@@ -6,13 +6,15 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 20:28:42 by frossiny          #+#    #+#             */
-/*   Updated: 2019/08/12 15:07:35 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/14 15:02:37 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include "libft.h"
 #include "shell.h"
+#include "ast.h"
+#include "builtins.h"
 
 static t_pipel	*create_pipel(t_pipel *prev, t_cmd *cmd, t_shell *shell)
 {

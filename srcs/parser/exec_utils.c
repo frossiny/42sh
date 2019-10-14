@@ -6,13 +6,15 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 17:27:04 by frossiny          #+#    #+#             */
-/*   Updated: 2019/05/22 16:39:03 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/14 15:09:23 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sys/stat.h>
 #include "libft.h"
 #include "shell.h"
+#include "utils.h"
+#include "hashtable.h"
 
 static char	*handle_absolute(char *name, int verbose)
 {

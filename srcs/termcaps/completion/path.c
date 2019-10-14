@@ -6,13 +6,15 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 16:28:40 by frossiny          #+#    #+#             */
-/*   Updated: 2019/05/22 17:32:18 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/14 14:59:00 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <dirent.h>
 #include "libft.h"
-#include "shell.h"
+#include "structs.h"
+#include "hashtable.h"
+#include "termcaps.h"
 
 static int	complete_ht(t_compl_info *ci, t_shell *shell)
 {

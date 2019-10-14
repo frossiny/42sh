@@ -6,12 +6,13 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/15 11:24:47 by frossiny          #+#    #+#             */
-/*   Updated: 2019/05/15 15:43:31 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/14 14:59:45 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
+#include "ast.h"
 
 void		close_here_docs(t_redirect *redir)
 {

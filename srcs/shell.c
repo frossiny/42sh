@@ -6,13 +6,16 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:05:59 by frossiny          #+#    #+#             */
-/*   Updated: 2019/07/29 18:05:00 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/14 14:58:05 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include "libft.h"
 #include "shell.h"
+#include "lexer.h"
+#include "ast.h"
+#include "hashtable.h"
 
 int		bslash_error(t_shell *shell, char **input, int ret)
 {
@@ -91,49 +94,49 @@ int		handle_input(t_shell *shell, char **input)
 	return (0);
 }
 
-int		eval_exec(t_shell *shell, char **input)
+static int	eval_exec(char **input)
 {
 	int		ret;
-	t_anode	*ast;
 
-	if (!input || !*input)
-		return (1);
 	if (ft_strcmp(*input, "") == 0)
 	{
 		ft_strdel(input);
 		return (g_return);
 	}
-	ast = NULL;
-	if ((ret = handle_input(shell, input)) == 0)
+	if ((ret = handle_input(&g_shell, input)) == 0)
 	{
 		if (!input)
 			return (1);
 		ft_strdel(input);
-		build_ast(shell, &ast);
-		shell->ast = ast;
-		shell->ast ? ret = parse(shell, shell->ast) : 0;
-		destroy_lexer(&(shell->lexer));
-		destroy_ast(shell);
+		build_ast(&g_shell);
+		g_shell.ast ? ret = parse(&g_shell, g_shell.ast) : 0;
+		destroy_lexer(&(g_shell.lexer));
+		destroy_ast(&g_shell);
 	}
 	else
 		ft_strdel(input);
 	return (ret);
 }
 
-int		shell(t_shell *shell)
+int		shell_init()
 {
 	char	*input;
 
-	shell->lexer.tokens = NULL;
-	shell->lexer.state = ST_GENERAL;
-	shell->lexer.lstate = ST_GENERAL;
-	while ((get_input(0, &input, shell)) > 0)
-		g_return = eval_exec(shell, &input);
+	g_shell.lexer.tokens = NULL;
+	g_shell.lexer.state = ST_GENERAL;
+	g_shell.lexer.lstate = ST_GENERAL;
+	while ((get_input(0, &input, &g_shell)) > 0)
+	{
+		if (!input)
+			g_return = 1;
+		else
+			g_return = eval_exec(&input);
+	}
 	if (input)
 		ft_strdel(&input);
 	isatty(0) ? ft_putchar('\n') : 0;
-	free_env(&(shell->env));
-	ht_delete(shell);
-	free_termcaps(shell);
+	free_env(&(g_shell.env));
+	ht_delete(g_shell);
+	free_termcaps(&g_shell);
 	return (g_return);
 }

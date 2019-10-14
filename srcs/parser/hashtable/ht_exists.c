@@ -6,11 +6,12 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/01 14:10:53 by frossiny          #+#    #+#             */
-/*   Updated: 2019/05/01 14:11:03 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/14 15:04:40 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+#include "hashtable.h"
 
 int			ht_exists(t_shell *shell, char *key)
 {

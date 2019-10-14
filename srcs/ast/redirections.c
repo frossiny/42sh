@@ -6,12 +6,14 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 15:11:08 by frossiny          #+#    #+#             */
-/*   Updated: 2019/08/13 14:47:25 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/14 15:11:18 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
+#include "ast.h"
+#include "utils.h"
 
 static int			is_redirection(t_token *token)
 {

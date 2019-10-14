@@ -6,12 +6,15 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 20:32:11 by frossiny          #+#    #+#             */
-/*   Updated: 2019/08/12 15:18:58 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/14 15:01:51 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include "shell.h"
+#include "ast.h"
+#include "utils.h"
+#include "builtins.h"
 
 static void	init_fd(t_pipel *pline, int op[], int np[])
 {
