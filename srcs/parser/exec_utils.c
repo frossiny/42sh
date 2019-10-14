@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 17:27:04 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/14 15:09:23 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/14 18:42:23 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,14 @@ static char	*handle_relative(char *name, int verbose)
 
 static char	*get_exe_path(t_shell *shell, char *name)
 {
-	t_env		*path;
+	t_var		*path;
 	char		**dirs;
 	size_t		i;
 	char		*file;
 
 	if ((file = ht_get(shell, name)))
 		return (file);
-	if (!(path = get_enve(shell->env, "PATH")) || !ft_strlen(path->value))
+	if (!(path = var_get(shell->vars, "PATH")) || !ft_strlen(path->value))
 		return (NULL);
 	i = -1;
 	dirs = ft_strsplit(path->value, ':');

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 14:23:53 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/14 15:01:24 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/14 19:05:03 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,16 @@
 # include <stdlib.h>
 # include <termios.h>
 
-# include "env.h"
+/*
+** Variables structure
+*/
+typedef struct	s_var
+{
+	char			*key;
+	char			*value;
+	int				export;
+	struct s_var	*next;
+}				t_var;
 
 /*
 ** Lexer structs
@@ -182,7 +191,7 @@ typedef struct	s_history
 */
 typedef struct		s_shell
 {
-	t_env			*env;
+	t_var			*vars;
 	t_lexer			lexer;
 	t_anode			*ast;
 	t_hashtable		bin_ht;

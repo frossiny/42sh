@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   disp_env.c                                         :+:      :+:    :+:   */
+/*   var_get.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/11 14:49:51 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/14 18:45:33 by frossiny         ###   ########.fr       */
+/*   Created: 2019/10/14 19:10:03 by frossiny          #+#    #+#             */
+/*   Updated: 2019/10/14 19:12:02 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
-#include "shell.h"
+#include "libft.h"
+#include "variables.h"
 
-int		disp_env(t_var *vars)
+t_var	*var_get(t_var *vars, char *key)
 {
-	if (!vars)
-		return (0);
+	if (!vars || !key)
+		return (NULL);
 	while (vars)
 	{
-		ft_printf("%s=%s\n", vars->key, vars->value);
+		if (ft_strequ(vars->key, key))
+			return (vars);
 		vars = vars->next;
 	}
-	return (0);
+	return (NULL);
 }

@@ -6,12 +6,12 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/10/14 12:39:23 by frossiny         ###   ########.fr        #
+#    Updated: 2019/10/14 19:21:16 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC		=	gcc
-CFLAGS	+=	-Wall -Werror -Wextra
+CC		=	gcc -g3 #-fsanitize=address
+#CFLAGS	+=	-Wall -Werror -Wextra
 
 SHELL	=	bash
 
@@ -77,32 +77,21 @@ FILES 	=	main.c									\
 			parser/executables.c					\
 			parser/here_doc.c						\
 			parser/get_pipes_docs.c					\
-			parser/hashtable/ht_create.c			\
-			parser/hashtable/ht_hash.c				\
-			parser/hashtable/ht_delone.c			\
-			parser/hashtable/ht_delete.c			\
-			parser/hashtable/ht_put.c				\
-			parser/hashtable/ht_get.c				\
-			parser/hashtable/ht_exists.c			\
 			parser/exec_utils.c						\
 			parser/child_add.c						\
+			hashtable/ht_create.c					\
+			hashtable/ht_hash.c						\
+			hashtable/ht_delone.c					\
+			hashtable/ht_delete.c					\
+			hashtable/ht_put.c						\
+			hashtable/ht_get.c						\
+			hashtable/ht_exists.c					\
 			ast/build_ast.c							\
 			ast/create_node.c						\
 			ast/build_args.c						\
 			ast/redirections.c						\
 			ast/destroy_ast.c						\
 			ast/create_cmd.c						\
-			env/build_env.c							\
-			env/copy_env.c							\
-			env/count_env.c							\
-			env/disp_env.c							\
-			env/disp_free_env.c						\
-			env/free_env.c							\
-			env/get_enve.c							\
-			env/new_envl.c							\
-			env/dup_env.c							\
-			env/exists_env.c						\
-			env/replace_env.c						\
 			builtins/builtins.c						\
 			builtins/builtins_errors.c				\
 			builtins/env.c							\
@@ -116,6 +105,15 @@ FILES 	=	main.c									\
 			utils/get_var_size.c					\
 			utils/str_escape.c						\
 			utils/copy_tab.c						\
+			variables/var_build_env.c				\
+			variables/var_delete.c					\
+			variables/var_destroy.c					\
+			variables/var_get.c						\
+			variables/var_init.c					\
+			variables/var_new.c						\
+			variables/var_replace.c					\
+			variables/var_set.c						\
+			env/disp_env.c							\
 			signals.c								\
 			errors.c								\
 			utils.c									\
@@ -124,6 +122,18 @@ FILES 	=	main.c									\
 SRCS	=	$(addprefix $(SRCDIR)/, $(FILES))
 OBJS 	=	$(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 OBJSD 	=	$(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.d)
+
+#			env/build_env.c							\
+#			env/copy_env.c							\
+#			env/count_env.c							\
+#			env/disp_env.c							\
+#			env/disp_free_env.c						\
+#			env/free_env.c							\
+#			env/get_enve.c							\
+#			env/new_envl.c							\
+#			env/dup_env.c							\
+#			env/exists_env.c						\
+#			env/replace_env.c						\
 
 ##### Colors #####
 _END=\x1b[0m

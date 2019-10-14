@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 14:41:24 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/14 15:15:17 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/14 18:59:40 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,30 +15,16 @@
 #include "shell.h"
 #include "utils.h"
 
-static void	update_env(t_env **env)
+static void	update_env(t_var **vars)
 {
 	char	*tmp;
-	t_env	*pwd;
-	t_env	*oldpwd;
+	t_var	*pwd;
 
-	tmp = getcwd(NULL, 0);
-	pwd = get_enve(*env, "PWD");
-	if (pwd)
-	{
-		if (!(oldpwd = get_enve(*env, "OLDPWD")))
-			oldpwd = new_envl(env, "OLDPWD", pwd->value, 0);
-		else
-		{
-			free(oldpwd->value);
-			if (!(oldpwd->value = ft_strdup(pwd->value)))
-				exit(1);
-		}
-		free(pwd->value);
-		if (!(pwd->value = ft_strdup(tmp)))
-			exit(1);
-	}
-	else
-		pwd = new_envl(env, "PWD", tmp, 0);
+	if (!(tmp = getcwd(NULL, 0)))
+		return ;
+	if ((pwd = var_get(*vars, "PWD")))
+		var_set(vars, "OLDPWD", pwd->value, 1);
+	var_set(vars, "PWD", tmp, 1);
 	free(tmp);
 }
 
@@ -56,22 +42,22 @@ static char	*build_path(char *arg)
 	return (path);
 }
 
-static char	*get_oldpwd(t_env *env)
+static char	*get_oldpwd(t_var *vars)
 {
-	t_env	*pwd;
+	t_var	*pwd;
 
-	if (!(pwd = get_enve(env, "OLDPWD")))
+	if (!(pwd = var_get(vars, "OLDPWD")))
 		return (ft_strdup(""));
 	return (ft_strdup(pwd->value));
 }
 
-static char	*get_newdir(int argc, char **argv, t_env *env)
+static char	*get_newdir(int argc, char **argv, t_var *vars)
 {
 	char	*path;
-	t_env	*home;
+	t_var	*home;
 
 	path = NULL;
-	if (argc == 1 && !(home = get_enve(env, "HOME")))
+	if (argc == 1 && !(home = var_get(vars, "HOME")))
 	{
 		write(2, "cd: HOME not set\n", 17);
 		return (NULL);
@@ -79,7 +65,7 @@ static char	*get_newdir(int argc, char **argv, t_env *env)
 	else if (argc == 1 && home)
 		path = ft_strdup(home->value);
 	else if (argc == 2 && ft_strcmp(argv[1], "-") == 0)
-		path = get_oldpwd(env);
+		path = get_oldpwd(vars);
 	else
 		path = build_path(argv[1]);
 	if (!path || !cd_exists(path, argv[1])
@@ -96,10 +82,10 @@ int			b_cd(t_cmd *cmd, t_shell *shell)
 	char	*newdir;
 	int		ret;
 
-	if (!(newdir = get_newdir(cmd->argc, cmd->args, shell->env)))
+	if (!(newdir = get_newdir(cmd->argc, cmd->args, shell->vars)))
 		return (1);
 	ret = chdir(newdir);
-	update_env(&(shell->env));
+	update_env(&(shell->vars));
 	free(newdir);
 	return (ret);
 }

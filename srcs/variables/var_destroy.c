@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   disp_env.c                                         :+:      :+:    :+:   */
+/*   var_destroy.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/11 14:49:51 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/14 18:45:33 by frossiny         ###   ########.fr       */
+/*   Created: 2019/10/14 18:10:31 by frossiny          #+#    #+#             */
+/*   Updated: 2019/10/14 18:11:08 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
-#include "shell.h"
+#include "variables.h"
 
-int		disp_env(t_var *vars)
+void	var_destroy(t_var **vars)
 {
-	if (!vars)
-		return (0);
-	while (vars)
+	t_var	*curr;
+	t_var	*next;
+
+	curr = *vars;
+	while (curr)
 	{
-		ft_printf("%s=%s\n", vars->key, vars->value);
-		vars = vars->next;
+		next = curr->next;
+		free(curr->key);
+		free(curr->value);
+		free(curr);
+		curr = next;
 	}
-	return (0);
+	*vars = NULL;
 }

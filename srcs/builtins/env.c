@@ -6,17 +6,17 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:27:28 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/14 15:13:26 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/14 19:05:33 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
-#include "env.h"
 #include "lexer.h"
 #include "utils.h"
 #include "parser.h"
 
+/*
 static int		parse_options(int *opt, int argc, char **argv)
 {
 	*opt = 0;
@@ -116,17 +116,16 @@ static int		exec(char *exe, char **args, t_env *env, t_shell *shell)
 	free(cmd);
 	destroy_lexer(&lexer);
 	return (g_return);
-}
+}*/
 
 int				b_env(t_cmd *cmd, t_shell *shell)
 {
 	int		options;
-	t_env	*nenv;
 	char	**args;
 
-	if (cmd->argc == 1)
-		return (disp_env(shell->env));
-	args = cmd->args;
+	//if (cmd->argc == 1)
+		return (disp_env(shell->vars));
+	/*args = cmd->args;
 	if (!parse_options(&options, --cmd->argc, ++args))
 		return (1);
 	nenv = dup_env(shell->env, options);
@@ -135,6 +134,6 @@ int				b_env(t_cmd *cmd, t_shell *shell)
 	if (cmd->argc < 1)
 		return (disp_free_env(&nenv));
 	exec(*args, args + 1, nenv, shell);
-	free_env(&nenv);
+	free_env(&nenv);*/
 	return (g_return);
 }

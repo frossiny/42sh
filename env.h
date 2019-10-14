@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/15 14:32:45 by frossiny          #+#    #+#             */
-/*   Updated: 2019/05/22 16:57:42 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/14 18:47:59 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ typedef struct		s_env
 }					t_env;
 
 t_env				*copy_env(char **envp, int inc);
-int					disp_env(t_env *env);
 t_env				*get_enve(t_env *env, char *key);
 t_env				*new_envl(t_env **env, char *key, char *value, int inc);
 t_env				*dup_env(t_env *env, int option);

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 20:32:11 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/14 15:01:51 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/14 18:41:59 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static int	execute_pipe_cmd(t_pipel *pline, t_fd *fd, t_shell *shell)
 		shell->able_termcaps ? restore_shell(shell->prev_term) : 0;
 		init_fd(pline, fd->op, fd->np);
 		if (execve(get_exe(shell, cmd->exe->content, 1),
-								cmd->args, build_env(shell->env)) == -1)
+								cmd->args, var_build_env(shell->vars)) == -1)
 			exit(EXIT_FAILURE);
 	}
 	else if (pline->previous)

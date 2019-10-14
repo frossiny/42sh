@@ -6,13 +6,13 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 16:28:40 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/14 14:59:00 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/14 18:40:15 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <dirent.h>
 #include "libft.h"
-#include "structs.h"
+#include "shell.h"
 #include "hashtable.h"
 #include "termcaps.h"
 
@@ -65,13 +65,13 @@ static int	check_files(DIR *dirp, t_compl_info *ci, t_shell *shell)
 int			complete_path(t_compl_info *ci, t_shell *shell)
 {
 	DIR				*dirp;
-	t_env			*path_env;
+	t_var			*path_env;
 	char			**array;
 	int				i;
 
 	if (complete_ht(ci, shell))
 		return (1);
-	if (!(path_env = get_enve(shell->env, "PATH")))
+	if (!(path_env = var_get(shell->vars, "PATH")))
 		return (0);
 	array = ft_strsplit(path_env->value, ':');
 	i = -1;

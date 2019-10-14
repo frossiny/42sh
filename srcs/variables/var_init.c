@@ -1,26 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   disp_env.c                                         :+:      :+:    :+:   */
+/*   var_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/11 14:49:51 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/14 18:45:33 by frossiny         ###   ########.fr       */
+/*   Created: 2019/10/14 17:38:16 by frossiny          #+#    #+#             */
+/*   Updated: 2019/10/14 19:25:01 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 #include "shell.h"
 
-int		disp_env(t_var *vars)
+t_var	*var_init(char *envp[])
 {
-	if (!vars)
-		return (0);
-	while (vars)
+	char	**split;
+
+	g_shell.vars = NULL;
+	while (*envp)
 	{
-		ft_printf("%s=%s\n", vars->key, vars->value);
-		vars = vars->next;
+		split = ft_strsplit(*envp, '=');
+		var_set(&(g_shell.vars), split[0], split[1], 1);
+		envp++;
 	}
-	return (0);
+
+	t_var *test = g_shell.vars;
+	while (test)
+	{
+		ft_printf("(%d) %s=%s\n", test->export, test->key, test->value);
+		test = test->next;
+	}
+	return (g_shell.vars);
 }

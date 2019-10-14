@@ -1,26 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   disp_env.c                                         :+:      :+:    :+:   */
+/*   var_set.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/11 14:49:51 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/14 18:45:33 by frossiny         ###   ########.fr       */
+/*   Created: 2019/10/14 17:50:15 by frossiny          #+#    #+#             */
+/*   Updated: 2019/10/14 19:19:05 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
-#include "shell.h"
+#include "variables.h"
 
-int		disp_env(t_var *vars)
+int		var_set(t_var **vars, char *key, char *value, int export)
 {
-	if (!vars)
+	t_var	*curr;
+	t_var	*new;
+	
+	if (!key)
 		return (0);
-	while (vars)
+	if (!*vars || !(curr = var_get(*vars, key)))
 	{
-		ft_printf("%s=%s\n", vars->key, vars->value);
-		vars = vars->next;
+		if (!(new = var_new(key, value, export)))
+			return (0);
+		if (!*vars)
+			*vars = new;
+		else
+		{
+			curr = *vars;
+			while (curr && curr->next)
+				curr = curr->next;
+			curr->next = new;
+		}
 	}
-	return (0);
+	else
+		return (var_replace(curr, value));
+	return (1);
 }

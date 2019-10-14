@@ -6,18 +6,19 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:26:37 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/14 15:05:23 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/14 18:43:29 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
+#include "libft.h"
 #include "shell.h"
 #include "ast.h"
 #include "utils.h"
 #include "hashtable.h"
 #include "builtins.h"
 
-static int	start_process(char *file, t_cmd *cmd, t_env *env, t_shell *shell)
+static int	start_process(char *file, t_cmd *cmd, char **env, t_shell *shell)
 {
 	int		status;
 
@@ -28,7 +29,7 @@ static int	start_process(char *file, t_cmd *cmd, t_env *env, t_shell *shell)
 		unregister_signals();
 		shell->able_termcaps ? restore_shell(shell->prev_term) : 0;
 		handle_redirections(cmd->redir);
-		if (execve(file, cmd->args, build_env(env)) == -1)
+		if (execve(file, cmd->args, env) == -1)
 			exit(EXIT_FAILURE);
 		exit(EXIT_SUCCESS);
 	}
@@ -43,7 +44,7 @@ static int	start_process(char *file, t_cmd *cmd, t_env *env, t_shell *shell)
 	return (WEXITSTATUS(status));
 }
 
-static int	start(t_cmd *cmd, t_env *env, t_shell *shell)
+static int	start(t_cmd *cmd, char **env, t_shell *shell)
 {
 	int		ret;
 	char	*file;
@@ -65,22 +66,17 @@ static int	start(t_cmd *cmd, t_env *env, t_shell *shell)
 
 int			execute(t_cmd *cmd, t_shell *shell)
 {
-	if (!cmd)
-		return (1);
-	build_args(cmd, shell->env);
-	cmd->redir = parse_redirections(cmd->exe, cmd->argc);
-	if (!validate_redirection(cmd->redir))
-		return (1);
-	return (start(cmd, shell->env, shell));
-}
+	int		ret;
+	char	**env;
 
-int			execute_env(t_cmd *cmd, t_env *env, t_shell *shell)
-{
 	if (!cmd)
 		return (1);
-	build_args(cmd, env);
+	build_args(cmd, shell->vars);
 	cmd->redir = parse_redirections(cmd->exe, cmd->argc);
 	if (!validate_redirection(cmd->redir))
 		return (1);
-	return (start(cmd, env, shell));
+	env = var_build_env(shell->vars);
+	ret = start(cmd, env, shell);
+	ft_strddel(&env);
+	return (ret);
 }

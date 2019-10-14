@@ -1,26 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   disp_env.c                                         :+:      :+:    :+:   */
+/*   var_delete.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/11 14:49:51 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/14 18:45:33 by frossiny         ###   ########.fr       */
+/*   Created: 2019/10/14 18:49:07 by frossiny          #+#    #+#             */
+/*   Updated: 2019/10/14 19:06:20 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
-#include "shell.h"
+#include "libft.h"
+#include "variables.h"
 
-int		disp_env(t_var *vars)
+int		var_delete(t_var **vars, char *key)
 {
+	t_var	*curr;
+	t_var	*last;
+
 	if (!vars)
 		return (0);
-	while (vars)
+	last = NULL;
+	curr = *vars;
+	while (curr)
 	{
-		ft_printf("%s=%s\n", vars->key, vars->value);
-		vars = vars->next;
+		if (ft_strequ(curr->key, key))
+		{
+			if (last)
+				last->next = curr->next;
+			else
+				*vars = curr->next;
+			free(curr->key);
+			free(curr->value);
+			free(curr);
+			return (1);
+		}
+		last = curr;
+		curr = curr->next;
 	}
 	return (0);
 }

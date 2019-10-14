@@ -1,26 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   disp_env.c                                         :+:      :+:    :+:   */
+/*   var_new.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/11 14:49:51 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/14 18:45:33 by frossiny         ###   ########.fr       */
+/*   Created: 2019/10/14 17:43:55 by frossiny          #+#    #+#             */
+/*   Updated: 2019/10/14 19:04:19 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 #include "shell.h"
 
-int		disp_env(t_var *vars)
+t_var	*var_new(char *key, char *value, int export)
 {
-	if (!vars)
-		return (0);
-	while (vars)
+	t_var	*nvar;
+	
+	if (!key)
+		return (NULL);
+	if (!(nvar = (t_var *)malloc(sizeof(t_var))))
+		return (NULL);
+	if (!(nvar->key = ft_strdup(key)) || !(nvar->value = ft_strdup(value)))
 	{
-		ft_printf("%s=%s\n", vars->key, vars->value);
-		vars = vars->next;
+		free(nvar);
+		return (NULL);
 	}
-	return (0);
+	nvar->export = export;
+	nvar->next = NULL;
+	return (nvar);
 }

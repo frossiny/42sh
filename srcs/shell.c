@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:05:59 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/14 14:58:05 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/14 18:38:16 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ static int	eval_exec(char **input)
 	return (ret);
 }
 
-int		shell_init()
+int		shell()
 {
 	char	*input;
 
@@ -135,7 +135,7 @@ int		shell_init()
 	if (input)
 		ft_strdel(&input);
 	isatty(0) ? ft_putchar('\n') : 0;
-	free_env(&(g_shell.env));
+	var_destroy(&(g_shell.vars));
 	ht_delete(g_shell);
 	free_termcaps(&g_shell);
 	return (g_return);

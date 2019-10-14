@@ -1,23 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ast.h                                              :+:      :+:    :+:   */
+/*   variables.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/04 15:50:15 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/14 18:22:11 by frossiny         ###   ########.fr       */
+/*   Created: 2019/10/14 17:39:34 by frossiny          #+#    #+#             */
+/*   Updated: 2019/10/14 19:07:01 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef AST_H
-# define AST_H
+#ifndef VARIABLES_H
+# define VARIABLES_H
 
 # include "structs.h"
 
-int		build_ast(t_shell *shell);
-int		build_args(t_cmd *cmd, t_var *var);
-void	destroy_ast(t_shell *shell);
-int		validate_redirection(t_redirect *redir);
+t_var	*var_init(char *envp[]);
+t_var	*var_new(char *key, char *value, int export);
+int		var_set(t_var **vars, char *key, char *value, int export);
+int		var_replace(t_var *var, char *value);
+t_var	*var_get(t_var *vars, char *key);
+char	**var_build_env(t_var *vars);
+int		var_delete(t_var **vars, char *key);
+void	var_destroy(t_var **vars);
+int		disp_env(t_var *vars);
+
 
 #endif
