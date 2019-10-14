@@ -6,12 +6,13 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:49:15 by frossiny          #+#    #+#             */
-/*   Updated: 2019/08/12 18:31:09 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/14 15:17:01 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
+#include "utils.h"
 
 static int	handle_home_spec(t_token *token, t_env *env)
 {

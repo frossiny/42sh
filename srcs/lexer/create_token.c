@@ -6,12 +6,12 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 15:03:37 by frossiny          #+#    #+#             */
-/*   Updated: 2019/05/20 13:55:39 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/10/14 14:52:24 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "shell.h"
+#include "lexer.h"
 
 t_token	*create_token(t_lexer *lexer, char *content,
 												size_t len, t_token_type type)

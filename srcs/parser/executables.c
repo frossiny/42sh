@@ -6,12 +6,16 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:26:37 by frossiny          #+#    #+#             */
-/*   Updated: 2019/08/12 15:06:46 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/14 15:05:23 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include "shell.h"
+#include "ast.h"
+#include "utils.h"
+#include "hashtable.h"
+#include "builtins.h"
 
 static int	start_process(char *file, t_cmd *cmd, t_env *env, t_shell *shell)
 {

@@ -6,11 +6,12 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/07 15:18:09 by frossiny          #+#    #+#             */
-/*   Updated: 2019/05/07 15:35:07 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/14 15:05:55 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+#include "hashtable.h"
 
 int		ht_delone(char *key, t_shell *shell)
 {

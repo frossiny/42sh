@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:46:01 by frossiny          #+#    #+#             */
-/*   Updated: 2019/05/28 15:21:27 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/14 15:16:03 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <sys/stat.h>
 #include "libft.h"
 #include "shell.h"
+#include "utils.h"
 
 char	*format_path_exe(char *dir, char *file)
 {

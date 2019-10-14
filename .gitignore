@@ -1,0 +1,5 @@
+42sh
+.vscode
+objs
+libft/objs
+*.a

@@ -6,12 +6,14 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/04 16:14:27 by frossiny          #+#    #+#             */
-/*   Updated: 2019/05/22 15:07:02 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/14 15:10:48 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
+#include "parser.h"
+#include "lexer.h"
 
 static int	build_args_arr(char ***args, t_token *tokens)
 {

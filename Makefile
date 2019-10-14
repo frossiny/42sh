@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/08/13 14:09:23 by frossiny         ###   ########.fr        #
+#    Updated: 2019/10/14 12:39:23 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ CFLAGS	+=	-Wall -Werror -Wextra
 
 SHELL	=	bash
 
-NAME 	=	21sh
+NAME 	=	42sh
 LIBFT	=	libft
 SRCDIR	=	srcs
 INCDIR	=	includes

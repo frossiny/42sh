@@ -6,12 +6,16 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:27:28 by frossiny          #+#    #+#             */
-/*   Updated: 2019/05/15 14:56:50 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/14 15:13:26 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
+#include "env.h"
+#include "lexer.h"
+#include "utils.h"
+#include "parser.h"
 
 static int		parse_options(int *opt, int argc, char **argv)
 {
