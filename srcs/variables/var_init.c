@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 17:38:16 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/14 19:25:01 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/16 13:13:42 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,8 @@ t_var	*var_init(char *envp[])
 	{
 		split = ft_strsplit(*envp, '=');
 		var_set(&(g_shell.vars), split[0], split[1], 1);
+		ft_strddel(&split);
 		envp++;
-	}
-
-	t_var *test = g_shell.vars;
-	while (test)
-	{
-		ft_printf("(%d) %s=%s\n", test->export, test->key, test->value);
-		test = test->next;
 	}
 	return (g_shell.vars);
 }

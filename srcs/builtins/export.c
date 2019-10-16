@@ -1,26 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   disp_env.c                                         :+:      :+:    :+:   */
+/*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/11 14:49:51 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/14 18:45:33 by frossiny         ###   ########.fr       */
+/*   Created: 2019/10/16 13:28:29 by frossiny          #+#    #+#             */
+/*   Updated: 2019/10/16 13:48:15 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
-#include "shell.h"
+#include "variables.h"
 
-int		disp_env(t_var *vars)
+int		b_export(t_cmd *cmd, t_shell *shell)
 {
-	if (!vars)
-		return (0);
-	while (vars)
-	{
-		ft_printf("%s=%s\n", vars->key, vars->value);
-		vars = vars->next;
-	}
+	var_disp_env(shell->vars);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 17:39:34 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/14 19:07:01 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/16 13:49:03 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ t_var	*var_get(t_var *vars, char *key);
 char	**var_build_env(t_var *vars);
 int		var_delete(t_var **vars, char *key);
 void	var_destroy(t_var **vars);
-int		disp_env(t_var *vars);
+int		var_display(t_var *vars);
+int		var_disp_env(t_var *vars);
 
 
 #endif

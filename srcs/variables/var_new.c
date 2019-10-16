@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 17:43:55 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/14 19:04:19 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/16 13:59:20 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 t_var	*var_new(char *key, char *value, int export)
 {
 	t_var	*nvar;
-	
+
 	if (!key)
 		return (NULL);
 	if (!(nvar = (t_var *)malloc(sizeof(t_var))))

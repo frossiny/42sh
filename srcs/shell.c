@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:05:59 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/14 18:38:16 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/16 14:05:42 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,15 @@ int		handle_input(t_shell *shell, char **input)
 		else
 			return (ret);
 	}
+
+	t_token *tokens = g_shell.lexer.tokens;
+	ft_printf("Tokens:\n");
+	while (tokens)
+	{
+		ft_printf("%s\n", tokens->content);
+		tokens = tokens->next;
+	}
+	
 	return (0);
 }
 
@@ -118,13 +127,10 @@ static int	eval_exec(char **input)
 	return (ret);
 }
 
-int		shell()
+int		shell(void)
 {
 	char	*input;
 
-	g_shell.lexer.tokens = NULL;
-	g_shell.lexer.state = ST_GENERAL;
-	g_shell.lexer.lstate = ST_GENERAL;
 	while ((get_input(0, &input, &g_shell)) > 0)
 	{
 		if (!input)

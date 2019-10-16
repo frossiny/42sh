@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 14:30:34 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/14 19:01:48 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/16 13:48:00 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	is_key_valid(char *str)
 int			b_setenv(t_cmd *cmd, t_shell *shell)
 {
 	if (cmd->argc == 1)
-		return (disp_env(shell->vars));
+		return (var_display(shell->vars));
 	else if (cmd->argc > 3)
 	{
 		write(2, "setenv: Too many arguments.\n", 28);
@@ -64,7 +64,7 @@ int			b_setenv(t_cmd *cmd, t_shell *shell)
 										cmd->argc == 3 ? cmd->args[2] : ""))
 		return (0);
 	if (!(var_set(&(shell->vars), cmd->args[1],
-										cmd->argc > 2 ? cmd->args[2] : "", 1)))
+										cmd->argc > 2 ? cmd->args[2] : "", 0)))
 		return (1);
 	return (0);
 }

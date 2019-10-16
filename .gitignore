@@ -3,3 +3,4 @@
 objs
 libft/objs
 *.a
+*.dSYM

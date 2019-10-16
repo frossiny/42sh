@@ -1,22 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   disp_free_env.c                                    :+:      :+:    :+:   */
+/*   var_display.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/11 14:53:28 by frossiny          #+#    #+#             */
-/*   Updated: 2019/04/11 14:53:34 by frossiny         ###   ########.fr       */
+/*   Created: 2019/10/16 13:29:22 by frossiny          #+#    #+#             */
+/*   Updated: 2019/10/16 13:48:56 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "libft.h"
+#include "variables.h"
 
-int		disp_free_env(t_env **env)
+int		var_display(t_var *vars)
 {
-	if (!env || !*env)
+	if (!vars)
 		return (0);
-	disp_env(*env);
-	free_env(env);
+	while (vars)
+	{
+		ft_printf("%s=%s\n", vars->key, vars->value);
+		vars = vars->next;
+	}
 	return (0);
 }

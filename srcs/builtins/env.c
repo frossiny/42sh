@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:27:28 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/14 19:05:33 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/16 13:46:20 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ int				b_env(t_cmd *cmd, t_shell *shell)
 	char	**args;
 
 	//if (cmd->argc == 1)
-		return (disp_env(shell->vars));
+		return (var_disp_env(shell->vars));
 	/*args = cmd->args;
 	if (!parse_options(&options, --cmd->argc, ++args))
 		return (1);

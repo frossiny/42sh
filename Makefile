@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/10/14 19:21:16 by frossiny         ###   ########.fr        #
+#    Updated: 2019/10/16 13:47:03 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -100,6 +100,7 @@ FILES 	=	main.c									\
 			builtins/exit.c							\
 			builtins/cd.c							\
 			builtins/echo.c							\
+			builtins/export.c						\
 			utils/dup_argv.c						\
 			utils/display_signal.c					\
 			utils/get_var_size.c					\
@@ -113,7 +114,8 @@ FILES 	=	main.c									\
 			variables/var_new.c						\
 			variables/var_replace.c					\
 			variables/var_set.c						\
-			env/disp_env.c							\
+			variables/var_display.c					\
+			variables/var_disp_env.c				\
 			signals.c								\
 			errors.c								\
 			utils.c									\
@@ -122,18 +124,6 @@ FILES 	=	main.c									\
 SRCS	=	$(addprefix $(SRCDIR)/, $(FILES))
 OBJS 	=	$(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 OBJSD 	=	$(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.d)
-
-#			env/build_env.c							\
-#			env/copy_env.c							\
-#			env/count_env.c							\
-#			env/disp_env.c							\
-#			env/disp_free_env.c						\
-#			env/free_env.c							\
-#			env/get_enve.c							\
-#			env/new_envl.c							\
-#			env/dup_env.c							\
-#			env/exists_env.c						\
-#			env/replace_env.c						\
 
 ##### Colors #####
 _END=\x1b[0m

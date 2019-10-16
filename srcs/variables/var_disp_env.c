@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   replace_env.c                                      :+:      :+:    :+:   */
+/*   var_disp_env.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/05/22 16:47:41 by frossiny          #+#    #+#             */
-/*   Updated: 2019/05/22 16:58:46 by frossiny         ###   ########.fr       */
+/*   Created: 2019/10/16 13:44:46 by frossiny          #+#    #+#             */
+/*   Updated: 2019/10/16 13:47:38 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
 #include "libft.h"
+#include "variables.h"
 
-t_env	*replace_env(t_env *env, char *key, char *new)
+int		var_disp_env(t_var *vars)
 {
-	while (env)
+	if (!vars)
+		return (0);
+	while (vars)
 	{
-		if (ft_strequ(env->key, key))
-		{
-			if (env->value)
-				free(env->value);
-			env->value = ft_strdup(new);
-			return (env);
-		}
-		env = env->next;
+		if (vars->export)
+			ft_printf("%s=%s\n", vars->key, vars->value);
+		vars = vars->next;
 	}
-	return (NULL);
+	return (0);
 }

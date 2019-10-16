@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 11:59:10 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/14 18:36:01 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/16 13:59:00 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ extern int			g_clear_buffer;
 extern int			g_ignore_signals;
 extern int			g_return;
 
-int					shell();
+int					shell(void);
 void				prompt(void);
 int					prompt_len(void);
 int					check_quotes(char *str, char c);
