@@ -1,37 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export.c                                           :+:      :+:    :+:   */
+/*   opt_add.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/16 13:28:29 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/16 16:22:44 by frossiny         ###   ########.fr       */
+/*   Created: 2019/10/16 16:20:21 by frossiny          #+#    #+#             */
+/*   Updated: 2019/10/16 16:20:31 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "variables.h"
+#include "libft.h"
 #include "opt.h"
 
-int		b_export(t_cmd *cmd, t_shell *shell)
+t_opt		*opt_add(t_options *opts, char *name, char *value)
 {
-	t_options	*options;
-	t_opt		*opt;
+	t_opt	*new;
+	t_opt	*curr;
 
-	options = opt_parse(cmd->argc, cmd->args, "fnp:", "export");
-
-	if (options->ret != 0)
-		return (1);
-
-	ft_printf("OPTIONS:\n");
-	opt = options->opts;
-	while (opt)
+	if (!(new = (t_opt *)malloc(sizeof(t_opt))))
+		return (NULL);
+	new->opt = ft_strdup(name);
+	new->value = value ? ft_strdup(value) : NULL;
+	new->next = NULL;
+	if (opts->opts)
 	{
-		ft_printf("-%s = %s\n", opt->opt, opt->value);
-		opt = opt->next;
+		curr = opts->opts;
+		while (curr->next)
+			curr = curr->next;
+		curr->next = new;
 	}
-
-	//var_disp_env(shell->vars);
-	opt_free(options);
-	return (0);
+	else
+		opts->opts = new;
+	return (new);
 }

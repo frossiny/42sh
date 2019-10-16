@@ -1,37 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export.c                                           :+:      :+:    :+:   */
+/*   opt_get.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/16 13:28:29 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/16 16:22:44 by frossiny         ###   ########.fr       */
+/*   Created: 2019/10/16 16:36:43 by frossiny          #+#    #+#             */
+/*   Updated: 2019/10/16 16:45:24 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "variables.h"
+#include "libft.h"
 #include "opt.h"
 
-int		b_export(t_cmd *cmd, t_shell *shell)
+t_opt	*opt_get(t_options *options, char *name)
 {
-	t_options	*options;
-	t_opt		*opt;
+	t_opt	*curr;
 
-	options = opt_parse(cmd->argc, cmd->args, "fnp:", "export");
-
-	if (options->ret != 0)
-		return (1);
-
-	ft_printf("OPTIONS:\n");
-	opt = options->opts;
-	while (opt)
+	curr = options->opts;
+	while (curr)
 	{
-		ft_printf("-%s = %s\n", opt->opt, opt->value);
-		opt = opt->next;
+		if (ft_strequ(curr->opt, name))
+			return (curr);
+		curr = curr->next;
 	}
-
-	//var_disp_env(shell->vars);
-	opt_free(options);
-	return (0);
+	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 14:23:53 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/14 19:05:03 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/16 16:08:50 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,21 @@ typedef struct		s_childs
 /*
 ** Builtin
 */
+
+typedef struct	s_opt
+{
+	char			*opt;
+	char			*value;
+	struct s_opt	*next;
+}				t_opt;
+
+typedef struct	s_options
+{
+	int			ret;
+	t_opt		*opts;
+	size_t		last;
+}				t_options;
+
 typedef struct	s_builtin
 {
 	char	*name;

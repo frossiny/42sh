@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/10/16 13:47:03 by frossiny         ###   ########.fr        #
+#    Updated: 2019/10/16 16:41:52 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -101,6 +101,10 @@ FILES 	=	main.c									\
 			builtins/cd.c							\
 			builtins/echo.c							\
 			builtins/export.c						\
+			builtins/options/opt_parse.c			\
+			builtins/options/opt_add.c				\
+			builtins/options/opt_get.c				\
+			builtins/options/opt_free.c			 	\
 			utils/dup_argv.c						\
 			utils/display_signal.c					\
 			utils/get_var_size.c					\
@@ -171,5 +175,8 @@ re: fclean
 norm:
 	@norminette $(INCDIR) $(SRCDIR) | grep "Warning\|Error" || true
 	@echo "Norm done!"
+
+test:
+	python3 err.py
 
 -include $(OBJSD)

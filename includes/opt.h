@@ -1,22 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_error.c                                      :+:      :+:    :+:   */
+/*   opt.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/12 13:29:31 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/16 14:18:46 by frossiny         ###   ########.fr       */
+/*   Created: 2019/10/16 14:38:25 by frossiny          #+#    #+#             */
+/*   Updated: 2019/10/16 16:41:43 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "shell.h"
+#ifndef OPT_H
+# define OPT_H
 
-int		parse_error(const char *str, size_t len, int ret)
-{
-	write(2, "42sh: parse error near '", 24);
-	write(2, str, len);
-	ft_putstr_fd("'\n", 2);
-	return (ret);
-}
+# include "structs.h"
+
+/*
+** Functions
+*/
+
+t_options	*opt_parse(int argc, char **argv, const char *optstring, const char *bname);
+t_opt		*opt_add(t_options *opts, char *name, char *value);
+t_opt		*opt_get(t_options *options, char *name);
+void		opt_free(t_options *options);
+
+#endif

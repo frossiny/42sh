@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 15:27:23 by frossiny          #+#    #+#             */
-/*   Updated: 2019/07/29 13:57:51 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/16 14:18:46 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static int		handle_aggregate(t_redirect *redir)
 			{
 				if (dup2(ft_atoi(redir->value->content), redir->filedes) == -1)
 				{
-					write(2, "21sh: ", 6);
+					write(2, "42sh: ", 6);
 					ft_putstr_fd(redir->value->content, 2);
 					write(2, ": bad file descriptor\n", 21);
 					return (0);
