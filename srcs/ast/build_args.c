@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/04 16:14:27 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/14 18:22:37 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/17 16:34:03 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	build_args_arr(char ***args, t_token *tokens)
 
 	argc = 0;
 	tmp = tokens;
-	while (tmp && is_word_token(tmp))
+	while (tmp && tok_is_word(tmp))
 	{
 		if (ft_strisdigit(tmp->content) && tmp->next
 		&& tmp->next->type == TOKEN_REDIRI && tmp->next->type == TOKEN_REDIRO)

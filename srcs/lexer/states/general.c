@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 14:17:47 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/14 14:52:58 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/17 16:34:22 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	lex_state_general_else(t_lexer *lexer)
 	else if (*(lexer->in) == '#'
 						&& !is_escaped(lexer->pin, lexer->in - lexer->pin, 0))
 	{
-		create_token(lexer, lexer->pin, lexer->in - lexer->pin, TOKEN_NAME);
+		tok_create(lexer, lexer->pin, lexer->in - lexer->pin, TOKEN_NAME);
 		lexer->pin = lexer->in;
 		update_state(lexer, ST_COMMENT);
 	}
@@ -62,17 +62,17 @@ int			lex_state_general(t_lexer *lex)
 	if (cur.op)
 	{
 		if (lex->in > lex->pin)
-			create_token(lex, lex->pin, lex->in - lex->pin, TOKEN_NAME);
+			tok_create(lex, lex->pin, lex->in - lex->pin, TOKEN_NAME);
 		if (cur.type != TOKEN_IGN)
-			create_token(lex, lex->in, cur.len, cur.type);
+			tok_create(lex, lex->in, cur.len, cur.type);
 		update_state(lex, cur.state);
 		lex->pin = (lex->in += cur.len);
 	}
 	else if (ft_isdigit(*(lex->in)) && (tmp = is_redirection(lex->in, &cur)))
 	{
 		if (lex->in > lex->pin)
-			create_token(lex, lex->pin, lex->in - lex->pin, TOKEN_NAME);
-		create_token(lex, lex->in, tmp, cur.type);
+			tok_create(lex, lex->pin, lex->in - lex->pin, TOKEN_NAME);
+		tok_create(lex, lex->in, tmp, cur.type);
 		update_state(lex, ST_OPERATOR);
 		lex->pin = (lex->in += tmp);
 	}

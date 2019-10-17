@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 11:23:45 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/14 14:52:07 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/17 16:34:22 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int			lex_end(t_lexer *lexer)
 	if (lexer->state == ST_GENERAL)
 	{
 		if (lexer->in > lexer->pin)
-			create_token(lexer, lexer->pin, lexer->in - lexer->pin, TOKEN_NAME);
+			tok_create(lexer, lexer->pin, lexer->in - lexer->pin, TOKEN_NAME);
 	}
 	else
 	{

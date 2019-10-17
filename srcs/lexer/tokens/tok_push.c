@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   replace_token.c                                    :+:      :+:    :+:   */
+/*   tok_push.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/29 17:30:43 by frossiny          #+#    #+#             */
-/*   Updated: 2019/07/29 17:31:34 by frossiny         ###   ########.fr       */
+/*   Created: 2019/02/28 12:27:16 by frossiny          #+#    #+#             */
+/*   Updated: 2019/10/17 16:34:40 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "lexer.h"
+#include "shell.h"
 
-void	replace_token(t_token *token, char *str)
+t_token		*tok_push(t_token *list, t_token *new)
 {
-	free(token->content);
-	if (!str)
-		str = ft_strdup("");
-	token->content = str;
-	token->len = ft_strlen(str);
+	while (list->next)
+		list = list->next;
+	if (!list)
+		return (NULL);
+	list->next = new;
+	return (new);
 }

@@ -1,18 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_word_token.c                                    :+:      :+:    :+:   */
+/*   tok_destroy.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/08 15:04:15 by frossiny          #+#    #+#             */
-/*   Updated: 2019/07/29 15:30:03 by frossiny         ###   ########.fr       */
+/*   Created: 2019/10/17 16:31:20 by frossiny          #+#    #+#             */
+/*   Updated: 2019/10/17 16:31:55 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "lexer.h"
 
-int		is_word_token(t_token *token)
+void	tok_destroy(t_token *token)
 {
-	return (token->type == TOKEN_NAME);
+	t_token *next;
+
+	next = NULL;
+	while (token)
+	{
+		next = token->next;
+		free(token->content);
+		free(token);
+		token = next;
+	}
 }

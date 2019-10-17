@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/28 13:16:59 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/14 18:27:18 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/17 16:34:58 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ static void	parse_token(t_token *token, t_expansion *e, t_var *vars)
 	(e->i > e->li)
 		? fill_new(&new, ft_strndup(e->str + e->li, e->i - e->li), 1)
 		: 0;
-	replace_token(token, new);
+	tok_replace(token, new);
 }
 
 int			replace_vars(t_token *token, t_var *vars)
@@ -103,7 +103,7 @@ int			replace_vars(t_token *token, t_var *vars)
 	t_expansion	exp;
 	int			esc;
 
-	while (token && is_word_token(token))
+	while (token && tok_is_word(token))
 	{
 		esc = (token->content[0] == '\\');
 		exp.i = -1;

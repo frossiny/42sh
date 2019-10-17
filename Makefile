@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/10/17 15:20:55 by frossiny         ###   ########.fr        #
+#    Updated: 2019/10/17 16:32:11 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,14 +57,15 @@ FILES 	=	main.c									\
 			termcaps/signal.c						\
 			lexer/lexer.c							\
 			lexer/is_escaped.c						\
-			lexer/is_word_token.c					\
 			lexer/lexer_free.c						\
 			lexer/lexer_search.c					\
-			lexer/create_token.c					\
-			lexer/push_token.c						\
-			lexer/replace_token.c					\
 			lexer/update_state.c					\
 			lexer/parse_error.c						\
+			lexer/tokens/tok_create.c				\
+			lexer/tokens/tok_destroy.c				\
+			lexer/tokens/tok_is_word.c				\
+			lexer/tokens/tok_push.c					\
+			lexer/tokens/tok_replace.c				\
 			lexer/states/general.c					\
 			lexer/states/quotes.c					\
 			lexer/states/comment.c					\
@@ -124,6 +125,7 @@ FILES 	=	main.c									\
 			utils.c									\
 			expansion/variables.c					\
 			expansion/tilde.c
+
 SRCS	=	$(addprefix $(SRCDIR)/, $(FILES))
 OBJS 	=	$(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 OBJSD 	=	$(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.d)

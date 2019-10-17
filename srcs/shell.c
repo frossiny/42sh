@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:05:59 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/16 14:19:18 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/17 16:34:04 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int		handle_input(t_shell *shell, char **input)
 	shell->lexer.size = 0;
 	while ((ret = lex(*input, &(shell->lexer))) < 1)
 	{
-		destroy_lexer(&(shell->lexer));
+		lexer_free(&(shell->lexer));
 		if (ret == -3 || ret == -2)
 		{
 			if ((ret = quote_error(shell, input, ret)))
@@ -120,7 +120,7 @@ static int	eval_exec(char **input)
 		ft_strdel(input);
 		build_ast(&g_shell);
 		g_shell.ast ? ret = parse(&g_shell, g_shell.ast) : 0;
-		destroy_lexer(&(g_shell.lexer));
+		lexer_free(&(g_shell.lexer));
 		destroy_ast(&g_shell);
 	}
 	else

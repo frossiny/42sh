@@ -1,23 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokens_utils.c                                     :+:      :+:    :+:   */
+/*   tok_is_word.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/28 12:27:16 by frossiny          #+#    #+#             */
-/*   Updated: 2019/04/03 15:04:50 by frossiny         ###   ########.fr       */
+/*   Created: 2019/04/08 15:04:15 by frossiny          #+#    #+#             */
+/*   Updated: 2019/07/29 15:30:03 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-t_token		*push_token(t_token *list, t_token *new)
+int		tok_is_word(t_token *token)
 {
-	while (list->next)
-		list = list->next;
-	if (!list)
-		return (NULL);
-	list->next = new;
-	return (new);
+	return (token->type == TOKEN_NAME);
 }

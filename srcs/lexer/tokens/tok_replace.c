@@ -1,21 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_free.c                                       :+:      :+:    :+:   */
+/*   tok_replace.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/03 12:12:12 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/17 16:32:22 by frossiny         ###   ########.fr       */
+/*   Created: 2019/07/29 17:30:43 by frossiny          #+#    #+#             */
+/*   Updated: 2019/07/29 17:31:34 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "lexer.h"
 
-void	lexer_free(t_lexer *lexer)
+void	tok_replace(t_token *token, char *str)
 {
-	tok_destroy(lexer->tokens);
-	lexer->tokens = NULL;
-	lexer->size = 0;
-	update_state(lexer, ST_GENERAL);
+	free(token->content);
+	if (!str)
+		str = ft_strdup("");
+	token->content = str;
+	token->len = ft_strlen(str);
 }

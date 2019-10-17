@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_token.c                                     :+:      :+:    :+:   */
+/*   tok_create.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -13,7 +13,7 @@
 #include "libft.h"
 #include "lexer.h"
 
-t_token	*create_token(t_lexer *lexer, char *content,
+t_token	*tok_create(t_lexer *lexer, char *content,
 												size_t len, t_token_type type)
 {
 	t_token *token;
@@ -26,7 +26,7 @@ t_token	*create_token(t_lexer *lexer, char *content,
 	token->type = type;
 	token->next = NULL;
 	if (lexer->tokens)
-		push_token(lexer->tokens, token);
+		tok_push(lexer->tokens, token);
 	else
 		lexer->tokens = token;
 	(lexer->size)++;
