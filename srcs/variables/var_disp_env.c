@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 13:44:46 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/16 13:47:38 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/17 13:45:07 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,12 @@ int		var_disp_env(t_var *vars)
 	while (vars)
 	{
 		if (vars->export)
-			ft_printf("%s=%s\n", vars->key, vars->value);
+		{
+			if (vars->value)
+				ft_printf("export %s=\"%s\"\n", vars->key, vars->value);
+			else
+				ft_printf("export %s\n", vars->key);
+		}
 		vars = vars->next;
 	}
 	return (0);
