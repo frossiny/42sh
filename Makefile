@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/10/17 14:47:05 by frossiny         ###   ########.fr        #
+#    Updated: 2019/10/17 15:20:55 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -94,9 +94,8 @@ FILES 	=	main.c									\
 			ast/create_cmd.c						\
 			builtins/builtins.c						\
 			builtins/builtins_errors.c				\
-			builtins/env.c							\
-			builtins/setenv.c						\
-			builtins/unsetenv.c						\
+			builtins/set.c							\
+			builtins/unset.c						\
 			builtins/exit.c							\
 			builtins/cd.c							\
 			builtins/echo.c							\

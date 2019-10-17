@@ -1,44 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   var_display.c                                      :+:      :+:    :+:   */
+/*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/16 13:29:22 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/17 15:18:39 by frossiny         ###   ########.fr       */
+/*   Created: 2019/02/27 15:29:33 by frossiny          #+#    #+#             */
+/*   Updated: 2019/10/17 15:20:32 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "variables.h"
+#include "shell.h"
 
-static int	need_quoting(char *val)
+int			b_unset(t_cmd *cmd, t_shell *shell)
 {
-	const char	*cl = " ?|&;<>$`\\\"'\t\n";
-	int			i;
+	int		i;
 
-	i = 0;
-	while (val[i])
+	if (cmd->argc < 2)
 	{
-		if (ft_strchr(cl, val[i]))
-			return (1);
-		i++;
+		write(2, "unset: Too few arguments.\n", 26);
+		return (1);
 	}
-	return(0);
-}
-
-int		var_display(t_var *vars)
-{
-	if (!vars)
-		return (0);
-	while (vars)
+	i = 1;
+	while (i < cmd->argc)
 	{
-		if (need_quoting(vars->value))
-			ft_printf("%s='%s'\n", vars->key, vars->value);
-		else
-			ft_printf("%s=%s\n", vars->key, vars->value);
-		vars = vars->next;
+		if (!cmd->args[i])
+			break ;
+		var_delete(&(shell->vars), cmd->args[i++]);
 	}
 	return (0);
 }

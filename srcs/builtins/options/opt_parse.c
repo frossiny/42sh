@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 14:31:38 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/17 14:44:07 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/17 15:24:19 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,7 @@ static int			parse_one(t_options *opts, t_cmd *cmd, int i, char *optstr)
 				opts->ret = -2;
 				return (-2);
 			}
-			if (!opt_get(opts, cmd->args[i] + 1))
-				opt_add(opts, cmd->args[i] + 1, cmd->args[i + 1]);
+			opt_add(opts, cmd->args[i] + 1, cmd->args[i + 1]);
 			i++;
 			opts->last++;
 		}

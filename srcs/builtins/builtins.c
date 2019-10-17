@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 14:03:28 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/16 13:43:55 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/17 15:21:34 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,8 @@ const t_builtin g_builtins[] =
 {
 	{ "echo", &b_echo },
 	{ "cd", &b_cd },
-	{ "setenv", &b_setenv },
-	{ "unsetenv", &b_unsetenv },
-	{ "env", &b_env },
+	{ "set", &b_set },
+	{ "unset", &b_unset },
 	{ "exit", &b_exit },
 	{ "export", &b_export },
 	{ NULL, NULL }
