@@ -6,7 +6,7 @@ i = 0
 def execute_test(command, fi):
 	global i
 	print("----- ", fi, ": ", end='')
-	proc = subprocess.Popen("./42sh", stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
+	proc = subprocess.Popen("../42sh", stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
 	proc.stdin.write(command)
 	proc_stdout = proc.communicate()
 	proc_value = proc.returncode

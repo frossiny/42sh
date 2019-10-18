@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 17:24:02 by frossiny          #+#    #+#             */
-/*   Updated: 2019/08/12 15:20:19 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/18 18:48:38 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,15 @@ typedef struct	s_expansion
 	char	*str;
 }				t_expansion;
 
+typedef struct	s_globing_list
+{
+	char			*content;
+	struct s_globing_list	*next;
+}				t_globing_list;
+
+typedef struct	s_globing
+{
+	int			root;
+	t_globing_list		*list;
+}				t_globing;
 #endif
