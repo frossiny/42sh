@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 14:23:53 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/16 16:08:50 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/23 14:28:22 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ typedef struct	s_token
 {
 	char			*content;
 	size_t			len;
+	int			is_glob_sub;
 	t_token_type	type;
 	struct s_token	*next;
 }				t_token;

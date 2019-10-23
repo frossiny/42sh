@@ -6,7 +6,7 @@
 /*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 18:49:27 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/10/18 18:49:28 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/10/23 14:37:51 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,22 @@ void			display_list(t_globing_list *list)
 	}
 }
 
+int			is_glob_char(char c)
+{
+	return (c == '*' || c == '[' || c == '?');
+}
+
+int			is_glob_str(char *str)
+{
+	int i;
+
+	i = -1;
+	while (str[++i])
+		if (is_glob_char(str[i]))	
+			return (1);
+	return (0);	
+}
+
 char			*pull_multi_occ(char *str, char occ)
 {
 	int	i;
@@ -62,6 +78,12 @@ char			*pull_multi_occ(char *str, char occ)
 	return (curr);
 }
 
+void			free_token(t_token *token)
+{
+	free(token->content);
+	free(token);
+}
+
 void			free_globing(t_globing_list *list)
 {
 	t_globing_list	*tmp;
@@ -70,6 +92,7 @@ void			free_globing(t_globing_list *list)
 		return ;
 	while (list)
 	{
+		free(list->path);
 		free(list->content);
 		tmp = list;
 		list = list->next;
@@ -99,24 +122,214 @@ t_globing_list		*create_globing(char *str)
 			return (NULL);
 		list = list->next;
 		list->content = ft_strdup(tab[i]);
+		list->path = NULL;
 		list->next = NULL;
 	}
 	ft_strddel(&tab);
 	return (begin);
 }
 
+int			check_last_occ(char *cmp, char *file)
+{
+	int	x;
+	int	y;
+
+	x = 0;
+	while (cmp[x])
+		x++;
+	y = 0;
+	while (file[y])
+		y++;
+	while (x > -1 && y > -1 && cmp[x] != '*' && cmp[x] == file[y])
+	{
+		x--;
+		y--;
+	}
+	if (x >= 0 && cmp[x] == '*')
+		return (1);
+	return (0);
+}
+
+int			find_occ(char *cmp, char *file, int *x, int *y)
+{
+	int	x2;
+	int	diff;
+	char	*occ;
+
+	x2 = *x;
+	while (cmp[x2] && !is_glob_char(cmp[x2]))
+		x2++;
+	occ = ft_strndup(cmp + *x, x2 - *x);
+	cmp = ft_strstr(file + *y, occ);
+	free(occ);
+	if (!cmp)
+		return (0);
+	*x = x2;
+	*y += cmp - file + 1;
+	return (1);
+}
+
+int			wildcard_star(char *cmp, char *file, int *x, int *y)
+{
+	(*x)++;
+	if (!cmp[*x])
+		return (1);
+	if (!find_occ(cmp, file, x, y))
+		return (0);
+	if (!cmp[*x] && check_last_occ(cmp, file))
+		return (1);
+	else if (!cmp[*x])
+		return (0);
+	return (2);
+}
+
+int			wildcard_question(char *cmp, char *file, int *x, int *y)
+{
+	(*x)++;
+	(*y)++;
+	while (cmp[*x] && file[*y] && !is_glob_char(cmp[*x]))
+	{
+		if (cmp[*x] != file[*y])
+			return (0);
+		(*x)++;
+		(*y)++;
+	}
+	return (2);
+}
+int			complete_str(char *cmp, char *file)
+{
+	int	x;
+	int	y;
+	int	ret;
+
+	if (!file || file[0] == '.')
+		return (0);
+	x = -1;
+	y = -1;
+	while (cmp[++x] && file[++y] && !is_glob_char(cmp[x]))
+		if (cmp[x] != file[y])
+			return (0);
+	while (cmp[x] && file[y] && is_glob_char(cmp[x]))
+	{
+		//ft_printf("cmp = %s, file = %s, x = %c, y = %c\n", cmp, file, cmp[x], file[y]);
+		if (cmp[x] == '*' && (ret = wildcard_star(cmp, file, &x, &y)) < 2)
+			return (ret);
+		else if (cmp[x] == '?' && (ret = wildcard_question(cmp, file, &x, &y)) < 2)
+			return (ret);
+	}
+	if (cmp[x] && !file[y])
+		return (0);
+	return (1);
+}
+
+void			add_token(t_globing *glob, char *content)
+{
+	t_token *new;
+
+	if (!(new = (t_token *)malloc(sizeof(t_token))))
+		return ;
+	if (!glob->root)
+		new->content = ft_strdup(content + 2);
+	else
+		new->content = ft_strdup(content);
+	new->next = glob->token->next;
+	new->len = ft_strlen(new->content);
+	new->type = TOKEN_NAME;
+	glob->token->next = new;
+	glob->token = new;
+	free(content);
+	glob->nb_file++;
+}
+
+int			file_globing(t_globing *glob, t_globing_list *list, DIR *dirp)
+{
+	struct dirent	*dirc;
+	int		find;
+	int		x;
+	
+	find = 0;
+	x = 0;
+	if (is_glob_str(list->content))
+	{
+		while ((dirc = readdir(dirp)) != NULL)
+			if (complete_str(list->content, dirc->d_name))
+			{
+				find++;
+				if (list->next)
+					dir_globing(glob, list->next, ft_strpathfile(list->path, dirc->d_name));
+				else
+					add_token(glob, ft_strpathfile(list->path, dirc->d_name));
+			}
+		if (!find)
+			return (0);
+	}
+	else
+		dir_globing(glob, list->next, ft_strpathfile(list->path, list->content));
+	return (1);
+}
+
+int			dir_globing(t_globing *glob, t_globing_list *list, char *path)
+{
+	DIR		*dirp;		
+
+	if (list == NULL)
+		return (1);
+	list->path = path;
+	if ((dirp = opendir(path)) == NULL)
+		return (0);
+	else
+		if (file_globing(glob, list, dirp) == 0)
+			return (0);
+	return (1);
+}
+
+void			remove_token(t_token *curr)
+{
+	t_token *prev;
+
+	prev = NULL;
+	while (curr)
+	{
+		if (is_glob_str(curr->content) && curr->is_glob_sub)
+		{
+			prev->next = curr->next;
+			free_token(curr);
+			curr = prev->next;
+		}
+		else
+		{
+			prev = curr;
+			curr = curr->next;
+		}
+	}
+}
+
 int			replace_globing(t_token *token, t_var *vars)
 {
+	t_token		*begin;
+	t_token		*token_next;
 	char		*tmp;
 	t_globing	glob;
+	int		ret;
 
-	while (token && is_word_token(token))
+	begin = token;
+	while (token)
 	{
-		glob.root = (token->content[0] == '/');
-		glob.list = create_globing(pull_multi_occ(token->content, '*'));	
-		display_list(glob.list);
-		token = token->next;
-		free_globing(glob.list);
+		ret = 0;
+		token_next = token->next;
+		if (is_word_token(token) && ft_strchr(token->content, '*'))
+		{
+			glob.nb_file = 0;
+			glob.token = token;
+			glob.root = (token->content[0] == '/');
+			glob.list = create_globing(pull_multi_occ(token->content, '*'));	
+			//display_list(glob.list);
+			ret = dir_globing(&glob, glob.list, glob.root ? ft_strdup("/") : ft_strdup("./"));
+			token->is_glob_sub = glob.nb_file;
+			free_globing(glob.list);
+		}
+		token = token_next;
 	}
-	return (1);
+	remove_token(begin);
+	return (ret);
 }
