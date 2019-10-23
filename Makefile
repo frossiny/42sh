@@ -6,11 +6,11 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/10/17 16:32:11 by frossiny         ###   ########.fr        #
+#    Updated: 2019/10/23 20:15:15 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC		=	gcc -g3 #-fsanitize=address
+CC		=	gcc -g3 -fsanitize=address
 #CFLAGS	+=	-Wall -Werror -Wextra
 
 SHELL	=	bash
@@ -23,6 +23,64 @@ OBJDIR	=	objs
 FILES 	=	main.c									\
 			shell.c									\
 			prompt.c								\
+			signals.c								\
+			errors.c								\
+			utils.c									\
+			ast/build_ast.c							\
+			ast/create_node.c						\
+			ast/build_args.c						\
+			ast/redirections.c						\
+			ast/destroy_ast.c						\
+			ast/create_cmd.c						\
+			builtins/builtins.c						\
+			builtins/builtins_errors.c				\
+			builtins/set.c							\
+			builtins/unset.c						\
+			builtins/exit.c							\
+			builtins/cd.c							\
+			builtins/echo.c							\
+			builtins/export.c						\
+			builtins/options/opt_parse.c			\
+			builtins/options/opt_add.c				\
+			builtins/options/opt_get.c				\
+			builtins/options/opt_free.c			 	\
+			expansion/variables.c					\
+			expansion/tilde.c						\
+			hashtable/ht_create.c					\
+			hashtable/ht_hash.c						\
+			hashtable/ht_delone.c					\
+			hashtable/ht_delete.c					\
+			hashtable/ht_put.c						\
+			hashtable/ht_get.c						\
+			hashtable/ht_exists.c					\
+			lexer/lexer.c							\
+			lexer/lex_free.c						\
+			lexer/lex_search.c						\
+			lexer/lex_update_state.c				\
+			lexer/tokens/tok_create.c				\
+			lexer/tokens/tok_destroy.c				\
+			lexer/tokens/tok_is_word.c				\
+			lexer/tokens/tok_is_redirection.c		\
+			lexer/tokens/tok_push.c					\
+			lexer/tokens/tok_replace.c				\
+			lexer/states/general.c					\
+			lexer/states/quotes.c					\
+			lexer/states/comment.c					\
+			lexer/states/escaped.c					\
+			lexer/states/operators.c				\
+			parser/parser.c							\
+			parser/par_next.c						\
+			parser/types/name.c						\
+			parser/types/redirections.c				\
+			reader/reader.c							\
+			reader/pipe.c							\
+			reader/pipeline.c						\
+			reader/redirections.c					\
+			reader/executables.c					\
+			reader/here_doc.c						\
+			reader/get_pipes_docs.c					\
+			reader/exec_utils.c						\
+			reader/child_add.c						\
 			termcaps/read_input.c					\
 			termcaps/read_utils.c					\
 			termcaps/termcaps.c						\
@@ -55,56 +113,7 @@ FILES 	=	main.c									\
 			termcaps/history.c						\
 			termcaps/history_utils.c				\
 			termcaps/signal.c						\
-			lexer/lexer.c							\
-			lexer/is_escaped.c						\
-			lexer/lexer_free.c						\
-			lexer/lexer_search.c					\
-			lexer/update_state.c					\
-			lexer/parse_error.c						\
-			lexer/tokens/tok_create.c				\
-			lexer/tokens/tok_destroy.c				\
-			lexer/tokens/tok_is_word.c				\
-			lexer/tokens/tok_push.c					\
-			lexer/tokens/tok_replace.c				\
-			lexer/states/general.c					\
-			lexer/states/quotes.c					\
-			lexer/states/comment.c					\
-			lexer/states/escaped.c					\
-			lexer/states/operators.c				\
-			parser/parser.c							\
-			parser/pipe.c							\
-			parser/pipeline.c						\
-			parser/redirections.c					\
-			parser/executables.c					\
-			parser/here_doc.c						\
-			parser/get_pipes_docs.c					\
-			parser/exec_utils.c						\
-			parser/child_add.c						\
-			hashtable/ht_create.c					\
-			hashtable/ht_hash.c						\
-			hashtable/ht_delone.c					\
-			hashtable/ht_delete.c					\
-			hashtable/ht_put.c						\
-			hashtable/ht_get.c						\
-			hashtable/ht_exists.c					\
-			ast/build_ast.c							\
-			ast/create_node.c						\
-			ast/build_args.c						\
-			ast/redirections.c						\
-			ast/destroy_ast.c						\
-			ast/create_cmd.c						\
-			builtins/builtins.c						\
-			builtins/builtins_errors.c				\
-			builtins/set.c							\
-			builtins/unset.c						\
-			builtins/exit.c							\
-			builtins/cd.c							\
-			builtins/echo.c							\
-			builtins/export.c						\
-			builtins/options/opt_parse.c			\
-			builtins/options/opt_add.c				\
-			builtins/options/opt_get.c				\
-			builtins/options/opt_free.c			 	\
+			utils/is_escaped.c						\
 			utils/dup_argv.c						\
 			utils/display_signal.c					\
 			utils/get_var_size.c					\
@@ -120,11 +129,7 @@ FILES 	=	main.c									\
 			variables/var_set.c						\
 			variables/var_display.c					\
 			variables/var_disp_env.c				\
-			signals.c								\
-			errors.c								\
-			utils.c									\
-			expansion/variables.c					\
-			expansion/tilde.c
+			variables/var_is_key_valid.c
 
 SRCS	=	$(addprefix $(SRCDIR)/, $(FILES))
 OBJS 	=	$(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)

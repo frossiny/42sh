@@ -6,13 +6,13 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 15:17:59 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/17 16:34:03 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/23 15:35:34 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 #include "lexer.h"
-#include "parser.h"
+#include "reader.h"
 
 static int	parse_tree(t_token *tokens, t_anode **ast)
 {

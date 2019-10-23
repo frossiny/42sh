@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 11:59:10 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/16 13:59:00 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/23 15:42:11 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include "structs.h"
 # include "termcaps.h"
 # include "variables.h"
+# include "utils.h"
 
 # define MAX_HISTORY	30
 # define HT_SIZE		150
@@ -35,7 +36,7 @@ void				prompt(void);
 int					prompt_len(void);
 int					check_quotes(char *str, char c);
 
-int					parse(t_shell *shell, t_anode *ast);
+int					reader(t_shell *shell, t_anode *ast);
 int					execute_pipes(t_anode *node, t_shell *shell, t_anode **cn);
 t_pipel				*build_pipeline(t_anode *node, t_shell *shell,
 															t_anode **cn);

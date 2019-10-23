@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 11:23:45 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/23 14:54:17 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/23 17:28:20 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ const static t_state_func	g_state_funcs[] =
 	{ ST_ESCAPED, &lex_state_escaped },
 	{ ST_COMMENT, &lex_state_comment },
 	{ ST_OPERATOR, &lex_state_operator },
-	{ ST_SEMIC, &lex_state_semic },
 	{ -1, NULL }
 };
 
@@ -51,16 +50,20 @@ static int			lex_end(t_lexer *lexer)
 	}
 	else
 	{
-		if (lexer->state == ST_DQUOTES)
+		if (lexer->state == ST_ESCAPED)
+			return (-4);
+		else if (lexer->state == ST_DQUOTES)
 			return (-3);
 		else if (lexer->state == ST_QUOTES)
 			return (-2);
-		else if (lexer->state == ST_SEMIC)
-			return (1);
-		else if (lexer->state == ST_COMMENT)
-			return (1);
-		else
-			return (parse_error(lexer->pin, -1));
+	}
+
+	t_token *cur;
+	cur = lexer->tokens;
+	while (cur)
+	{
+		ft_printf("%s - %d\n", cur->content, cur->type);
+		cur = cur->next;
 	}
 	return (1);
 }
@@ -79,20 +82,15 @@ static int			lex_loop(t_lexer *lexer)
 				return (ret);
 		}
 		else
-			return (parse_error("", 0));
+			return (-1);
 	}
 	return (lex_end(lexer));
 }
 
 int					lex(char *s, t_lexer *lexer)
 {
-	size_t	last_char;
-
 	if (!s)
 		return (1);
-	last_char = ft_strlen(s) - 1;
-	if (*s && s[last_char] == '\\' && !is_escaped(s, last_char, 0))
-		return (-4);
 	lexer->in = s;
 	lexer->pin = s;
 	return (lex_loop(lexer));

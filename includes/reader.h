@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   reader.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/23 15:39:39 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/23 18:12:04 by frossiny         ###   ########.fr       */
+/*   Created: 2019/04/10 20:33:56 by frossiny          #+#    #+#             */
+/*   Updated: 2019/10/23 15:35:15 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H
-# define PARSER_H
+#ifndef READER_H
+# define READER_H
 
 # include "structs.h"
 
-int		parse(t_token *tokens);
-void	par_next(t_parser *parser, int i);
-
-int		par_type_name(t_parser *par);
-int		par_type_redir(t_parser *par);
-int		par_type_io_fd(t_parser *par);
+t_anode				*create_node(t_token *ope, t_cmd *cmd);
+t_token				*create_ope_node(t_anode **tree, t_token *tokens);
+t_token				*create_cmd_node(t_anode **tree, t_token *tokens);
+t_cmd				*create_cmd(t_token *exe);
 
 #endif

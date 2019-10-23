@@ -6,38 +6,28 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 14:23:10 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/23 14:52:54 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/23 19:03:43 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "utils.h"
 
-int		lex_state_operator(t_lexer *lexer)
+int		lex_state_operator(t_lexer *lex)
 {
 	t_ex_token	cur;
 
-	cur = lexer_search(lexer->in);
-	if (cur.op && cur.type != TOKEN_IGN)
-		return (parse_error(cur.op, 0));
-	else if (cur.op)
+	cur = lexer_search(lex->in);
+	if (cur.op)
 	{
-		lexer->in += cur.len;
-		lexer->pin += cur.len;
+		if (lex->in > lex->pin)
+			tok_create(lex, lex->pin, lex->in - lex->pin, TOKEN_NAME);
+		if (cur.type != TOKEN_IGN)
+			tok_create(lex, lex->in, cur.len, cur.type);
+		lex->in += cur.len;
+		lex->pin = lex->in;
 	}
 	else
-		update_state(lexer, ST_GENERAL);
-	return (1);
-}
-
-int		lex_state_semic(t_lexer *lexer)
-{
-	t_ex_token	cur;
-
-	cur = lexer_search(lexer->in);
-	if (cur.op && cur.type != TOKEN_IGN)
-		return (parse_error(cur.op, 0));
-	else
-		update_state(lexer, ST_GENERAL);
+		lex_update_state(lex, ST_GENERAL);
 	return (1);
 }

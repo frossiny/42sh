@@ -1,25 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   lexer_free.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/23 15:39:39 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/23 18:12:04 by frossiny         ###   ########.fr       */
+/*   Created: 2019/04/03 12:12:12 by frossiny          #+#    #+#             */
+/*   Updated: 2019/10/23 15:26:20 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H
-# define PARSER_H
+#include "lexer.h"
 
-# include "structs.h"
-
-int		parse(t_token *tokens);
-void	par_next(t_parser *parser, int i);
-
-int		par_type_name(t_parser *par);
-int		par_type_redir(t_parser *par);
-int		par_type_io_fd(t_parser *par);
-
-#endif
+void	lexer_free(t_lexer *lexer)
+{
+	tok_destroy(lexer->tokens);
+	lexer->tokens = NULL;
+	lexer->size = 0;
+	lex_update_state(lexer, ST_GENERAL);
+}

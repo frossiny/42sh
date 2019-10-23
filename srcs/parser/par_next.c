@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   par_next.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/23 15:39:39 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/23 18:12:04 by frossiny         ###   ########.fr       */
+/*   Created: 2019/10/23 17:47:11 by frossiny          #+#    #+#             */
+/*   Updated: 2019/10/23 18:05:26 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H
-# define PARSER_H
+#include "parser.h"
 
-# include "structs.h"
-
-int		parse(t_token *tokens);
-void	par_next(t_parser *parser, int i);
-
-int		par_type_name(t_parser *par);
-int		par_type_redir(t_parser *par);
-int		par_type_io_fd(t_parser *par);
-
-#endif
+void	par_next(t_parser *parser, int i)
+{
+	if (!parser)
+		return ;
+	while (parser->tokens && i)
+	{
+		parser->tokens = parser->tokens->next;
+		parser->i++;
+		i--;
+	}
+}

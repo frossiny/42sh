@@ -1,20 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_error.c                                      :+:      :+:    :+:   */
+/*   var_is_key_valid.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/12 13:29:31 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/23 14:54:44 by frossiny         ###   ########.fr       */
+/*   Created: 2019/10/23 20:13:46 by frossiny          #+#    #+#             */
+/*   Updated: 2019/10/23 20:14:31 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "shell.h"
 
-int		parse_error(const char *str, int ret)
+int		var_is_key_valid(char *str, size_t len)
 {
-	ft_dprintf(2, "42sh: parse error near '%s'\n", str);
-	return (ret);
+	if (len == 0)
+		len = ft_strlen(str);
+	while (*str && len--)
+	{
+		if (!ft_isalnum(*str) && *str != '_')
+			return (0);
+		str++;
+	}
+	return (1);
 }

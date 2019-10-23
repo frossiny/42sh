@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:05:59 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/23 14:51:57 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/23 20:51:04 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "libft.h"
 #include "shell.h"
 #include "lexer.h"
+#include "parser.h"
 #include "ast.h"
 #include "hashtable.h"
 
@@ -90,16 +91,20 @@ int		handle_input(t_shell *shell, char **input)
 		else
 			return (ret);
 	}
-
-/*
-	t_token *tokens = g_shell.lexer.tokens;
-	ft_printf("Tokens:\n");
-	while (tokens)
+	if (!parse(shell->lexer.tokens))
 	{
-		ft_printf("%s\n", tokens->content);
-		tokens = tokens->next;
-	}*/
+		lexer_free(&(shell->lexer));
+		return (1);
+	}
 	
+	ft_printf("\nPARSER:\n");
+	t_token *cur;
+	cur = shell->lexer.tokens;
+	while (cur)
+	{
+		ft_printf("%s - %d\n", cur->content, cur->type);
+		cur = cur->next;
+	}
 	return (0);
 }
 
@@ -118,7 +123,7 @@ static int	eval_exec(char **input)
 			return (1);
 		ft_strdel(input);
 		build_ast(&g_shell);
-		g_shell.ast ? ret = parse(&g_shell, g_shell.ast) : 0;
+		//g_shell.ast ? ret = reader(&g_shell, g_shell.ast) : 0;
 		lexer_free(&(g_shell.lexer));
 		destroy_ast(&g_shell);
 	}

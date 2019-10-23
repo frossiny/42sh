@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 14:30:34 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/17 15:14:38 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/23 15:46:17 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,6 @@
 
 int			b_set(t_cmd *cmd, t_shell *shell)
 {
+	(void)cmd;
 	return (var_display(shell->vars));
 }

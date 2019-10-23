@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/15 14:34:54 by frossiny          #+#    #+#             */
-/*   Updated: 2019/05/15 15:28:01 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/23 19:03:16 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ static const t_ex_token g_tokens_list[] =
 	{"|", 1, TOKEN_PIPE, ST_OPERATOR},
 	{"<", 1, TOKEN_REDIRI, ST_OPERATOR},
 	{">", 1, TOKEN_REDIRO, ST_OPERATOR},
-	{";", 1, TOKEN_SEMI, ST_SEMIC},
-	{" ", 1, TOKEN_IGN, ST_GENERAL},
-	{"\n", 1, TOKEN_IGN, ST_GENERAL},
-	{"\v", 1, TOKEN_IGN, ST_GENERAL},
-	{"\t", 1, TOKEN_IGN, ST_GENERAL},
-	{"\r", 1, TOKEN_IGN, ST_GENERAL},
-	{"\f", 1, TOKEN_IGN, ST_GENERAL},
-	{NULL, 1, TOKEN_NULL, ST_GENERAL}
+	{";", 1, TOKEN_SEMI, ST_OPERATOR},
+	{" ", 1, TOKEN_IGN, ST_OPERATOR},
+	{"\n", 1, TOKEN_IGN, ST_OPERATOR},
+	{"\v", 1, TOKEN_IGN, ST_OPERATOR},
+	{"\t", 1, TOKEN_IGN, ST_OPERATOR},
+	{"\r", 1, TOKEN_IGN, ST_OPERATOR},
+	{"\f", 1, TOKEN_IGN, ST_OPERATOR},
+	{NULL, 1, TOKEN_NULL, ST_OPERATOR}
 };
 
 #endif

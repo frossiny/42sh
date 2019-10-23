@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 15:11:08 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/14 15:11:18 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/23 17:39:46 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,7 @@
 #include "shell.h"
 #include "ast.h"
 #include "utils.h"
-
-static int			is_redirection(t_token *token)
-{
-	return (token->type == TOKEN_REDIRI
-			|| token->type == TOKEN_REDIRO
-			|| token->type == TOKEN_AGGR);
-}
+#include "lexer.h" 
 
 static int			is_append(t_token *token)
 {
@@ -67,10 +61,10 @@ t_redirect			*parse_redirections(t_token *tok, int offset)
 		return (NULL);
 	while (tok && offset--)
 		tok = tok->next;
-	if (!tok || !tok->next || !is_redirection(tok))
+	if (!tok || !tok->next || !tok_is_redirection(tok))
 		return (NULL);
 	red = NULL;
-	while (tok && is_redirection(tok))
+	while (tok && tok_is_redirection(tok))
 	{
 		if (!red)
 			red = create_redirection(tok);

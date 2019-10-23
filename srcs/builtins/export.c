@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 13:28:29 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/17 14:51:22 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/23 15:46:48 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ static int	parse_vars(t_cmd *cmd, t_options *opts, t_shell *shell)
 {
 	int		i;
 	char	*chr;
-	char	**tmp;
 
 	i = opts->last - 1;
 	while (cmd->args[++i])
@@ -70,7 +69,6 @@ static int	parse_vars(t_cmd *cmd, t_options *opts, t_shell *shell)
 int			b_export(t_cmd *cmd, t_shell *shell)
 {
 	t_options	*options;
-	t_opt		*opt;
 
 	options = opt_parse(cmd, "p", "export");
 	if (options->ret != 0)
