@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 11:23:45 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/17 16:34:22 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/23 14:54:17 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static int			lex_end(t_lexer *lexer)
 		else if (lexer->state == ST_COMMENT)
 			return (1);
 		else
-			return (parse_error(lexer->pin, lexer->in - lexer->pin + 1, -1));
+			return (parse_error(lexer->pin, -1));
 	}
 	return (1);
 }
@@ -79,7 +79,7 @@ static int			lex_loop(t_lexer *lexer)
 				return (ret);
 		}
 		else
-			return (parse_error("", 0, 0));
+			return (parse_error("", 0));
 	}
 	return (lex_end(lexer));
 }

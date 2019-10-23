@@ -6,17 +6,15 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 13:29:31 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/16 14:18:46 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/23 14:54:44 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
 
-int		parse_error(const char *str, size_t len, int ret)
+int		parse_error(const char *str, int ret)
 {
-	write(2, "42sh: parse error near '", 24);
-	write(2, str, len);
-	ft_putstr_fd("'\n", 2);
+	ft_dprintf(2, "42sh: parse error near '%s'\n", str);
 	return (ret);
 }

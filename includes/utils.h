@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 14:30:04 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/14 14:30:39 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/23 14:53:08 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int					permission_denied(char *name);
 void				no_user(char *name);
 int					cd_exists(char *file, char *name);
 void				env_invalid_arg(int *argc, char ***argv);
-int					parse_error(const char *str, size_t len, int ret);
+int					parse_error(const char *str, int ret);
 int					is_directory_err(char *name);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:05:59 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/17 16:34:04 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/23 14:51:57 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,7 @@ int		quote_error(t_shell *shell, char **input, int ret)
 	{
 		if (g_ignore_signals)
 		{
-			write(2,
-			"42sh: unexpected EOF while looking for quote\n", 45);
+			ft_dprintf(2, "42sh: unexpected EOF while looking for quote\n");
 			g_ignore_signals = 0;
 			return (2);
 		}
