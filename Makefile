@@ -6,11 +6,11 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/10/23 20:15:15 by frossiny         ###   ########.fr        #
+#    Updated: 2019/10/24 13:02:48 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC		=	gcc -g3 -fsanitize=address
+CC		=	gcc #-g3 #-fsanitize=address
 #CFLAGS	+=	-Wall -Werror -Wextra
 
 SHELL	=	bash
@@ -72,6 +72,8 @@ FILES 	=	main.c									\
 			parser/par_next.c						\
 			parser/types/name.c						\
 			parser/types/redirections.c				\
+			parser/types/operators.c				\
+			parser/types/semic.c					\
 			reader/reader.c							\
 			reader/pipe.c							\
 			reader/pipeline.c						\

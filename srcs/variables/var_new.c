@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 17:43:55 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/16 13:59:20 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/24 12:55:57 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,14 @@ t_var	*var_new(char *key, char *value, int export)
 		return (NULL);
 	if (!(nvar = (t_var *)malloc(sizeof(t_var))))
 		return (NULL);
-	if (!(nvar->key = ft_strdup(key)) || !(nvar->value = ft_strdup(value)))
+	if (!(nvar->key = ft_strdup(key)))
 	{
+		free(nvar);
+		return (NULL);
+	}
+	if (!(nvar->value = ft_strdup(value)))
+	{
+		free(nvar->key);
 		free(nvar);
 		return (NULL);
 	}

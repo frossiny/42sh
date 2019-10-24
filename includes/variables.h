@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 17:39:34 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/23 20:14:46 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/24 12:56:53 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,5 @@ void	var_destroy(t_var **vars);
 int		var_display(t_var *vars);
 int		var_disp_env(t_var *vars);
 int		var_is_key_valid(char *str, size_t len);
-
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 15:11:08 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/23 17:39:46 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/24 12:54:11 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "shell.h"
 #include "ast.h"
 #include "utils.h"
-#include "lexer.h" 
+#include "lexer.h"
 
 static int			is_append(t_token *token)
 {

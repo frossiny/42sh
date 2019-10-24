@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 13:29:22 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/17 15:18:39 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/24 12:56:39 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ static int	need_quoting(char *val)
 			return (1);
 		i++;
 	}
-	return(0);
+	return (0);
 }
 
-int		var_display(t_var *vars)
+int			var_display(t_var *vars)
 {
 	if (!vars)
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 16:08:55 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/23 20:06:51 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/24 12:58:29 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ static int	is_aggr_valid(t_parser *par)
 		return (1);
 	if (!par->tokens->next)
 		return (0);
-	if (!ft_strisdigit(par->tokens->next->content) && !ft_strequ(par->tokens->next->content, "-"))
+	if (!ft_strisdigit(par->tokens->next->content) \
+			&& !ft_strequ(par->tokens->next->content, "-"))
 	{
 		par_next(par, 1);
 		return (0);
@@ -28,7 +29,7 @@ static int	is_aggr_valid(t_parser *par)
 	return (1);
 }
 
-int		par_type_redir(t_parser *par)
+int			par_type_redir(t_parser *par)
 {
 	if (!tok_is_word(par->tokens->next))
 	{
@@ -41,7 +42,7 @@ int		par_type_redir(t_parser *par)
 	return (1);
 }
 
-int		par_type_io_fd(t_parser *par)
+int			par_type_io_fd(t_parser *par)
 {
 	if (par->tokens->next == NULL)
 	{

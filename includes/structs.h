@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 14:23:53 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/23 17:59:01 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/24 12:57:54 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct		s_state_func
 {
 	t_state		key;
 	int			(*lex)();
-}				t_state_func;
+}					t_state_func;
 
 typedef enum		e_token_type
 {

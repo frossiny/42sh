@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 18:31:50 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/14 18:34:41 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/24 12:53:48 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	count_env(t_var *vars)
 	return (c);
 }
 
-char	**var_build_env(t_var *vars)
+char		**var_build_env(t_var *vars)
 {
 	char	**envp;
 	size_t	i;
