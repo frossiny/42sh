@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 11:23:45 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/23 17:28:20 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/24 13:11:43 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,14 @@ static int			lex_end(t_lexer *lexer)
 			return (-2);
 	}
 
+/*
 	t_token *cur;
 	cur = lexer->tokens;
 	while (cur)
 	{
 		ft_printf("%s - %d\n", cur->content, cur->type);
 		cur = cur->next;
-	}
+	}*/
 	return (1);
 }
 
