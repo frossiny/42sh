@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 11:59:10 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/23 15:42:11 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/24 15:18:40 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int					reader(t_shell *shell, t_anode *ast);
 int					execute_pipes(t_anode *node, t_shell *shell, t_anode **cn);
 t_pipel				*build_pipeline(t_anode *node, t_shell *shell,
 															t_anode **cn);
-t_redirect			*parse_redirections(t_token *tok, int offset);
+t_redirect			*parse_redirections(t_token *tok);
 void				del_pipeline(t_pipel *pline);
 int					handle_redirections(t_redirect *redir);
 int					get_here_doc(t_redirect *redir, t_shell *shell);

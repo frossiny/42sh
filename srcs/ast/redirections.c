@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 15:11:08 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/24 12:54:11 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/24 15:21:09 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,11 @@ static t_redirect	*create_redirection(t_token *token)
 	skip = 0;
 	red->p[0] = -1;
 	red->p[1] = -1;
-	if (ft_isdigit(token->content[0]))
+	if (token->type == TOKEN_IO_FD)
+	{
 		red->filedes = ft_atoi_i(token->content, &skip);
+		token = token->next;
+	}
 	else
 	{
 		if (token->type != TOKEN_AGGR)
@@ -53,24 +56,25 @@ static t_redirect	*create_redirection(t_token *token)
 	return (red);
 }
 
-t_redirect			*parse_redirections(t_token *tok, int offset)
+t_redirect			*parse_redirections(t_token *tok)
 {
 	t_redirect	*red;
 
-	if (offset < 0)
-		return (NULL);
-	while (tok && offset--)
-		tok = tok->next;
-	if (!tok || !tok->next || !tok_is_redirection(tok))
+	if (!tok || !tok->next)
 		return (NULL);
 	red = NULL;
-	while (tok && tok_is_redirection(tok))
+	while (tok && (tok_is_redirection(tok) || tok_is_word(tok)))
 	{
-		if (!red)
-			red = create_redirection(tok);
+		if (tok_is_redirection(tok))
+		{
+			if (!red)
+				red = create_redirection(tok);
+			else
+				red->next = create_redirection(tok);
+			tok = tok->next->next;
+		}
 		else
-			red->next = create_redirection(tok);
-		tok = tok->next->next;
+			tok = tok->next;
 	}
 	return (red);
 }

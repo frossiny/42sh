@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/04 15:52:54 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/23 15:35:34 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/24 13:24:42 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@ static t_token	*get_cmd_end(t_token *tok)
 	while (tok)
 	{
 		if (tok_is_word(tok))
+			tok = tok->next;
+		else if (tok->type == TOKEN_ASSIGNMENT)
+			tok = tok->next;
+		else if (tok->type == TOKEN_IO_FD)
 			tok = tok->next;
 		else if (tok->type == TOKEN_REDIRO || tok->type == TOKEN_REDIRI)
 			tok = tok->next;

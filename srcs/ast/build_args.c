@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/04 16:14:27 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/23 15:35:34 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/24 15:09:59 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static int	build_args_arr(char ***args, t_token *tokens)
 
 	argc = 0;
 	tmp = tokens;
+	//TODO: ACCEPT: ls . oui 2>test dossier
 	while (tmp && tok_is_word(tmp))
 	{
 		if (ft_strisdigit(tmp->content) && tmp->next
