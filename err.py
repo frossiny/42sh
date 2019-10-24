@@ -1,6 +1,6 @@
 import subprocess
-import os 
-import sys 
+import os
+import sys
 
 i = 0
 def execute_test(command, fi):
@@ -11,10 +11,13 @@ def execute_test(command, fi):
 	proc_stdout = proc.communicate()
 	proc_value = proc.returncode
 
-	shell = subprocess.Popen("/bin/bash", stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
+	shell = subprocess.Popen("bash", stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
 	shell.stdin.write(command)
 	shell_stdout = shell.communicate()
 	shell_value = shell.returncode
+
+	proc_stderr = proc_stdout[1].decode()
+	shell_stderr = shell_stdout[1].decode().replace("bash", "42sh")
 
 	if shell_stdout != proc_stdout or shell_value != proc_value:
 		print("\033[31m[ERROR]\033[0m")
@@ -25,9 +28,9 @@ def execute_test(command, fi):
 			print(proc_stdout[0].decode())
 			print("\033[33mbash stdout -> \033[0m")
 			print(shell_stdout[0].decode())
-		if shell_stdout[1] != proc_stdout[1]:
+		if proc_stderr != shell_stderr:
 			print("\033[33m42sh stderr -> \033[0m")
-			print(proc_stdout[1].decode())
+			print(proc_stderr)
 			print("\033[33mbash stderr -> \033[0m")
 			print(shell_stdout[1].decode())
 		if shell_value != proc_value:
