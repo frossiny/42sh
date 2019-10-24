@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 15:11:08 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/24 15:21:09 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/24 16:47:57 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,15 @@ static int			is_append(t_token *token)
 static t_redirect	*create_redirection(t_token *token)
 {
 	t_redirect	*red;
-	size_t		skip;
 
 	if (!token || !(red = (t_redirect *)malloc(sizeof(t_redirect))))
 		return (NULL);
 	red->done = 0;
-	skip = 0;
 	red->p[0] = -1;
 	red->p[1] = -1;
 	if (token->type == TOKEN_IO_FD)
 	{
-		red->filedes = ft_atoi_i(token->content, &skip);
+		red->filedes = ft_atoi(token->content);
 		token = token->next;
 	}
 	else
