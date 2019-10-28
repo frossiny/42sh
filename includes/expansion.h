@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 17:24:02 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/23 14:37:28 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/10/28 16:01:13 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define EXPANSION_H
 
 # include <stdlib.h>
+# include "structs.h"
 
 typedef struct	s_expansion
 {
@@ -39,4 +40,18 @@ typedef struct	s_globing
 }				t_globing;
 
 int				dir_globing(t_globing *glob, t_globing_list *list, char *path);
+int				complete_str(char *cmp, char *file);
+int				next_char(char *cmp, char *file, int x, int y);
+
+void				free_globing(t_globing_list *list);
+t_globing_list			*create_globing(char *str);
+
+void				add_token(t_globing *glob, char *content);
+void				free_token(t_token *token);
+void				remove_first_token(t_token **token);
+void				remove_token(t_token *curr);
+
+int				is_glob_char(char c);
+int				is_glob_str(char *str);
+char				*pull_multi_occ(char *str, char occ);
 #endif

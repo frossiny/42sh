@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/10/18 18:50:06 by vsaltel          ###   ########.fr        #
+#    Updated: 2019/10/28 14:13:08 by vsaltel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -123,7 +123,12 @@ FILES 	=	main.c									\
 			errors.c								\
 			utils.c									\
 			expansion/variables.c					\
-			expansion/globing.c					\
+			expansion/globbing/globbing.c					\
+			expansion/globbing/path.c					\
+			expansion/globbing/complete.c					\
+			expansion/globbing/globbing_utils.c					\
+			expansion/globbing/token_utils.c					\
+			expansion/globbing/utils.c					\
 			expansion/tilde.c
 SRCS	=	$(addprefix $(SRCDIR)/, $(FILES))
 OBJS 	=	$(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
