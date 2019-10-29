@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 14:17:47 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/23 19:03:59 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/29 18:03:54 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ static void	lex_state_general_else(t_lexer *lexer)
 	else if (*(lexer->in) == '#'
 						&& !is_escaped(lexer->pin, lexer->in - lexer->pin, 0))
 	{
-		tok_create(lexer, lexer->pin, lexer->in - lexer->pin, TOKEN_NAME);
+		if (lexer->in > lexer->pin)
+			tok_create(lexer, lexer->pin, lexer->in - lexer->pin, TOKEN_NAME);
 		lexer->pin = lexer->in;
 		lex_update_state(lexer, ST_COMMENT);
 	}
@@ -63,9 +64,7 @@ int			lex_state_general(t_lexer *lex)
 	if (cur.op)
 		lex_update_state(lex, cur.state);
 	else if (lex->pin == lex->in && ft_isdigit(lex->in[0]))
-	{
 		lex_state_redirection(lex);
-	}
 	else
 		lex_state_general_else(lex);
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 14:23:53 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/24 12:57:54 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/29 16:01:44 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ typedef enum		e_state
 	ST_DQUOTES,
 	ST_ESCAPED,
 	ST_COMMENT,
-	ST_OPERATOR
+	ST_OPERATOR,
+	ST_VAREXP
 }					t_state;
 
 typedef struct		s_state_func
@@ -51,6 +52,9 @@ typedef enum		e_token_type
 	TOKEN_NULL,
 	TOKEN_NAME,
 	TOKEN_ASSIGNMENT,
+	TOKEN_VAR,
+	TOKEN_VAROPEN,
+	TOKEN_VARCLOSE,
 	TOKEN_SEMI,
 	TOKEN_AND,
 	TOKEN_OR,

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 15:36:46 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/24 12:59:42 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/29 16:41:15 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ const static t_type_func	g_type_funcs[] =
 	{ TOKEN_REDIRO, &par_type_redir },
 	{ TOKEN_PIPE, &par_type_redir },
 	{ TOKEN_AGGR, &par_type_redir },
+	{ TOKEN_VAROPEN, &par_type_varexp },
+	{ TOKEN_VARCLOSE, &par_type_varexp },
 	{ TOKEN_ASSIGNMENT, NULL },
 	{ TOKEN_NULL, NULL }
 };
@@ -50,8 +52,9 @@ static int			parse_error(int err, t_token *tokens, int i)
 		tokens = tokens->next;
 		i--;
 	}
-	ft_dprintf(2, "42sh: syntax error near unexpected token: %s\n", \
-		tokens->content);
+	if (err == 0)
+		ft_dprintf(2, "42sh: syntax error near unexpected token: %s\n", \
+			tokens->content);
 	return (err);
 }
 
@@ -72,7 +75,7 @@ int					parse(t_token *tokens)
 		cur = get_func(parser.tokens->type);
 		if (cur.fnc)
 		{
-			if (!(ret = cur.fnc(&parser)))
+			if ((ret = cur.fnc(&parser)) < 1)
 				return (parse_error(ret, tokens, parser.i));
 		}
 		else if (cur.key != TOKEN_NULL)
