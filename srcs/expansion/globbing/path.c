@@ -6,7 +6,7 @@
 /*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 13:50:44 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/10/28 14:19:41 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/10/29 18:37:14 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 #include "expansion.h"
 #include <dirent.h>
 
-int			file_globing(t_globing *glob, t_globing_list *list, t_list *file)
+int				file_globing(t_globing *glob,
+					t_globing_list *list, t_list *file)
 {
-	int		x;
-	
+	int				x;
+
 	x = 0;
 	if (is_glob_str(list->content))
 	{
@@ -26,7 +27,8 @@ int			file_globing(t_globing *glob, t_globing_list *list, t_list *file)
 			if (complete_str(list->content, file->content))
 			{
 				if (list->next)
-					dir_globing(glob, list->next, ft_strpathfile(list->path, file->content));
+					dir_globing(glob, list->next,
+						ft_strpathfile(list->path, file->content));
 				else
 					add_token(glob, ft_strpathfile(list->path, file->content));
 			}
@@ -36,15 +38,16 @@ int			file_globing(t_globing *glob, t_globing_list *list, t_list *file)
 			return (0);
 	}
 	else
-		dir_globing(glob, list->next, ft_strpathfile(list->path, list->content));
+		dir_globing(glob, list->next,
+			ft_strpathfile(list->path, list->content));
 	return (1);
 }
 
 t_list			*get_file(DIR *dirp)
 {
 	struct dirent	*dirc;
-	t_list		*tab;
-	t_list		*beg;
+	t_list			*tab;
+	t_list			*beg;
 
 	beg = NULL;
 	while ((dirc = readdir(dirp)) != NULL)
@@ -69,10 +72,10 @@ t_list			*get_file(DIR *dirp)
 	return (beg);
 }
 
-int			dir_globing(t_globing *glob, t_globing_list *list, char *path)
+int				dir_globing(t_globing *glob, t_globing_list *list, char *path)
 {
-	DIR		*dirp;		
-	t_list		*file;
+	DIR		*dirp;
+	t_list	*file;
 
 	if (list == NULL)
 		return (1);
@@ -81,7 +84,7 @@ int			dir_globing(t_globing *glob, t_globing_list *list, char *path)
 		return (0);
 	else
 	{
-		file = get_file(dirp);	
+		file = get_file(dirp);
 		ft_lstsort(&file);
 		if (file_globing(glob, list, file) == 0)
 			return (0);

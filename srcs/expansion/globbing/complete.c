@@ -6,91 +6,58 @@
 /*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 13:56:44 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/10/28 17:06:09 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/10/29 18:09:40 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "expansion.h"
 
-int			wildcard_bracket(char *cmp, char *file, int x, int y)
+int			quote_char(t_compare s, int x, int y)
 {
-	int	end;
-	int	i;
-
-	end = x + 1;
-	while ((cmp[end] && cmp[end] != ']') || (cmp[end] == ']' && x + 1 == end))
-		end++;
-	if (!cmp[end])
-		return (0);
-	while (++x != end)
+	x++;
+	while (s.cmp[x] && s.cmp[x] != '"' && s.file[y])
 	{
-		if (cmp[x + 1] == '-' && cmp[x + 2] != ']' && cmp[x] <= cmp[x + 2])
-		{
-			i = 0;
-			while (cmp[x] + i <= cmp[x + 2])
-			{
-				if (cmp[x] + i == file[y] && cmp[x] != '/')
-					if (next_char(cmp, file, end + 1, y + 1))
-						return (1);
-				
-				i++;
-			}
-			x = x + 2;
-		}
-		else if (cmp[x] == file[y])
-			if (next_char(cmp, file, end + 1, y + 1))
-				return (1);
-	}
-	return (0);
-}
-
-int			wildcard_star(char *cmp, char *file, int x, int y)
-{
-	while (file[y])	
-	{
-		if (next_char(cmp, file, x + 1, y))
-			return (1);
-		y++;	
-	}
-	return (next_char(cmp, file, x + 1, y));
-}
-
-int			wildcard_question(char *cmp, char *file, int x, int y)
-{
-	if (!file[y])
-		return (0);
-	return (next_char(cmp, file, x + 1, y + 1));
-}
-
-int			standard_char(char *cmp, char *file, int x, int y)
-{
-	while (cmp[x] && file[y] && !is_glob_char(cmp[x]))
-	{
-		if (cmp[x] != file[y])
+		if (s.cmp[x] != s.file[y])
 			return (0);
 		x++;
 		y++;
 	}
-	return (next_char(cmp, file, x, y));
+	if (s.cmp[x] == '"')
+		return (next_char(s, x + 1, y));
+	else
+		return (0);
 }
 
-int			next_char(char *cmp, char *file, int x, int y)
+int			standard_char(t_compare s, int x, int y)
 {
-	if (cmp[x] == '*')
-		return (wildcard_star(cmp, file, x, y));
-	if (cmp[x] == '?')
-		return (wildcard_question(cmp, file, x, y));
-	if (cmp[x] == '[')
-		return (wildcard_bracket(cmp, file, x, y));
-	if (cmp[x])
+	while (s.cmp[x] && s.file[y] && !is_glob_char(s.cmp[x]) && s.cmp[x] != '"')
 	{
-		if (!file[y])
+		if (s.cmp[x] != s.file[y])
+			return (0);
+		x++;
+		y++;
+	}
+	return (next_char(s, x, y));
+}
+
+int			next_char(t_compare s, int x, int y)
+{
+	if (s.cmp[x] == '*')
+		return (wildcard_star(s, x, y));
+	if (s.cmp[x] == '?')
+		return (wildcard_question(s, x, y));
+	if (s.cmp[x] == '[')
+		return (wildcard_bracket(s, x, y));
+	if (s.cmp[x] == '"')
+		return (quote_char(s, x, y));
+	if (s.cmp[x])
+	{
+		if (!s.file[y])
 			return (0);
 		else
-			return (standard_char(cmp, file, x, y));
+			return (standard_char(s, x, y));
 	}
-	if (!file[y])
+	if (!s.file[y])
 		return (1);
 	else
 		return (0);
@@ -98,10 +65,13 @@ int			next_char(char *cmp, char *file, int x, int y)
 
 int			complete_str(char *cmp, char *file)
 {
-	int	ret;
+	int			ret;
+	t_compare	s;
 
 	if (!file || file[0] == '.')
 		return (0);
-	ret = next_char(cmp, file, 0, 0);
+	s.cmp = cmp;
+	s.file = file;
+	ret = next_char(s, 0, 0);
 	return (ret);
 }

@@ -6,14 +6,14 @@
 /*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 13:45:40 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/10/28 14:19:39 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/10/29 18:31:49 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expansion.h"
 #include "libft.h"
 
-void			free_globing(t_globing_list *list)
+void				free_globing(t_globing_list *list)
 {
 	t_globing_list	*tmp;
 
@@ -31,10 +31,10 @@ void			free_globing(t_globing_list *list)
 
 t_globing_list		*create_globing(char *str)
 {
-	char		**tab;
+	char			**tab;
 	t_globing_list	*list;
 	t_globing_list	*begin;
-	int		i;
+	int				i;
 
 	if ((tab = ft_strsplit(str, '/')) == NULL)
 		return (NULL);
