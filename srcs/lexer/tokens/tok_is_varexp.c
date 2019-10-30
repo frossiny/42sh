@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 16:23:35 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/29 16:24:54 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/30 15:24:50 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 int		tok_is_varexp(t_token *token)
 {
 	if (token->type == TOKEN_VAR)
-		return (1);
-	if (token->type == TOKEN_VAROPEN || token->type == TOKEN_VARCLOSE)
 		return (1);
 	return (0);
 }

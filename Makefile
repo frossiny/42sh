@@ -6,11 +6,11 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/10/29 16:37:59 by frossiny         ###   ########.fr        #
+#    Updated: 2019/10/30 18:29:55 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC		=	gcc -g3 #-fsanitize=address
+CC		=	gcc -g3 -fsanitize=address
 #CFLAGS	+=	-Wall -Werror -Wextra
 
 SHELL	=	bash
@@ -57,6 +57,7 @@ FILES 	=	main.c									\
 			lexer/lex_free.c						\
 			lexer/lex_search.c						\
 			lexer/lex_update_state.c				\
+			lexer/lex_is_expansion.c				\
 			lexer/tokens/tok_create.c				\
 			lexer/tokens/tok_destroy.c				\
 			lexer/tokens/tok_is_word.c				\
@@ -69,13 +70,13 @@ FILES 	=	main.c									\
 			lexer/states/comment.c					\
 			lexer/states/escaped.c					\
 			lexer/states/operators.c				\
+			lexer/states/expansions.c				\
 			parser/parser.c							\
 			parser/par_next.c						\
 			parser/types/name.c						\
 			parser/types/redirections.c				\
 			parser/types/operators.c				\
 			parser/types/semic.c					\
-			parser/types/varexp.c					\
 			reader/reader.c							\
 			reader/pipe.c							\
 			reader/pipeline.c						\

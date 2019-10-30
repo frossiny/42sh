@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/28 13:16:59 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/17 16:34:58 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/30 18:43:24 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int			replace_vars(t_token *token, t_var *vars)
 	t_expansion	exp;
 	int			esc;
 
-	while (token && tok_is_word(token))
+	while (token && token->type == TOKEN_VAR)
 	{
 		esc = (token->content[0] == '\\');
 		exp.i = -1;

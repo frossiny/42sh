@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 14:23:10 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/23 19:03:43 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/30 18:11:11 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int		lex_state_operator(t_lexer *lex)
 			tok_create(lex, lex->in, cur.len, cur.type);
 		lex->in += cur.len;
 		lex->pin = lex->in;
+		lex_update_state(lex, ST_GENERAL);
 	}
 	else
 		lex_update_state(lex, ST_GENERAL);

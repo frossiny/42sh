@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 14:17:47 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/29 18:03:54 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/30 18:58:01 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,21 +37,26 @@ static void	lex_state_redirection(t_lexer *lex)
 
 static void	lex_state_general_else(t_lexer *lexer)
 {
-	if ((*(lexer->in) == '"' || *(lexer->in) == '\'')
+	if ((lexer->in[0] == '"' || lexer->in[0] == '\'')
 						&& !is_escaped(lexer->pin, lexer->in - lexer->pin, 0))
 	{
 		lex_update_state(lexer, lexer->in[0] == '"' ? ST_DQUOTES : ST_QUOTES);
 	}
-	else if (*(lexer->in) == '\\'
+	else if (lexer->in[0] == '\\'
 						&& !is_escaped(lexer->pin, lexer->in - lexer->pin, 0))
 		lex_update_state(lexer, ST_ESCAPED);
-	else if (*(lexer->in) == '#'
+	else if (lexer->in[0] == '#'
 						&& !is_escaped(lexer->pin, lexer->in - lexer->pin, 0))
 	{
 		if (lexer->in > lexer->pin)
 			tok_create(lexer, lexer->pin, lexer->in - lexer->pin, TOKEN_NAME);
 		lexer->pin = lexer->in;
 		lex_update_state(lexer, ST_COMMENT);
+	}
+	else if (lex_is_expansion(lexer))
+	{
+		lex_update_state(lexer, ST_EXPANSIONS);
+		return ;
 	}
 	lexer->in++;
 }

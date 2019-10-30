@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 11:23:45 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/29 16:01:52 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/30 18:03:30 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ const static t_state_func	g_state_funcs[] =
 	{ ST_ESCAPED, &lex_state_escaped },
 	{ ST_COMMENT, &lex_state_comment },
 	{ ST_OPERATOR, &lex_state_operator },
+	{ ST_EXPANSIONS, &lex_state_expansions},
 	{ -1, NULL }
 };
 
@@ -57,15 +58,6 @@ static int			lex_end(t_lexer *lexer)
 		else if (lexer->state == ST_QUOTES)
 			return (-2);
 	}
-
-
-	t_token *cur;
-	cur = lexer->tokens;
-	while (cur)
-	{
-		ft_printf("%s - %d\n", cur->content, cur->type);
-		cur = cur->next;
-	}
 	return (1);
 }
 
@@ -76,6 +68,7 @@ static int			lex_loop(t_lexer *lexer)
 
 	while (lexer->in && *(lexer->in))
 	{
+		ft_printf("STATE: %d - %s\n", lexer->state, lexer->in);
 		cur = get_func(lexer->state);
 		if (cur.lex)
 		{

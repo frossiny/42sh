@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 15:39:39 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/29 16:38:10 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/30 15:24:26 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,5 @@ int		par_type_operator(t_parser *par);
 int		par_type_semic(t_parser *par);
 int		par_type_redir(t_parser *par);
 int		par_type_io_fd(t_parser *par);
-int		par_type_varexp(t_parser *par);
 
 #endif
