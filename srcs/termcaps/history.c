@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 17:47:28 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/08/13 13:52:16 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/30 20:08:49 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,19 @@
 
 void				add_to_history(char *str, t_history *history)
 {
+	static size_t		i = 1;
 	t_histo_lst			*item;
 
 	if (!history || !str || !str[0]
 		|| (history->lst && ft_strcmp(str, history->lst->str) == 0))
 		return ;
 	item = new_link(ft_strdup(str));
+	item->index = i++;
 	if (history->lst)
+	{
 		item->next = history->lst;
+		history->lst->prev = item;
+	}
 	history->lst = item;
 	history->size++;
 }

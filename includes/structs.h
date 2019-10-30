@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 14:23:53 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/14 15:01:24 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/30 19:56:16 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,8 @@ typedef struct	s_histo_lst
 {
 	char				*str;
 	size_t				len;
+	size_t				index;
+	struct s_histo_lst	*prev;
 	struct s_histo_lst	*next;
 }				t_histo_lst;
 

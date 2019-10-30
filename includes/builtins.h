@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:40:21 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/14 15:00:55 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/30 17:29:54 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,6 @@ int				b_unsetenv(t_cmd *cmd, t_shell *shell);
 int				b_exit(t_cmd *cmd, t_shell *shell);
 int				b_cd(t_cmd *cmd, t_shell *shell);
 int				b_echo(t_cmd *cmd, t_shell *shell);
+int				b_history(t_cmd *cmd, t_shell *shell);
 
 #endif

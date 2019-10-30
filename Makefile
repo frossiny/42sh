@@ -6,12 +6,12 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/10/14 12:39:23 by frossiny         ###   ########.fr        #
+#    Updated: 2019/10/30 18:47:37 by lubenard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC		=	gcc
-CFLAGS	+=	-Wall -Werror -Wextra
+CC		=	clang
+CFLAGS	+=	-Wall -Werror -Wextra -g3
 
 SHELL	=	bash
 
@@ -103,6 +103,7 @@ FILES 	=	main.c									\
 			env/dup_env.c							\
 			env/exists_env.c						\
 			env/replace_env.c						\
+			builtins/history.c 						\
 			builtins/builtins.c						\
 			builtins/builtins_errors.c				\
 			builtins/env.c							\
@@ -121,6 +122,7 @@ FILES 	=	main.c									\
 			utils.c									\
 			expansion/variables.c					\
 			expansion/tilde.c
+
 SRCS	=	$(addprefix $(SRCDIR)/, $(FILES))
 OBJS 	=	$(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 OBJSD 	=	$(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.d)
@@ -144,7 +146,7 @@ _WHITE=\x1b[37m
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@$(MAKE) -q -C $(LIBFT) || $(MAKE) -C $(LIBFT)
+	@$(MAKE) -q -C $(LIBFT) || $(MAKE) -j4 -C $(LIBFT)
 	@echo -e -n "\n${_BLUE}${_BOLD}[Create Executable] $(NAME)${_END}"
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -L./$(LIBFT) -lft -ltermcap
 	@echo -e "\n${_GREEN}${_BOLD}$(NAME) done.${_END}"
