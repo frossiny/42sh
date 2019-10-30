@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 11:59:10 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/18 18:50:27 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/10/30 13:24:20 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int					get_pipes_docs(t_shell *shell, t_pipel *pipes);
 
 char				**dup_argv(int argc, char **args, char ***argv);
 int					replace_vars(t_token *curr, t_var *vars);
-int					replace_globing(t_token *token, t_var *vars);
+int					replace_globbing(t_token *token, t_var *vars);
 size_t				get_var_size(char *key);
 int					handle_home(t_token *token, t_var *vars);
 char				*strjoin_escape(char *s1, char *s2);

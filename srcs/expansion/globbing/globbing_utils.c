@@ -6,16 +6,16 @@
 /*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 13:45:40 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/10/29 18:31:49 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/10/30 13:23:08 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expansion.h"
 #include "libft.h"
 
-void				free_globing(t_globing_list *list)
+void				free_globbing(t_globbing_list *list)
 {
-	t_globing_list	*tmp;
+	t_globbing_list	*tmp;
 
 	if (!list)
 		return ;
@@ -29,17 +29,17 @@ void				free_globing(t_globing_list *list)
 	}
 }
 
-t_globing_list		*create_globing(char *str)
+t_globbing_list		*create_globbing(char *str)
 {
 	char			**tab;
-	t_globing_list	*list;
-	t_globing_list	*begin;
+	t_globbing_list	*list;
+	t_globbing_list	*begin;
 	int				i;
 
 	if ((tab = ft_strsplit(str, '/')) == NULL)
 		return (NULL);
 	free(str);
-	if (!(list = (t_globing_list *)malloc(sizeof(t_globing_list))))
+	if (!(list = (t_globbing_list *)malloc(sizeof(t_globbing_list))))
 		return (NULL);
 	i = 0;
 	list->content = ft_strdup(tab[i]);
@@ -47,7 +47,7 @@ t_globing_list		*create_globing(char *str)
 	begin = list;
 	while (tab[++i])
 	{
-		if (!(list->next = (t_globing_list *)malloc(sizeof(t_globing_list))))
+		if (!(list->next = (t_globbing_list *)malloc(sizeof(t_globbing_list))))
 			return (NULL);
 		list = list->next;
 		list->content = ft_strdup(tab[i]);

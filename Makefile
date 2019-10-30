@@ -6,11 +6,11 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/10/29 16:51:03 by vsaltel          ###   ########.fr        #
+#    Updated: 2019/10/30 19:03:02 by vsaltel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC		=	gcc -g3 -fsanitize=address
+CC		=	gcc -g3 #-fsanitize=address
 #CFLAGS	+=	-Wall -Werror -Wextra
 
 SHELL	=	bash
@@ -100,6 +100,7 @@ FILES 	=	main.c									\
 			builtins/cd.c							\
 			builtins/echo.c							\
 			builtins/export.c						\
+			builtins/type.c							\
 			builtins/options/opt_parse.c			\
 			builtins/options/opt_add.c				\
 			builtins/options/opt_get.c				\
@@ -123,13 +124,13 @@ FILES 	=	main.c									\
 			errors.c								\
 			utils.c									\
 			expansion/variables.c					\
-			expansion/globbing/globbing.c					\
-			expansion/globbing/path.c					\
-			expansion/globbing/complete.c					\
-			expansion/globbing/wildcards.c					\
-			expansion/globbing/globbing_utils.c					\
-			expansion/globbing/token_utils.c					\
-			expansion/globbing/utils.c					\
+			expansion/globbing/globbing.c			\
+			expansion/globbing/path.c				\
+			expansion/globbing/complete.c			\
+			expansion/globbing/wildcards.c			\
+			expansion/globbing/globbing_utils.c		\
+			expansion/globbing/token_utils.c		\
+			expansion/globbing/utils.c				\
 			expansion/tilde.c
 SRCS	=	$(addprefix $(SRCDIR)/, $(FILES))
 OBJS 	=	$(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)

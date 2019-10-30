@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:40:21 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/17 15:21:04 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/30 17:56:10 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,18 @@ int			b_exit(t_cmd *cmd, t_shell *shell);
 int			b_cd(t_cmd *cmd, t_shell *shell);
 int			b_echo(t_cmd *cmd, t_shell *shell);
 int			b_export(t_cmd *cmd, t_shell *shell);
+int			b_type(t_cmd *cmd, t_shell *shell);
+
+static const t_builtin g_builtins[] =
+{
+	{ "echo", &b_echo },
+	{ "cd", &b_cd },
+	{ "set", &b_set },
+	{ "unset", &b_unset },
+	{ "exit", &b_exit },
+	{ "export", &b_export },
+	{ "type", &b_type },
+	{ NULL, NULL }
+};
 
 #endif

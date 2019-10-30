@@ -6,7 +6,7 @@
 /*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 13:41:50 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/10/28 14:08:15 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/10/30 13:23:54 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void			free_token(t_token *token)
 	free(token);
 }
 
-void			add_token(t_globing *glob, char *content)
+void			add_token(t_globbing *glob, char *content)
 {
 	t_token *new;
 

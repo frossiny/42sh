@@ -6,24 +6,13 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 14:03:28 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/17 15:21:34 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/30 17:54:19 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
 #include "builtins.h"
-
-const t_builtin g_builtins[] =
-{
-	{ "echo", &b_echo },
-	{ "cd", &b_cd },
-	{ "set", &b_set },
-	{ "unset", &b_unset },
-	{ "exit", &b_exit },
-	{ "export", &b_export },
-	{ NULL, NULL }
-};
 
 int					is_builtin(char *name)
 {

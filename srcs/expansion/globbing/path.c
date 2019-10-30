@@ -6,7 +6,7 @@
 /*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 13:50:44 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/10/29 18:37:14 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/10/30 13:26:58 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 #include "expansion.h"
 #include <dirent.h>
 
-int				file_globing(t_globing *glob,
-					t_globing_list *list, t_list *file)
+int				file_globbing(t_globbing *glob,
+					t_globbing_list *list, t_list *file)
 {
 	int				x;
 
@@ -27,7 +27,7 @@ int				file_globing(t_globing *glob,
 			if (complete_str(list->content, file->content))
 			{
 				if (list->next)
-					dir_globing(glob, list->next,
+					dir_globbing(glob, list->next,
 						ft_strpathfile(list->path, file->content));
 				else
 					add_token(glob, ft_strpathfile(list->path, file->content));
@@ -38,7 +38,7 @@ int				file_globing(t_globing *glob,
 			return (0);
 	}
 	else
-		dir_globing(glob, list->next,
+		dir_globbing(glob, list->next,
 			ft_strpathfile(list->path, list->content));
 	return (1);
 }
@@ -72,7 +72,8 @@ t_list			*get_file(DIR *dirp)
 	return (beg);
 }
 
-int				dir_globing(t_globing *glob, t_globing_list *list, char *path)
+int				dir_globbing(t_globbing *glob,
+					t_globbing_list *list, char *path)
 {
 	DIR		*dirp;
 	t_list	*file;
@@ -86,7 +87,7 @@ int				dir_globing(t_globing *glob, t_globing_list *list, char *path)
 	{
 		file = get_file(dirp);
 		ft_lstsort(&file);
-		if (file_globing(glob, list, file) == 0)
+		if (file_globbing(glob, list, file) == 0)
 			return (0);
 		ft_freelst(&file);
 	}
