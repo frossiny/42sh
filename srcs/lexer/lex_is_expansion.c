@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 14:56:53 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/30 18:45:25 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/30 19:16:27 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,5 @@ int		lex_is_expansion(t_lexer *lex)
 				return (1);
 		i++;
 	}
-	ft_printf("NOT EXPANSION: %s\n", lex->in);
 	return (0);
 }
