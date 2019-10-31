@@ -6,11 +6,11 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/16 11:23:33 by frossiny          #+#    #+#              #
-#    Updated: 2019/05/07 15:12:42 by vsaltel          ###   ########.fr        #
+#    Updated: 2019/10/31 15:13:36 by lubenard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC		=	gcc
+CC		=	clang
 CFLAGS	+=	-Wall -Werror -Wextra -g3
 
 SHELL	=	bash
@@ -139,6 +139,8 @@ _CYAN=\x1b[36m
 _WHITE=\x1b[37m
 
 .PHONY: all clean fclean re
+
+.SILENT:
 
 $(NAME): $(OBJS)
 	@echo -e -n "\n${_BLUE}${_BOLD}[Linking] $(NAME)${_END}"

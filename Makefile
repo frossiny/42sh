@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/10/30 18:47:37 by lubenard         ###   ########.fr        #
+#    Updated: 2019/10/31 15:13:57 by lubenard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -142,6 +142,8 @@ _CYAN=\x1b[36m
 _WHITE=\x1b[37m
 
 .PHONY: all clean fclean re norm $(LIBFT)
+
+.SILENT:
 
 all: $(NAME)
 

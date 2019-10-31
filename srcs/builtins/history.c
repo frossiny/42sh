@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:03:36 by lubenard          #+#    #+#             */
-/*   Updated: 2019/10/30 20:27:57 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/10/31 17:44:09 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,12 @@ int		empty_hist(t_shell *shell)
 	return (0);
 }
 
-/*
-** Will print last 500 hist var
-*/
-
-int		b_history(t_cmd *cmd, t_shell *shell)
+int		print_history(t_shell *shell)
 {
 	t_histo_lst		*history;
 	int				counter;
 
 	counter = 0;
-	(void)cmd;
 	history = shell->history.lst;
 	while (history->next && counter != 500)
 	{
@@ -58,5 +53,18 @@ int		b_history(t_cmd *cmd, t_shell *shell)
 		ft_printf("  %zu  %s\n", history->index, history->str);
 		history = history->prev;
 	}
+	return (0);
+}
+
+/*
+** Will print last 500 hist var
+*/
+
+#include <stdio.h>
+
+int		b_history(t_cmd *cmd, t_shell *shell)
+{
+	(void)cmd;
+	print_history(shell);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 12:18:44 by frossiny          #+#    #+#             */
-/*   Updated: 2018/11/08 15:43:30 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/31 15:03:20 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,11 @@
 
 void	ft_bzero(void *s, size_t n)
 {
-	size_t		i;
 	char		*str;
 
 	if (n <= 0)
 		return ;
 	str = (char *)s;
-	i = 0;
 	while (n--)
 		*str++ = '\0';
 }
