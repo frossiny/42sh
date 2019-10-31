@@ -6,7 +6,7 @@
 /*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 13:25:26 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/10/30 13:25:29 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/10/31 14:51:06 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,15 @@ int			replace_globbing(t_token *token, t_var *vars)
 	t_token		*token_next;
 	char		*tmp;
 	t_globbing	glob;
-	int			ret;
 
 	begin = token;
 	while (token)
 	{
-		ret = 0;
 		token_next = token->next;
 		if (is_word_token(token) && is_glob_str(token->content))
 		{
 			set_glob(&glob, token);
-			ret = dir_globbing(&glob, glob.list, glob.root
+			dir_globbing(&glob, glob.list, glob.root
 				? ft_strdup("/") : ft_strdup("./"));
 			token->is_glob_sub = glob.nb_file;
 			free_globbing(glob.list);
@@ -46,5 +44,5 @@ int			replace_globbing(t_token *token, t_var *vars)
 		token = token_next;
 	}
 	remove_token(begin);
-	return (ret);
+	return (glob.nb_file ? 0 : 1);
 }

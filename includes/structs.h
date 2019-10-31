@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 14:23:53 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/23 14:28:22 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/10/31 17:47:58 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,7 +213,6 @@ typedef struct		s_shell
 	t_hashtable		bin_ht;
 	t_history		history;
 	struct termios	prev_term;
-	int				able_termcaps : 1;
 }					t_shell;
 
 #endif

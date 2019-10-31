@@ -6,23 +6,23 @@
 /*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 13:56:44 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/10/29 18:09:40 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/10/31 16:10:11 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expansion.h"
 
-int			quote_char(t_compare s, int x, int y)
+int			quote_char(t_compare s, int x, int y, char c)
 {
 	x++;
-	while (s.cmp[x] && s.cmp[x] != '"' && s.file[y])
+	while (s.cmp[x] && s.cmp[x] != c && s.file[y])
 	{
 		if (s.cmp[x] != s.file[y])
 			return (0);
 		x++;
 		y++;
 	}
-	if (s.cmp[x] == '"')
+	if (s.cmp[x] == c)
 		return (next_char(s, x + 1, y));
 	else
 		return (0);
@@ -48,8 +48,8 @@ int			next_char(t_compare s, int x, int y)
 		return (wildcard_question(s, x, y));
 	if (s.cmp[x] == '[')
 		return (wildcard_bracket(s, x, y));
-	if (s.cmp[x] == '"')
-		return (quote_char(s, x, y));
+	if (s.cmp[x] == '"' || s.cmp[x] == '\'')
+		return (quote_char(s, x, y, s.cmp[x]));
 	if (s.cmp[x])
 	{
 		if (!s.file[y])

@@ -6,7 +6,7 @@
 /*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 13:50:44 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/10/30 13:26:58 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/10/31 15:42:57 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,12 @@ int				dir_globbing(t_globbing *glob,
 	t_list	*file;
 
 	if (list == NULL)
+	{
+		free(path);
 		return (1);
+	}
+	if (list->path)
+		free(list->path);
 	list->path = path;
 	if ((dirp = opendir(path)) == NULL)
 		return (0);
@@ -87,9 +92,10 @@ int				dir_globbing(t_globbing *glob,
 	{
 		file = get_file(dirp);
 		ft_lstsort(&file);
-		if (file_globbing(glob, list, file) == 0)
-			return (0);
+		file_globbing(glob, list, file);
 		ft_freelst(&file);
 	}
-	return (1);
+	if (closedir(dirp) != 0)
+		return (1);
+	return (glob->nb_file ? 0 : 1);
 }

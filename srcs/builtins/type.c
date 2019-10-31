@@ -6,7 +6,7 @@
 /*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:40:24 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/10/30 19:02:07 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/10/31 16:22:48 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,20 @@ char		*check_path(char *path, char *arg)
 {
 	DIR				*dirp;
 	struct dirent	*dirc;
+	char			*var;
 
 	if ((dirp = opendir(path)) == NULL)
 		return (NULL);
 	while ((dirc = readdir(dirp)) != NULL)
 	{
 		if (ft_strcmp(arg, dirc->d_name) == 0)
-			return (ft_strpathfile(path, dirc->d_name));
+		{
+			var = ft_strpathfile(path, dirc->d_name);
+			closedir(dirp);
+			return (var);
+		}
 	}
+	closedir(dirp);
 	return (NULL);
 }
 
@@ -60,9 +66,13 @@ int			find_path(char *arg, size_t *find, t_var *vars)
 
 int			find_hashtable(char *arg, size_t *find)
 {
+	char	*var;
+
 	if (ht_exists(&g_shell, arg))
 	{
-		ft_printf("%s is hashed (%s)\n", arg, ht_get(&g_shell, arg));
+		var = ht_get(&g_shell, arg);
+		ft_printf("%s is hashed (%s)\n", arg, var);
+		free(var);
 		(*find)++;
 		return (1);
 	}
