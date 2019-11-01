@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:40:21 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/17 15:21:04 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/01 16:14:14 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 int			handle_builtin(t_cmd *cmd, t_shell *shell);
 t_builtin	get_builtin(char *name);
 int			is_builtin(char *name);
+char		*cd_buildpath(char *path);
 int			b_set(t_cmd *cmd, t_shell *shell);
 int			b_unset(t_cmd *cmd, t_shell *shell);
 int			b_exit(t_cmd *cmd, t_shell *shell);

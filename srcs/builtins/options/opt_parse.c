@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   opt_parse.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 14:31:38 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/30 17:42:00 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/01 16:30:04 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,14 @@ static int			parse_mul(t_options *opts, char *opt, char *optstr, \
 		if (ft_strchr(optstr, opt[i]))
 		{
 			tmp = ft_strsub(opt, i, 1);
-			if (!opt_get(opts, tmp))
-				opt_add(opts, tmp, NULL);
+			opt_add(opts, tmp, NULL);
 			free(tmp);
 		}
 		else
 		{
-			ft_dprintf(2, "42sh: %s: illegal option -- %c", bname, opt[i]);
+			write(2, bname, ft_strlen(bname));
+			write(2, ": illegal option -- ", 20);
+			write(2, opt + i, 1);
 			opts->ret = -1;
 			return (0);
 		}
@@ -56,8 +57,7 @@ static int			parse_one(t_options *opts, t_cmd *cmd, int i, char *optstr)
 			i++;
 			opts->last++;
 		}
-		else if (!opt_get(opts, cmd->args[i] + 1))
-			opt_add(opts, cmd->args[i] + 1, NULL);
+		opt_add(opts, cmd->args[i] + 1, NULL);
 	}
 	else
 	{
@@ -83,10 +83,9 @@ static t_options	*disp_errors(t_options *opts, int ret, char *bname, \
 																char *arg)
 {
 	if (ret == -1)
-		ft_dprintf(2, "42sh: %s: illegal option -- %s", bname, arg + 1);
+		ft_printf("42sh: %s: -%c: invalid option\n", bname, arg[1]);
 	if (ret == -2)
-		ft_dprintf(2, "42sh: %s: option requires an argument -- %s\n", \
-														bname, arg + 1);
+		ft_printf("42sh: %s: option requires an argument -- %c\n", bname, arg[1]);
 	return (opts);
 }
 
@@ -101,7 +100,8 @@ t_options			*opt_parse(t_cmd *cmd, char *optstring, char *bname)
 	i = 0;
 	while (++i < cmd->argc)
 	{
-		if (cmd->args[i][0] != '-' || ft_strnequ("--", cmd->args[i], 2))
+		if (cmd->args[i][0] != '-' || ft_strlen(cmd->args[i]) < 2
+			|| ft_strequ("--", cmd->args[i]))
 			break ;
 		if (ft_strlen(cmd->args[i]) > 2)
 		{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 11:23:45 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/30 18:03:30 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/01 15:38:50 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ static int			lex_loop(t_lexer *lexer)
 
 	while (lexer->in && *(lexer->in))
 	{
-		ft_printf("STATE: %d - %s\n", lexer->state, lexer->in);
 		cur = get_func(lexer->state);
 		if (cur.lex)
 		{
