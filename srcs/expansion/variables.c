@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/28 13:16:59 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/31 18:00:14 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/01 18:26:48 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 #include "expansion.h"
 #include "lexer.h"
 #include "utils.h"
-# include <stdio.h>
 
 static char	*handle_var(t_env *env, char *var_name)
 {

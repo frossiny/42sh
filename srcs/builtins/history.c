@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:03:36 by lubenard          #+#    #+#             */
-/*   Updated: 2019/10/31 17:44:09 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/01 19:25:13 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int		empty_hist(t_shell *shell)
 		free(history);
 		history = NULL;
 	}
+	shell->history.index = 1;
 	shell->history.lst = NULL;
 	return (0);
 }
@@ -39,11 +40,11 @@ int		empty_hist(t_shell *shell)
 int		print_history(t_shell *shell)
 {
 	t_histo_lst		*history;
-	int				counter;
+	size_t			counter;
 
 	counter = 0;
 	history = shell->history.lst;
-	while (history->next && counter != 500)
+	while (history->next && counter != shell->history.index)
 	{
 		history = history->next;
 		counter++;
@@ -57,14 +58,23 @@ int		print_history(t_shell *shell)
 }
 
 /*
-** Will print last 500 hist var
+** Will print last hist var depending on $HISTSIZE
 */
 
 #include <stdio.h>
 
 int		b_history(t_cmd *cmd, t_shell *shell)
 {
+	t_options	opts;
+
 	(void)cmd;
-	print_history(shell);
+	opts = opt_parse(cmd, "cdanrwps", "history");
+	while (opts->opts && opts->opts->next)
+	{
+		printf("option = %s\n");
+		opts->opts = opts->opts->next;
+	}
+	//print_history(shell);
+	//empty_hist(shell);
 	return (0);
 }
