@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/11/01 15:53:33 by frossiny         ###   ########.fr        #
+#    Updated: 2019/11/01 18:32:26 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,9 +37,10 @@ FILES 	=	main.c									\
 			builtins/set.c							\
 			builtins/unset.c						\
 			builtins/exit.c							\
-			builtins/cd.c							\
 			builtins/echo.c							\
 			builtins/export.c						\
+			builtins/cd/build_path.c				\
+			builtins/cd/cd.c						\
 			builtins/options/opt_parse.c			\
 			builtins/options/opt_add.c				\
 			builtins/options/opt_get.c				\

@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 11:43:47 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/16 13:57:45 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/01 15:38:31 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <dirent.h>
 #include "shell.h"
+#include "libft.h"
 
 t_shell			g_shell;
 t_cursor_pos	g_pos;
@@ -18,6 +20,36 @@ int				g_child;
 int				g_ignore_signals;
 int				g_return;
 int				g_clear_buffer;
+char			*g_pwd;
+
+static void	init_default_vars(void)
+{
+	char	buff[8192];
+	t_var	*pwd;
+	t_var	*shlvl;
+	char	*tmp;
+	DIR		*dir;
+
+	if ((pwd = var_get(g_shell.vars, "PWD")) && (dir = opendir(pwd->value)))
+	{
+		closedir(dir);
+		g_pwd = ft_strdup(pwd->value);
+	}
+	else
+	{
+		getcwd(buff, 8192);
+		g_pwd = ft_strdup(buff);
+	}
+	var_set(&g_shell.vars, "PWD", g_pwd, 1);
+	if ((shlvl = var_get(g_shell.vars, "SHLVL"))
+		&& (tmp = ft_itoa(ft_atoi(shlvl->value) + 1)))
+	{
+		var_set(&g_shell.vars, "SHLVL", tmp, 1);
+		ft_strdel(&tmp);
+	}
+	else
+		var_set(&g_shell.vars, "SHLVL", "1", 1);
+}
 
 static void	shell_init(char *envp[])
 {
@@ -44,5 +76,6 @@ int			main(int argc, char *argv[], char *envp[])
 	(void)argv;
 	register_signals();
 	shell_init(envp);
+	init_default_vars();
 	return (shell());
 }

@@ -1,24 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_2dstrndel.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/06 17:02:17 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/01 16:27:28 by pcharrie         ###   ########.fr       */
+/*   Created: 2019/11/01 16:05:39 by pcharrie          #+#    #+#             */
+/*   Updated: 2019/11/01 16:06:32 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strdup(const char *s1)
+void		ft_2dstrndel(char ***tab, int size)
 {
-	char	*dest;
-
-	if (!s1)
-		return (NULL);
-	if (!(dest = ft_strnew(ft_strlen(s1))))
-		return (NULL);
-	return (ft_strcpy(dest, s1));
+	if (!tab)
+		return ;
+	while (size >= 0)
+		ft_strdel(&(*tab)[size--]);
+	free(*tab);
+	*tab = NULL;
 }
