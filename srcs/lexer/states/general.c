@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 14:17:47 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/30 18:58:01 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/01 18:26:03 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,9 @@ static void	lex_state_general_else(t_lexer *lexer)
 	}
 	else if (lex_is_expansion(lexer))
 	{
+		if (lexer->in > lexer->pin)
+			tok_create(lexer, lexer->pin, lexer->in - lexer->pin, TOKEN_NAME);
+		lexer->pin = lexer->in;
 		lex_update_state(lexer, ST_EXPANSIONS);
 		return ;
 	}

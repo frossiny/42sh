@@ -1,35 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expansion.h                                        :+:      :+:    :+:   */
+/*   exp_get_var.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/29 17:24:02 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/01 16:32:18 by frossiny         ###   ########.fr       */
+/*   Created: 2019/11/01 15:22:13 by frossiny          #+#    #+#             */
+/*   Updated: 2019/11/01 15:31:39 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXPANSION_H
-# define EXPANSION_H
+#include "libft.h"
+#include "shell.h"
+#include "variables.h"
 
-# include <stdlib.h>
-# include "structs.h"
-
-typedef struct	s_expansion
+static char		*get_special_var(char *key)
 {
-	size_t	i;
-	size_t	li;
-	char	isquote;
-	char	*str;
-	char	*new;
-}				t_expansion;
+	if (ft_strequ(key, "?"))
+		return (ft_itoa(g_return));
+	return (NULL);
+}
 
-int				expand(t_token *tokens);
-int				exp_remove_quotes(t_expansion *e);
-int				handle_home(t_token *token, t_var *vars);
+char			*exp_get_var(char *key)
+{
+	char	*val;
 
-char			*strjoin_escape(char *s1, char *s2);
-char			*strdup_escape(char *str);
-
-#endif
+	if ((val = get_special_var(key)))
+		return (val);
+	if (!(val = var_value(g_shell.vars, key)))
+		return (NULL);
+	return (ft_strdup(val));
+}

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 17:39:34 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/24 12:56:53 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/01 15:31:05 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ t_var	*var_new(char *key, char *value, int export);
 int		var_set(t_var **vars, char *key, char *value, int export);
 int		var_replace(t_var *var, char *value);
 t_var	*var_get(t_var *vars, char *key);
+char	*var_value(t_var *vars, char *key);
 char	**var_build_env(t_var *vars);
 int		var_delete(t_var **vars, char *key);
 void	var_destroy(t_var **vars);

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 15:26:08 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/30 19:03:25 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/01 18:29:41 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,43 +33,37 @@ static t_token_type	get_tok_type(const char *op)
 	return (TOKEN_NAME);
 }
 
+static int			update_state(t_lexer *lexer, t_state state, int ret)
+{
+	lex_update_state(lexer, state);
+	return (ret);
+}
+
 int					lex_state_expansions(t_lexer *lexer)
 {
 	t_ex_token	cur;
 	char		*match;
 	char		*str;
 
-	if (lexer->in > lexer->pin)
+	if (!(cur = g_exp_list[lex_get_expansion(lexer)]).op)
+		return (update_state(lexer, ST_GENERAL, 1));
+	lexer->in += cur.len;
+	if ((match = get_closing(cur.op)) && !ft_strequ(cur.op, "$"))
 	{
-		tok_create(lexer, lexer->pin, lexer->in - lexer->pin, TOKEN_NAME);
-		lexer->pin = lexer->in;
+		if (!(str = ft_strstr(lexer->in, match)))
+			return (-5);
+		str += ft_strlen(match);
 	}
-	if ((cur = g_exp_list[lex_get_expansion(lexer)]).op)
+	else if (ft_strequ(cur.op, "$"))
 	{
-		lexer->in += cur.len;
-		if ((match = get_closing(cur.op)) && !ft_strequ(cur.op, "$"))
-		{
-			if (!(str = ft_strstr(lexer->in, match)))
-				return (-5);
-			str += ft_strlen(match);
-		}
-		else if (ft_strequ(cur.op, "$"))
-		{
-			while (lexer->in[0] && !lexer_search(lexer->in).op)
-				lexer->in++;
-			str = lexer->in;
-		}
-		else
-		{
-			lex_update_state(lexer, ST_GENERAL);
-			return (1);
-		}
-		tok_create(lexer, lexer->pin, str - lexer->pin, get_tok_type(cur.op));
-		lexer->pin = str;
-		lexer->in = str;
-		lex_update_state(lexer, ST_GENERAL);
+		while (lexer->in[0] && !lexer_search(lexer->in).op)
+			lexer->in++;
+		str = lexer->in;
 	}
 	else
-		lex_update_state(lexer, ST_GENERAL);
-	return (1);
+		return (update_state(lexer, ST_GENERAL, 1));
+	tok_create(lexer, lexer->pin, str - lexer->pin, get_tok_type(cur.op));
+	lexer->pin = str;
+	lexer->in = str;
+	return (update_state(lexer, ST_GENERAL, 1));
 }

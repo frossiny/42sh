@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/10/30 18:29:55 by frossiny         ###   ########.fr        #
+#    Updated: 2019/11/01 15:53:33 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,8 @@ FILES 	=	main.c									\
 			builtins/options/opt_free.c			 	\
 			expansion/variables.c					\
 			expansion/tilde.c						\
+			expansion/expansion.c					\
+			expansion/exp_remove_quotes.c			\
 			hashtable/ht_create.c					\
 			hashtable/ht_hash.c						\
 			hashtable/ht_delone.c					\
@@ -128,6 +130,7 @@ FILES 	=	main.c									\
 			variables/var_delete.c					\
 			variables/var_destroy.c					\
 			variables/var_get.c						\
+			variables/var_value.c					\
 			variables/var_init.c					\
 			variables/var_new.c						\
 			variables/var_replace.c					\
