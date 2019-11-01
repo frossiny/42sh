@@ -6,25 +6,27 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:49:15 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/14 15:17:01 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/14 19:01:10 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <pwd.h>
 
 #include "libft.h"
 #include "shell.h"
 #include "utils.h"
 
-static int	handle_home_spec(t_token *token, t_env *env)
+static int	handle_home_spec(t_token *token, t_var *vars)
 {
 	char	*path;
-	t_env	*var;
+	t_var	*var;
 
-	if (!env || token->content[1] == '\0')
+	if (!vars || token->content[1] == '\0')
 		return (0);
 	if ((token->content[1] == '+' || token->content[1] == '-')
 			&& (token->content[2] == '\0' || token->content[2] == '/'))
 	{
-		if (!(var = get_enve(env, token->content[1] == '+'
+		if (!(var = var_get(vars, token->content[1] == '+'
 					? "PWD" : "OLDPWD")))
 			return (0);
 		if (!(path = ft_strjoin(var->value, token->content + 2)))
@@ -37,17 +39,17 @@ static int	handle_home_spec(t_token *token, t_env *env)
 	return (1);
 }
 
-static int	handle_home_own(t_token *token, t_env *env)
+static int	handle_home_own(t_token *token, t_var *vars)
 {
 	char	*path;
-	t_env	*tmp;
+	t_var	*tmp;
 
-	if (!env)
+	if (!vars)
 		return (0);
 	path = NULL;
-	if ((tmp = get_enve(env, "HOME")))
+	if ((tmp = var_get(vars, "HOME")))
 		path = ft_strjoin(tmp->value, token->content + 1);
-	else if ((tmp = get_enve(env, "USER")))
+	else if ((tmp = var_get(vars, "USER")))
 		path = ft_strjoint("/Users/", tmp->value, token->content + 1);
 	if (!path && !(path = ft_strdup("")))
 		return (0);
@@ -56,28 +58,25 @@ static int	handle_home_own(t_token *token, t_env *env)
 	return (1);
 }
 
-int			handle_home(t_token *token, t_env *env)
+int			handle_home(t_token *token, t_var *vars)
 {
-	char	*path;
+	char			*path;
+	struct passwd	*pwd;
 
 	path = NULL;
 	if (!token)
 		return (0);
 	if (token->content[1] == '\0' || token->content[1] == '/')
-		return (handle_home_own(token, env));
+		return (handle_home_own(token, vars));
 	else if (token->content[1] == '+' || token->content[1] == '-')
-		return (handle_home_spec(token, env));
+		return (handle_home_spec(token, vars));
 	else if (!ft_isalnum(token->content[1]))
 		return (1);
 	else
 	{
-		path = ft_strjoin("/Users/", token->content + 1);
-		if (!path || access(path, F_OK))
-		{
-			path ? no_user(token->content + 1) : 0;
-			ft_strdel(&path);
+		if (!(pwd = getpwnam(token->content + 1)))
 			return (0);
-		}
+		path = ft_strdup(pwd->pw_dir);
 	}
 	path = path ? path : ft_strdup("");
 	free(token->content);

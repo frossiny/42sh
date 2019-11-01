@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 15:58:08 by frossiny          #+#    #+#             */
-/*   Updated: 2019/08/13 12:39:14 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/24 12:53:19 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 #include "libft.h"
 #include "shell.h"
 
-static char		*get_path(char *word, t_env *env)
+static char		*get_path(char *word, t_var *vars)
 {
 	char	*search;
 
 	if (word[0] == '~')
-		return (get_tilde(word, env));
+		return (get_tilde(word, vars));
 	if (ft_strequ(word, "/"))
 		return (ft_strdup("/"));
 	if (!(search = ft_strrchr(word, '/')))
@@ -41,8 +41,8 @@ static char		*get_home_word(char *word, char *dname)
 	return (word);
 }
 
-static int		complete_file(char **str,
-									char *dname, t_compl_info *ci, t_env *env)
+static int		complete_file(char **str, \
+									char *dname, t_compl_info *ci, t_var *vars)
 {
 	char			*tmp;
 	char			*path;
@@ -51,7 +51,7 @@ static int		complete_file(char **str,
 
 	word = ci->word;
 	pos = ci->pos;
-	if (!(path = get_path(word, env)))
+	if (!(path = get_path(word, vars)))
 		return (0);
 	if (word[0] == '~')
 		tmp = get_home_word(word, dname);
@@ -67,9 +67,10 @@ static int		complete_file(char **str,
 	return (1);
 }
 
-static int		file_found(DIR *dirp, t_compl_info *ci, char *dname, t_env *env)
+static int		file_found(DIR *dirp, t_compl_info *ci, \
+											char *dname, t_var *vars)
 {
-	complete_file(ci->str, dname, ci, env);
+	complete_file(ci->str, dname, ci, vars);
 	closedir(dirp);
 	return (1);
 }
@@ -82,7 +83,7 @@ int				complete_files(t_compl_info *ci, t_shell *shell)
 	char			*path;
 
 	file = get_file_start(ci->word);
-	if (!(path = get_path(ci->word, shell->env)))
+	if (!(path = get_path(ci->word, shell->vars)))
 		return (0);
 	dirp = opendir(path);
 	free(path);
@@ -93,7 +94,7 @@ int				complete_files(t_compl_info *ci, t_shell *shell)
 			if (ft_strnequ(dirc->d_name, file, ft_strlen(file)))
 			{
 				if (ci->index == 0)
-					return (file_found(dirp, ci, dirc->d_name, shell->env));
+					return (file_found(dirp, ci, dirc->d_name, shell->vars));
 				else
 					ci->index--;
 			}

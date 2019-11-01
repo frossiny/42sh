@@ -2,8 +2,8 @@
 /libft/objs
 objs
 *.o
-*.dSYM
 42sh
 vgcore.*
 .vscode
 .DS_Store
+*.dSYM

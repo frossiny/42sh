@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 14:23:53 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/01 18:14:56 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/01 19:28:55 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,21 @@
 # include <stdlib.h>
 # include <termios.h>
 
-# include "env.h"
+/*
+** Variables structure
+*/
+typedef struct		s_var
+{
+	char			*key;
+	char			*value;
+	int				export;
+	struct s_var	*next;
+}					t_var;
 
 /*
 ** Lexer structs
 */
-typedef enum	e_state
+typedef enum		e_state
 {
 	ST_GENERAL,
 	ST_QUOTES,
@@ -29,46 +38,50 @@ typedef enum	e_state
 	ST_ESCAPED,
 	ST_COMMENT,
 	ST_OPERATOR,
-	ST_SEMIC
-}				t_state;
+	ST_EXPANSIONS
+}					t_state;
 
-typedef struct	s_state_func
+typedef struct		s_state_func
 {
 	t_state		key;
 	int			(*lex)();
-}				t_state_func;
+}					t_state_func;
 
-typedef enum	e_token_type
+typedef enum		e_token_type
 {
 	TOKEN_NULL,
 	TOKEN_NAME,
+	TOKEN_ASSIGNMENT,
+	TOKEN_VAR,
+	TOKEN_ARITHMETIC,
 	TOKEN_SEMI,
 	TOKEN_AND,
 	TOKEN_OR,
+	TOKEN_IO_FD,
 	TOKEN_REDIRI,
 	TOKEN_REDIRO,
 	TOKEN_PIPE,
 	TOKEN_AGGR,
 	TOKEN_IGN
-}				t_token_type;
+}					t_token_type;
 
-typedef struct	s_ex_token
+typedef struct		s_ex_token
 {
 	const char		*op;
 	size_t			len;
 	t_token_type	type;
 	t_state			state;
-}				t_ex_token;
+}					t_ex_token;
 
-typedef struct	s_token
+typedef struct		s_token
 {
 	char			*content;
 	size_t			len;
 	t_token_type	type;
 	struct s_token	*next;
-}				t_token;
+}					t_token;
 
-typedef struct	s_lexer
+typedef struct		s_lexer
 {
 	char		*in;
 	char		*pin;
@@ -77,8 +90,23 @@ typedef struct	s_lexer
 	size_t		size;
 	t_state		state;
 	t_state		lstate;
-}				t_lexer;
+}					t_lexer;
 
+/*
+** Parser structures
+*/
+typedef struct		s_type_func
+{
+	t_token_type	key;
+	int				(*fnc)();
+}					t_type_func;
+
+typedef struct		s_parser
+{
+	t_token		*tokens;
+	int			i;
+	char		can_var;
+}					t_parser;
 
 /*
 ** AST structures
@@ -113,7 +141,7 @@ typedef struct		s_anode
 }					t_anode;
 
 /*
-** Parser structure
+** Reader structure
 */
 typedef struct		s_pipel
 {
@@ -138,11 +166,26 @@ typedef struct		s_childs
 /*
 ** Builtin
 */
-typedef struct	s_builtin
+
+typedef struct		s_opt
+{
+	char			*opt;
+	char			*value;
+	struct s_opt	*next;
+}					t_opt;
+
+typedef struct		s_options
+{
+	int			ret;
+	t_opt		*opts;
+	size_t		last;
+}					t_options;
+
+typedef struct		s_builtin
 {
 	char	*name;
 	int		(*func)();
-}				t_builtin;
+}					t_builtin;
 
 /*
 ** Hashtable structure
@@ -162,16 +205,16 @@ typedef struct		s_hashtable
 /*
 ** History structure
 */
-typedef struct	s_histo_lst
+typedef struct		s_histo_lst
 {
 	char				*str;
 	size_t				len;
 	size_t				index;
 	struct s_histo_lst	*prev;
 	struct s_histo_lst	*next;
-}				t_histo_lst;
+}					t_histo_lst;
 
-typedef struct	s_history
+typedef struct		s_history
 {
 	t_histo_lst			*lst;
 	size_t				pos;
@@ -179,14 +222,14 @@ typedef struct	s_history
 	size_t				index;
 	size_t				histsize;
 	char				*first_command;
-}				t_history;
+}					t_history;
 
 /*
 ** Main shell structure
 */
 typedef struct		s_shell
 {
-	t_env			*env;
+	t_var			*vars;
 	t_lexer			lexer;
 	t_anode			*ast;
 	t_hashtable		bin_ht;

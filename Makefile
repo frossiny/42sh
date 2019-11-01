@@ -6,23 +6,90 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/10/31 15:13:57 by lubenard         ###   ########.fr        #
+#    Updated: 2019/11/01 22:43:06 by lubenard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC		=	clang
-CFLAGS	+=	-Wall -Werror -Wextra -g3
+CC		=	clang -g3 #-fsanitize=address
+CFLAGS	+=	-Wall -Werror -Wextra
 
 SHELL	=	bash
 
-NAME 	=	42sh
+NAME	=	42sh
 LIBFT	=	libft
 SRCDIR	=	srcs
 INCDIR	=	includes
 OBJDIR	=	objs
-FILES 	=	main.c									\
+FILES	=	main.c									\
 			shell.c									\
 			prompt.c								\
+			signals.c								\
+			errors.c								\
+			utils.c									\
+			ast/build_ast.c							\
+			ast/create_node.c						\
+			ast/build_args.c						\
+			ast/redirections.c						\
+			ast/destroy_ast.c						\
+			ast/create_cmd.c						\
+			builtins/builtins.c						\
+			builtins/builtins_errors.c				\
+			builtins/set.c							\
+			builtins/unset.c						\
+			builtins/exit.c							\
+			builtins/echo.c							\
+			builtins/export.c						\
+			builtins/cd/build_path.c				\
+			builtins/cd/cd.c						\
+			builtins/history.c						\
+			builtins/options/opt_parse.c			\
+			builtins/options/opt_add.c				\
+			builtins/options/opt_get.c				\
+			builtins/options/opt_free.c				\
+			expansion/variables.c					\
+			expansion/tilde.c						\
+			expansion/expansion.c					\
+			expansion/exp_remove_quotes.c			\
+			hashtable/ht_create.c					\
+			hashtable/ht_hash.c						\
+			hashtable/ht_delone.c					\
+			hashtable/ht_delete.c					\
+			hashtable/ht_put.c						\
+			hashtable/ht_get.c						\
+			hashtable/ht_exists.c					\
+			lexer/lexer.c							\
+			lexer/lex_free.c						\
+			lexer/lex_search.c						\
+			lexer/lex_update_state.c				\
+			lexer/lex_is_expansion.c				\
+			lexer/tokens/tok_create.c				\
+			lexer/tokens/tok_destroy.c				\
+			lexer/tokens/tok_is_word.c				\
+			lexer/tokens/tok_is_redirection.c		\
+			lexer/tokens/tok_push.c					\
+			lexer/tokens/tok_replace.c				\
+			lexer/tokens/tok_is_varexp.c			\
+			lexer/states/general.c					\
+			lexer/states/quotes.c					\
+			lexer/states/comment.c					\
+			lexer/states/escaped.c					\
+			lexer/states/operators.c				\
+			lexer/states/expansions.c				\
+			parser/parser.c							\
+			parser/par_next.c						\
+			parser/types/name.c						\
+			parser/types/redirections.c				\
+			parser/types/operators.c				\
+			parser/types/semic.c					\
+			reader/reader.c							\
+			reader/pipe.c							\
+			reader/pipeline.c						\
+			reader/redirections.c					\
+			reader/executables.c					\
+			reader/here_doc.c						\
+			reader/get_pipes_docs.c					\
+			reader/exec_utils.c						\
+			reader/child_add.c						\
 			termcaps/read_input.c					\
 			termcaps/read_utils.c					\
 			termcaps/termcaps.c						\
@@ -55,77 +122,28 @@ FILES 	=	main.c									\
 			termcaps/history.c						\
 			termcaps/history_utils.c				\
 			termcaps/signal.c						\
-			lexer/lexer.c							\
-			lexer/is_escaped.c						\
-			lexer/is_word_token.c					\
-			lexer/lexer_free.c						\
-			lexer/lexer_search.c					\
-			lexer/create_token.c					\
-			lexer/push_token.c						\
-			lexer/replace_token.c					\
-			lexer/update_state.c					\
-			lexer/parse_error.c						\
-			lexer/states/general.c					\
-			lexer/states/quotes.c					\
-			lexer/states/comment.c					\
-			lexer/states/escaped.c					\
-			lexer/states/operators.c				\
-			parser/parser.c							\
-			parser/pipe.c							\
-			parser/pipeline.c						\
-			parser/redirections.c					\
-			parser/executables.c					\
-			parser/here_doc.c						\
-			parser/get_pipes_docs.c					\
-			parser/hashtable/ht_create.c			\
-			parser/hashtable/ht_hash.c				\
-			parser/hashtable/ht_delone.c			\
-			parser/hashtable/ht_delete.c			\
-			parser/hashtable/ht_put.c				\
-			parser/hashtable/ht_get.c				\
-			parser/hashtable/ht_exists.c			\
-			parser/exec_utils.c						\
-			parser/child_add.c						\
-			ast/build_ast.c							\
-			ast/create_node.c						\
-			ast/build_args.c						\
-			ast/redirections.c						\
-			ast/destroy_ast.c						\
-			ast/create_cmd.c						\
-			env/build_env.c							\
-			env/copy_env.c							\
-			env/count_env.c							\
-			env/disp_env.c							\
-			env/disp_free_env.c						\
-			env/free_env.c							\
-			env/get_enve.c							\
-			env/new_envl.c							\
-			env/dup_env.c							\
-			env/exists_env.c						\
-			env/replace_env.c						\
-			builtins/history.c 						\
-			builtins/builtins.c						\
-			builtins/builtins_errors.c				\
-			builtins/env.c							\
-			builtins/setenv.c						\
-			builtins/unsetenv.c						\
-			builtins/exit.c							\
-			builtins/cd.c							\
-			builtins/echo.c							\
+			utils/is_escaped.c						\
 			utils/dup_argv.c						\
 			utils/display_signal.c					\
 			utils/get_var_size.c					\
 			utils/str_escape.c						\
 			utils/copy_tab.c						\
-			signals.c								\
-			errors.c								\
-			utils.c									\
-			expansion/variables.c					\
-			expansion/tilde.c
+			variables/var_build_env.c				\
+			variables/var_delete.c					\
+			variables/var_destroy.c					\
+			variables/var_get.c						\
+			variables/var_value.c					\
+			variables/var_init.c					\
+			variables/var_new.c						\
+			variables/var_replace.c					\
+			variables/var_set.c						\
+			variables/var_display.c					\
+			variables/var_disp_env.c				\
+			variables/var_is_key_valid.c
 
 SRCS	=	$(addprefix $(SRCDIR)/, $(FILES))
-OBJS 	=	$(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
-OBJSD 	=	$(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.d)
+OBJS	=	$(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
+OBJSD	=	$(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.d)
 
 ##### Colors #####
 _END=\x1b[0m
@@ -168,6 +186,8 @@ fclean: clean
 	@$(MAKE) -C $(LIBFT) fclean
 	@echo -e "${_RED}${_BOLD}Cleaning project...${_END}"
 	@rm -f $(NAME)
+	@rm -rf $(OBJDIR)
+	@rm -rf $(NAME).dSYM
 
 re: fclean
 	@$(MAKE)
@@ -175,5 +195,8 @@ re: fclean
 norm:
 	@norminette $(INCDIR) $(SRCDIR) | grep "Warning\|Error" || true
 	@echo "Norm done!"
+
+test:
+	python3 err.py
 
 -include $(OBJSD)

@@ -6,13 +6,14 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:03:36 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/01 19:25:13 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/01 22:42:24 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft.h>
 #include <shell.h>
 #include <utils.h>
+#include <opt.h>
 
 /*
 ** Will clear hist and free linked list
@@ -65,16 +66,19 @@ int		print_history(t_shell *shell)
 
 int		b_history(t_cmd *cmd, t_shell *shell)
 {
-	t_options	opts;
+	t_options	*opts;
 
 	(void)cmd;
+	(void)shell;
 	opts = opt_parse(cmd, "cdanrwps", "history");
-	while (opts->opts && opts->opts->next)
+	printf("RET = %d, last = %zu\n", opts->ret, opts->last);
+	while (opts->opts)
 	{
-		printf("option = %s\n");
+		printf("option {%s = %s}\n", opts->opts->opt,  opts->opts->value);
 		opts->opts = opts->opts->next;
 	}
-	//print_history(shell);
+	if (cmd->argc - opts->last == 0)
+		print_history(shell);
 	//empty_hist(shell);
 	return (0);
 }

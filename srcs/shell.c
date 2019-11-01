@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:05:59 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/14 14:58:05 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/01 15:39:08 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "libft.h"
 #include "shell.h"
 #include "lexer.h"
+#include "parser.h"
 #include "ast.h"
 #include "hashtable.h"
 
@@ -54,8 +55,7 @@ int		quote_error(t_shell *shell, char **input, int ret)
 	{
 		if (g_ignore_signals)
 		{
-			write(2,
-			"21sh: unexpected EOF while looking for quote\n", 45);
+			ft_dprintf(2, "42sh: unexpected EOF while looking for quote\n");
 			g_ignore_signals = 0;
 			return (2);
 		}
@@ -77,7 +77,7 @@ int		handle_input(t_shell *shell, char **input)
 	shell->lexer.size = 0;
 	while ((ret = lex(*input, &(shell->lexer))) < 1)
 	{
-		destroy_lexer(&(shell->lexer));
+		lexer_free(&(shell->lexer));
 		if (ret == -3 || ret == -2)
 		{
 			if ((ret = quote_error(shell, input, ret)))
@@ -90,6 +90,11 @@ int		handle_input(t_shell *shell, char **input)
 		}
 		else
 			return (ret);
+	}
+	if (!parse(shell->lexer.tokens))
+	{
+		lexer_free(&(shell->lexer));
+		return (1);
 	}
 	return (0);
 }
@@ -109,8 +114,8 @@ static int	eval_exec(char **input)
 			return (1);
 		ft_strdel(input);
 		build_ast(&g_shell);
-		g_shell.ast ? ret = parse(&g_shell, g_shell.ast) : 0;
-		destroy_lexer(&(g_shell.lexer));
+		g_shell.ast ? ret = reader(&g_shell, g_shell.ast) : 0;
+		lexer_free(&(g_shell.lexer));
 		destroy_ast(&g_shell);
 	}
 	else
@@ -118,13 +123,10 @@ static int	eval_exec(char **input)
 	return (ret);
 }
 
-int		shell_init()
+int		shell(void)
 {
 	char	*input;
 
-	g_shell.lexer.tokens = NULL;
-	g_shell.lexer.state = ST_GENERAL;
-	g_shell.lexer.lstate = ST_GENERAL;
 	while ((get_input(0, &input, &g_shell)) > 0)
 	{
 		if (!input)
@@ -135,7 +137,7 @@ int		shell_init()
 	if (input)
 		ft_strdel(&input);
 	isatty(0) ? ft_putchar('\n') : 0;
-	free_env(&(g_shell.env));
+	var_destroy(&(g_shell.vars));
 	ht_delete(g_shell);
 	free_termcaps(&g_shell);
 	return (g_return);

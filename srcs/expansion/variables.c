@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/28 13:16:59 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/01 18:26:48 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/01 19:43:38 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@
 #include "lexer.h"
 #include "utils.h"
 
-static char	*handle_var(t_env *env, char *var_name)
+static char	*handle_var(t_var *vars, char *var_name)
 {
 	char	*ret;
-	t_env	*var;
+	t_var	*var;
 
 	ret = NULL;
-	var = get_enve(env, var_name);
+	var = var_get(vars, var_name);
 	if (var_name[0] == '?')
 		ret = ft_itoa(g_return);
 	else if (!ft_strcmp(var_name, "HISTSIZE"))
@@ -71,7 +71,7 @@ static int	handle_quotes(char **new, t_expansion *e)
 	return (0);
 }
 
-static void	parse_token(t_token *token, t_expansion *e, t_env *env)
+static void	parse_token(t_token *token, t_expansion *e, t_var *vars)
 {
 	char	*new;
 	char	*tmp;
@@ -88,7 +88,7 @@ static void	parse_token(t_token *token, t_expansion *e, t_env *env)
 			&& (e->str[e->i + 1] == '\0' || e->str[e->i + 1] == '"'))
 			continue ;
 		fill_new(&new, ft_strndup(e->str + e->li, e->i - e->li), 1);
-		tmp = handle_var(env,
+		tmp = handle_var(vars,
 			ft_strndup(e->str + e->i + 1, get_var_size(e->str + e->i)));
 		(tmp) ? fill_new(&new, tmp, 0) : 0;
 		e->i += get_var_size(e->str + e->i);
@@ -97,25 +97,28 @@ static void	parse_token(t_token *token, t_expansion *e, t_env *env)
 	(e->i > e->li)
 		? fill_new(&new, ft_strndup(e->str + e->li, e->i - e->li), 1)
 		: 0;
-	replace_token(token, new);
+	tok_replace(token, new);
 }
 
-int			replace_vars(t_token *token, t_env *env)
+int			replace_vars(t_token *token, t_var *vars)
 {
 	t_expansion	exp;
 	int			esc;
 
-	while (token && is_word_token(token))
+	while (token)
 	{
-		esc = (token->content[0] == '\\');
-		exp.i = -1;
-		exp.li = 0;
-		exp.isquote = 0;
-		exp.str = token->content;
-		parse_token(token, &exp, env);
-		if (!esc && token->content[0] == '~')
-			if (!(handle_home(token, env)))
-				return (0);
+		if (token->type == TOKEN_VAR || token->type == TOKEN_NAME)
+		{
+			esc = (token->content[0] == '\\');
+			exp.i = -1;
+			exp.li = 0;
+			exp.isquote = 0;
+			exp.str = token->content;
+			parse_token(token, &exp, vars);
+			if (!esc && token->content[0] == '~')
+				if (!(handle_home(token, vars)))
+					return (0);
+		}
 		token = token->next;
 	}
 	return (1);

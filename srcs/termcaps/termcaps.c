@@ -6,13 +6,13 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 11:02:25 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/10/14 14:57:19 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/14 18:39:46 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <term.h>
 #include "libft.h"
-#include "structs.h"
+#include "shell.h"
 #include "termcaps.h"
 
 static const t_ex_caps g_caps_list[] =

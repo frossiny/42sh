@@ -6,14 +6,15 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/04 16:14:27 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/14 15:10:48 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/01 19:41:10 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
-#include "parser.h"
+#include "reader.h"
 #include "lexer.h"
+#include "expansion.h"
 
 static int	build_args_arr(char ***args, t_token *tokens)
 {
@@ -23,12 +24,9 @@ static int	build_args_arr(char ***args, t_token *tokens)
 
 	argc = 0;
 	tmp = tokens;
-	while (tmp && is_word_token(tmp))
+	while (tmp && (tok_is_word(tmp) || tok_is_redirection(tmp)))
 	{
-		if (ft_strisdigit(tmp->content) && tmp->next
-		&& tmp->next->type == TOKEN_REDIRI && tmp->next->type == TOKEN_REDIRO)
-			break ;
-		argc++;
+		argc += tok_is_word(tmp);
 		tmp = tmp->next;
 	}
 	if (!((*args) = (char **)malloc(sizeof(char *) * (argc + 1))))
@@ -37,20 +35,22 @@ static int	build_args_arr(char ***args, t_token *tokens)
 	i = 0;
 	while (tmp && i < argc)
 	{
-		(*args)[i++] = tmp->content;
+		if (tok_is_word(tmp))
+			(*args)[i++] = tmp->content;
 		tmp = tmp->next;
 	}
 	(*args)[i] = NULL;
 	return (argc);
 }
 
-int			build_args(t_cmd *cmd, t_env *env)
+int			build_args(t_cmd *cmd)
 {
 	char	**argv;
 
 	if (!cmd)
 		return (-1);
-	replace_vars(cmd->exe, env);
+	//replace_vars(cmd->exe, vars);
+	expand(cmd->exe);
 	cmd->argc = build_args_arr(&argv, cmd->exe);
 	cmd->args = argv;
 	return (cmd->argc);

@@ -5,63 +5,82 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/21 15:17:59 by frossiny          #+#    #+#             */
-/*   Updated: 2019/07/29 10:34:07 by frossiny         ###   ########.fr       */
+/*   Created: 2019/10/23 15:36:46 by frossiny          #+#    #+#             */
+/*   Updated: 2019/10/30 15:24:15 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "libft.h"
+#include "parser.h"
 
-static int	is_pipe_node(t_anode *node)
+const static t_type_func	g_type_funcs[] =
 {
-	if (!node || !node->ope)
-		return (0);
-	return (node->ope->type == TOKEN_PIPE);
-}
+	{ TOKEN_NAME, &par_type_name },
+	{ TOKEN_IO_FD, &par_type_io_fd },
+	{ TOKEN_SEMI, &par_type_semic },
+	{ TOKEN_AND, &par_type_operator },
+	{ TOKEN_OR, &par_type_operator },
+	{ TOKEN_REDIRI, &par_type_redir },
+	{ TOKEN_REDIRO, &par_type_redir },
+	{ TOKEN_PIPE, &par_type_redir },
+	{ TOKEN_AGGR, &par_type_redir },
+	{ TOKEN_VAR, &par_type_name },
+	{ TOKEN_ASSIGNMENT, NULL },
+	{ TOKEN_NULL, NULL }
+};
 
-static int	is_cond_node(t_anode *node)
+static t_type_func	get_func(t_token_type type)
 {
-	if (!node || !node->ope)
-		return (0);
-	return (node->ope->type == TOKEN_AND || node->ope->type == TOKEN_OR);
-}
+	const t_type_func	null_state = { TOKEN_NULL, NULL };
+	int					i;
 
-static int	parse_condition(int *ret, t_anode *cond, t_shell *shell)
-{
-	if (cond->ope->type == TOKEN_AND)
+	i = 0;
+	while (g_type_funcs[i].key != TOKEN_NULL)
 	{
-		if (*ret != 0)
-			return (0);
-		*ret = execute(cond->right->cmd, shell);
-		return (1);
+		if (g_type_funcs[i].key == type)
+			return (g_type_funcs[i]);
+		i++;
 	}
-	else if (cond->ope->type == TOKEN_OR)
-	{
-		if (*ret == 0)
-			return (0);
-		*ret = execute(cond->right->cmd, shell);
-		return (1);
-	}
-	else
-		return (1);
+	return (null_state);
 }
 
-int			parse(t_shell *shell, t_anode *ast)
+static int			parse_error(int err, t_token *tokens, int i)
 {
-	while (ast->left)
-		ast = ast->left;
-	while (ast)
+	while (tokens->next && i)
 	{
-		if (!ast->ope && !is_pipe_node(ast->parent))
-			g_return = execute(ast->cmd, shell);
-		else if (is_pipe_node(ast->parent))
-			g_return = execute_pipes(ast, shell, &ast);
-		else if (is_cond_node(ast))
+		tokens = tokens->next;
+		i--;
+	}
+	if (err == 0)
+		ft_dprintf(2, "42sh: syntax error near unexpected token: %s\n", \
+			tokens->content);
+	return (err);
+}
+
+int					parse(t_token *tokens)
+{
+	t_type_func	cur;
+	t_parser	parser;
+	int			ret;
+
+	parser.i = 0;
+	parser.can_var = 1;
+	parser.tokens = tokens;
+	while (parser.tokens)
+	{
+		if (parser.tokens->type == TOKEN_SEMI \
+					|| parser.tokens->type == TOKEN_PIPE)
+			parser.can_var = 1;
+		cur = get_func(parser.tokens->type);
+		if (cur.fnc)
 		{
-			if (!parse_condition(&g_return, ast, shell))
-				return (g_return);
+			if ((ret = cur.fnc(&parser)) < 1)
+				return (parse_error(ret, tokens, parser.i));
 		}
-		ast ? ast = ast->parent : 0;
+		else if (cur.key != TOKEN_NULL)
+			par_next(&parser, 1);
+		else
+			return (parse_error(ret, tokens, parser.i));
 	}
-	return (g_return);
+	return (1);
 }

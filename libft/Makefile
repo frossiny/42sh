@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
+#    By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/16 11:23:33 by frossiny          #+#    #+#              #
-#    Updated: 2019/10/31 15:13:36 by lubenard         ###   ########.fr        #
+#    Updated: 2019/11/01 22:13:30 by lubenard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,9 @@ NAME 	=	libft.a
 SRCDIR	=	srcs
 INCDIR	=	includes
 OBJDIR	=	objs
-FILES 	=	ft_memset.c							\
+FILES 	=	ft_2dstrlen.c						\
+			ft_2dstrndel.c						\
+			ft_memset.c							\
 			ft_memalloc.c						\
 			ft_memdel.c							\
 			ft_memcpy.c							\
@@ -144,7 +146,7 @@ _WHITE=\x1b[37m
 
 $(NAME): $(OBJS)
 	@echo -e -n "\n${_BLUE}${_BOLD}[Linking] $(NAME)${_END}"
-	@ar rc $(NAME) $(OBJS)
+	@ar rcs $(NAME) $(OBJS)
 	@echo -e -n "\n${_GREEN}${_BOLD}$(NAME) done.${_END}"
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
@@ -164,6 +166,7 @@ clean:
 fclean: clean
 	@echo -e "${_RED}${_BOLD}Removing $(NAME)...${_END}"
 	@rm -f $(NAME)
+	@rm -rf $(OBJDIR)
 
 re: fclean
 	$(MAKE) $(NAME)
