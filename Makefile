@@ -6,11 +6,11 @@
 #    By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/11/01 16:09:39 by pcharrie         ###   ########.fr        #
+#    Updated: 2019/11/02 02:15:13 by pcharrie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC		=	gcc -g3 -fsanitize=address
+CC		=	gcc -g3
 #CFLAGS	+=	-Wall -Werror -Wextra
 
 SHELL	=	bash
@@ -41,6 +41,7 @@ FILES 	=	main.c									\
 			builtins/export.c						\
 			builtins/cd/build_path.c				\
 			builtins/cd/cd.c						\
+			builtins/cd/get_path.c				\
 			builtins/options/opt_parse.c			\
 			builtins/options/opt_add.c				\
 			builtins/options/opt_get.c				\
