@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 16:10:39 by pcharrie          #+#    #+#             */
-/*   Updated: 2019/11/02 17:03:11 by pcharrie         ###   ########.fr       */
+/*   Updated: 2019/11/02 17:13:51 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int			test_unary(t_cmd *c)
 
 	if (!ft_strequstrs(c->args[1], g_test_unary_operators))
 		ft_dprintf(2, "42sh: test: %s: unary operator expected\n", c->args[1]);
-	else if (stat(c->args[2], &buf)
+	else if (!stat(c->args[2], &buf)
 		&& ((ft_strequ(c->args[1], "-b") && S_ISBLK(buf.st_mode))
 		|| (ft_strequ(c->args[1], "-c") && S_ISCHR(buf.st_mode))
 		|| (ft_strequ(c->args[1], "-d") && S_ISDIR(buf.st_mode))
