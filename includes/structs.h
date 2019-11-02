@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 14:23:53 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/30 18:41:04 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/02 17:20:51 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,54 @@
 
 # include <stdlib.h>
 # include <termios.h>
+
+/*
+** Arithmetic Expansions structs
+*/
+typedef enum		s_ae_type
+{
+	ERROR,
+	WORD,
+	NUM,
+	OPERATOR,
+	INCR,
+	DECR,
+	COMP,
+	SEP,
+	EOI,
+}					t_ae_type;
+
+typedef enum		s_ae_value
+{
+	PLUS,
+	PPLUS,
+	MINUS,
+	MMINUS,
+	MULT,
+	DIV,
+	MOD,
+	EQU,
+	NEQU,
+	GREAT,
+	GREATEQ,
+	LESS,
+	LESSEQ,
+	AND,
+	OR,
+}					t_ae_value;
+
+typedef struct		s_ae_token
+{
+	t_ae_type		type;
+	long			num_value;
+	t_ae_value		value;
+}					t_ae_token;
+
+typedef struct		s_fill_aevalue
+{
+	char			*str;
+	t_ae_value		value;
+}					t_fill_aevalue;
 
 /*
 ** Variables structure
