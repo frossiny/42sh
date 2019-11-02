@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 14:03:28 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/17 15:21:34 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/02 17:05:18 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ const t_builtin g_builtins[] =
 	{ "unset", &b_unset },
 	{ "exit", &b_exit },
 	{ "export", &b_export },
+	{ "test", &b_test },
 	{ NULL, NULL }
 };
 
