@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 11:59:10 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/24 15:18:40 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/02 01:44:19 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ extern int			g_child;
 extern int			g_clear_buffer;
 extern int			g_ignore_signals;
 extern int			g_return;
+extern char			*g_pwd;
 
 int					shell(void);
 void				prompt(void);

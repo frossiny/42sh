@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 16:04:58 by pcharrie          #+#    #+#             */
-/*   Updated: 2019/11/01 16:44:07 by pcharrie         ###   ########.fr       */
+/*   Updated: 2019/11/02 01:47:50 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@
 #include "builtins.h"
 #include "opt.h"
 
-extern char	*g_pwd;
-
 static int	ft_strredupconst(char **s1, char *s2)
 {
 	char *tmp;
@@ -32,12 +30,12 @@ static int	ft_strredupconst(char **s1, char *s2)
 	return (1);
 }
 
-static char	*cd_get_var(t_shell *shell, char *key)
+static char	*cd_get_var(char *key)
 {
 	t_var	*var;
 	char	*path;
 
-	if (!(var = var_get(shell->vars, key))
+	if (!(var = var_get(g_shell.vars, key))
 		|| !(path = var->value))
 	{
 		ft_dprintf(2, "42sh: cd: %s not set\n", key);
@@ -112,11 +110,13 @@ int			b_cd(t_cmd *cmd, t_shell *shell)
 	else if (cmd->argc - opts->last > 1)
 		ft_putendl_fd("42sh: cd: too many arguments", 2);
 	else if (!cmd->args[opts->last] || !ft_strcmp(cmd->args[opts->last], "--"))
-		path = cd_get_var(shell, "HOME");
+		path = cd_get_var("HOME");
 	else if (!ft_strcmp(cmd->args[opts->last], "-"))
-		path = cd_get_var(shell, "OLDPWD");
-	else if (cmd->args[opts->last][0] != '/' &&
-		(cdpath = var_get(g_shell.vars, "CDPATH")))
+		path = cd_get_var("OLDPWD");
+	else if (cmd->args[opts->last][0] != '/'
+		&& !ft_strequ(cmd->args[opts->last], ".")
+		&& !ft_strequ(cmd->args[opts->last], "..")
+		&& (cdpath = var_get(g_shell.vars, "CDPATH")))
 		path = ft_strjoint(cdpath->value, "/", cmd->args[opts->last]);
 	else
 		path = (cmd->args[opts->last][0] == '/'
