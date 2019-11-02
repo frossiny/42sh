@@ -6,7 +6,7 @@
 /*   By: alagroy- <alagroy-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 16:42:22 by alagroy-          #+#    #+#             */
-/*   Updated: 2019/11/02 17:32:37 by alagroy-         ###   ########.fr       */
+/*   Updated: 2019/11/02 18:33:36 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,19 @@ long		ft_atol(char *str)
 	int		neg;
 
 	num = 0;
-	i = -1;
+	i = 0;
 	neg = 0;
 	if (str[0] == '-')
 		neg = 1;
 	if (str[0] == '+' || str[0] == '-')
 		i++;
-	while (str[++i] && ft_isdigit(str[i]))
+	while (ft_isspace(str[i]))
+		i++;
+	while (str[i] && ft_isdigit(str[i]))
 	{
 		num *= 10;
 		num += str[i] - '0';
+		i++;
 	}
-	return (num);
+	return (neg ? num * -1 : num);
 }
