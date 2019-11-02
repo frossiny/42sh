@@ -6,7 +6,7 @@
 #    By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/16 11:23:33 by frossiny          #+#    #+#              #
-#    Updated: 2019/11/01 16:09:14 by pcharrie         ###   ########.fr        #
+#    Updated: 2019/11/02 17:57:51 by pcharrie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ SRCDIR	=	srcs
 INCDIR	=	includes
 OBJDIR	=	objs
 FILES 	=	ft_2dstrlen.c						\
+			ft_2dstrdel.c						\
 			ft_2dstrndel.c						\
 			ft_memset.c							\
 			ft_memalloc.c						\

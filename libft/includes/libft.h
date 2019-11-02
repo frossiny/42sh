@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 18:24:16 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/01 16:12:55 by pcharrie         ###   ########.fr       */
+/*   Updated: 2019/11/02 17:58:11 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef	struct		s_list
 }					t_list;
 
 int					ft_2dstrlen(char **t);
+void				ft_2dstrdel(char ***t);
 void				ft_2dstrndel(char ***t, int size);
 
 void				*ft_memset(void *b, int c, size_t len);

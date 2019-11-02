@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 02:12:48 by pcharrie          #+#    #+#             */
-/*   Updated: 2019/11/02 17:39:32 by pcharrie         ###   ########.fr       */
+/*   Updated: 2019/11/02 18:19:44 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,7 @@ int			cd_pathcheck(char *path, char *arg)
 	int			c;
 
 	error = NULL;
-	if (!path)
-		return (0);
-	if (stat(path, &buf))
+	if (!path || stat(path, &buf))
 		error = "No such file or directory";
 	else if (!S_ISDIR(buf.st_mode))
 		error = "Not a directory";
@@ -63,6 +61,7 @@ int			cd_pathcheck(char *path, char *arg)
 	if (error)
 	{
 		ft_dprintf(2, "42sh: cd: %s: %s\n", arg, error);
+		ft_strdel(&path);
 		return (0);
 	}
 	return (1);
@@ -107,7 +106,7 @@ int			cd_getpath(t_cmd *cmd, t_options *opts)
 	else if (cmd->args[opts->last][0] != '/'
 		&& !ft_strequ(cmd->args[opts->last], ".")
 		&& !ft_strequ(cmd->args[opts->last], "..")
-		&& (cdp = var_get(g_shell.vars, "cdp")) && ft_strlen(cdp->value))
+		&& (cdp = var_get(g_shell.vars, "CDPATH")) && ft_strlen(cdp->value))
 		path = cd_cdpath(cdp, cmd->args[opts->last]);
 	else
 		path = (cmd->args[opts->last][0] == '/'
