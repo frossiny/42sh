@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 02:12:48 by pcharrie          #+#    #+#             */
-/*   Updated: 2019/11/02 02:16:23 by pcharrie         ###   ########.fr       */
+/*   Updated: 2019/11/02 17:39:32 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static char	*cd_get_var(char *key)
 	return (ft_strdup(path));
 }
 
-static int	cd_pathcheck(char *path, char *arg)
+int			cd_pathcheck(char *path, char *arg)
 {
 	struct stat	buf;
 	char		buf2[8192];
@@ -98,7 +98,7 @@ int			cd_chdir(char *path, int follow)
 int			cd_getpath(t_cmd *cmd, t_options *opts)
 {
 	char	*path;
-	t_var	*cdpath;
+	t_var	*cdp;
 
 	if (!cmd->args[opts->last] || !ft_strcmp(cmd->args[opts->last], "--"))
 		path = cd_get_var("HOME");
@@ -107,8 +107,8 @@ int			cd_getpath(t_cmd *cmd, t_options *opts)
 	else if (cmd->args[opts->last][0] != '/'
 		&& !ft_strequ(cmd->args[opts->last], ".")
 		&& !ft_strequ(cmd->args[opts->last], "..")
-		&& (cdpath = var_get(g_shell.vars, "CDPATH")))
-		path = ft_strjoint(cdpath->value, "/", cmd->args[opts->last]);
+		&& (cdp = var_get(g_shell.vars, "cdp")) && ft_strlen(cdp->value))
+		path = cd_cdpath(cdp, cmd->args[opts->last]);
 	else
 		path = (cmd->args[opts->last][0] == '/'
 			? ft_strdup(cmd->args[opts->last])

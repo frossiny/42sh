@@ -6,16 +6,46 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 16:04:58 by pcharrie          #+#    #+#             */
-/*   Updated: 2019/11/02 02:16:17 by pcharrie         ###   ########.fr       */
+/*   Updated: 2019/11/02 17:39:54 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <sys/stat.h>
 #include "utils.h"
 #include "shell.h"
 #include "libft.h"
 #include "variables.h"
 #include "builtins.h"
 #include "opt.h"
+
+char		*cd_cdpath(t_var *cdpath, char *path)
+{
+	char		**tab;
+	char		*np;
+	int			i;
+	struct stat	buf;
+
+	if (!(tab = ft_strsplit(cdpath->value, ':')))
+		return (NULL);
+	i = 0;
+	np = NULL;
+	while (tab[i])
+	{
+		if (np)
+			ft_strdel(&np);
+		if (!(np = ft_strjoint(tab[i], "/", path)))
+			continue ;
+		if (!stat(np, &buf) && S_ISDIR(buf.st_mode) && !access(np, X_OK))
+			return (np);
+		if (!(tab[i + 1]))
+		{
+			cd_pathcheck(np, path);
+			ft_strdel(&np);
+		}
+		i++;
+	}
+	return (NULL);
+}
 
 int			b_cd(t_cmd *cmd, t_shell *shell)
 {

@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:40:21 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/02 16:28:02 by pcharrie         ###   ########.fr       */
+/*   Updated: 2019/11/02 17:35:06 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ t_builtin	get_builtin(char *name);
 int			is_builtin(char *name);
 char		*cd_buildpath(char *path);
 int			cd_getpath(t_cmd *cmd, t_options *opts);
+char		*cd_cdpath(t_var *cdpath, char *path);
+int			cd_pathcheck(char *path, char *arg);
 int			test_unary(t_cmd *cmd);
 int			test_binary(t_cmd *cmd);
 int			b_set(t_cmd *cmd, t_shell *shell);

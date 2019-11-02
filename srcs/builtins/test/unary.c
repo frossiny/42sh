@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 16:10:39 by pcharrie          #+#    #+#             */
-/*   Updated: 2019/11/02 17:13:51 by pcharrie         ###   ########.fr       */
+/*   Updated: 2019/11/02 17:33:08 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,12 @@ int			test_unary(t_cmd *c)
 			&& S_ISLNK(buf.st_mode))
 		|| (ft_strequ(c->args[1], "-n") && ft_strlen(c->args[2]))
 		|| (ft_strequ(c->args[1], "-p") && S_ISFIFO(buf.st_mode))
-		|| (ft_strequ(c->args[1], "-r") && access(c->args[2], R_OK))
+		|| (ft_strequ(c->args[1], "-r") && !access(c->args[2], R_OK))
 		|| (ft_strequ(c->args[1], "-S") && S_ISSOCK(buf.st_mode))
 		|| (ft_strequ(c->args[1], "-s") && buf.st_size > 0)
 		|| (ft_strequ(c->args[1], "-u") && (buf.st_mode & S_ISUID))
-		|| (ft_strequ(c->args[1], "-w") && access(c->args[2], W_OK))
-		|| (ft_strequ(c->args[1], "-x") && access(c->args[2], X_OK))
+		|| (ft_strequ(c->args[1], "-w") && !access(c->args[2], W_OK))
+		|| (ft_strequ(c->args[1], "-x") && !access(c->args[2], X_OK))
 		|| ((ft_strequ(c->args[1], "-z") || ft_strequ(c->args[1], "!"))
 			&& !ft_strlen(c->args[2]))))
 		return (1);
