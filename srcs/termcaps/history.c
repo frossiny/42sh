@@ -6,13 +6,14 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 17:47:28 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/01 19:44:18 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/02 19:09:27 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include "get_next_line.h"
 #include "shell.h"
+# include <stdio.h>
 
 void				add_to_history(char *str, t_history *history)
 {
@@ -23,38 +24,44 @@ void				add_to_history(char *str, t_history *history)
 		return ;
 	item = new_link(ft_strdup(str));
 	item->index = history->index++;
+	printf("Je lis {%zu %s}\n", item->index, item->str);
 	if (history->lst)
 	{
 		item->next = history->lst;
+		//printf("%s next pointe vers %s\n", item->str, history->lst->str);
 		history->lst->prev = item;
+		//printf("%s prev pointe vers %s\n", history->lst->str, item->str);
 	}
 	history->lst = item;
 	history->size++;
 }
 
-t_histo_lst			*read_history(int fd, size_t *history_size)
+t_histo_lst			*read_history(int fd, size_t *history_size, size_t *history_index)
 {
-	t_histo_lst			*begin;
-	t_histo_lst			*curr;
+	t_histo_lst			*last;
+	t_histo_lst			*item;
 	int					ret;
 	char				*buf;
 
-	begin = NULL;
+	last = NULL;
 	while ((ret = get_next_line(fd, &buf)) == 1)
 	{
+		item = new_link(buf);
+		item->index = (*history_index)++;
 		(*history_size)++;
-		if (begin)
+		printf("Je lis {%zu %s}\n", item->index, item->str);
+		if (last)
 		{
-			curr->next = new_link(buf);
-			curr = curr->next;
+			item->next = last;
+			//printf("%s next pointe vers %s\n", item->str, last->str);
+			item->next->prev = item;
+			//printf("%s prev pointe vers %s\n", last->str, item->str);
+			last = item;
 		}
 		else
-		{
-			begin = new_link(buf);
-			curr = begin;
-		}
+			last = item;
 	}
-	return (ret == -1 ? (NULL) : (begin));
+	return (ret == -1 ? (NULL) : (last));
 }
 
 t_history			get_history(void)
@@ -78,7 +85,7 @@ t_history			get_history(void)
 	}
 	if ((fd = open(path, O_RDONLY)))
 	{
-		histo.lst = read_history(fd, &(histo.size));
+		histo.lst = read_history(fd, &(histo.size), &(histo.index));
 		close(fd);
 	}
 	free(path);
@@ -102,11 +109,13 @@ void				overwrite_history(t_histo_lst *histo)
 		if ((fd = open(path, O_CREAT | O_WRONLY | O_TRUNC)))
 		{
 			curr = histo;
+			while (curr->next)
+				curr = curr->next;
 			while (curr)
 			{
 				write(fd, curr->str, curr->len);
 				write(fd, "\n", 1);
-				curr = curr->next;
+				curr = curr->prev;
 			}
 			close(fd);
 		}

@@ -6,12 +6,12 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/11/01 22:43:06 by lubenard         ###   ########.fr        #
+#    Updated: 2019/11/02 19:37:14 by lubenard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC		=	clang -g3 #-fsanitize=address
-CFLAGS	+=	-Wall -Werror -Wextra
+CC		=	clang #-fsanitize=address
+CFLAGS	+=	-Wall -Werror -Wextra -g3
 
 SHELL	=	bash
 
@@ -188,6 +188,7 @@ fclean: clean
 	@rm -f $(NAME)
 	@rm -rf $(OBJDIR)
 	@rm -rf $(NAME).dSYM
+	@rm -rf ~/.$(NAME)_history
 
 re: fclean
 	@$(MAKE)
@@ -195,6 +196,10 @@ re: fclean
 norm:
 	@norminette $(INCDIR) $(SRCDIR) | grep "Warning\|Error" || true
 	@echo "Norm done!"
+
+check_error:
+	@grep -rn "printf" srcs | grep -v "ft_"
+	@grep -rn "stdio.h" srcs
 
 test:
 	python3 err.py
