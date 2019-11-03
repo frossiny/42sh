@@ -1,3 +1,11 @@
 language: c
 compiler: clang
-
+os: osx
+install: make git
+git:
+    depth: 3
+matrix:
+    include:
+        - osx_image: xcode11.2
+script: >
+    make
