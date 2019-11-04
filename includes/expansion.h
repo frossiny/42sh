@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 17:24:02 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/01 16:32:18 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/04 15:15:01 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,17 @@ typedef struct	s_expansion
 }				t_expansion;
 
 int				expand(t_token *tokens);
-int				exp_remove_quotes(t_expansion *e);
-int				handle_home(t_token *token, t_var *vars);
+void			exp_set_struct(t_expansion *exp, char *content);
+void			exp_join(t_expansion *e, char *tmp);
 
+int				handle_home(t_token *token, t_var *vars);
+int				exp_remove_quotes(t_expansion *e);
 char			*strjoin_escape(char *s1, char *s2);
 char			*strdup_escape(char *str);
+
+int				exp_variables(t_token *token);
+char			*exp_get_varname(t_expansion *exp);
+int				exp_simple_var(t_expansion *exp);
+int				exp_parameter(t_expansion *exp);
 
 #endif

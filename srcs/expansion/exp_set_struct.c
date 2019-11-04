@@ -1,32 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_var_size.c                                     :+:      :+:    :+:   */
+/*   exp_set_struct.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/11 14:53:45 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/04 15:37:55 by frossiny         ###   ########.fr       */
+/*   Created: 2019/11/04 12:48:47 by frossiny          #+#    #+#             */
+/*   Updated: 2019/11/04 12:49:22 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "shell.h"
+#include "expansion.h"
 
-size_t	get_var_size(char *key)
+void		exp_set_struct(t_expansion *exp, char *content)
 {
-	size_t	ret;
-
-	if (!key)
-		return (0);
-	*key == '$' ? key++ : 0;
-	ret = -1;
-	while (key[++ret])
-	{
-		if (key[ret] == '?')
-			return (1);
-		if (!ft_isalnum(key[ret]) && key[ret] != '_')
-			break ;
-	}
-	return (ret);
+	exp->i = -1;
+	exp->li = 0;
+	exp->isquote = 0;
+	exp->str = content;
+	exp->new = NULL;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:05:59 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/01 15:39:08 by pcharrie         ###   ########.fr       */
+/*   Updated: 2019/11/04 14:06:23 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,12 @@ int		handle_input(t_shell *shell, char **input)
 		}
 		else
 			return (ret);
+	}
+	t_token *cur = shell->lexer.tokens;
+	while (cur)
+	{
+		ft_printf("%s (%d)\n", cur->content, cur->type);
+		cur = cur->next;
 	}
 	if (!parse(shell->lexer.tokens))
 	{

@@ -1,32 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_var_size.c                                     :+:      :+:    :+:   */
+/*   exp_join.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/11 14:53:45 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/04 15:37:55 by frossiny         ###   ########.fr       */
+/*   Created: 2019/11/04 12:52:11 by frossiny          #+#    #+#             */
+/*   Updated: 2019/11/04 13:07:22 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "shell.h"
+#include "expansion.h"
 
-size_t	get_var_size(char *key)
+void	exp_join(t_expansion *e, char *tmp)
 {
-	size_t	ret;
-
-	if (!key)
-		return (0);
-	*key == '$' ? key++ : 0;
-	ret = -1;
-	while (key[++ret])
+	if (!tmp)
+		return ;
+	if (e->new)
 	{
-		if (key[ret] == '?')
-			return (1);
-		if (!ft_isalnum(key[ret]) && key[ret] != '_')
-			break ;
+		if (e->isquote == 1)
+			e->new = ft_strfjoin(e->new, tmp, e->new);
+		else
+			e->new = strjoin_escape(e->new, tmp);
 	}
-	return (ret);
+	else
+	{
+		if (e->isquote == 1)
+			e->new = ft_strdup(tmp);
+		else
+			e->new = strdup_escape(tmp);
+	}
+	free(tmp);
 }

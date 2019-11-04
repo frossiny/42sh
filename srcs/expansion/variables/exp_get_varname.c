@@ -1,32 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_var_size.c                                     :+:      :+:    :+:   */
+/*   exp_get_varname.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/11 14:53:45 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/04 15:37:55 by frossiny         ###   ########.fr       */
+/*   Created: 2019/11/04 13:02:38 by frossiny          #+#    #+#             */
+/*   Updated: 2019/11/04 13:06:56 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "expansion.h"
 #include "shell.h"
 
-size_t	get_var_size(char *key)
+char	*exp_get_varname(t_expansion *exp)
 {
-	size_t	ret;
+	size_t	varsize;
 
-	if (!key)
-		return (0);
-	*key == '$' ? key++ : 0;
-	ret = -1;
-	while (key[++ret])
-	{
-		if (key[ret] == '?')
-			return (1);
-		if (!ft_isalnum(key[ret]) && key[ret] != '_')
-			break ;
-	}
-	return (ret);
+	if (!(varsize = get_var_size(exp->str + exp->i)))
+		return (ft_strdup(""));
+	return (ft_strsub(exp->str, exp->i + 1, varsize));
 }
