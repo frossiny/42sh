@@ -6,7 +6,7 @@
 /*   By: alagroy- <alagroy-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 18:00:22 by alagroy-          #+#    #+#             */
-/*   Updated: 2019/11/02 19:18:52 by alagroy-         ###   ########.fr       */
+/*   Updated: 2019/11/05 14:15:16 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char				*g_sym_tab[NBR_SYM] =\
 {
 	" \t\n",
-	"qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM",
+	"$qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM",
 	"1234567890",
 	"+",
 	"-",
@@ -59,20 +59,20 @@ int					g_ae_lexer[2][10][NBR_SYM + 1] =\
 t_fill_aevalue		g_ae_value_tab[NBR_AE_VAL] =\
 {
 	{"+", PLUS},
-		{"++", PPLUS},
-		{"-", MINUS},
-		{"--", MMINUS},
-		{"*", MULT},
-		{"/", DIV},
-		{"%", MOD},
-		{"==", EQU},
-		{"!=", NEQU},
-		{">", GREAT},
-		{">=", GREATEQ},
-		{"<", LESS},
-		{"<=", LESSEQ},
-		{"&&", AND},
-		{"||", OR},
+	{"++", PPLUS},
+	{"-", MINUS},
+	{"--", MMINUS},
+	{"*", MULT},
+	{"/", DIV},
+	{"%", MOD},
+	{"==", EQU},
+	{"!=", NEQU},
+	{">", GREAT},
+	{">=", GREATEQ},
+	{"<", LESS},
+	{"<=", LESSEQ},
+	{"&&", AND},
+	{"||", OR},
 };
 
 static t_ae_token	fill_token(char *str, int begin, int *i, int state)
@@ -100,7 +100,7 @@ static t_ae_token	fill_token(char *str, int begin, int *i, int state)
 			if (!ft_strncmp(sub, g_ae_value_tab[j].str,
 						ft_strlen(g_ae_value_tab[j].str)))
 				token.value = g_ae_value_tab[j].value;
-	ft_strdel(&sub);
+	token.type == WORD ? token.word = sub : ft_strdel(&sub);
 	return (token);
 }
 
@@ -142,7 +142,8 @@ t_list				*lex_ae_str(char *str)
 	while (token.type != EOI && token.type != ERROR)
 	{
 		token = make_next_aetoken(str, begin ? 0 : 1,
-				token.type != WORD && token.type != NUM ? 1 : 0);
+				token.type != WORD && token.type != NUM && token.type != INCR
+				&& token.type != DECR ? 1 : 0);
 		if (!(new = ft_lstnew(&token, sizeof(t_token))))
 			return (NULL);
 		if (!begin)

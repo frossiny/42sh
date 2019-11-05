@@ -6,12 +6,12 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/10/30 18:29:55 by frossiny         ###   ########.fr        #
+#    Updated: 2019/11/04 15:09:02 by alagroy-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC		=	gcc -g3 -fsanitize=address
-#CFLAGS	+=	-Wall -Werror -Wextra
+CFLAGS	+=	-Wall -Werror -Wextra
 
 SHELL	=	bash
 
@@ -19,7 +19,7 @@ NAME 	=	42sh
 LIBFT	=	libft
 SRCDIR	=	srcs
 INCDIR	=	includes
-OBJDIR	=	objs
+OBJDIR	=	objs/
 FILES 	=	main.c									\
 			shell.c									\
 			prompt.c								\
@@ -174,6 +174,7 @@ clean:
 	@echo -e "${_RED}${_BOLD}Cleaning obj files...${_END}"
 	@rm -f $(OBJS)
 	@rm -f $(OBJSD)
+	@rm -Rf $(OBJDIR)
 
 fclean: clean
 	@$(MAKE) -C $(LIBFT) fclean

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 14:23:53 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/02 17:20:51 by alagroy-         ###   ########.fr       */
+/*   Updated: 2019/11/05 13:37:47 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stdlib.h>
 # include <termios.h>
+# include "libft.h"
 
 /*
 ** Arithmetic Expansions structs
@@ -55,6 +56,7 @@ typedef struct		s_ae_token
 {
 	t_ae_type		type;
 	long			num_value;
+	char			*word;
 	t_ae_value		value;
 }					t_ae_token;
 
