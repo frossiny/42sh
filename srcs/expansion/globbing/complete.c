@@ -6,7 +6,7 @@
 /*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 13:56:44 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/10/31 16:10:11 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/11/04 15:37:54 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int			standard_char(t_compare s, int x, int y)
 	return (next_char(s, x, y));
 }
 
+#include "ft_printf.h"
 int			next_char(t_compare s, int x, int y)
 {
 	if (s.cmp[x] == '*')
@@ -52,15 +53,14 @@ int			next_char(t_compare s, int x, int y)
 		return (quote_char(s, x, y, s.cmp[x]));
 	if (s.cmp[x])
 	{
-		if (!s.file[y])
+		if (!(s.file[y]))
 			return (0);
 		else
 			return (standard_char(s, x, y));
 	}
 	if (!s.file[y])
 		return (1);
-	else
-		return (0);
+	return (0);
 }
 
 int			complete_str(char *cmp, char *file)

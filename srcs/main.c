@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 11:43:47 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/31 17:47:43 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/11/05 14:59:00 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static int	shell_init(char *envp[])
 	g_ignore_signals = 0;
 	g_return = 0;
 	g_shell.vars = var_init(envp);
+	g_shell.alias = NULL;
 	if (var_get(g_shell.vars, "HOME"))
 		g_shell.history = get_history();
 	else

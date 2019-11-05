@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 14:23:53 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/31 17:47:58 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/11/04 14:28:16 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,16 @@
 
 # include <stdlib.h>
 # include <termios.h>
+
+/*
+** Alias structure
+*/
+typedef struct	s_alias
+{
+	char			*key;
+	char			*value;
+	struct s_alias	*next;
+}				t_alias;
 
 /*
 ** Variables structure
@@ -208,6 +218,7 @@ typedef struct	s_history
 typedef struct		s_shell
 {
 	t_var			*vars;
+	t_alias			*alias;
 	t_lexer			lexer;
 	t_anode			*ast;
 	t_hashtable		bin_ht;

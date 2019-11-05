@@ -6,11 +6,11 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/10/30 19:03:02 by vsaltel          ###   ########.fr        #
+#    Updated: 2019/11/05 17:01:17 by vsaltel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC		=	gcc -g3 #-fsanitize=address
+CC		=	gcc -g3 -fsanitize=address
 #CFLAGS	+=	-Wall -Werror -Wextra
 
 SHELL	=	bash
@@ -101,6 +101,8 @@ FILES 	=	main.c									\
 			builtins/echo.c							\
 			builtins/export.c						\
 			builtins/type.c							\
+			builtins/alias.c						\
+			builtins/unalias.c						\
 			builtins/options/opt_parse.c			\
 			builtins/options/opt_add.c				\
 			builtins/options/opt_get.c				\
@@ -120,6 +122,10 @@ FILES 	=	main.c									\
 			variables/var_set.c						\
 			variables/var_display.c					\
 			variables/var_disp_env.c				\
+			alias/alias_new.c						\
+			alias/alias_get.c						\
+			alias/alias_display.c					\
+			alias/alias_free.c						\
 			signals.c								\
 			errors.c								\
 			utils.c									\

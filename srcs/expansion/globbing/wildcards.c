@@ -6,7 +6,7 @@
 /*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 16:48:56 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/10/29 18:39:24 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/11/04 15:35:50 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ int			wildcard_bracket(t_compare s, int x, int y)
 {
 	int	end;
 
+	if (!s.file[y])
+		return (0);
 	end = x + 1;
 	while ((s.cmp[end] && s.cmp[end] != ']')
 			|| (s.cmp[end] == ']' && x + 1 == end)

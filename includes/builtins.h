@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:40:21 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/30 17:56:10 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/11/05 17:26:04 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int			b_cd(t_cmd *cmd, t_shell *shell);
 int			b_echo(t_cmd *cmd, t_shell *shell);
 int			b_export(t_cmd *cmd, t_shell *shell);
 int			b_type(t_cmd *cmd, t_shell *shell);
+int			b_alias(t_cmd *cmd, t_shell *shell);
+int			b_unalias(t_cmd *cmd, t_shell *shell);
 
 static const t_builtin g_builtins[] =
 {
@@ -35,6 +37,8 @@ static const t_builtin g_builtins[] =
 	{ "exit", &b_exit },
 	{ "export", &b_export },
 	{ "type", &b_type },
+	{ "alias", &b_alias },
+	{ "unalias", &b_unalias },
 	{ NULL, NULL }
 };
 

@@ -6,7 +6,7 @@
 /*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:40:24 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/10/31 16:22:48 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/11/04 14:38:32 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ int			find_path(char *arg, size_t *find, t_var *vars)
 			return (1);
 		}
 	}
-	free(path);
 	ft_strddel(&tab);
 	return (0);
 }
@@ -114,6 +113,5 @@ int			b_type(t_cmd *cmd, t_shell *shell)
 	}
 	if (find)
 		return (0);
-	else
-		return (1);
+	return (1);
 }
