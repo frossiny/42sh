@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 15:22:13 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/06 15:14:01 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/06 16:44:16 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,12 @@ static t_var	*get_special_var(char *key)
 	if (ft_strequ(key, "?"))
 	{
 		tmp = ft_itoa(g_return);
+		ret = var_new(key, tmp, 0);
+		free(tmp);
+	}
+	else if (ft_strequ(key, "$"))
+	{
+		tmp = ft_itoa((int)getpid());
 		ret = var_new(key, tmp, 0);
 		free(tmp);
 	}
