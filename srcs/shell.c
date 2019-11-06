@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:05:59 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/16 14:19:18 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/06 16:45:27 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "shell.h"
 #include "lexer.h"
 #include "ast.h"
+#include "alias.h"
 #include "hashtable.h"
 
 int		bslash_error(t_shell *shell, char **input, int ret)
@@ -143,6 +144,7 @@ int		shell(void)
 		ft_strdel(&input);
 	isatty(0) ? ft_putchar('\n') : 0;
 	var_destroy(&(g_shell.vars));
+	alias_free_all(&(g_shell.alias));
 	ht_delete(g_shell);
 	free_termcaps(&g_shell);
 	return (g_return);

@@ -6,7 +6,7 @@
 /*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 14:16:26 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/05 18:21:55 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/11/06 15:26:41 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,7 @@ void			add_alias(t_alias **alias, char *str)
 	char	*tmp;
 
 	if (!(tmp = ft_strchr(str, '=')))
-	{
-		ft_printf("42sh: alias: %s: not found\n", str);
 		return ;
-	}
 	key = ft_strndup(str, tmp - str);
 	if (!check_key_chain(key))
 	{
@@ -47,7 +44,6 @@ void			add_alias(t_alias **alias, char *str)
 		free(key);
 		return ;
 	}
-	if (ft_strchr(key, '/') || ft_strchr(key, '/'))
 	value = ft_strdup(tmp + 1);
 	alias_new(alias, key, value);
 }
@@ -62,7 +58,12 @@ int				b_alias(t_cmd *cmd, t_shell *shell)
 	{
 		i = 0;
 		while (cmd->args[++i])
-			add_alias(&(shell->alias), cmd->args[i]);
+		{
+			if (ft_strchr(cmd->args[i], '='))
+				add_alias(&(shell->alias), cmd->args[i]);
+			else
+				alias_display_one(shell->alias, cmd->args[i]);
+		}
 	}
 	return (0);
 }
