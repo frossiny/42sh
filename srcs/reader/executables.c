@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:26:37 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/24 15:18:49 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/06 16:08:57 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ int			execute(t_cmd *cmd, t_shell *shell)
 
 	if (!cmd)
 		return (1);
-	build_args(cmd, shell->vars);
+	if (build_args(cmd, shell->vars) < 1)
+		return (1);
 	cmd->redir = parse_redirections(cmd->exe);
 	if (!validate_redirection(cmd->redir))
 		return (1);

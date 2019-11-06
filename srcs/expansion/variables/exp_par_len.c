@@ -1,37 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expansion.c                                        :+:      :+:    :+:   */
+/*   exp_par_len.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/01 15:32:30 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/06 16:13:01 by frossiny         ###   ########.fr       */
+/*   Created: 2019/11/06 14:02:11 by frossiny          #+#    #+#             */
+/*   Updated: 2019/11/06 14:03:44 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
-#include "lexer.h"
 #include "expansion.h"
 
-int				expand(t_token *tokens)
+char	*exp_par_len(t_expansion *exp)
 {
-	t_expansion		exp;
+	char	*tmp;
+	t_var	*var;
+	char	*ret;
+	size_t	vsize;
 
-	while (tokens)
+	vsize = get_var_size(exp->str + exp->i);
+	exp->li = exp->i + vsize + 1;
+	if (!(tmp = ft_strsub(exp->str, exp->i, vsize)))
+		return (ft_strdup("0"));
+	if (!(var = var_get(g_shell.vars, tmp)))
 	{
-		if (tokens->content[0] == '~')
-			if (!(handle_home(tokens, g_shell.vars)))
-				return (0);
-		if (!(exp_variables(tokens)))
-			return (0);
-		exp_set_struct(&exp, tokens->content);
-		if (!exp_remove_quotes(&exp))
-			return (0);
-		if (exp.new)
-			tok_replace(tokens, exp.new);
-		tokens = tokens->next;
+		free(tmp);
+		return (ft_strdup("0"));
 	}
-	return (1);
+	if (var->value)
+		ret = ft_itoa(ft_strlen(var->value));
+	else
+		ret = ft_strdup("0");
+	free(tmp);
+	return (ret);
 }

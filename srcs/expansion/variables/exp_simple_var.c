@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 14:24:33 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/04 15:42:10 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/06 16:14:17 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static char	*handle_var(t_var *vars, char *var_name)
 	return (ret);
 }
 
-int		exp_simple_var(t_expansion *exp)
+int			exp_simple_var(t_expansion *exp)
 {
 	size_t	vsize;
 	char	*tmp;
@@ -47,7 +47,7 @@ int		exp_simple_var(t_expansion *exp)
 	vsize = get_var_size(exp->str + exp->i);
 	if (vsize > 0)
 	{
-		tmp = handle_var(g_shell.vars, 
+		tmp = handle_var(g_shell.vars,
 							ft_strsub(exp->str, exp->i + 1, vsize));
 		tmp ? exp_join(exp, tmp) : 0;
 		exp->i += vsize + 1;
