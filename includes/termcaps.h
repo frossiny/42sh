@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 18:49:29 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/10/14 18:22:23 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/06 18:33:12 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 **	y_max; 		position y de la derniere affichable dans le shell
 */
 
-typedef struct	s_cursor_pos
+typedef struct		s_cursor_pos
 {
 	char				*str;
 	long				len_str;
@@ -46,22 +46,22 @@ typedef struct	s_cursor_pos
 	char				*v_str;
 	int					search_mode : 1;
 	char				*s_str;
-}				t_cursor_pos;
+}					t_cursor_pos;
 
-typedef struct	s_ex_caps
+typedef struct		s_ex_caps
 {
 	const char			*content;
 	size_t				size;
 	void				(*func)();
-}				t_ex_caps;
+}					t_ex_caps;
 
-typedef struct	s_compl_info
+typedef struct		s_compl_info
 {
 	char			**str;
 	char			*word;
 	t_cursor_pos	*pos;
 	int				index;
-}				t_compl_info;
+}					t_compl_info;
 
 int					termcaps_init(struct termios *prev_term);
 void				restore_shell(struct termios prev_term);

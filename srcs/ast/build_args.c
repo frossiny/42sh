@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/04 16:14:27 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/24 16:47:14 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/06 18:17:45 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "shell.h"
 #include "reader.h"
 #include "lexer.h"
+#include "expansion.h"
 
 static int	build_args_arr(char ***args, t_token *tokens)
 {
@@ -48,7 +49,9 @@ int			build_args(t_cmd *cmd, t_var *vars)
 
 	if (!cmd)
 		return (-1);
-	replace_vars(cmd->exe, vars);
+	//replace_vars(cmd->exe, vars);
+	if (!expand(cmd->exe))
+		return (-1);
 	cmd->argc = build_args_arr(&argv, cmd->exe);
 	cmd->args = argv;
 	return (cmd->argc);

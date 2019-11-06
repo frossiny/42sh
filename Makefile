@@ -6,7 +6,7 @@
 #    By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/11/06 17:31:55 by pcharrie         ###   ########.fr        #
+#    Updated: 2019/11/06 18:48:57 by pcharrie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,12 +26,19 @@ FILES 	=	main.c									\
 			signals.c								\
 			errors.c								\
 			utils.c									\
+			alias/alias_new.c						\
+			alias/alias_get.c						\
+			alias/alias_display.c					\
+			alias/alias_free.c						\
 			ast/build_ast.c							\
 			ast/create_node.c						\
 			ast/build_args.c						\
 			ast/redirections.c						\
 			ast/destroy_ast.c						\
 			ast/create_cmd.c						\
+			builtins/alias.c						\
+			builtins/unalias.c						\
+			builtins/type.c							\
 			builtins/builtins.c						\
 			builtins/builtins_errors.c				\
 			builtins/set.c							\
@@ -42,7 +49,7 @@ FILES 	=	main.c									\
 			builtins/cd/build_path.c				\
 			builtins/cd/cd.c						\
 			builtins/cd/get_path.c					\
-			builtins/fc/fc.c					\
+			builtins/fc/fc.c						\
 			builtins/options/opt_parse.c			\
 			builtins/options/opt_add.c				\
 			builtins/options/opt_get.c				\
@@ -52,6 +59,24 @@ FILES 	=	main.c									\
 			builtins/test/binary.c				 	\
 			expansion/variables.c					\
 			expansion/tilde.c						\
+			expansion/expansion.c					\
+			expansion/exp_join.c					\
+			expansion/exp_set_struct.c				\
+			expansion/exp_remove_quotes.c			\
+			expansion/variables/exp_variables.c		\
+			expansion/variables/exp_get_varname.c	\
+			expansion/variables/exp_simple_var.c	\
+			expansion/variables/exp_parameter.c		\
+			expansion/variables/exp_par_len.c		\
+			expansion/variables/exp_par_colon.c		\
+			expansion/variables/exp_get_var.c		\
+			expansion/globbing/globbing.c			\
+			expansion/globbing/path.c				\
+			expansion/globbing/complete.c			\
+			expansion/globbing/wildcards.c			\
+			expansion/globbing/globbing_utils.c		\
+			expansion/globbing/token_utils.c		\
+			expansion/globbing/utils.c				\
 			hashtable/ht_create.c					\
 			hashtable/ht_hash.c						\
 			hashtable/ht_delone.c					\
@@ -134,6 +159,7 @@ FILES 	=	main.c									\
 			variables/var_delete.c					\
 			variables/var_destroy.c					\
 			variables/var_get.c						\
+			variables/var_value.c					\
 			variables/var_init.c					\
 			variables/var_new.c						\
 			variables/var_replace.c					\

@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:40:21 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/06 17:31:34 by pcharrie         ###   ########.fr       */
+/*   Updated: 2019/11/06 18:47:55 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,22 @@ int			b_echo(t_cmd *cmd, t_shell *shell);
 int			b_export(t_cmd *cmd, t_shell *shell);
 int			b_test(t_cmd *cmd, t_shell *shell);
 int			b_fc(t_cmd *cmd, t_shell *shell);
+int			b_type(t_cmd *cmd, t_shell *shell);
+int			b_alias(t_cmd *cmd, t_shell *shell);
+int			b_unalias(t_cmd *cmd, t_shell *shell);
+
+static const t_builtin g_builtins[] =
+{
+	{ "echo", &b_echo },
+	{ "cd", &b_cd },
+	{ "set", &b_set },
+	{ "unset", &b_unset },
+	{ "exit", &b_exit },
+	{ "export", &b_export },
+	{ "type", &b_type },
+	{ "alias", &b_alias },
+	{ "unalias", &b_unalias },
+	{ NULL, NULL }
+};
 
 #endif

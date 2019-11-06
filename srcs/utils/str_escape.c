@@ -6,14 +6,23 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/08 16:25:20 by frossiny          #+#    #+#             */
-/*   Updated: 2019/05/15 14:59:26 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/01 17:53:54 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
 
-char	*strjoin_escape(char *s1, char *s2)
+static int	can_escape(char *s, size_t i)
+{
+	if (s[i] == '\\')
+	{
+		return (!is_escaped(s, i, 0));
+	}
+	return (0);
+}
+
+char		*strjoin_escape(char *s1, char *s2)
 {
 	char	*new;
 	size_t	i;
@@ -26,15 +35,16 @@ char	*strjoin_escape(char *s1, char *s2)
 	j = ft_strlen(new);
 	while (s2[i])
 	{
-		if (s2[i] == '\\')
+		if (can_escape(s2, i))
 			i++;
-		new[j++] = s2[i++];
+		if (s2[i])
+			new[j++] = s2[i++];
 	}
 	free(s1);
 	return (new);
 }
 
-char	*strdup_escape(char *str)
+char		*strdup_escape(char *str)
 {
 	char	*new;
 	size_t	i;
@@ -46,9 +56,10 @@ char	*strdup_escape(char *str)
 	j = 0;
 	while (str[i])
 	{
-		if (str[i] == '\\')
+		if (can_escape(str, i))
 			i++;
-		new[j++] = str[i++];
+		if (str[i])
+			new[j++] = str[i++];
 	}
 	return (new);
 }

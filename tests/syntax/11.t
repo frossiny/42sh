@@ -1,0 +1,1 @@
+PWD=nope > a.txt
