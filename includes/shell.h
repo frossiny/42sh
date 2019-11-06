@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 11:59:10 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/02 01:44:19 by pcharrie         ###   ########.fr       */
+/*   Updated: 2019/11/06 17:48:24 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 
 # define MAX_HISTORY	30
 # define HT_SIZE		150
+# define MAX_PWD_LEN	8192
 
 extern t_shell		g_shell;
 extern t_cursor_pos	g_pos;

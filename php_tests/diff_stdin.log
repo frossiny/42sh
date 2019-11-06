@@ -1,0 +1,20 @@
+
+DIFF tests.test STDIN
+9d8
+< 42sh: cd: -z: invalid option
+
+DIFF tests.test STDIN
+2a3
+> stderr_bash.log
+3a5
+> stdin_bash.log
+8d9
+< 42sh: cd: -z: invalid option
+
+DIFF tests.test STDIN
+2a3
+> stderr_bash.log
+3a5
+> stdin_bash.log
+8d9
+< 42sh: cd: -z: invalid option

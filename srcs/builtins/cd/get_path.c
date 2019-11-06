@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 02:12:48 by pcharrie          #+#    #+#             */
-/*   Updated: 2019/11/02 18:19:44 by pcharrie         ###   ########.fr       */
+/*   Updated: 2019/11/06 17:48:35 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static char	*cd_get_var(char *key)
 int			cd_pathcheck(char *path, char *arg)
 {
 	struct stat	buf;
-	char		buf2[8192];
+	char		buf2[MAX_PWD_LEN];
 	char		*error;
 	int			c;
 
@@ -70,7 +70,7 @@ int			cd_pathcheck(char *path, char *arg)
 int			cd_chdir(char *path, int follow)
 {
 	t_var	*pwd;
-	char	buff[8192];
+	char	buff[MAX_PWD_LEN];
 
 	(!follow ? path = cd_buildpath(path) : 0);
 	if (!ft_strlen(path))
@@ -84,7 +84,7 @@ int			cd_chdir(char *path, int follow)
 		var_set(&g_shell.vars, "OLDPWD", pwd->value, 1);
 	if (follow)
 	{
-		getcwd(buff, 8192);
+		getcwd(buff, MAX_PWD_LEN);
 		ft_strredupconst(&g_pwd, buff);
 	}
 	else

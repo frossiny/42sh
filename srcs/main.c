@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 11:43:47 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/01 15:38:31 by pcharrie         ###   ########.fr       */
+/*   Updated: 2019/11/06 17:48:39 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char			*g_pwd;
 
 static void	init_default_vars(void)
 {
-	char	buff[8192];
+	char	buff[MAX_PWD_LEN];
 	t_var	*pwd;
 	t_var	*shlvl;
 	char	*tmp;
@@ -37,7 +37,7 @@ static void	init_default_vars(void)
 	}
 	else
 	{
-		getcwd(buff, 8192);
+		getcwd(buff, MAX_PWD_LEN);
 		g_pwd = ft_strdup(buff);
 	}
 	var_set(&g_shell.vars, "PWD", g_pwd, 1);
