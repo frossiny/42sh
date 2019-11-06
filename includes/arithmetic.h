@@ -6,7 +6,7 @@
 /*   By: alagroy- <alagroy-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 18:19:27 by alagroy-          #+#    #+#             */
-/*   Updated: 2019/11/05 18:46:15 by alagroy-         ###   ########.fr       */
+/*   Updated: 2019/11/06 17:14:26 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ long				ae_lesseq(long, long);
 long				ae_and(long, long);
 long				ae_or(long, long);
 void				remove_or(t_list *mem_left);
-char				ae_base10(char *str);
+char				*ae_base10(char *str);
+char				*ft_ltoa(long nb);
+long				ft_atol_base(char *str, int base);
 
 #endif
