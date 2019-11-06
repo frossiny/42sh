@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+         #
+#    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/16 11:23:33 by frossiny          #+#    #+#              #
-#    Updated: 2019/11/01 16:09:14 by pcharrie         ###   ########.fr        #
+#    Updated: 2019/11/06 18:15:31 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -92,6 +92,7 @@ FILES 	=	ft_2dstrlen.c						\
 			ft_putendl_fd.c						\
 			ft_putnbr_fd.c						\
 			ft_lstnew.c							\
+			ft_lstsort.c						\
 			ft_lstdelone.c						\
 			ft_lstadd.c							\
 			ft_lstdel.c							\
@@ -99,6 +100,7 @@ FILES 	=	ft_2dstrlen.c						\
 			ft_lstiter.c						\
 			ft_lstmap.c							\
 			ft_lstfold.c						\
+			ft_freelst.c						\
 			ft_strfjoin.c						\
 			ft_strfdup.c						\
 			ft_putstrtable.c					\
