@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 11:43:47 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/06 18:49:52 by pcharrie         ###   ########.fr       */
+/*   Updated: 2019/11/06 18:52:46 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,15 @@ int				g_return;
 int				g_clear_buffer;
 char			*g_pwd;
 
-static void	init_default_vars(void)
+static void	init_default_vars(char *tmp)
 {
 	char	buff[MAX_PWD_LEN];
 	t_var	*pwd;
 	t_var	*shlvl;
-	char	*tmp;
 	DIR		*dir;
 
-	if ((pwd = var_get(g_shell.vars, "PWD")) && (dir = opendir(pwd->value)))
+	if ((pwd = var_get(g_shell.vars, "PWD"))
+		&& (dir = opendir(pwd->value)))
 	{
 		closedir(dir);
 		g_pwd = ft_strdup(pwd->value);
@@ -84,6 +84,6 @@ int			main(int argc, char *argv[], char *envp[])
 	(void)argv;
 	register_signals();
 	shell_init(envp);
-	init_default_vars();
+	init_default_vars(NULL);
 	return (shell());
 }
