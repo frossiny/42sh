@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:40:21 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/06 18:47:55 by pcharrie         ###   ########.fr       */
+/*   Updated: 2019/11/07 19:07:27 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ static const t_builtin g_builtins[] =
 	{ "type", &b_type },
 	{ "alias", &b_alias },
 	{ "unalias", &b_unalias },
+	{ "fc", &b_fc },
 	{ NULL, NULL }
 };
 
