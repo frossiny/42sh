@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 11:59:10 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/06 18:20:08 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/07 18:13:02 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ extern int			g_child;
 extern int			g_clear_buffer;
 extern int			g_ignore_signals;
 extern int			g_return;
+extern char			*g_pwd;
 
 int					shell(void);
 void				prompt(void);

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 18:24:16 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/07 16:45:10 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/07 16:47:28 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,12 +115,9 @@ void				ft_lstadd(t_list **alst, t_list *new);
 void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 void				ft_lstfold(t_list **lst, void (*del)(void *, size_t));
-<<<<<<< HEAD
 void				ft_lstsort(t_list **list);
 void				ft_freelst(t_list **alst);
-=======
 void				ft_lstend(t_list **begin, t_list *new);
->>>>>>> dfd3be53f8286233b19d53442f401ca14bcd7376
 
 void				ft_putstrtable(char **tb);
 char				*ft_strfdup(const char *s1, const char *f);
