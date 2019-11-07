@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 14:20:01 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/07 16:40:47 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/07 17:52:28 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int			exp_word(t_expansion *exp, char **word)
 	if (!(tok = (t_token *)malloc(sizeof(t_token))))
 		return (0);
 	tok->content = *word;
-	ft_printf("WORD: %s\n", tok->content);
 	tok->len = ft_strlen(*word);
 	osize = tok->len;
 	tok->type = TOKEN_NAME;

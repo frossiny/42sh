@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 16:04:58 by pcharrie          #+#    #+#             */
-/*   Updated: 2019/11/01 16:44:07 by pcharrie         ###   ########.fr       */
+/*   Updated: 2019/11/07 18:12:37 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@
 #include "variables.h"
 #include "builtins.h"
 #include "opt.h"
-
-extern char	*g_pwd;
 
 static int	ft_strredupconst(char **s1, char *s2)
 {

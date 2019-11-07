@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:05:59 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/07 16:45:32 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/07 18:11:53 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,5 +142,6 @@ int		shell(void)
 	alias_free_all(&(g_shell.alias));
 	ht_delete(g_shell);
 	free_termcaps(&g_shell);
+	free(g_pwd);
 	return (g_return);
 }

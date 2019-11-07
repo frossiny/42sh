@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 11:53:12 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/06 18:17:50 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/07 18:17:51 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int			b_exit(t_cmd *cmd, t_shell *shell)
 	lexer_free(&(shell->lexer));
 	destroy_ast(shell);
 	ht_delete(shell);
+	free(g_pwd);
 	exit(ret);
 	return (ret);
 }
