@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:03:36 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/02 19:34:50 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/07 21:35:07 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,21 +73,47 @@ int		print_hist(t_shell *shell)
 
 	counter = 0;
 	history = shell->history.lst;
-	printf("history.histsize = %zu\n", shell->history.histsize);
 	while (history->next && counter != shell->history.histsize)
 	{
-		printf("Je remonte {%zu %s}\n",  history->index, history->str);
 		history = history->next;
-		//printf("counter = %zu\n", counter);
 		counter++;
 	}
-	printf("[sortie de boucle] Je remonte {%zu %s}, ses valeurs sont NEXT=%p , PREV=%p\n",  history->index, history->str, history->next, history->prev);
 	while (history)
 	{
-		ft_printf("  %zu  %s\n", history->index, history->str);
+		ft_printf("  %2zu  %s\n", history->index, history->str);
 		history = history->prev;
 	}
 	return (0);
+}
+
+/*
+** Will parse cmd to add good variable to hist
+*/
+
+void	parse_and_add_hist(t_cmd *cmd, t_shell *shell)
+{
+	int		i;
+	int		e;
+	int		k;
+	char	*ret;
+
+	e = 1;
+	while (cmd->args[e][0] == '-')
+		e++;
+	k = e;
+	i = 0;
+	while (cmd->args[e + 1])
+		i += ft_strlen(cmd->args[e++]) + 1;
+	i += ft_strlen(cmd->args[e]);
+	if (!(ret = ft_strnew(i)))
+		return ;
+	while (cmd->args[k + 1])
+	{
+		ft_strcat(ret, cmd->args[k++]);
+		ft_strcat(ret, " ");
+	}
+	ft_strcat(ret, cmd->args[k]);
+	shell->history.lst->str = ret;
 }
 
 /*
@@ -98,45 +124,23 @@ int		b_history(t_cmd *cmd, t_shell *shell)
 {
 	t_options	*opts;
 
-	(void)cmd;
-	(void)shell;
 	opts = opt_parse(cmd, "cdanrwps", "history");
-	printf("RET = %d, last = %zu\n", opts->ret, opts->last);
-	/*while (opts->opts)
-	{
-		printf("option {%s = %s}\n", opts->opts->opt,  opts->opts->value);
-		opts->opts = opts->opts->next;
-	}*/
 	if (cmd->argc == 1)
-	{
-		printf("Printing basic history\n");
 		print_hist(shell);
-	}
 	else
 	{
 		while (opts->opts)
 		{
-			printf("option {%s = %s}\n", opts->opts->opt,  opts->opts->value);
 			if (!ft_strcmp(opts->opts->opt, "c"))
-			{
-				printf("Je vide mon history\n");
 				empty_hist(shell);
-			}
 			else if (!ft_strcmp(opts->opts->opt, "w"))
-			{
-				printf("Je vais overwrite mon history\n");
 				overwrite_history(shell->history.lst);
-			}
 			else if (!ft_strcmp(opts->opts->opt, "a"))
-			{
-				printf("Je vais append mon history\n");
 				append_hist(shell->history.lst);
-			}
 			else if (!ft_strcmp(opts->opts->opt, "r"))
-			{
-				printf("Je vais load mon history\n"); // probably overwriting it. have to see
 				shell->history = get_history();
-			}
+			else if (!ft_strcmp(opts->opts->opt, "s"))
+				parse_and_add_hist(cmd, shell);
 			opts->opts = opts->opts->next;
 		}
 	}
