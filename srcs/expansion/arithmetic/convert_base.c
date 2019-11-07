@@ -6,7 +6,7 @@
 /*   By: alagroy- <alagroy-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 18:45:05 by alagroy-          #+#    #+#             */
-/*   Updated: 2019/11/07 13:29:14 by alagroy-         ###   ########.fr       */
+/*   Updated: 2019/11/07 18:53:40 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ char		*ae_base10(char *str)
 	int		j;
 	char	*sub;
 
-	i = -1;
+/*	i = -1;
 	while (str[++i])
 	{
 		j = -1;
@@ -100,7 +100,7 @@ char		*ae_base10(char *str)
 			ft_strdel(&sub);
 		}
 	}
-	i = -1;
+*/	i = -1;
 	while (str[++i])
 	{
 		if (str[i] == '0' && (i == 0 || !ft_isdigit(str[i - 1])))
