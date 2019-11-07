@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 17:24:02 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/06 18:32:42 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/07 16:30:35 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ typedef struct		s_expansion
 {
 	size_t	i;
 	size_t	li;
+	int		rec;
 	char	isquote;
 	char	*str;
 	char	*new;
@@ -60,9 +61,18 @@ t_var				*exp_get_var(t_expansion *exp);
 char				*exp_get_varname(t_expansion *exp);
 int					exp_simple_var(t_expansion *exp);
 int					exp_parameter(t_expansion *exp);
+char				*exp_get_word(t_expansion *exp);
 
 char				*exp_par_len(t_expansion *exp);
 int					exp_par_colon(t_expansion *exp, t_var *var, char *name);
+int					exp_plus(t_expansion *exp, t_var *var, \
+												char *word, char *name);
+int					exp_qm(t_expansion *exp, t_var *var, \
+												char *word, char *name);
+int					exp_equ(t_expansion *exp, t_var *var, \
+												char *word, char *name);
+int					exp_minus(t_expansion *exp, t_var *var, \
+												char *word, char *name);
 
 int					dir_globbing(t_globbing *glob,
 						t_globbing_list *list, char *path);
