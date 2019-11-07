@@ -1,32 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstmap.c                                        :+:      :+:    :+:   */
+/*   ft_lstend.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alagroy- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/08 18:50:21 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/04 19:52:02 by alagroy-         ###   ########.fr       */
+/*   Created: 2018/11/13 18:37:03 by alagroy-          #+#    #+#             */
+/*   Updated: 2018/12/15 17:23:22 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem))
+void	ft_lstend(t_list **alst, t_list *new)
 {
-	t_list	*fl;
-	t_list	*nc;
+	t_list	*tmp;
 
-	if (!lst)
-		return (NULL);
-	fl = f(lst);
-	nc = fl;
-	while (lst->next)
+	if (!alst || !new)
+		return ;
+	if (!(*alst))
 	{
-		nc->next = f(lst->next);
-		lst = lst->next;
-		if (nc->next)
-			nc = nc->next;
+		*alst = new;
+		new->next = NULL;
+		return ;
 	}
-	return (fl);
+	tmp = *alst;
+	while (tmp->next)
+		tmp = tmp->next;
+	tmp->next = new;
+	tmp->next->next = NULL;
 }

@@ -6,12 +6,12 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/11/07 16:30:59 by frossiny         ###   ########.fr        #
+#    Updated: 2019/11/07 16:44:51 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC		=	gcc -g3 -fsanitize=address
-#CFLAGS	+=	-Wall -Werror -Wextra
+CFLAGS	+=	-Wall -Werror -Wextra
 
 SHELL	=	bash
 
@@ -67,6 +67,18 @@ FILES	=	shell.c											\
 			expansion/variables/exp_par_colon_op.c			\
 			expansion/variables/exp_get_var.c				\
 			expansion/variables/exp_get_word.c				\
+			expansion/arithmetic/comp.c						\
+			expansion/arithmetic/convert_base.c				\
+			expansion/arithmetic/eval.c						\
+			expansion/arithmetic/eval_expr.c				\
+			expansion/arithmetic/eval_test.c				\
+			expansion/arithmetic/ft_ato.c					\
+			expansion/arithmetic/lexer.c					\
+			expansion/arithmetic/op.c						\
+			expansion/arithmetic/parser.c					\
+			expansion/arithmetic/sep_less.c					\
+			expansion/arithmetic/tools.c					\
+			expansion/arithmetic/arithmetic.c				\
 			expansion/globbing/globbing.c					\
 			expansion/globbing/path.c						\
 			expansion/globbing/complete.c					\
@@ -203,6 +215,7 @@ clean:
 	@echo -e "${_RED}${_BOLD}Cleaning obj files...${_END}"
 	@rm -f $(OBJS)
 	@rm -f $(OBJSD)
+	@rm -Rf $(OBJDIR)
 
 fclean: clean
 	@$(MAKE) -C $(LIBFT) fclean

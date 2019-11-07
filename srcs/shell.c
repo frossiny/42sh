@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:05:59 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/06 18:17:27 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/07 16:45:32 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,12 +91,6 @@ int		handle_input(t_shell *shell, char **input)
 		}
 		else
 			return (ret);
-	}
-	t_token *cur = shell->lexer.tokens;
-	while (cur)
-	{
-		ft_printf("%s (%d)\n", cur->content, cur->type);
-		cur = cur->next;
 	}
 	if (!parse(shell->lexer.tokens))
 	{
