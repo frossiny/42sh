@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:03:36 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/07 21:35:07 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/07 22:18:05 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,10 @@ void	empty_hist(t_shell *shell)
 	shell->history.index = 1;
 	shell->history.lst = NULL;
 }
+
+/*
+** Append to the history file
+*/
 
 void	append_hist(t_histo_lst *histo)
 {
@@ -97,11 +101,14 @@ void	parse_and_add_hist(t_cmd *cmd, t_shell *shell)
 	int		k;
 	char	*ret;
 
+	(void)shell;
 	e = 1;
-	while (cmd->args[e][0] == '-')
+	while (cmd->args[e] && cmd->args[e][0] == '-')
 		e++;
 	k = e;
 	i = 0;
+	if (!cmd->args[e])
+		return ;
 	while (cmd->args[e + 1])
 		i += ft_strlen(cmd->args[e++]) + 1;
 	i += ft_strlen(cmd->args[e]);
