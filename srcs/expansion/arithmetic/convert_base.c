@@ -6,11 +6,14 @@
 /*   By: alagroy- <alagroy-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 18:45:05 by alagroy-          #+#    #+#             */
-/*   Updated: 2019/11/06 18:25:49 by alagroy-         ###   ########.fr       */
+/*   Updated: 2019/11/07 13:29:14 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "arithmetic.h"
+#include "variables.h"
+
+extern t_shell	*g_shell;
 
 static int	parse_base(char *str)
 {
@@ -56,10 +59,47 @@ static int	convert_base_str(char **str, int i)
 	return (i += len - 1);
 }
 
+static char	*var_ae_replace(char *str, int i, int j)
+{
+	char	*sub;
+	t_var	*var;
+
+	if (!(sub = ft_strsub(str, i, j)))
+		return (str);
+	if (!(var = var_get(g_shell->vars, sub)))
+	{
+		ft_strdel(&sub);
+		return (str);
+	}
+	str = ft_strdelpart(str, i, j);
+	str = ft_insert_str(str, ft_strdup(var->value), i);
+	ft_strdel(&sub);
+	return (str);
+}
+
 char		*ae_base10(char *str)
 {
 	int		i;
+	int		j;
+	char	*sub;
 
+	i = -1;
+	while (str[++i])
+	{
+		j = -1;
+		while (str[i + ++j])
+		{
+			sub = ft_strsub(str, i, j);
+			if (sub && var_get(g_shell->vars, sub))
+			{
+				str = var_ae_replace(str, i, j);
+				ft_strdel(&sub);
+				i += j;
+				break ;
+			}
+			ft_strdel(&sub);
+		}
+	}
 	i = -1;
 	while (str[++i])
 	{

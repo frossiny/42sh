@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/11/04 15:09:02 by alagroy-         ###   ########.fr        #
+#    Updated: 2019/11/07 13:41:17 by alagroy-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -134,7 +134,19 @@ FILES 	=	main.c									\
 			variables/var_set.c						\
 			variables/var_display.c					\
 			variables/var_disp_env.c				\
-			variables/var_is_key_valid.c
+			variables/var_is_key_valid.c			\
+			expansion/arithmetic/comp.c				\
+			expansion/arithmetic/convert_base.c		\
+			expansion/arithmetic/eval.c				\
+			expansion/arithmetic/eval_expr.c		\
+			expansion/arithmetic/eval_test.c		\
+			expansion/arithmetic/ft_ato.c			\
+			expansion/arithmetic/lexer.c			\
+			expansion/arithmetic/op.c				\
+			expansion/arithmetic/parser.c			\
+			expansion/arithmetic/sep_less.c			\
+			expansion/arithmetic/tools.c			\
+			expansion/arithmetic/arithmetic.c
 
 SRCS	=	$(addprefix $(SRCDIR)/, $(FILES))
 OBJS 	=	$(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
