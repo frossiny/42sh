@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:05:59 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/16 14:05:42 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/07 18:11:53 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 #include "libft.h"
 #include "shell.h"
 #include "lexer.h"
+#include "parser.h"
 #include "ast.h"
+#include "alias.h"
 #include "hashtable.h"
 
 int		bslash_error(t_shell *shell, char **input, int ret)
@@ -54,8 +56,7 @@ int		quote_error(t_shell *shell, char **input, int ret)
 	{
 		if (g_ignore_signals)
 		{
-			write(2,
-			"21sh: unexpected EOF while looking for quote\n", 45);
+			ft_dprintf(2, "42sh: unexpected EOF while looking for quote\n");
 			g_ignore_signals = 0;
 			return (2);
 		}
@@ -77,7 +78,7 @@ int		handle_input(t_shell *shell, char **input)
 	shell->lexer.size = 0;
 	while ((ret = lex(*input, &(shell->lexer))) < 1)
 	{
-		destroy_lexer(&(shell->lexer));
+		lexer_free(&(shell->lexer));
 		if (ret == -3 || ret == -2)
 		{
 			if ((ret = quote_error(shell, input, ret)))
@@ -91,15 +92,11 @@ int		handle_input(t_shell *shell, char **input)
 		else
 			return (ret);
 	}
-
-	t_token *tokens = g_shell.lexer.tokens;
-	ft_printf("Tokens:\n");
-	while (tokens)
+	if (!parse(shell->lexer.tokens))
 	{
-		ft_printf("%s\n", tokens->content);
-		tokens = tokens->next;
+		lexer_free(&(shell->lexer));
+		return (1);
 	}
-	
 	return (0);
 }
 
@@ -118,8 +115,8 @@ static int	eval_exec(char **input)
 			return (1);
 		ft_strdel(input);
 		build_ast(&g_shell);
-		g_shell.ast ? ret = parse(&g_shell, g_shell.ast) : 0;
-		destroy_lexer(&(g_shell.lexer));
+		g_shell.ast ? ret = reader(&g_shell, g_shell.ast) : 0;
+		lexer_free(&(g_shell.lexer));
 		destroy_ast(&g_shell);
 	}
 	else
@@ -142,7 +139,9 @@ int		shell(void)
 		ft_strdel(&input);
 	isatty(0) ? ft_putchar('\n') : 0;
 	var_destroy(&(g_shell.vars));
+	alias_free_all(&(g_shell.alias));
 	ht_delete(g_shell);
 	free_termcaps(&g_shell);
+	free(g_pwd);
 	return (g_return);
 }

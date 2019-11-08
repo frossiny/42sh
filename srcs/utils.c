@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:46:01 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/14 15:16:03 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/23 14:55:39 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,7 @@ int		cd_is_dir(char *file, char *name)
 		return (0);
 	if (!S_ISDIR(stats.st_mode))
 	{
-		write(2, "cd: not a directory: ", 21);
-		ft_putstr_fd(name, 2);
-		ft_putchar_fd('\n', 2);
+		ft_dprintf(2, "42sh: not a directory: %s\n", name);
 		return (-1);
 	}
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 11:53:12 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/14 18:11:55 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/07 18:17:51 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "shell.h"
 #include "lexer.h"
 #include "ast.h"
+#include "alias.h"
 #include "termcaps.h"
 #include "hashtable.h"
 
@@ -42,10 +43,12 @@ int			b_exit(t_cmd *cmd, t_shell *shell)
 	else if (cmd->argc == 2)
 		ret = ft_atoi(cmd->args[1]);
 	var_destroy(&(shell->vars));
+	alias_free_all(&(shell->alias));
 	free_termcaps(shell);
-	destroy_lexer(&(shell->lexer));
+	lexer_free(&(shell->lexer));
 	destroy_ast(shell);
 	ht_delete(shell);
+	free(g_pwd);
 	exit(ret);
 	return (ret);
 }

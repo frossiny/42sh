@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/10 20:33:56 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/14 14:35:45 by frossiny         ###   ########.fr       */
+/*   Created: 2019/10/23 15:39:39 by frossiny          #+#    #+#             */
+/*   Updated: 2019/10/30 15:24:26 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,13 @@
 
 # include "structs.h"
 
-t_anode				*create_node(t_token *ope, t_cmd *cmd);
-t_token				*create_ope_node(t_anode **tree, t_token *tokens);
-t_token				*create_cmd_node(t_anode **tree, t_token *tokens);
-t_cmd				*create_cmd(t_token *exe);
+int		parse(t_token *tokens);
+void	par_next(t_parser *parser, int i);
+
+int		par_type_name(t_parser *par);
+int		par_type_operator(t_parser *par);
+int		par_type_semic(t_parser *par);
+int		par_type_redir(t_parser *par);
+int		par_type_io_fd(t_parser *par);
 
 #endif

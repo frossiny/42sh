@@ -6,82 +6,82 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 17:28:10 by frossiny          #+#    #+#             */
-/*   Updated: 2019/02/19 18:25:32 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/23 14:47:45 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static size_t	write_buf(char buf[], int *i)
+static size_t	write_buf(char buf[], t_printf_state *s)
 {
 	int c;
 
-	c = *i;
+	c = s->index;
 	write(1, buf, c);
 	buf[0] = '\0';
-	*i = 0;
+	s->index = 0;
 	return (c);
 }
 
-static size_t	write_arg(char buf[], t_arg *arg, int start, size_t *count)
+static size_t	write_arg(char buf[], t_printf_state *s)
 {
 	size_t	str_len;
 
-	if (!arg || arg->str == NULL)
-		return (start);
-	str_len = ft_strlen(arg->str);
-	if (arg->type == 'c' && arg->data.c == 0)
+	if (!s->arg || s->arg->str == NULL)
+		return (s->index);
+	str_len = ft_strlen(s->arg->str);
+	if (s->arg->type == 'c' && s->arg->data.c == 0)
 	{
-		*count += write_buf(buf, &start);
-		*count += write(1, arg->str, arg->width == 0 ? 1 : arg->width);
-		return (start);
+		s->c += write_buf(buf, s);
+		s->c += write(1, s->arg->str, s->arg->width == 0 ? 1 : s->arg->width);
+		return (s->index);
 	}
 	if (str_len >= BUFF_SIZE)
 	{
-		*count += write_buf(buf, &start);
-		*count += write(1, arg->str, str_len);
-		return (start);
+		s->c += write_buf(buf, s);
+		s->c += write(1, s->arg->str, str_len);
+		return (s->index);
 	}
-	if (start + ft_strlen(arg->str) >= BUFF_SIZE)
-		*count += write_buf(buf, &start);
-	ft_strcat(buf + start, arg->str);
-	start = ft_strlen(buf);
-	return (start);
+	if (s->index + ft_strlen(s->arg->str) >= BUFF_SIZE)
+		s->c += write_buf(buf, s);
+	ft_strcat(buf + s->index, s->arg->str);
+	return ((s->index = ft_strlen(buf)));
 }
 
-static size_t	write_end(char buf[], char *format, int j, size_t c)
+static size_t	write_end(char buf[], char *format, t_printf_state *s)
 {
 	if (ft_strlen(buf) > 0)
-		c += write_buf(buf, &j);
+		s->c += write_buf(buf, s);
 	write(1, format, ft_strlen(format));
-	return (c + ft_strlen(format));
+	return (s->c + ft_strlen(format));
 }
 
-size_t			write_all(char *format, t_arg *alst)
+size_t			write_all(int fd, char *format, t_arg *alst)
 {
-	char	buf[BUFF_SIZE + 1];
-	int		i;
-	int		j;
-	size_t	c;
+	t_printf_state	s;
+	char			buf[BUFF_SIZE + 1];
+	int				i;
 
 	i = 0;
-	j = 0;
-	c = 0;
+	s.fd = fd;
+	s.arg = alst;
+	s.index = 0;
+	s.c = 0;
 	buf[0] = '\0';
 	while (format[i])
 	{
-		if (alst)
+		if (s.arg)
 		{
-			ft_strncat(buf, format + i, alst->index - i);
-			j += alst->index - i;
-			buf[j] = '\0';
-			j = write_arg(buf, alst, j, &c);
-			i = alst->end + 1;
-			alst = alst->next;
+			ft_strncat(buf, format + i, s.arg->index - i);
+			s.index += s.arg->index - i;
+			buf[s.index] = '\0';
+			s.index = write_arg(buf, &s);
+			i = s.arg->end + 1;
+			s.arg = s.arg->next;
 		}
 		else
-			return (write_end(buf, format + i, j, c));
+			return (write_end(buf, format + i, &s));
 	}
-	c += write_buf(buf, &j);
-	return (c);
+	s.c += write_buf(buf, &s);
+	return (s.c);
 }

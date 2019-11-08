@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 17:02:17 by frossiny          #+#    #+#             */
-/*   Updated: 2018/11/15 10:52:57 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/01 16:27:28 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ char	*ft_strdup(const char *s1)
 {
 	char	*dest;
 
+	if (!s1)
+		return (NULL);
 	if (!(dest = ft_strnew(ft_strlen(s1))))
 		return (NULL);
 	return (ft_strcpy(dest, s1));

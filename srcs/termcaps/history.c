@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 17:47:28 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/08/13 13:52:16 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/16 14:18:46 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ t_history			get_history(void)
 	if (!isatty(0))
 		return (histo);
 	path = NULL;
-	path = ft_strpathfile(getenv("HOME"), ".21sh_history");
+	path = ft_strpathfile(getenv("HOME"), ".42sh_history");
 	if (access(path, F_OK) || access(path, X_OK))
 	{
 		free(path);
@@ -88,7 +88,7 @@ void				overwrite_history(t_histo_lst *histo)
 	if (!histo)
 		return ;
 	fd = 0;
-	path = ft_strpathfile(getenv("HOME"), ".21sh_history");
+	path = ft_strpathfile(getenv("HOME"), ".42sh_history");
 	if (!access(path, F_OK))
 		if (access(path, X_OK))
 			return ;

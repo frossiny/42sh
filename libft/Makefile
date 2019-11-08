@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/16 11:23:33 by frossiny          #+#    #+#              #
-#    Updated: 2019/05/07 15:12:42 by vsaltel          ###   ########.fr        #
+#    Updated: 2019/11/07 16:45:05 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,9 @@ NAME 	=	libft.a
 SRCDIR	=	srcs
 INCDIR	=	includes
 OBJDIR	=	objs
-FILES 	=	ft_memset.c							\
+FILES 	=	ft_2dstrlen.c						\
+			ft_2dstrndel.c						\
+			ft_memset.c							\
 			ft_memalloc.c						\
 			ft_memdel.c							\
 			ft_memcpy.c							\
@@ -90,6 +92,7 @@ FILES 	=	ft_memset.c							\
 			ft_putendl_fd.c						\
 			ft_putnbr_fd.c						\
 			ft_lstnew.c							\
+			ft_lstsort.c						\
 			ft_lstdelone.c						\
 			ft_lstadd.c							\
 			ft_lstdel.c							\
@@ -97,13 +100,16 @@ FILES 	=	ft_memset.c							\
 			ft_lstiter.c						\
 			ft_lstmap.c							\
 			ft_lstfold.c						\
+			ft_freelst.c						\
 			ft_strfjoin.c						\
 			ft_strfdup.c						\
 			ft_putstrtable.c					\
 			ft_strpathfile.c					\
 			ft_strcut.c							\
 			ft_strfcut.c						\
+			ft_lstend.c							\
 			get_next_line.c						\
+			edit_string.c						\
 			printf/ft_printf.c					\
 			printf/display.c					\
 			printf/arg_parser.c					\

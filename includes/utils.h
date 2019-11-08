@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 14:30:04 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/14 14:30:39 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/24 12:54:54 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define UTILS_H
 
 # include "structs.h"
+
+int					is_escaped(char *s, size_t index, int endquote);
 
 int					is_local_exe(char *name);
 int					is_relative_path(char *name);
@@ -28,7 +30,6 @@ int					permission_denied(char *name);
 void				no_user(char *name);
 int					cd_exists(char *file, char *name);
 void				env_invalid_arg(int *argc, char ***argv);
-int					parse_error(const char *str, size_t len, int ret);
 int					is_directory_err(char *name);
 
 #endif

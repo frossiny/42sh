@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 15:58:08 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/14 18:28:42 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/24 12:53:19 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static char		*get_home_word(char *word, char *dname)
 	return (word);
 }
 
-static int		complete_file(char **str,
+static int		complete_file(char **str, \
 									char *dname, t_compl_info *ci, t_var *vars)
 {
 	char			*tmp;
@@ -67,7 +67,8 @@ static int		complete_file(char **str,
 	return (1);
 }
 
-static int		file_found(DIR *dirp, t_compl_info *ci, char *dname, t_var *vars)
+static int		file_found(DIR *dirp, t_compl_info *ci, \
+											char *dname, t_var *vars)
 {
 	complete_file(ci->str, dname, ci, vars);
 	closedir(dirp);

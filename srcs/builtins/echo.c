@@ -6,12 +6,13 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/28 10:50:50 by frossiny          #+#    #+#             */
-/*   Updated: 2019/05/15 14:57:30 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/07 17:55:32 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
+#include "opt.h"
 
 static int		get_char(char c)
 {
@@ -35,7 +36,7 @@ static int		get_char(char c)
 		return (0);
 }
 
-static void		disp(int argc, char **argv, int opt)
+static void		disp(int argc, char **argv)
 {
 	size_t	i;
 
@@ -44,7 +45,7 @@ static void		disp(int argc, char **argv, int opt)
 		i = 0;
 		while (*argv && (*argv)[i])
 		{
-			if ((opt & 2) && (*argv)[i] == '\\' && (*argv)[i + 1])
+			if ((*argv)[i] == '\\' && (*argv)[i + 1])
 				ft_putchar(get_char((*argv)[++i]));
 			else
 				ft_putchar((*argv)[i]);
@@ -64,26 +65,21 @@ static int		empty_args(void)
 
 int				b_echo(t_cmd *cmd, t_shell *shell)
 {
-	int	opt;
-	int	i;
+	t_options	*options;
+	int			opt;
 
 	(void)shell;
+	options = opt_parse(cmd, "n", "echo");
+	if (options->ret != 0)
+	{
+		opt_free(options);
+		return (1);
+	}
+	opt = opt_get(options, "n") ? 1 : 0;
 	if (cmd->argc < 2)
 		return (empty_args());
-	opt = 0;
-	i = 0;
-	while (++i < cmd->argc)
-	{
-		if (ft_strlen(cmd->args[i]) < 2 || cmd->args[i][0] != '-')
-			break ;
-		if (cmd->args[i][1] == 'n')
-			opt |= 1;
-		else if (cmd->args[i][1] == 'e')
-			opt |= 2;
-		else
-			break ;
-	}
-	disp(cmd->argc - i, cmd->args + i, opt);
-	opt & 1 ? 0 : ft_putchar('\n');
+	disp(cmd->argc - 1 - opt, cmd->args + 1 + opt);
+	opt ? 0 : ft_putchar('\n');
+	opt_free(options);
 	return (0);
 }

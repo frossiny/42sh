@@ -6,13 +6,13 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/01 14:09:30 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/14 13:00:13 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/24 12:52:26 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void	ht_delete()
+void	ht_delete(void)
 {
 	int		i;
 
