@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 13:28:29 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/23 15:46:48 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/08 16:50:19 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static int	parse_vars(t_cmd *cmd, t_options *opts, t_shell *shell)
 		else
 		{
 			if (is_key_valid(cmd->args[i], 0))
-				var_set(&(shell->vars), cmd->args[i], NULL, 1);
+				var_export(shell->vars, cmd->args[i]);
 			else
 				ft_printf("export: '%s': not a valid identifier\n", \
 					cmd->args[i]);

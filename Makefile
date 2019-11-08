@@ -6,11 +6,11 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/11/08 14:52:44 by frossiny         ###   ########.fr        #
+#    Updated: 2019/11/08 16:49:51 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC		=	gcc -g3 #-fsanitize=address
+CC		=	gcc -g3 -fsanitize=address
 #CFLAGS	+=	-Wall -Werror -Wextra
 
 SHELL	=	bash
@@ -176,7 +176,9 @@ FILES	=	shell.c											\
 			variables/var_set.c								\
 			variables/var_display.c							\
 			variables/var_disp_env.c						\
-			variables/var_is_key_valid.c
+			variables/var_is_key_valid.c					\
+			variables/var_merge.c							\
+			variables/var_export.c
 
 SRCS	=	$(addprefix $(SRCDIR)/, $(FILES))
 OBJS 	=	$(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)

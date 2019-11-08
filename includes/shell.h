@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 11:59:10 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/07 18:13:02 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/08 16:32:13 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ size_t				get_var_size(char *key);
 
 char				*get_exe(t_shell *shell, char *name, int verbose);
 int					is_exe(t_shell *shell, char *name, int verbose);
-int					execute(t_cmd *cmd, t_shell *shell);
+int					execute(t_cmd *cmd);
 void				restore_fd(int fd[]);
 
 void				register_signals(void);
