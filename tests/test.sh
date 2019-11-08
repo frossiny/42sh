@@ -6,7 +6,7 @@
 #    By: lubenard <lubenard@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/03 15:04:01 by lubenard          #+#    #+#              #
-#    Updated: 2019/11/03 15:49:03 by lubenard         ###   ########.fr        #
+#    Updated: 2019/11/08 17:35:53 by lubenard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,4 +21,3 @@ if [[ $output == *"[ERROR]"* ]]; then
 fi
 echo "DONE ! All tests passed !"
 rm log_test
-return 0

@@ -5,7 +5,7 @@ notifications:
     slack: 42born2code:oGLcjIK8yfa48y4ycV5sL0mn
 compiler: clang
 os: osx
-install: make
+install: make re
 git:
     depth: 3
 matrix:
