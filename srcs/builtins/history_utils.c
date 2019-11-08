@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 16:16:03 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/08 16:37:18 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/08 17:43:02 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,25 @@ void	parse_and_add_hist(t_cmd *cmd, t_shell *shell)
 	ft_strcat(ret, cmd->args[k]);
 	ft_strdel(&shell->history.lst->str);
 	shell->history.lst->str = ret;
+}
+
+/*
+** Will clear hist and free linked list
+*/
+
+void	empty_hist(t_shell *shell)
+{
+	t_histo_lst		*history;
+	t_histo_lst		*hist_tmp;
+
+	history = shell->history.lst;
+	while (history)
+	{
+		hist_tmp = history;
+		history = history->prev;
+		ft_strdel(&hist_tmp->str);
+		free(hist_tmp);
+	}
+	shell->history.index = 1;
+	shell->history.lst = NULL;
 }
