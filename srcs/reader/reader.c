@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 15:17:59 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/23 15:36:22 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/08 16:34:27 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,14 @@ static int	parse_condition(int *ret, t_anode *cond, t_shell *shell)
 	{
 		if (*ret != 0)
 			return (0);
-		*ret = execute(cond->right->cmd, shell);
+		*ret = execute(cond->right->cmd);
 		return (1);
 	}
 	else if (cond->ope->type == TOKEN_OR)
 	{
 		if (*ret == 0)
 			return (0);
-		*ret = execute(cond->right->cmd, shell);
+		*ret = execute(cond->right->cmd);
 		return (1);
 	}
 	else
@@ -53,7 +53,7 @@ int			reader(t_shell *shell, t_anode *ast)
 	while (ast)
 	{
 		if (!ast->ope && !is_pipe_node(ast->parent))
-			g_return = execute(ast->cmd, shell);
+			g_return = execute(ast->cmd);
 		else if (is_pipe_node(ast->parent))
 			g_return = execute_pipes(ast, shell, &ast);
 		else if (is_cond_node(ast))

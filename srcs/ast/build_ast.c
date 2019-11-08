@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 15:17:59 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/23 15:35:34 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/08 16:09:49 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	parse_tree(t_token *tokens, t_anode **ast)
 				return (0);
 			tokens = create_ope_node(ast, tokens);
 		}
-		else if (tok_is_word(tokens))
+		else if (tok_is_word(tokens) || tokens->type == TOKEN_ASSIGNMENT)
 			tokens = create_cmd_node(ast, tokens);
 		else if (tokens->type == TOKEN_SEMI)
 			tokens = tokens->next;
