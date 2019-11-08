@@ -13,6 +13,7 @@
 #include <unistd.h>
 #include <term.h>
 #include "shell.h"
+#include "ft_printf.h"
 
 int				termcaps_init(struct termios *prev_term)
 {
@@ -20,15 +21,17 @@ int				termcaps_init(struct termios *prev_term)
 	char			*term_var;
 	struct termios	term;
 
+	g_shell.able_termcaps = 0;
 	if (!isatty(0))
-		return (0);
+		return (2);
 	tcgetattr(0, &term);
 	if (prev_term)
 	{
 		*prev_term = term;
-		if (!(term_var = getenv("TERM")))
+		if ((term_var = getenv("TERM"))
+				&& (ret = tgetent(NULL, term_var)) != 1)
 			return (0);
-		if ((ret = tgetent(NULL, term_var)) != 1)
+		else if ((ret = tgetent(NULL, "xterm-256color")) != 1)
 			return (0);
 	}
 	term.c_lflag &= ~(ICANON | ECHO | IEXTEN);
@@ -36,6 +39,7 @@ int				termcaps_init(struct termios *prev_term)
 	term.c_cc[VMIN] = 1;
 	term.c_cc[VTIME] = 0;
 	tcsetattr(0, TCSADRAIN, &term);
+	g_shell.able_termcaps = 1;
 	return (1);
 }
 
@@ -48,12 +52,15 @@ void			restore_shell(struct termios prev_term)
 
 void			free_termcaps(t_shell *shell)
 {
-	overwrite_history(shell->history.lst);
-	free_history(&(shell->history));
-	restore_shell(shell->prev_term);
-	free(g_pos.v_str);
-	if (g_pos.o_input)
-		free(g_pos.o_input);
+	if (shell->able_termcaps)
+	{
+		overwrite_history(shell->history.lst);
+		free_history(&(shell->history));
+		restore_shell(shell->prev_term);
+		free(g_pos.v_str);
+		if (g_pos.o_input)
+			free(g_pos.o_input);
+	}
 }
 
 int				memset_all(char **str, t_history *history, t_cursor_pos *pos)

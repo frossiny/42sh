@@ -46,7 +46,7 @@ static int	execute_pipe_cmd(t_pipel *pline, t_fd *fd, t_shell *shell)
 	if ((g_child = fork()) == 0)
 	{
 		unregister_signals();
-		restore_shell(shell->prev_term);
+		shell->able_termcaps ? restore_shell(shell->prev_term) : 0;
 		init_fd(pline, fd->op, fd->np);
 		if (execve(get_exe(shell, cmd->exe->content, 1),
 								cmd->args, var_build_env(shell->vars)) == -1)
@@ -104,7 +104,7 @@ static void	end_pipes(t_childs *childs, t_fd *fd, t_shell *shell)
 		}
 		childs = childs->next;
 	}
-	termcaps_init(NULL);
+	shell->able_termcaps ? termcaps_init(NULL) : 0;
 	g_child = 0;
 	close(fd->np[0]);
 	close(fd->np[1]);
