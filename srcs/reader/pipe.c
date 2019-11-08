@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 20:32:11 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/31 17:49:05 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/11/08 17:26:28 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ static void	end_pipes(t_childs *childs, t_fd *fd, t_shell *shell)
 				g_return = display_signal(ret);
 			else
 				g_return = WEXITSTATUS(ret);
+			g_lpid = childs->pid;
 		}
 		childs = childs->next;
 	}

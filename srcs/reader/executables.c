@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:26:37 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/08 16:42:56 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/08 17:24:43 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ static int	start_process(char *file, t_cmd *cmd, char **env)
 		return (g_child = 0);
 	waitpid(g_child, &status, 0);
 	termcaps_init(NULL);
+	g_lpid = g_child;
 	g_child = 0;
 	if (WIFSIGNALED(status))
 		return (display_signal(status));
@@ -85,10 +86,8 @@ int			execute(t_cmd *cmd)
 
 	if (!cmd)
 		return (1);
-	ft_printf("execute\n");
 	if (build_args(cmd, g_shell.vars) < 1)
 		return (1);
-	ft_printf("Exe: %p - Env: %p\n", cmd->exe, cmd->tenv);
 	if (!cmd->exe && cmd->tenv)
 		return (exe_assignements(cmd));
 	cmd->redir = parse_redirections(cmd->exe);

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 15:32:30 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/07 19:25:57 by alagroy-         ###   ########.fr       */
+/*   Updated: 2019/11/08 17:12:31 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@
 int				expand(t_token *tokens)
 {
 	t_expansion		exp;
+	size_t			i;
 
+	i = 0;
 	while (tokens)
 	{
 		if (tokens->content[0] == '~')
