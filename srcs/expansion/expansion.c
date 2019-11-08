@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 15:32:30 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/06 18:19:39 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/07 19:25:57 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "shell.h"
 #include "lexer.h"
 #include "expansion.h"
+#include "arithmetic.h"
 
 int				expand(t_token *tokens)
 {
@@ -25,6 +26,8 @@ int				expand(t_token *tokens)
 			if (!(handle_home(tokens, g_shell.vars)))
 				return (0);
 		if (!(exp_variables(tokens)))
+			return (0);
+		if (!(replace_ae_token(tokens)))
 			return (0);
 		replace_globbing(tokens);
 		exp_set_struct(&exp, tokens->content);
