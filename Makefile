@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/11/07 18:59:12 by lubenard         ###   ########.fr        #
+#    Updated: 2019/11/08 16:29:30 by lubenard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,7 @@ FILES	=	main.c									\
 			builtins/cd/build_path.c				\
 			builtins/cd/cd.c						\
 			builtins/history.c						\
+			builtins/history_utils.c				\
 			builtins/options/opt_parse.c			\
 			builtins/options/opt_add.c				\
 			builtins/options/opt_get.c				\

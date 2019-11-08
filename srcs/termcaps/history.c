@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 17:47:28 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/07 19:28:49 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/08 16:07:13 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,11 @@ void				add_to_history(char *str, t_history *history)
 {
 	t_histo_lst			*item;
 
-	if (!history || !str || !str[0]
-		|| (history->lst && ft_strcmp(str, history->lst->str) == 0))
+	if (!history || !str || !str[0])
 		return ;
 	item = new_link(ft_strdup(str));
 	item->index = history->index++;
-	//printf("Je lis {%zu %s}\n", item->index, item->str);
+	printf("Je lis {%zu %s}\n", item->index, item->str);
 	if (history->lst)
 	{
 		item->next = history->lst;
