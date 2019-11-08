@@ -6,7 +6,7 @@
 /*   By: alagroy- <alagroy-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 18:03:04 by alagroy-          #+#    #+#             */
-/*   Updated: 2019/11/07 19:15:12 by alagroy-         ###   ########.fr       */
+/*   Updated: 2019/11/08 17:15:55 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ static long	eval_ae_test(t_list *token_list, int size)
 		tmp_tok = tmp_tok ? tmp_tok->next : tmp_tok;
 	}
 	value = eval_test(test_list);
+	ft_lstdel(&test_list, del_ae_token);
 	return (value);
 }
 

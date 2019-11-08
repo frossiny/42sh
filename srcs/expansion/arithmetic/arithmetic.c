@@ -6,7 +6,7 @@
 /*   By: alagroy- <alagroy-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 13:40:41 by alagroy-          #+#    #+#             */
-/*   Updated: 2019/11/07 19:25:55 by alagroy-         ###   ########.fr       */
+/*   Updated: 2019/11/08 17:19:05 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ static void	find_ae_limits(char *str, int *beg, int *end)
 				*end = i;
 				break ;
 			}
+			i++;
 			bool--;
 		}
-
 	}
 }
 
@@ -47,7 +47,7 @@ static int	ae_process(t_token *token)
 	char	*str;
 	int		status;
 	long	result;
-	
+
 	if (!(str = ae_base10(ft_strdup(token->content))))
 		return (0);
 	if (!(token_list = lex_ae_str(str)))
@@ -56,16 +56,20 @@ static int	ae_process(t_token *token)
 	if (status != AEPSUCCESS)
 	{
 		ft_strdel(&token->content);
+		ft_strdel(&str);
+		ft_lstdel(&token_list, del_ae_token);
 		token->content = ft_strnew(0);
 		return (0);
 	}
 	result = eval_ae(token_list);
 	ft_strdel(&token->content);
+	ft_strdel(&str);
+	ft_lstdel(&token_list, del_ae_token);
 	token->content = ft_ltoa(result);
 	return (1);
 }
 
-int		replace_ae_token(t_token *token)
+int			replace_ae_token(t_token *token)
 {
 	t_token	tmp;
 	int		beg;

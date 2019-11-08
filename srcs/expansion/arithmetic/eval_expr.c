@@ -6,7 +6,7 @@
 /*   By: alagroy- <alagroy-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 19:49:31 by alagroy-          #+#    #+#             */
-/*   Updated: 2019/11/05 00:28:20 by alagroy-         ###   ########.fr       */
+/*   Updated: 2019/11/08 15:21:49 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,33 +69,27 @@ static int	fill_elems(t_list *token_list, t_list **mem_left,
 	t_list	*tmp;
 
 	tmp = token_list;
-	while (tmp)
+	while (tmp && !*op)
 	{
 		if (((t_ae_token *)tmp->content)->value >= MULT
 				&& ((t_ae_token *)tmp->content)->value <= MOD)
-		{
 			*op = tmp;
-			break ;
-		}
 		tmp = tmp->next;
 	}
 	tmp = token_list;
 	if (!*op)
-		while (tmp)
+		while (tmp && !*op)
 		{
 			if (((t_ae_token *)tmp->content)->type == OPERATOR
 					&& (((t_ae_token *)tmp->content)->value == PLUS
-					 || ((t_ae_token *)tmp->content)->value == MINUS))
-			{
+					|| ((t_ae_token *)tmp->content)->value == MINUS))
 				*op = tmp;
-				break ;
-			}
 			tmp = tmp->next;
 		}
 	return (!*op ? 0 : fill_member(token_list, mem_left, mem_right, op));
 }
 
-long	eval_expr(t_list *expr)
+long		eval_expr(t_list *expr)
 {
 	t_list	*mem_left;
 	t_list	*mem_right;

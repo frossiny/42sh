@@ -6,7 +6,7 @@
 /*   By: alagroy- <alagroy-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 14:43:27 by alagroy-          #+#    #+#             */
-/*   Updated: 2019/11/05 18:05:12 by alagroy-         ###   ########.fr       */
+/*   Updated: 2019/11/08 17:08:25 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,24 +83,18 @@ static int	fill_elems(t_list *test_list, t_list **mem_left, t_list **mem_right,
 	t_list	*tmp;
 
 	tmp = test_list;
-	while (tmp)
+	while (tmp && !*op)
 	{
 		if (((t_ae_token *)tmp->content)->type == COMP)
-		{
 			*op = tmp;
-			break ;
-		}
 		tmp = tmp->next;
 	}
 	tmp = test_list;
 	if (!*op)
-		while (tmp)
+		while (tmp && !*op)
 		{
 			if (((t_ae_token *)tmp->content)->value == OR)
-			{
 				*op = tmp;
-				break ;
-			}
 			tmp = tmp->next;
 		}
 	if (!*op)

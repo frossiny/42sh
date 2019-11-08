@@ -6,7 +6,7 @@
 /*   By: alagroy- <alagroy-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 18:04:45 by alagroy-          #+#    #+#             */
-/*   Updated: 2019/11/05 14:20:53 by alagroy-         ###   ########.fr       */
+/*   Updated: 2019/11/08 17:07:48 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,6 @@ static void	fill_test_list(t_list *token_list, t_list *begin)
 			tmp_token = tmp_token->next;
 		if (i % 2 == 0)
 			token->type = NUM;
-		if (i % 2 == 0)
-			token->num_value = 0;
 		if (i % 2 == 1)
 		{
 			token->type = ((t_ae_token *)tmp_token->content)->type;
