@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 11:43:47 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/06 18:17:22 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/08 17:18:19 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ t_cursor_pos	g_pos;
 int				g_child;
 int				g_ignore_signals;
 int				g_return;
+int				g_lpid;
 int				g_clear_buffer;
 char			*g_pwd;
 
@@ -63,6 +64,7 @@ static int	shell_init(char *envp[])
 	g_child = 0;
 	g_ignore_signals = 0;
 	g_return = 0;
+	g_lpid = -1;
 	g_shell.vars = var_init(envp);
 	g_shell.alias = NULL;
 	if (var_get(g_shell.vars, "HOME"))

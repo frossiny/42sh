@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 15:22:13 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/07 14:51:59 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/08 17:24:16 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,29 @@
 #include "shell.h"
 #include "variables.h"
 #include "expansion.h"
+
+static t_var	*get_special_var_pid(char *key)
+{
+	t_var	*ret;
+	char	*tmp;
+
+	ret = NULL;
+	if (ft_strequ(key, "$"))
+	{
+		tmp = ft_itoa((int)getpid());
+		ret = var_new(key, tmp, 0);
+		free(tmp);
+	}
+	else if (ft_strequ(key, "!"))
+	{
+		if (g_lpid < 0)
+			return (NULL);
+		tmp = ft_itoa(g_lpid);
+		ret = var_new(key, tmp, 0);
+		free(tmp);
+	}
+	return (ret);
+}
 
 static t_var	*get_special_var(char *key)
 {
@@ -26,17 +49,13 @@ static t_var	*get_special_var(char *key)
 	if (ft_strequ(key, "?"))
 	{
 		tmp = ft_itoa(g_return);
-		if (!(ret = var_new(key, tmp, 0)))
-			return (NULL);
+		ret = var_new(key, tmp, 0);
 		free(tmp);
 	}
-	else if (ft_strequ(key, "$"))
-	{
-		tmp = ft_itoa((int)getpid());
-		if (!(ret = var_new(key, tmp, 0)))
-			return (NULL);
-		free(tmp);
-	}
+	else if (ft_strequ(key, "0"))
+		ret = var_new(key, "42sh", 0);
+	else
+		ret = get_special_var_pid(key);
 	return (ret);
 }
 
