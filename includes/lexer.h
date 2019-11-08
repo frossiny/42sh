@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 11:23:56 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/30 17:58:23 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/08 14:35:52 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int			tok_is_varexp(t_token *token);
 void		tok_replace(t_token *token, char *str);
 int			lex_is_expansion(t_lexer *lex);
 size_t		lex_get_expansion(t_lexer *lex);
+t_exp_tok	*lex_new_exp(t_lexer *lexer, const char *op);
+void		lex_exp_del(t_lexer *lexer);
 
 void		lex_update_state(t_lexer *lexer, t_state newstate);
 

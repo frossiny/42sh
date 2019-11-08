@@ -1,23 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lex_free.c                                         :+:      :+:    :+:   */
+/*   lex_exp_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/03 12:12:12 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/08 14:50:46 by frossiny         ###   ########.fr       */
+/*   Created: 2019/11/08 14:23:05 by frossiny          #+#    #+#             */
+/*   Updated: 2019/11/08 14:35:34 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "lexer.h"
+#include "tokens_list.h"
 
-void	lexer_free(t_lexer *lexer)
+t_exp_tok	*lex_new_exp(t_lexer *lexer, const char *op)
 {
-	while (lexer->exps)
-		lex_exp_del(lexer);
-	tok_destroy(lexer->tokens);
-	lexer->tokens = NULL;
-	lexer->size = 0;
-	lex_update_state(lexer, ST_GENERAL);
+	t_exp_tok	*new;
+
+	if (!(new = (t_exp_tok *)malloc(sizeof(t_exp_tok))))
+		return (NULL);
+	new->op = (char *)op;
+	new->next = lexer->exps;
+	lexer->exps = new;
+	return (new);
+}
+
+void		lex_exp_del(t_lexer *lexer)
+{
+	t_exp_tok	*tmp;
+
+	tmp = lexer->exps->next;
+	free(lexer->exps);
+	lexer->exps = tmp;
 }

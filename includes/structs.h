@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 14:23:53 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/07 16:45:01 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/08 14:21:55 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,15 @@ typedef struct		s_token
 	struct s_token	*next;
 }					t_token;
 
+/*
+**	Used in expansions lexing
+*/
+typedef struct		s_exp_tok
+{
+	char				*op;
+	struct s_exp_tok	*next;
+}					t_exp_tok;
+
 typedef struct		s_lexer
 {
 	char		*in;
@@ -151,6 +160,7 @@ typedef struct		s_lexer
 	size_t		size;
 	t_state		state;
 	t_state		lstate;
+	t_exp_tok	*exps;
 }					t_lexer;
 
 /*

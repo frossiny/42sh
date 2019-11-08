@@ -6,12 +6,12 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/11/07 16:44:51 by frossiny         ###   ########.fr        #
+#    Updated: 2019/11/08 14:49:41 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC		=	gcc -g3 -fsanitize=address
-CFLAGS	+=	-Wall -Werror -Wextra
+CC		=	gcc -g3 #-fsanitize=address
+#CFLAGS	+=	-Wall -Werror -Wextra
 
 SHELL	=	bash
 
@@ -98,6 +98,7 @@ FILES	=	shell.c											\
 			lexer/lex_search.c								\
 			lexer/lex_update_state.c						\
 			lexer/lex_is_expansion.c						\
+			lexer/lex_exp_utils.c							\
 			lexer/tokens/tok_create.c						\
 			lexer/tokens/tok_destroy.c						\
 			lexer/tokens/tok_is_word.c						\

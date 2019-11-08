@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 11:23:45 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/07 16:45:44 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/08 14:34:56 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,9 @@ static int			lex_end(t_lexer *lexer)
 	}
 	else
 	{
-		if (lexer->state == ST_ESCAPED)
+		if (lexer->state == ST_EXPANSIONS)
+			return (-5);
+		else if (lexer->state == ST_ESCAPED)
 			return (-4);
 		else if (lexer->state == ST_DQUOTES)
 			return (-3);
