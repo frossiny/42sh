@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 20:32:11 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/14 18:41:59 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/09 16:38:01 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static int	execute_pipe_cmd(t_pipel *pline, t_fd *fd, t_shell *shell)
 	if ((g_child = fork()) == 0)
 	{
 		unregister_signals();
-		shell->able_termcaps ? restore_shell(shell->prev_term) : 0;
+		restore_shell(shell->prev_term);
 		init_fd(pline, fd->op, fd->np);
 		if (execve(get_exe(shell, cmd->exe->content, 1),
 								cmd->args, var_build_env(shell->vars)) == -1)
@@ -88,7 +88,7 @@ static int	execute_pipe_builtin(t_pipel *pline, t_fd *fd, t_shell *shell)
 	return (ret);
 }
 
-static void	end_pipes(t_childs *childs, t_fd *fd, t_shell *shell)
+static void	end_pipes(t_childs *childs, t_fd *fd)
 {
 	int		ret;
 
@@ -101,10 +101,11 @@ static void	end_pipes(t_childs *childs, t_fd *fd, t_shell *shell)
 				g_return = display_signal(ret);
 			else
 				g_return = WEXITSTATUS(ret);
+			g_lpid = childs->pid;
 		}
 		childs = childs->next;
 	}
-	shell->able_termcaps ? termcaps_init(NULL) : 0;
+	termcaps_init(NULL);
 	g_child = 0;
 	close(fd->np[0]);
 	close(fd->np[1]);
@@ -135,7 +136,7 @@ int			execute_pipes(t_anode *node, t_shell *shell, t_anode **cn)
 	}
 	dup2(fd.sfd, 1);
 	close(fd.sfd);
-	end_pipes(childs, &fd, shell);
+	end_pipes(childs, &fd);
 	child_del(childs);
 	del_pipeline(pipeline);
 	return (g_return);

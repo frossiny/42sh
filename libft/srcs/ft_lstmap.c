@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 18:50:21 by frossiny          #+#    #+#             */
-/*   Updated: 2018/11/08 18:58:10 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/04 19:52:02 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ t_list	*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem))
 	{
 		nc->next = f(lst->next);
 		lst = lst->next;
-		nc = nc->next;
+		if (nc->next)
+			nc = nc->next;
 	}
 	return (fl);
 }

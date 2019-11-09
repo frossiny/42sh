@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 14:59:12 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/05/22 17:43:34 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/10/31 17:47:04 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,12 @@ void			restore_shell(struct termios prev_term)
 
 void			free_termcaps(t_shell *shell)
 {
-	if (shell->able_termcaps)
-	{
-		overwrite_history(shell->history.lst);
-		free_history(&(shell->history));
-		restore_shell(shell->prev_term);
-		free(g_pos.v_str);
-		if (g_pos.o_input)
-			free(g_pos.o_input);
-	}
+	overwrite_history(shell->history.lst);
+	free_history(&(shell->history));
+	restore_shell(shell->prev_term);
+	free(g_pos.v_str);
+	if (g_pos.o_input)
+		free(g_pos.o_input);
 }
 
 int				memset_all(char **str, t_history *history, t_cursor_pos *pos)

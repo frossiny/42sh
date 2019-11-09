@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 11:59:10 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/01 19:31:54 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/09 16:15:12 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 
 # define MAX_HISTORY	30
 # define HT_SIZE		150
+# define EXP_SPECIAL	"?$!0"
 
 extern t_shell		g_shell;
 extern t_cursor_pos	g_pos;
@@ -32,6 +33,8 @@ extern int			g_child;
 extern int			g_clear_buffer;
 extern int			g_ignore_signals;
 extern int			g_return;
+extern int			g_lpid;
+extern char			*g_pwd;
 
 int					shell(void);
 void				prompt(void);
@@ -52,11 +55,12 @@ int					get_pipes_docs(t_shell *shell, t_pipel *pipes);
 
 char				**dup_argv(int argc, char **args, char ***argv);
 int					replace_vars(t_token *curr, t_var *vars);
+int					replace_globbing(t_token *token);
 size_t				get_var_size(char *key);
 
 char				*get_exe(t_shell *shell, char *name, int verbose);
 int					is_exe(t_shell *shell, char *name, int verbose);
-int					execute(t_cmd *cmd, t_shell *shell);
+int					execute(t_cmd *cmd);
 void				restore_fd(int fd[]);
 
 void				register_signals(void);

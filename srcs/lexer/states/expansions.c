@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 15:26:08 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/01 18:29:41 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/08 14:48:13 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,6 @@ static char			*get_closing(const char *open)
 	return (NULL);
 }
 
-static t_token_type	get_tok_type(const char *op)
-{
-	if (ft_strequ(op, "$") || ft_strequ(op, "${"))
-		return (TOKEN_VAR);
-	if (ft_strequ(op, "$(("))
-		return (TOKEN_ARITHMETIC);
-	return (TOKEN_NAME);
-}
-
 static int			update_state(t_lexer *lexer, t_state state, int ret)
 {
 	lex_update_state(lexer, state);
@@ -42,28 +33,27 @@ static int			update_state(t_lexer *lexer, t_state state, int ret)
 int					lex_state_expansions(t_lexer *lexer)
 {
 	t_ex_token	cur;
-	char		*match;
-	char		*str;
+	char		*closing;
 
-	if (!(cur = g_exp_list[lex_get_expansion(lexer)]).op)
+	if ((cur = g_exp_list[lex_get_expansion(lexer)]).op)
+	{
+		lex_new_exp(lexer, cur.op);
+		lexer->in += cur.len;
+	}
+	else if (!cur.op && !lexer->exps)
 		return (update_state(lexer, ST_GENERAL, 1));
-	lexer->in += cur.len;
-	if ((match = get_closing(cur.op)) && !ft_strequ(cur.op, "$"))
-	{
-		if (!(str = ft_strstr(lexer->in, match)))
-			return (-5);
-		str += ft_strlen(match);
-	}
-	else if (ft_strequ(cur.op, "$"))
-	{
-		while (lexer->in[0] && !lexer_search(lexer->in).op)
-			lexer->in++;
-		str = lexer->in;
-	}
 	else
-		return (update_state(lexer, ST_GENERAL, 1));
-	tok_create(lexer, lexer->pin, str - lexer->pin, get_tok_type(cur.op));
-	lexer->pin = str;
-	lexer->in = str;
-	return (update_state(lexer, ST_GENERAL, 1));
+	{
+		closing = get_closing(lexer->exps->op);
+		if (ft_strnequ(lexer->in, closing, ft_strlen(closing)))
+		{
+			lex_exp_del(lexer);
+			lexer->in += ft_strlen(closing);
+			if (lexer->exps == NULL)
+				return (update_state(lexer, ST_GENERAL, 1));
+		}
+		else
+			lexer->in++;
+	}
+	return (1);
 }

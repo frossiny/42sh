@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/04 16:14:27 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/01 19:41:10 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/09 16:13:27 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,10 @@ int			build_args(t_cmd *cmd)
 
 	if (!cmd)
 		return (-1);
-	//replace_vars(cmd->exe, vars);
-	expand(cmd->exe);
+	if (!cmd->exe && cmd->tenv)
+		return (1);
+	if (!expand(cmd->exe))
+		return (-1);
 	cmd->argc = build_args_arr(&argv, cmd->exe);
 	cmd->args = argv;
 	return (cmd->argc);

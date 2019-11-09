@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 18:24:16 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/01 16:12:55 by pcharrie         ###   ########.fr       */
+/*   Updated: 2019/11/07 19:33:52 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ char				*ft_strctrim(char const *s, char c);
 char				**ft_strsplit(char const *s, char c);
 int					ft_strisalnum(char *str);
 int					ft_strisdigit(char *str);
+char				*ft_insert_str(char *str, char *insert, int index);
+char				*ft_strdelpart(char *str, int i, int len);
 
 int					ft_atoi(const char *str);
 char				*ft_itoa(int n);
@@ -113,6 +115,9 @@ void				ft_lstadd(t_list **alst, t_list *new);
 void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 void				ft_lstfold(t_list **lst, void (*del)(void *, size_t));
+void				ft_lstsort(t_list **list);
+void				ft_freelst(t_list **alst);
+void				ft_lstend(t_list **begin, t_list *new);
 
 void				ft_putstrtable(char **tb);
 char				*ft_strfdup(const char *s1, const char *f);

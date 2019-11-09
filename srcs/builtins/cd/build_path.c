@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   build_path.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 15:41:21 by pcharrie          #+#    #+#             */
-/*   Updated: 2019/11/01 16:24:38 by pcharrie         ###   ########.fr       */
+/*   Updated: 2019/11/07 18:13:23 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-extern char	*g_pwd;
+#include "shell.h"
 
 static int	ft_strredupmem(char **s1, char *s2)
 {

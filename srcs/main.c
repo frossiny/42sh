@@ -3,22 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 11:43:47 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/01 19:37:02 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/09 16:10:11 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <dirent.h>
 #include "shell.h"
 #include "libft.h"
+#include "ft_printf.h"
 
 t_shell			g_shell;
 t_cursor_pos	g_pos;
 int				g_child;
 int				g_ignore_signals;
 int				g_return;
+int				g_lpid;
 int				g_clear_buffer;
 char			*g_pwd;
 
@@ -51,13 +53,20 @@ static void	init_default_vars(void)
 		var_set(&g_shell.vars, "SHLVL", "1", 1);
 }
 
-static void	shell_init(char *envp[])
+static int	shell_init(char *envp[])
 {
-	g_shell.able_termcaps = termcaps_init(&(g_shell.prev_term));
+	if (!termcaps_init(&(g_shell.prev_term)))
+	{
+		ft_printf("42sh: can not load termcaps\n");
+		ft_printf("Verify TERM variable \"TERM=xterm-256color\"\n");
+		return (0);
+	}
 	g_child = 0;
 	g_ignore_signals = 0;
 	g_return = 0;
+	g_lpid = -1;
 	g_shell.vars = var_init(envp);
+	g_shell.alias = NULL;
 	if (var_get(g_shell.vars, "HOME"))
 		g_shell.history = get_history();
 	else
@@ -68,6 +77,7 @@ static void	shell_init(char *envp[])
 	g_shell.lexer.lstate = ST_GENERAL;
 	g_shell.ast = NULL;
 	g_shell.bin_ht.table = NULL;
+	return (1);
 }
 
 int			main(int argc, char *argv[], char *envp[])

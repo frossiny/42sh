@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:05:59 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/01 15:39:08 by pcharrie         ###   ########.fr       */
+/*   Updated: 2019/11/07 18:11:53 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "lexer.h"
 #include "parser.h"
 #include "ast.h"
+#include "alias.h"
 #include "hashtable.h"
 
 int		bslash_error(t_shell *shell, char **input, int ret)
@@ -138,7 +139,9 @@ int		shell(void)
 		ft_strdel(&input);
 	isatty(0) ? ft_putchar('\n') : 0;
 	var_destroy(&(g_shell.vars));
+	alias_free_all(&(g_shell.alias));
 	ht_delete(g_shell);
 	free_termcaps(&g_shell);
+	free(g_pwd);
 	return (g_return);
 }

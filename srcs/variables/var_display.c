@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 13:29:22 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/24 12:56:39 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/08 16:45:16 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static int	need_quoting(char *val)
 	const char	*cl = " ?|&;<>$`\\\"'\t\n";
 	int			i;
 
+	if (!val)
+		return (0);
 	i = 0;
 	while (val[i])
 	{
