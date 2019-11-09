@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/11/08 16:29:30 by lubenard         ###   ########.fr        #
+#    Updated: 2019/11/09 15:13:14 by lubenard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -174,7 +174,6 @@ $(NAME): $(OBJS)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@mkdir -p $(@D)
-	#@echo -n -e "\033[K${_PURPLE}${BOLD}[${NAME}] Compiling $<${_END}"
 	@$(CC) $(CFLAGS) -I $(INCDIR) -I $(LIBFT)/$(INCDIR) -MMD -o $@ -c $<
 	@python3 .loading.py $@
 
@@ -191,6 +190,7 @@ fclean: clean
 	@rm -rf $(OBJDIR)
 	@rm -rf $(NAME).dSYM
 	@rm -rf ~/.$(NAME)_history
+	@rm -rf /tmp/makefile_42sh
 
 re: fclean
 	@$(MAKE)
