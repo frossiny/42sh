@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/04 16:14:27 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/12 15:27:20 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/12 16:31:36 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,13 @@
 #include "lexer.h"
 #include "expansion.h"
 
+static int	is_arg(t_token *token)
+{
+	if (!token)
+		return (0);
+	return (tok_is_word(token) || tok_is_redirection(token));
+}
+
 static int	count_args(t_token *tokens)
 {
 	t_token	*prev;
@@ -23,7 +30,7 @@ static int	count_args(t_token *tokens)
 
 	argc = 0;
 	prev = NULL;
-	while (tokens)
+	while (is_arg(tokens))
 	{
 		if (tok_is_word(tokens) && !tok_is_redirection(prev))
 			argc++;
@@ -44,7 +51,7 @@ static int	build_args_arr(char ***args, t_token *tokens)
 		exit(-1);
 	prev = NULL;
 	i = 0;
-	while (tokens && i < argc)
+	while (is_arg(tokens) && i < argc)
 	{
 		if (tok_is_word(tokens) && !tok_is_redirection(prev))
 			(*args)[i++] = tokens->content;
