@@ -6,13 +6,14 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 15:27:23 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/23 14:58:03 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/09 17:40:26 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include "libft.h"
 #include "shell.h"
+# include <stdio.h>
 
 static void		redirect_output(t_redirect *redir)
 {
@@ -21,8 +22,10 @@ static void		redirect_output(t_redirect *redir)
 
 	otype = O_WRONLY | O_CREAT;
 	otype |= (redir->append) ? O_APPEND : O_TRUNC;
+	printf("redir->value->content = %s\n", redir->value->content);
 	if ((fd = open(redir->value->content, otype, 420)) == -1)
 		return ;
+	printf("Je dup2 %d -> %d\n", redir->filedes, fd);
 	dup2(fd, redir->filedes);
 	close(fd);
 }
@@ -64,11 +67,16 @@ int				handle_redirections(t_redirect *redir)
 {
 	t_redirect	*save;
 
+	printf("I'm going to launch redir\n");
 	save = redir;
 	while (redir && redir->value)
 	{
 		if (redir->type == TOKEN_REDIRO)
+		{
+			printf("Je rentre la\n");
 			redirect_output(redir);
+			printf("je sort de cette fonction\n");
+		}
 		else if (redir->type == TOKEN_REDIRI)
 		{
 			if (redir->append)

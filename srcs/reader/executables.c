@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:26:37 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/08 17:24:43 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/09 17:29:53 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "utils.h"
 #include "hashtable.h"
 #include "builtins.h"
+# include <stdio.h>
 
 static int	exe_assignements(t_cmd *cmd)
 {
@@ -36,6 +37,7 @@ static int	start_process(char *file, t_cmd *cmd, char **env)
 {
 	int		status;
 
+	printf("start_process\n");
 	if (!get_here_doc(cmd->redir, &g_shell))
 		return (EXIT_FAILURE);
 	if ((g_child = fork()) == 0)
@@ -43,6 +45,7 @@ static int	start_process(char *file, t_cmd *cmd, char **env)
 		unregister_signals();
 		restore_shell(g_shell.prev_term);
 		handle_redirections(cmd->redir);
+		printf("file = %s\n", file);
 		if (execve(file, cmd->args, env) == -1)
 			exit(EXIT_FAILURE);
 		exit(EXIT_SUCCESS);

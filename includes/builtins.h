@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:40:21 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/09 16:17:01 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/09 16:47:56 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ static const t_builtin g_builtins[] =
 	{ "type", &b_type },
 	{ "alias", &b_alias },
 	{ "unalias", &b_unalias },
+	{ "history", &b_history},
 	{ NULL, NULL }
 };
 
