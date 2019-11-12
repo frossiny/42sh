@@ -27,7 +27,7 @@ static int	start_process(char *file, t_cmd *cmd, char **env, t_shell *shell)
 	if ((g_child = fork()) == 0)
 	{
 		unregister_signals();
-		restore_shell(shell->prev_term);
+		shell->able_termcaps ? restore_shell(shell->prev_term) : 0;
 		handle_redirections(cmd->redir);
 		if (execve(file, cmd->args, env) == -1)
 			exit(EXIT_FAILURE);
@@ -37,7 +37,7 @@ static int	start_process(char *file, t_cmd *cmd, char **env, t_shell *shell)
 	if (g_child == -1)
 		return (g_child = 0);
 	waitpid(g_child, &status, 0);
-	termcaps_init(NULL);
+	shell->able_termcaps ? termcaps_init(NULL) : 0;
 	g_child = 0;
 	if (WIFSIGNALED(status))
 		return (display_signal(status));

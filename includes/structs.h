@@ -242,6 +242,7 @@ typedef struct		s_shell
 	t_anode			*ast;
 	t_hashtable		bin_ht;
 	t_history		history;
+	int			able_termcaps;
 	struct termios	prev_term;
 }					t_shell;
 

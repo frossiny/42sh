@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 11:43:47 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/06 18:52:46 by pcharrie         ###   ########.fr       */
+/*   Updated: 2019/11/10 22:11:54 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,8 @@ int			main(int argc, char *argv[], char *envp[])
 	(void)argc;
 	(void)argv;
 	register_signals();
-	shell_init(envp);
+	if (!shell_init(envp))
+		return (0);
 	init_default_vars(NULL);
 	return (shell());
 }
