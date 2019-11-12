@@ -6,7 +6,7 @@
 #    By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/16 11:23:33 by frossiny          #+#    #+#              #
-#    Updated: 2019/11/06 18:49:53 by pcharrie         ###   ########.fr        #
+#    Updated: 2019/11/12 01:33:13 by pcharrie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,6 +81,7 @@ FILES 	=	ft_2dstrnew.c						\
 			ft_isascii.c						\
 			ft_isprint.c						\
 			ft_isspace.c						\
+			ft_isnumeric.c						\
 			ft_tolower.c						\
 			ft_toupper.c						\
 			ft_putchar.c						\

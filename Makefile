@@ -6,7 +6,7 @@
 #    By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/11/06 18:48:57 by pcharrie         ###   ########.fr        #
+#    Updated: 2019/11/12 01:35:38 by pcharrie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,8 @@ FILES 	=	main.c									\
 			builtins/cd/cd.c						\
 			builtins/cd/get_path.c					\
 			builtins/fc/fc.c						\
+			builtins/fc/list.c						\
+			builtins/fc/parse.c						\
 			builtins/options/opt_parse.c			\
 			builtins/options/opt_add.c				\
 			builtins/options/opt_get.c				\

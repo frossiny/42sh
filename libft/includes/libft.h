@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 18:24:16 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/06 18:49:54 by pcharrie         ###   ########.fr       */
+/*   Updated: 2019/11/12 01:32:29 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ int					ft_isprint(int c);
 int					ft_isascii(int c);
 int					ft_tolower(int c);
 int					ft_toupper(int c);
+int					ft_isnumeric(char *str);
 
 int					ft_putchar(int c);
 void				ft_putstr(char const *s);
