@@ -1,0 +1,13 @@
+je sort de cette fonction
+cmd->args[0] = ls
+cmd->args[1] = (null)
+42sh
+Makefile
+README.md
+auteur
+file1
+includes
+libft
+objs
+srcs
+tests

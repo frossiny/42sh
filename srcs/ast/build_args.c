@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/04 16:14:27 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/09 16:13:27 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/12 15:35:47 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,28 +16,39 @@
 #include "lexer.h"
 #include "expansion.h"
 
+static int	count_args(t_token *tokens)
+{
+	t_token	*prev;
+	int		argc;
+
+	argc = 0;
+	prev = NULL;
+	while (tokens)
+	{
+		if (tok_is_word(tokens) && !tok_is_redirection(prev))
+			argc++;
+		prev = tokens;
+		tokens = tokens->next;
+	}
+	return (argc);
+}
+
 static int	build_args_arr(char ***args, t_token *tokens)
 {
 	int		argc;
 	int		i;
-	t_token	*tmp;
+	t_token	*prev;
 
-	argc = 0;
-	tmp = tokens;
-	while (tmp && (tok_is_word(tmp) || tok_is_redirection(tmp)))
-	{
-		argc += tok_is_word(tmp);
-		tmp = tmp->next;
-	}
+	argc = count_args(tokens);
 	if (!((*args) = (char **)malloc(sizeof(char *) * (argc + 1))))
 		exit(-1);
-	tmp = tokens;
+	prev = NULL;
 	i = 0;
-	while (tmp && i < argc)
+	while (tokens && i < argc)
 	{
-		if (tok_is_word(tmp))
-			(*args)[i++] = tmp->content;
-		tmp = tmp->next;
+		if (tok_is_word(tokens) && !tok_is_redirection(prev))
+			(*args)[i++] = tokens->content;
+		tokens = tokens->next;
 	}
 	(*args)[i] = NULL;
 	return (argc);

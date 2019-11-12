@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:03:36 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/08 17:16:37 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/12 16:04:22 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,10 @@ int		b_history(t_cmd *cmd, t_shell *shell)
 
 	opts = opt_parse(cmd, "cdanrwps", "history");
 	tmp_options = opts->opts;
-	if (cmd->argc == 1)
+	if (opts->ret != 0)
+		(opts->ret == -1 ? ft_putendl_fd("history: usage: [-c] [-d offset] \
+or history -awrn [filename] or history -ps arg [arg...]", 2) : 0);
+	else if (cmd->argc == 1)
 		print_hist(shell, shell->history.histsize);
 	else if (ft_strisdigit(cmd->args[1]))
 		print_hist(shell, ft_atoi(cmd->args[1]) - 1);

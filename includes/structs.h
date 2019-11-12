@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 14:23:53 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/09 16:14:50 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/12 16:46:57 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -266,6 +266,7 @@ typedef struct		s_hashval
 {
 	char	*key;
 	char	*value;
+	size_t	occurence;
 }					t_hashval;
 
 typedef struct		s_hashtable

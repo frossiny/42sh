@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:40:21 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/09 16:47:56 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/12 14:14:20 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int			b_history(t_cmd *cmd, t_shell *shell);
 int			b_type(t_cmd *cmd, t_shell *shell);
 int			b_alias(t_cmd *cmd, t_shell *shell);
 int			b_unalias(t_cmd *cmd, t_shell *shell);
+int			b_hash(t_cmd *cmd, t_shell *shell);
+
 
 /*
 ** Cd internal functions
@@ -56,6 +58,7 @@ static const t_builtin g_builtins[] =
 	{ "alias", &b_alias },
 	{ "unalias", &b_unalias },
 	{ "history", &b_history},
+	{ "hash", &b_hash},
 	{ NULL, NULL }
 };
 

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 17:27:04 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/14 18:42:23 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/12 19:14:09 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,15 +57,18 @@ static char	*handle_relative(char *name, int verbose)
 	return (NULL);
 }
 
+#include <stdio.h>
+
 static char	*get_exe_path(t_shell *shell, char *name)
 {
 	t_var		*path;
 	char		**dirs;
 	size_t		i;
 	char		*file;
+	static int	is_called_twice = 0;
 
-	if ((file = ht_get(shell, name)))
-		return (file);
+	file = ht_get(shell, name);
+	printf("Je vais pas jusque la, file vaut %s\n", file);
 	if (!(path = var_get(shell->vars, "PATH")) || !ft_strlen(path->value))
 		return (NULL);
 	i = -1;
@@ -77,9 +80,20 @@ static char	*get_exe_path(t_shell *shell, char *name)
 		ft_strdel(&file);
 	}
 	ft_strddel(&dirs);
+	printf("Je vais pour acceder a ht_put\n");
 	if (file && access(file, F_OK) == 0)
 	{
-		ht_put(shell, name, file);
+		if (is_called_twice)
+		{
+			is_called_twice = 0;
+			printf("Is called twice = %d\n", is_called_twice);
+		}
+		else if (!is_called_twice)
+		{
+			ht_put(shell, name, file);
+			is_called_twice = 1;
+			printf("Is called twice = %d\n", is_called_twice);
+		}
 		return (file);
 	}
 	ft_strdel(&file);

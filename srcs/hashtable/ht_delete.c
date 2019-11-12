@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/01 14:09:30 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/24 12:52:26 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/12 15:22:59 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,5 @@ void	ht_delete(void)
 		free(g_shell.bin_ht.table[i].value);
 	}
 	free(g_shell.bin_ht.table);
+	g_shell.bin_ht.table = NULL;
 }
