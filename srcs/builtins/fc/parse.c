@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 01:34:27 by pcharrie          #+#    #+#             */
-/*   Updated: 2019/11/12 02:13:48 by pcharrie         ###   ########.fr       */
+/*   Updated: 2019/11/12 05:31:46 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,13 +110,19 @@ int		fc_parse_range(t_cmd *cmd, t_fc_vars *fc)
 	if (cmd->args[fc->i])
 	{
 		if (!ft_isnumeric(cmd->args[fc->i]))
+		{
+			ft_putendl_fd("42sh: fc: history specification out of range", 2);
 			return (0);
+		}
 		fc->from = ft_atoi(cmd->args[fc->i++]);
 	}
 	if (cmd->args[fc->i])
 	{
 		if (!ft_isnumeric(cmd->args[fc->i]))
+		{
+			ft_putendl_fd("42sh: fc: history specification out of range", 2);
 			return (0);
+		}
 		fc->to = ft_atoi(cmd->args[fc->i++]);
 	}
 	fc_fix_range(fc);

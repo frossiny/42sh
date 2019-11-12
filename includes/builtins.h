@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:40:21 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/12 02:18:33 by pcharrie         ###   ########.fr       */
+/*   Updated: 2019/11/12 04:28:14 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ typedef struct	t_fc_vars
 	char			*editor;
 	int				i;
 	t_histo_lst_fc	*lst;
+	char			**tab;
+	int				tab_len;
 }				t_fc_vars;
 
 void			fc_list(t_fc_vars *fc);
