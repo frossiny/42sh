@@ -85,7 +85,8 @@ int			main(int argc, char *argv[], char *envp[])
 	(void)argc;
 	(void)argv;
 	register_signals();
-	shell_init(envp);
+	if (!shell_init(envp))
+		return (0);
 	init_default_vars();
 	return (shell());
 }

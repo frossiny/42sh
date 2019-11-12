@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/11/08 16:49:51 by frossiny         ###   ########.fr        #
+#    Updated: 2019/11/12 15:16:32 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -198,7 +198,7 @@ _PURPLE=\x1b[35m
 _CYAN=\x1b[36m
 _WHITE=\x1b[37m
 
-.PHONY: all clean fclean re norm $(LIBFT)
+.PHONY: all clean fclean re norm test $(LIBFT)
 
 all: $(NAME)
 
@@ -232,7 +232,7 @@ norm:
 	@norminette $(INCDIR) $(SRCDIR) | grep "Warning\|Error" || true
 	@echo "Norm done!"
 
-test:
-	python3 err.py
+test: all
+	./test.sh . $(NAME)
 
 -include $(OBJSD)
