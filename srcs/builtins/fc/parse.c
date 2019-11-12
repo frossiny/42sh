@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 01:34:27 by pcharrie          #+#    #+#             */
-/*   Updated: 2019/11/12 05:31:46 by pcharrie         ###   ########.fr       */
+/*   Updated: 2019/11/12 07:17:19 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int		fc_parse_options(t_cmd *cmd, t_fc_vars *fc)
 						ft_putendl_fd("42sh: fc: -e: option requires an argument", 2);
 						return (-1);
 					}
-					break;
+					break ;
 				}
 				else if (cmd->args[i][j] == 'l' || cmd->args[i][j] == 's')
 					cmd->args[i][j] == 'l' ? (fc->list = 1) : (fc->exec = 1);
@@ -71,21 +71,6 @@ int		fc_parse_options(t_cmd *cmd, t_fc_vars *fc)
 	return (1);
 }
 
-int		fc_histo_lst_size(void)
-{
-	t_histo_lst	*lst;
-	int			i;
-
-	lst = g_shell.history.lst;
-	i = 0;
-	while (lst)
-	{
-		i++;
-		lst = lst->next;
-	}
-	return (i);
-}
-
 void	fc_fix_range(t_fc_vars *fc)
 {
 	int hist_size;
@@ -93,8 +78,13 @@ void	fc_fix_range(t_fc_vars *fc)
 	hist_size = fc_histo_lst_size();
 	if (fc->from < 0)
 	{
-		fc->from = (hist_size - 15 < 0 ? 0 : hist_size - 15);
-		fc->to = hist_size;
+		if (fc_get_mode(fc) == 2)
+		{
+			fc->from = (hist_size - 15 < 0 ? 0 : hist_size - 15);
+			fc->to = hist_size;
+		}
+		else
+			fc->from = hist_size;
 	}
 	if (fc->to > -1 && fc->to < fc->from)
 	{

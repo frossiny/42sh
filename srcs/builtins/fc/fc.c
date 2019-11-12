@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 17:13:15 by pcharrie          #+#    #+#             */
-/*   Updated: 2019/11/12 05:56:26 by pcharrie         ###   ########.fr       */
+/*   Updated: 2019/11/12 07:37:31 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,68 +37,30 @@ void	fc_vars_init(t_fc_vars *fc)
 void	fc_proceed(t_fc_vars *fc)
 {
 	if (fc->exec)
-	{
-
-	}
+		fc_exec_tab(fc);
 	else if (fc->list)
 		fc_list(fc);
 	else
 	{
-		// edit
+		if (!fc->editor && !(fc->editor = ft_strdup("/usr/bin/vim")))
+			return ;
+		fc_edit(fc);
 	}
 }
 
-int		fc_build_tab_len(t_fc_vars *fc)
+int		fc_histo_lst_size(void)
 {
-	int			i;
-	int			j;
 	t_histo_lst	*lst;
+	int			i;
 
 	lst = g_shell.history.lst;
 	i = 0;
-	j = 0;
 	while (lst)
 	{
-		if (i >= fc->from)
-		{
-			if (fc->to > -1 && i > fc->to)
-				break;
-			j++;
-		}
 		i++;
 		lst = lst->next;
 	}
-	return (j);
-}
-
-int		fc_build_tab(t_fc_vars *fc)
-{
-	int			i;
-	int			j;
-	t_histo_lst	*lst;
-
-	fc->tab_len = fc_build_tab_len(fc);
-	if (!(fc->tab = ft_2dstrnew(fc->tab_len)))
-		return (0);
-	lst = g_shell.history.lst;
-	i = 0;
-	j = 0;
-	while (lst)
-	{
-		if (i >= fc->from)
-		{
-			if (fc->to > -1 && i > fc->to)
-				break;
-			if (!(fc->tab[j++] = ft_strdup(lst->str)))
-			{
-				ft_2dstrdel(&fc->tab);
-				return (0);
-			}
-		}
-		i++;
-		lst = lst->next;
-	}
-	return (1);
+	return (i);
 }
 
 void	fc_vars_del(t_fc_vars *fc)
@@ -117,19 +79,13 @@ int		b_fc(t_cmd *cmd, t_shell *shell)
 		|| !fc_build_tab(&fc))
 	{
 		if (ret == -1)
-			ft_putendl_fd("fc: usage: fc [-e ename] [-nlr] [first] [last] or fc -s [pat=rep] [cmd]", 2);
+		{
+			ft_putstr_fd("fc: usage: fc [-e ename] [-nlr] [first] [last] o", 2);
+			ft_putendl_fd("r fc -s [pat=rep] [cmd]", 2);
+		}
 		fc_vars_del(&fc);
 		return (1);
 	}
-	
-	ft_printf("\nfrom: %d\n", fc.from);
-	ft_printf("to: %d\n", fc.to);
-	ft_printf("list: %d\n", fc.list);
-	ft_printf("exec: %d\n", fc.exec);
-	ft_printf("rm: %d\n", fc.rm);
-	ft_printf("rv: %d\n", fc.rv);
-	ft_printf("editor: %s\n", fc.editor);
-	
 	fc_proceed(&fc);
 	fc_vars_del(&fc);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:40:21 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/12 04:28:14 by pcharrie         ###   ########.fr       */
+/*   Updated: 2019/11/12 07:13:11 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,11 @@ typedef struct	t_fc_vars
 void			fc_list(t_fc_vars *fc);
 int				fc_parse_options(t_cmd *cmd, t_fc_vars *fc);
 int				fc_parse_range(t_cmd *cmd, t_fc_vars *fc);
+int				fc_build_tab(t_fc_vars *fc);
+int				fc_histo_lst_size(void);
+void			fc_edit(t_fc_vars *fc);
+void			fc_exec_tab(t_fc_vars *fc);
+void			fc_exec_file(void);
+int				fc_get_mode(t_fc_vars *fc);
 
 #endif

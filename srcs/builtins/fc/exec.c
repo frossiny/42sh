@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list.c                                             :+:      :+:    :+:   */
+/*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/12 01:29:44 by pcharrie          #+#    #+#             */
-/*   Updated: 2019/11/12 06:36:24 by pcharrie         ###   ########.fr       */
+/*   Created: 2019/11/12 06:37:24 by pcharrie          #+#    #+#             */
+/*   Updated: 2019/11/12 07:12:31 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,31 +20,19 @@
 #include "builtins.h"
 #include "opt.h"
 
-void	fc_list_print(t_fc_vars *fc)
+int		fc_get_mode(t_fc_vars *fc)
 {
-	int i;
-	int j;
-
-	i = 0;
-	j = fc->from;
-	while (fc->tab[i])
-		(fc->rm ? ft_printf("	%s\n", fc->tab[i++])
-			: ft_printf("%d	%s\n", j++, fc->tab[i++]));
+	if (fc->exec)
+		return (1);
+	if (fc->list)
+		return (2);
+	return (3);
 }
 
-void	fc_list_print_reverse(t_fc_vars *fc)
+void	fc_exec_tab(t_fc_vars *fc)
 {
-	int i;
-	int j;
-
-	i = fc->tab_len - 1;
-	j = fc->from + i;
-	while (i >= 0)
-		(fc->rm ? ft_printf("	%s\n", fc->tab[i--])
-			: ft_printf("%d	%s\n", j--, fc->tab[i--]));
 }
 
-void	fc_list(t_fc_vars *fc)
+void	fc_exec_file(void)
 {
-	(fc->rv ? fc_list_print_reverse(fc) : fc_list_print(fc));
 }
