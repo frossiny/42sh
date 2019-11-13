@@ -44,6 +44,7 @@ typedef struct		s_compare
 {
 	char					*cmp;
 	char					*file;
+	int					l_pattern;
 }					t_compare;
 
 int					expand(t_token *tokens);
@@ -60,6 +61,7 @@ t_var				*exp_get_var(t_expansion *exp);
 char				*exp_get_varname(t_expansion *exp);
 int					exp_simple_var(t_expansion *exp);
 int					exp_parameter(t_expansion *exp);
+int					exp_prefix(t_expansion *exp, t_var *var);
 
 char				*exp_par_len(t_expansion *exp);
 int					exp_par_colon(t_expansion *exp, t_var *var, char *name);

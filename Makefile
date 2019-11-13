@@ -65,6 +65,7 @@ FILES 	=	main.c									\
 			expansion/variables/exp_par_len.c		\
 			expansion/variables/exp_par_colon.c		\
 			expansion/variables/exp_get_var.c		\
+			expansion/variables/exp_prefix.c		\
 			expansion/globbing/globbing.c			\
 			expansion/globbing/path.c				\
 			expansion/globbing/complete.c			\

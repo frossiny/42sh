@@ -69,6 +69,8 @@ int				exp_parameter(t_expansion *exp)
 	var = exp_get_var(exp);
 	if (exp->str[exp->i] == ':')
 		ret = exp_par_colon(exp, var, name);
+	else if (exp->str[exp->i] == '#')
+		ret = exp_prefix(exp, var);
 	else
 		ret = exp_noflag(exp, var, name);
 	free(name);
