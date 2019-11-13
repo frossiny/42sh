@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 11:59:10 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/06 18:48:03 by pcharrie         ###   ########.fr       */
+/*   Updated: 2019/11/13 17:21:04 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ extern int			g_ignore_signals;
 extern int			g_return;
 extern char			*g_pwd;
 
+int					handle_input(t_shell *shell, char **input);
+int					eval_exec(char **input);
 int					shell(void);
 void				prompt(void);
 int					prompt_len(void);
@@ -56,6 +58,7 @@ int					replace_globbing(t_token *token);
 size_t				get_var_size(char *key);
 
 char				*get_exe(t_shell *shell, char *name, int verbose);
+char				*get_exe_path(t_shell *shell, char *name);
 int					is_exe(t_shell *shell, char *name, int verbose);
 int					execute(t_cmd *cmd, t_shell *shell);
 void				restore_fd(int fd[]);

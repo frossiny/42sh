@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 01:34:27 by pcharrie          #+#    #+#             */
-/*   Updated: 2019/11/12 07:17:19 by pcharrie         ###   ########.fr       */
+/*   Updated: 2019/11/13 15:31:23 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #include "builtins.h"
 #include "opt.h"
 
-int		fc_parse_options(t_cmd *cmd, t_fc_vars *fc)
+int			fc_parse_options(t_cmd *cmd, t_fc_vars *fc)
 {
 	int i;
 	int j;
@@ -71,31 +71,40 @@ int		fc_parse_options(t_cmd *cmd, t_fc_vars *fc)
 	return (1);
 }
 
-void	fc_fix_range(t_fc_vars *fc)
+static void	fc_fix_range(t_fc_vars *fc)
 {
 	int hist_size;
 
 	hist_size = fc_histo_lst_size();
-	if (fc->from < 0)
+	if (fc->exec)
 	{
-		if (fc_get_mode(fc) == 2)
-		{
-			fc->from = (hist_size - 15 < 0 ? 0 : hist_size - 15);
-			fc->to = hist_size;
-		}
-		else
-			fc->from = hist_size;
-	}
-	if (fc->to > -1 && fc->to < fc->from)
-	{
-		hist_size = fc->to;
+		if (fc->from == -1)
+			fc->from = fc_histo_lst_size();
 		fc->to = fc->from;
-		fc->from = hist_size;
-		fc->rv = 1;
+	}
+	else
+	{
+		if (fc->from < 1)
+		{
+			if (fc_get_mode(fc) == 2)
+			{
+				fc->from = (hist_size - 15 < 1 ? 1 : hist_size - 15);
+				fc->to = hist_size;
+			}
+			else
+				fc->from = hist_size;
+		}
+		if (fc->to > -1 && fc->to < fc->from)
+		{
+			hist_size = fc->to;
+			fc->to = fc->from;
+			fc->from = hist_size;
+			fc->rv = 1;
+		}
 	}
 }
 
-int		fc_parse_range(t_cmd *cmd, t_fc_vars *fc)
+int			fc_parse_range(t_cmd *cmd, t_fc_vars *fc)
 {
 	if (cmd->args[fc->i])
 	{

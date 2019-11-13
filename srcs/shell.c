@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:05:59 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/06 18:17:27 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/13 17:25:40 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,7 @@ int		handle_input(t_shell *shell, char **input)
 	}
 	t_token *cur = shell->lexer.tokens;
 	while (cur)
-	{
-		ft_printf("%s (%d)\n", cur->content, cur->type);
 		cur = cur->next;
-	}
 	if (!parse(shell->lexer.tokens))
 	{
 		lexer_free(&(shell->lexer));
@@ -106,7 +103,7 @@ int		handle_input(t_shell *shell, char **input)
 	return (0);
 }
 
-static int	eval_exec(char **input)
+int		eval_exec(char **input)
 {
 	int		ret;
 

@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 06:38:23 by pcharrie          #+#    #+#             */
-/*   Updated: 2019/11/12 07:13:56 by pcharrie         ###   ########.fr       */
+/*   Updated: 2019/11/13 17:24:00 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,38 @@ static void	fc_edit_remove_file(void)
 	ft_strdel(&path);
 }
 
+int			fc_set_editor_path(t_fc_vars *fc)
+{
+	char *tmp;
+
+	if ((tmp = get_exe_path(&g_shell, fc->editor)))
+	{
+		ft_strdel(&fc->editor);
+		fc->editor = tmp;
+		return (1);
+	}
+	return (0);
+}
+
+int			fc_set_editor(t_fc_vars *fc)
+{
+	
+	if (fc->editor[0] == '/' && access(fc->editor, F_OK))
+	{
+		ft_dprintf(2, "42sh: no such file or directory: %s", fc->editor);
+		return (0);
+	}
+	if (fc->editor[0] != '/' && !fc_set_editor_path(fc))
+	{
+		ft_dprintf(2, "42sh: command not found: %s", fc->editor);
+		return (0);
+	}
+	return (1);
+}
+
 void		fc_edit(t_fc_vars *fc)
 {
-	if (fc_edit_write_file(fc) && fc_edit_run_editor(fc))
+	if (fc_set_editor(fc) && fc_edit_write_file(fc) && fc_edit_run_editor(fc))
 		fc_exec_file();
 	fc_edit_remove_file();
 }
