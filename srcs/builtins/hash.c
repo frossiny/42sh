@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 13:08:41 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/12 18:50:13 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/13 13:17:01 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,11 @@ int		display_hash_table(t_hashtable table)
 
 	i = 0;
 	ft_putendl("hits    command");
-	while (i++ != table.size)
+	while (i != table.size)
 	{
 		if (table.table[i].key)
 			ft_printf("%4zu    %s\n", table.table[i].occurence, table.table[i].value);
+		i++;
 	}
 	return (0);
 }
@@ -49,5 +50,6 @@ int		b_hash(t_cmd *cmd, t_shell *shell)
 	}
 	else
 		ft_putendl("hash: hash table empty");
+	opt_free(opts);
 	return (0);
 }

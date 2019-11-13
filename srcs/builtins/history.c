@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:03:36 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/12 16:04:22 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/13 19:23:15 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,10 @@ void	append_hist(t_histo_lst *histo)
 	free(path);
 }
 
+/*
+** Will print last hist var depending on $HISTSIZE
+*/
+
 int		print_hist(t_shell *shell, size_t size)
 {
 	t_histo_lst		*history;
@@ -92,19 +96,27 @@ void	load_history_file(t_shell *shell)
 	{
 		while (get_next_line(fd, &buf) == 1)
 		{
-			add_to_history(buf, &shell->history);
+			if (ft_strisascii(buf))
+				add_to_history(buf, &shell->history);
 			ft_strdel(&buf);
 		}
 	}
 	free(path);
 }
 
+/*
+** Check options for history
+*/
+
 void	loop_history(t_cmd *cmd, t_shell *shell, t_options *opts)
 {
+	(void)cmd;
 	while (opts->opts)
 	{
 		if (!ft_strcmp(opts->opts->opt, "c"))
 			empty_hist(shell);
+		else if (!ft_strcmp(opts->opts->opt, "d"))
+			delone_hist(&shell->history, ft_atoi(opts->opts->value));
 		else if (!ft_strcmp(opts->opts->opt, "w"))
 			overwrite_history(shell->history.lst);
 		else if (!ft_strcmp(opts->opts->opt, "a"))
@@ -112,21 +124,17 @@ void	loop_history(t_cmd *cmd, t_shell *shell, t_options *opts)
 		else if (!ft_strcmp(opts->opts->opt, "r"))
 			load_history_file(shell);
 		else if (!ft_strcmp(opts->opts->opt, "s"))
-			parse_and_add_hist(cmd, shell);
+			replace_curr_hist(shell, opts->opts->value);
 		opts->opts = opts->opts->next;
 	}
 }
-
-/*
-** Will print last hist var depending on $HISTSIZE
-*/
 
 int		b_history(t_cmd *cmd, t_shell *shell)
 {
 	t_options	*opts;
 	t_opt		*tmp_options;
 
-	opts = opt_parse(cmd, "cdanrwps", "history");
+	opts = opt_parse(cmd, "cd:anrwps::", "history");
 	tmp_options = opts->opts;
 	if (opts->ret != 0)
 		(opts->ret == -1 ? ft_putendl_fd("history: usage: [-c] [-d offset] \

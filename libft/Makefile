@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/16 11:23:33 by frossiny          #+#    #+#              #
-#    Updated: 2019/11/09 16:14:22 by lubenard         ###   ########.fr        #
+#    Updated: 2019/11/13 18:05:23 by lubenard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,6 +69,7 @@ FILES 	=	ft_2dstrlen.c						\
 			ft_strsplit.c						\
 			ft_strisalnum.c						\
 			ft_strisdigit.c						\
+			ft_strisascii.c						\
 			ft_atoi.c							\
 			ft_itoa.c							\
 			ft_islower.c						\

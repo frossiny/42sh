@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 17:47:28 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/08 16:07:13 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/13 18:28:44 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,11 @@ t_histo_lst			*read_history(int fd, size_t *history_size, size_t *history_index)
 	last = NULL;
 	while ((ret = get_next_line(fd, &buf)) == 1)
 	{
+		if (!ft_strisascii(buf) || !ft_strcmp(buf, ""))
+		{
+			ft_strdel(&buf);
+			continue;
+		}
 		item = new_link(buf);
 		item->index = (*history_index)++;
 		(*history_size)++;
@@ -52,9 +57,7 @@ t_histo_lst			*read_history(int fd, size_t *history_size, size_t *history_index)
 		if (last)
 		{
 			item->next = last;
-			//printf("%s next pointe vers %s\n", item->str, last->str);
 			item->next->prev = item;
-			//printf("%s prev pointe vers %s\n", last->str, item->str);
 			last = item;
 		}
 		else

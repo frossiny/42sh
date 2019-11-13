@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 18:24:16 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/07 19:33:52 by alagroy-         ###   ########.fr       */
+/*   Updated: 2019/11/13 18:12:13 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ char				*ft_strctrim(char const *s, char c);
 char				**ft_strsplit(char const *s, char c);
 int					ft_strisalnum(char *str);
 int					ft_strisdigit(char *str);
+int					ft_strisascii(char *str);
 char				*ft_insert_str(char *str, char *insert, int index);
 char				*ft_strdelpart(char *str, int i, int len);
 

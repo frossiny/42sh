@@ -6,20 +6,18 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/01 14:10:11 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/12 18:31:22 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/13 14:13:44 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
 #include "hashtable.h"
-# include <stdio.h>
 
 void	ht_put(t_shell *shell, char *key, char *value)
 {
 	int		hash;
 
-	printf("Je rentre dans ht_put\n");
 	if (shell->bin_ht.table == NULL)
 		ht_create(shell, HT_SIZE);
 	if (!shell->bin_ht.table)
