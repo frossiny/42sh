@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/11/12 17:50:13 by frossiny         ###   ########.fr        #
+#    Updated: 2019/11/14 16:39:37 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -233,6 +233,6 @@ norm:
 	@echo "Norm done!"
 
 tests: all
-	./tests/42ShellTester/42ShellTester.sh "$(PWD)/$(NAME)" --reference $(SHELL)
+	./tests/42ShellTester/42ShellTester.sh "$(PWD)/$(NAME)" --show-success
 
 -include $(OBJSD)

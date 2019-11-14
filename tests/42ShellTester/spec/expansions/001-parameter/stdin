@@ -1,0 +1,3 @@
+echo ${PATH:+${USER:-UNDEFINED}}
+echo ${CUSTOM_VAR:=${HOME}}
+echo $CUSTOM_VAR

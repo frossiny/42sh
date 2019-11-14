@@ -1,0 +1,3 @@
+echo -n ${TEST_UNSET_VAR}
+echo ${USER}
+echo ${PATH}

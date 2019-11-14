@@ -1,0 +1,6 @@
+expected_to have_nb_of_lines 5
+expected_to match_regex "^42SH"
+expected_to match_regex "^21sh"
+expected_to match_regex "^${USER}"
+expected_to match_regex "^${USER}"
+expected_to match_regex "^${USER}"

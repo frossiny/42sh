@@ -1,0 +1,4 @@
+export TOKEN54654=ENV_TEST
+env | grep 'TOKEN54654'
+export TOKEN1010=
+env | grep TOKEN1010
