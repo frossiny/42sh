@@ -3,101 +3,60 @@
 /*                                                        :::      ::::::::   */
 /*   files.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alagroy- <alagroy-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/25 15:58:08 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/24 12:53:19 by frossiny         ###   ########.fr       */
+/*   Created: 2019/11/14 18:33:26 by alagroy-          #+#    #+#             */
+/*   Updated: 2019/11/14 20:30:26 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <dirent.h>
-#include "libft.h"
-#include "shell.h"
+#include "completion.h"
 
-static char		*get_path(char *word, t_var *vars)
+t_list		*find_file(char *path, char *file)
 {
-	char	*search;
+	DIR			*dir;
+	t_dirent	*dir_content;
+	t_list		*new;
+	t_list		*begin;
 
-	if (word[0] == '~')
-		return (get_tilde(word, vars));
-	if (ft_strequ(word, "/"))
-		return (ft_strdup("/"));
-	if (!(search = ft_strrchr(word, '/')))
-		return (ft_strdup("."));
-	return (ft_strndup(word, search - word + 1));
+	begin = NULL;
+	if (!(dir = opendir(path)))
+		return (NULL);
+	while ((dir_content = readdir(dir)))
+	{
+		if (ft_strncmp(file, dir_content->d_name, ft_strlen(file))
+				|| (dir_content->d_name[0] == '.' && file[0] != '.'))
+			continue ;
+		new = ft_lstnew(dir_content->d_name,
+				ft_strlen(dir_content->d_name) + 1);
+		if (!begin)
+			begin = new;
+		else
+			ft_lstend(&begin, new);
+	}
+	closedir(dir);
+	return (begin);
 }
 
-static char		*get_home_word(char *word, char *dname)
+t_list		*compl_file(char *compl, t_shell *shell)
 {
-	char	*file;
-	char	*tmp;
+	t_list		*compl_list;
+	char		*slash_ptr;
+	char		*file;
+	char		*path;
+	int			beg;
 
-	if (!(file = get_file_start(word)))
-		return (NULL);
-	if (!(tmp = ft_strndup(word, file - word)))
-		return (NULL);
-	word = ft_strjoin(tmp, dname);
-	free(tmp);
-	return (word);
-}
-
-static int		complete_file(char **str, \
-									char *dname, t_compl_info *ci, t_var *vars)
-{
-	char			*tmp;
-	char			*path;
-	char			*word;
-	t_cursor_pos	*pos;
-
-	word = ci->word;
-	pos = ci->pos;
-	if (!(path = get_path(word, vars)))
-		return (0);
-	if (word[0] == '~')
-		tmp = get_home_word(word, dname);
-	else if (path[ft_strlen(path) - 1] == '/')
-		tmp = ft_strjoin(path, dname);
-	else if (ft_strnequ(word, ".", 1) || ft_strcmp(path, "."))
-		tmp = ft_strjoint(path, "/", dname);
+	(void)shell;
+	if (!(slash_ptr = ft_strrchr(compl, '/')))
+		beg = 0;
 	else
-		tmp = ft_strdup(dname);
-	include_word(tmp, str, pos);
-	free(tmp);
-	free(path);
-	return (1);
-}
-
-static int		file_found(DIR *dirp, t_compl_info *ci, \
-											char *dname, t_var *vars)
-{
-	complete_file(ci->str, dname, ci, vars);
-	closedir(dirp);
-	return (1);
-}
-
-int				complete_files(t_compl_info *ci, t_shell *shell)
-{
-	DIR				*dirp;
-	struct dirent	*dirc;
-	char			*file;
-	char			*path;
-
-	file = get_file_start(ci->word);
-	if (!(path = get_path(ci->word, shell->vars)))
-		return (0);
-	dirp = opendir(path);
-	free(path);
-	if (!dirp)
-		return (0);
-	while ((dirc = readdir(dirp)))
-		if (dirc->d_name[0] != '.')
-			if (ft_strnequ(dirc->d_name, file, ft_strlen(file)))
-			{
-				if (ci->index == 0)
-					return (file_found(dirp, ci, dirc->d_name, shell->vars));
-				else
-					ci->index--;
-			}
-	closedir(dirp);
-	return (0);
+		beg = (int)(slash_ptr - compl) + 1;
+	if (!(file = ft_strsub(compl, beg, ft_strlen(compl) - beg)))
+		return (NULL);
+	if (!(path = ft_strsub(compl, 0, beg)))
+		return (NULL);
+	if (beg == 0)
+		path = ft_strdup(".");
+	compl_list = find_file(path, file);
+	return (compl_list);
 }

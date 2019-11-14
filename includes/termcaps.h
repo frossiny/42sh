@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 18:49:29 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/10/14 18:22:23 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/14 17:32:58 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,6 @@ typedef struct	s_ex_caps
 	size_t				size;
 	void				(*func)();
 }				t_ex_caps;
-
-typedef struct	s_compl_info
-{
-	char			**str;
-	char			*word;
-	t_cursor_pos	*pos;
-	int				index;
-}				t_compl_info;
 
 int					termcaps_init(struct termios *prev_term);
 void				restore_shell(struct termios prev_term);
@@ -134,9 +126,7 @@ void				termcaps_visual_cut(char **str, t_cursor_pos *pos,
 void				termcaps_visual_copy(char **str, t_cursor_pos *pos,
 														t_shell *shell);
 
-int					complete_files(t_compl_info *ci, t_shell *shell);
 void				include_word(char *word, char **str, t_cursor_pos *pos);
-int					complete_path(t_compl_info *ci, t_shell *shell);
 char				*get_tilde(char *word, t_var *var);
 char				*get_file_start(char *word);
 

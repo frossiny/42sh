@@ -1,22 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_file_start.c                                   :+:      :+:    :+:   */
+/*   ft_2dstrlen.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alagroy- <alagroy-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/08/13 12:36:23 by frossiny          #+#    #+#             */
-/*   Updated: 2019/08/13 12:36:45 by frossiny         ###   ########.fr       */
+/*   Created: 2019/07/16 09:19:10 by alagroy-          #+#    #+#             */
+/*   Updated: 2019/07/16 09:21:59 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-char		*get_file_start(char *word)
+int		ft_2dstrlen(char **tab)
 {
-	char	*search;
+	int		i;
 
-	if (!(search = ft_strrchr(word, '/')))
-		return (word[0] == '~' ? word + 1 : word);
-	return (search + 1);
+	i = 0;
+	while (tab && tab[i])
+		i++;
+	return (i);
 }

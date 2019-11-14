@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 18:24:16 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/06 16:14:23 by alagroy-         ###   ########.fr       */
+/*   Updated: 2019/11/14 19:51:21 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,8 @@ void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 void				ft_lstfold(t_list **lst, void (*del)(void *, size_t));
 void				ft_lstend(t_list **begin, t_list *new);
+size_t				ft_lstsize(t_list *begin);
+void				ft_print_strlist(t_list *begin);
 
 void				ft_putstrtable(char **tb);
 char				*ft_strfdup(const char *s1, const char *f);
@@ -121,5 +123,7 @@ char				*ft_strpathfile(const char *s1, const char *s2);
 void				ft_multifree(char **s1, char **s2, char **s3);
 char				*ft_strcut(char *str, size_t beg, size_t end);
 char				*ft_strfcut(char *str, size_t beg, size_t end);
+
+void				ft_2dstrdel(char **array);
 
 #endif

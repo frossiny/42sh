@@ -6,11 +6,11 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/11/07 13:41:17 by alagroy-         ###   ########.fr        #
+#    Updated: 2019/11/14 20:24:56 by alagroy-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC		=	gcc -g3 -fsanitize=address
+CC		=	gcc #-g3 -fsanitize=address
 CFLAGS	+=	-Wall -Werror -Wextra
 
 SHELL	=	bash
@@ -93,11 +93,10 @@ FILES 	=	main.c									\
 			termcaps/set_position.c					\
 			termcaps/set_position_utils.c			\
 			termcaps/completion/t_completion.c		\
+			termcaps/completion/lite_parser.c		\
 			termcaps/completion/files.c				\
-			termcaps/completion/path.c				\
-			termcaps/completion/include_word.c		\
-			termcaps/completion/get_tilde.c			\
-			termcaps/completion/get_file_start.c	\
+			termcaps/completion/cmd.c				\
+			termcaps/completion/var.c				\
 			termcaps/t_up.c							\
 			termcaps/t_down.c						\
 			termcaps/t_history_next.c				\
@@ -170,13 +169,13 @@ _WHITE=\x1b[37m
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
+$(NAME): $(OBJS) Makefile
 	@$(MAKE) -q -C $(LIBFT) || $(MAKE) -C $(LIBFT)
 	@echo -e -n "\n${_BLUE}${_BOLD}[Create Executable] $(NAME)${_END}"
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -L./$(LIBFT) -lft -ltermcap
 	@echo -e "\n${_GREEN}${_BOLD}$(NAME) done.${_END}"
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.c
+$(OBJDIR)/%.o: $(SRCDIR)/%.c Makefile
 	@mkdir -p $(@D)
 	@echo -n -e "\r\033[K${_PURPLE}${BOLD}[${NAME}] Compiling $<${_END}"
 	@$(CC) $(CFLAGS) -I $(INCDIR) -I $(LIBFT)/$(INCDIR) -MMD -o $@ -c $<
