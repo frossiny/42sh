@@ -3,17 +3,10 @@
 #                                                         :::      ::::::::    #
 #    test.sh                                            :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-<<<<<<< HEAD
 #    By: lubenard <lubenard@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/03 15:04:01 by lubenard          #+#    #+#              #
-#    Updated: 2019/11/08 17:35:53 by lubenard         ###   ########.fr        #
-=======
-#    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/11/03 15:04:01 by lubenard          #+#    #+#              #
-#    Updated: 2019/11/08 17:31:22 by frossiny         ###   ########.fr        #
->>>>>>> e724c38d80f6dab5e9e1ff6e20931269f5a0f3bc
+#    Updated: 2019/11/14 18:48:22 by lubenard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,9 +21,6 @@ if [[ $output == *"[ERROR]"* ]]; then
 fi
 echo "DONE ! All tests passed !"
 rm log_test
-<<<<<<< HEAD
-=======
-return 0
 
 ##!/bin/zsh
 #
@@ -71,4 +61,3 @@ return 0
 #		diff bash_result/result_$file 42sh_result/result_$file > diff_$file;
 #	fi
 #done
->>>>>>> e724c38d80f6dab5e9e1ff6e20931269f5a0f3bc

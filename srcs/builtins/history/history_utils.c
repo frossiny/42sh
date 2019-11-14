@@ -6,13 +6,12 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 16:16:03 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/14 18:22:01 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/14 18:31:38 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "structs.h"
-# include <stdio.h>
 
 /*
 ** Will clear hist and free linked list

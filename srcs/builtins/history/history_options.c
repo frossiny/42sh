@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 13:54:13 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/14 15:27:31 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/14 19:18:32 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,30 +48,20 @@ void	replace_curr_hist(t_cmd *cmd, t_shell *shell)
 	shell->history.lst->str = ret;
 }
 
-int		get_index(char **args)
+void	delone_hist(t_history *hist, char *value)
 {
-	int		i;
-
-	i = 0;
-	while (args[i] && !ft_strchr(args[i], '-') && !ft_strchr(args[i], 'd'))
-		i++;
-	printf("ft_strchr = %s\n", args[i]);
-	//if ()
-	return (0);
-}
-
-void	delone_hist(t_history *hist, char **args)
-{
-	(void)hist;
-	/*size_t		counter;
+	size_t		counter;
 	t_histo_lst	*history;
 	t_histo_lst	*start;
+	int			index;
 
 	counter = 0;
 	history = hist->lst;
 	start = hist->lst;
+	if (ft_isdigit(value))
+		index = ft_atoi(value);
 	if (index > hist->size)
-		ft_printf("bash: history: %s: history position out of range", index);
+		ft_printf("bash: history: %d: history position out of range", index);
 	while (history->next && counter != hist->size && (int)history->index != index)
 	{
 		history = history->next;
@@ -91,8 +81,7 @@ void	delone_hist(t_history *hist, char **args)
 	}
 	ft_strdel(&history->str);
 	free(history);
-	hist->index--;*/
-	get_index(args);
+	hist->index--;
 }
 
 /*

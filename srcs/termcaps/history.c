@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 17:47:28 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/14 18:06:53 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/14 18:24:16 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ t_history		get_history(void)
 	histo.lst = NULL;
 	histo.size = 0;
 	histo.index = 1;
-	histo.histsize = 3;
+	histo.histsize = 500;
 	if (!isatty(0))
 		return (histo);
 	path = NULL;

@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:03:36 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/14 17:34:37 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/14 18:50:49 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,9 @@ int		verify_options_hist(t_opt *opts)
 			is_set++;
 		else if (!ft_strcmp(opts->opt, "r"))
 			is_set++;
-		else if (!ft_strcmp(opts->opt, "n"))
-			is_set++;
 		if (is_set > 1)
 		{
-			ft_putendl_fd("42sh: history: cannot use more than one of -anrw", 2);
+			ft_putendl_fd("42sh: history: cannot use more than one of -arw", 2);
 			return (0);
 		}
 		opts = opts->next;
@@ -101,25 +99,12 @@ int		verify_options_hist(t_opt *opts)
 
 void	loop_history(t_cmd *cmd, t_shell *shell, t_options *opts)
 {
-	/*t_options *opt_copie;
-
-	opt_copie = opts;
-	while (opt_copie->opts)
-	{
-		if (!ft_strcmp(opt_copie->opts->opt, "d"))
-		{
-			printf("opt_copie->opts->value = %s\n", opt_copie->opts->value);
-			return (delone_hist(&shell->history, cmd->args));
-		}
-		opt_copie->opts = opt_copie->opts->next;
-	}*/
 	while (opts->opts)
 	{
+		if (!ft_strcmp(opts->opts->opt, "d"))
+			return (delone_hist(&shell->history, cmd->args));
 		if (!ft_strcmp(opts->opts->opt, "c"))
-		{
-			printf("Je vide l'history\n");
 			empty_hist(shell);
-		}
 		else if (!ft_strcmp(opts->opts->opt, "w"))
 			overwrite_history(shell->history.lst);
 		else if (!ft_strcmp(opts->opts->opt, "a"))
@@ -137,13 +122,13 @@ int		b_history(t_cmd *cmd, t_shell *shell)
 	t_options	*opts;
 	t_opt		*tmp_options;
 
-	opts = opt_parse(cmd, "cd:anrwps", "history");
+	opts = opt_parse(cmd, "cd:arws", "history");
 	tmp_options = opts->opts;
 	if (!verify_options_hist(opts->opts))
 		return (1);
 	if (opts->ret != 0)
 		(opts->ret == -1 ? ft_putendl_fd("history: usage: [-c] [-d offset] \
-or history -awrn [filename] or history -ps arg [arg...]", 2) : 0);
+or history -awrn [filename]", 2) : 0);
 	else if (cmd->argc == 1)
 		print_hist(shell, shell->history.histsize);
 	else if (ft_strisdigit(cmd->args[1]))
