@@ -6,7 +6,7 @@
 /*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 16:48:26 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/05 17:36:43 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/11/13 14:06:57 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void			alias_del_aft(t_alias *alias, char *key)
 	bef = NULL;
 	while (alias)
 	{
-		if (bef && ft_strcmp(alias->key, key) == 0)		
+		if (bef && ft_strcmp(alias->key, key) == 0)
 		{
-			tmp = alias->next;	
+			tmp = alias->next;
 			alias_free_one(alias);
 			bef->next = tmp;
 			alias = bef;
@@ -41,21 +41,21 @@ void			alias_del(t_alias **list, char *key)
 
 	if (!list || !*list || !key)
 		return ;
-	if (ft_strcmp((*list)->key, key) == 0)		
+	if (ft_strcmp((*list)->key, key) == 0)
 	{
 		tmp = (*list)->next;
 		alias_free_one(*list);
 		*list = tmp;
 		return ;
 	}
-	alias_del_aft(*list, key);	
+	alias_del_aft(*list, key);
 }
 
 int				b_unalias(t_cmd *cmd, t_shell *shell)
 {
 	size_t	i;
 	size_t	unfined;
-	
+
 	unfined = 0;
 	i = 0;
 	while (cmd->args[++i])

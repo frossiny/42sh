@@ -6,7 +6,7 @@
 /*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 15:51:03 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/06 16:38:13 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/11/13 14:05:05 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 int			alias_maj(t_alias *alias, char *key, char *value)
 {
-	while (alias)	
+	while (alias)
 	{
 		if (ft_strcmp(key, alias->key) == 0)
 		{
@@ -45,7 +45,7 @@ int			add_alias_aft(t_alias *alias, char *key, char *value)
 	t_alias *bef;
 
 	bef = NULL;
-	while (alias)	
+	while (alias)
 	{
 		if (bef && ft_strcmp(key, alias->key) < 0)
 		{

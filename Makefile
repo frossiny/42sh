@@ -6,11 +6,11 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/11/06 18:26:01 by frossiny         ###   ########.fr        #
+#    Updated: 2019/11/14 13:31:56 by vsaltel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC		=	gcc -g3 -fsanitize=address
+CC		=	gcc -g3 #-fsanitize=address
 #CFLAGS	+=	-Wall -Werror -Wextra
 
 SHELL	=	bash
@@ -65,7 +65,7 @@ FILES 	=	main.c									\
 			expansion/variables/exp_par_len.c		\
 			expansion/variables/exp_par_colon.c		\
 			expansion/variables/exp_get_var.c		\
-			expansion/variables/exp_prefix.c		\
+			expansion/variables/exp_del_pattern.c	\
 			expansion/globbing/globbing.c			\
 			expansion/globbing/path.c				\
 			expansion/globbing/complete.c			\

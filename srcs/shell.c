@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:05:59 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/06 18:17:27 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/13 13:32:17 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ static int	eval_exec(char **input)
 	{
 		if (!input)
 			return (1);
+		add_to_history(*input, &(g_shell.history));
 		ft_strdel(input);
 		build_ast(&g_shell);
 		g_shell.ast ? ret = reader(&g_shell, g_shell.ast) : 0;
