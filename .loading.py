@@ -6,9 +6,11 @@
 #    By: lubenard <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/06 18:18:56 by lubenard          #+#    #+#              #
-#    Updated: 2019/11/07 18:58:33 by lubenard         ###   ########.fr        #
+#    Updated: 2019/11/14 15:50:27 by lubenard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+#!/bin/usr/env python3
 
 import sys
 from time import sleep
@@ -33,7 +35,7 @@ def printProgressBar (start_time, iteration, total, prefix = '', suffix = '', de
     ETA = 0
     if iteration > 0:
         ETA = 100 / (100 * iteration / total) * (now() - start_time)
-    print('\r%s %s%%  |{}%s{}| {} %30s'.format(bcolors.OKGREEN, bcolors.ENDC, bcolors.OKBLUE + sys.argv[1] + bcolors.ENDC) % ( prefix, percent,bar, suffix), end = printEnd)
+    print('\r%s %s%%  |{}%s{}| {} %30s'.format(bcolors.OKGREEN, bcolors.ENDC, bcolors.OKBLUE + sys.argv[1] + bcolors.ENDC) % ( prefix, percent,bar, suffix), end=printEnd)
     if iteration == total:
         print()
 

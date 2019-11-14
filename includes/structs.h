@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 14:23:53 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/12 16:46:57 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/14 15:53:41 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -290,6 +290,7 @@ typedef struct		s_histo_lst
 typedef struct		s_history
 {
 	t_histo_lst			*lst;
+	t_histo_lst			*first_element;
 	size_t				pos;
 	size_t				size;
 	size_t				index;

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 17:47:28 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/13 18:28:44 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/14 18:06:53 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,22 @@
 #include "shell.h"
 # include <stdio.h>
 
-void				add_to_history(char *str, t_history *history)
+void			delete_entry_hist(t_history *history)
+{
+	t_histo_lst *to_delete;
+
+	to_delete = NULL;
+	if (history->size > history->histsize)
+	{
+		to_delete = history->first_element;
+		history->first_element = history->first_element->prev;
+		history->first_element->next = NULL;
+		ft_strdel(&to_delete->str);
+		free(to_delete);
+	}
+}
+
+void			add_to_history(char *str, t_history *history)
 {
 	t_histo_lst			*item;
 
@@ -27,46 +42,32 @@ void				add_to_history(char *str, t_history *history)
 	if (history->lst)
 	{
 		item->next = history->lst;
-		//printf("%s next pointe vers %s\n", item->str, history->lst->str);
 		history->lst->prev = item;
-		//printf("%s prev pointe vers %s\n", history->lst->str, item->str);
 	}
 	history->lst = item;
 	history->size++;
+	if (history->size == 1)
+		history->first_element = item;
+	delete_entry_hist(history);
 }
 
-t_histo_lst			*read_history(int fd, size_t *history_size, size_t *history_index)
+void			read_history(int fd, t_history *hist)
 {
 	t_histo_lst			*last;
-	t_histo_lst			*item;
 	int					ret;
 	char				*buf;
 
 	last = NULL;
 	while ((ret = get_next_line(fd, &buf)) == 1)
 	{
-		if (!ft_strisascii(buf) || !ft_strcmp(buf, ""))
-		{
-			ft_strdel(&buf);
-			continue;
-		}
-		item = new_link(buf);
-		item->index = (*history_index)++;
-		(*history_size)++;
-		printf("Je lis {%zu %s}\n", item->index, item->str);
-		if (last)
-		{
-			item->next = last;
-			item->next->prev = item;
-			last = item;
-		}
-		else
-			last = item;
+		if (ft_strisascii(buf) && ft_strcmp(buf, ""))
+			add_to_history(buf, hist);
+		ft_strdel(&buf);
 	}
-	return (ret == -1 ? (NULL) : (last));
+	return ;
 }
 
-t_history			get_history(void)
+t_history		get_history(void)
 {
 	t_history	histo;
 	int			fd;
@@ -75,7 +76,7 @@ t_history			get_history(void)
 	histo.lst = NULL;
 	histo.size = 0;
 	histo.index = 1;
-	histo.histsize = 500;
+	histo.histsize = 3;
 	if (!isatty(0))
 		return (histo);
 	path = NULL;
@@ -87,14 +88,14 @@ t_history			get_history(void)
 	}
 	if ((fd = open(path, O_RDONLY)))
 	{
-		histo.lst = read_history(fd, &(histo.size), &(histo.index));
+		read_history(fd, &histo);
 		close(fd);
 	}
 	free(path);
 	return (histo);
 }
 
-void				overwrite_history(t_histo_lst *histo)
+void			overwrite_history(t_histo_lst *histo)
 {
 	t_histo_lst	*curr;
 	char		*path;

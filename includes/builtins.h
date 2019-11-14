@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:40:21 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/13 18:51:15 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/14 14:11:24 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,10 @@ char		*cd_buildpath(char *path);
 /*
 ** history internal functions
 */
-void		replace_curr_hist(t_shell *shell, char *to_add);
+void		replace_curr_hist(t_cmd *cmd, t_shell *shell);
 void		empty_hist(t_shell *shell);
-void		delone_hist(t_history *hist, int index);
+void		delone_hist(t_history *hist, char **args);
+void		append_hist(t_histo_lst *hist);
 
 static const t_builtin g_builtins[] =
 {

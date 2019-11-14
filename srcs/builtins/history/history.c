@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:03:36 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/13 19:23:15 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/14 17:34:37 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,41 +17,7 @@
 #include "builtins.h"
 #include <fcntl.h>
 
-/*
-** Append to the history file
-*/
-
-void	append_hist(t_histo_lst *histo)
-{
-	t_histo_lst	*curr;
-	char		*path;
-	int			fd;
-
-	if (!histo)
-		return ;
-	fd = 0;
-	path = ft_strpathfile(getenv("HOME"), ".42sh_history");
-	if (!access(path, F_OK) || access(path, X_OK))
-	{
-		free(path);
-		return ;
-	}
-	if ((fd = open(path, O_WRONLY | O_APPEND)))
-	{
-		if (fd != -1)
-		{
-			curr = histo;
-			while (curr)
-			{
-				write(fd, curr->str, curr->len);
-				write(fd, "\n", 1);
-				curr = curr->next;
-			}
-			close(fd);
-		}
-	}
-	free(path);
-}
+# include <stdio.h>
 
 /*
 ** Will print last hist var depending on $HISTSIZE
@@ -96,12 +62,37 @@ void	load_history_file(t_shell *shell)
 	{
 		while (get_next_line(fd, &buf) == 1)
 		{
-			if (ft_strisascii(buf))
+			if (ft_strisascii(buf) && ft_strcmp(buf, ""))
 				add_to_history(buf, &shell->history);
 			ft_strdel(&buf);
 		}
 	}
 	free(path);
+}
+
+int		verify_options_hist(t_opt *opts)
+{
+	size_t is_set;
+
+	is_set = 0;
+	while (opts)
+	{
+		if (!ft_strcmp(opts->opt, "w"))
+			is_set++;
+		else if (!ft_strcmp(opts->opt, "a"))
+			is_set++;
+		else if (!ft_strcmp(opts->opt, "r"))
+			is_set++;
+		else if (!ft_strcmp(opts->opt, "n"))
+			is_set++;
+		if (is_set > 1)
+		{
+			ft_putendl_fd("42sh: history: cannot use more than one of -anrw", 2);
+			return (0);
+		}
+		opts = opts->next;
+	}
+	return (1);
 }
 
 /*
@@ -110,13 +101,25 @@ void	load_history_file(t_shell *shell)
 
 void	loop_history(t_cmd *cmd, t_shell *shell, t_options *opts)
 {
-	(void)cmd;
+	/*t_options *opt_copie;
+
+	opt_copie = opts;
+	while (opt_copie->opts)
+	{
+		if (!ft_strcmp(opt_copie->opts->opt, "d"))
+		{
+			printf("opt_copie->opts->value = %s\n", opt_copie->opts->value);
+			return (delone_hist(&shell->history, cmd->args));
+		}
+		opt_copie->opts = opt_copie->opts->next;
+	}*/
 	while (opts->opts)
 	{
 		if (!ft_strcmp(opts->opts->opt, "c"))
+		{
+			printf("Je vide l'history\n");
 			empty_hist(shell);
-		else if (!ft_strcmp(opts->opts->opt, "d"))
-			delone_hist(&shell->history, ft_atoi(opts->opts->value));
+		}
 		else if (!ft_strcmp(opts->opts->opt, "w"))
 			overwrite_history(shell->history.lst);
 		else if (!ft_strcmp(opts->opts->opt, "a"))
@@ -124,7 +127,7 @@ void	loop_history(t_cmd *cmd, t_shell *shell, t_options *opts)
 		else if (!ft_strcmp(opts->opts->opt, "r"))
 			load_history_file(shell);
 		else if (!ft_strcmp(opts->opts->opt, "s"))
-			replace_curr_hist(shell, opts->opts->value);
+			replace_curr_hist(cmd, shell);
 		opts->opts = opts->opts->next;
 	}
 }
@@ -134,8 +137,10 @@ int		b_history(t_cmd *cmd, t_shell *shell)
 	t_options	*opts;
 	t_opt		*tmp_options;
 
-	opts = opt_parse(cmd, "cd:anrwps::", "history");
+	opts = opt_parse(cmd, "cd:anrwps", "history");
 	tmp_options = opts->opts;
+	if (!verify_options_hist(opts->opts))
+		return (1);
 	if (opts->ret != 0)
 		(opts->ret == -1 ? ft_putendl_fd("history: usage: [-c] [-d offset] \
 or history -awrn [filename] or history -ps arg [arg...]", 2) : 0);
