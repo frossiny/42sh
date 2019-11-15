@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 06:37:24 by pcharrie          #+#    #+#             */
-/*   Updated: 2019/11/13 17:25:19 by pcharrie         ###   ########.fr       */
+/*   Updated: 2019/11/15 21:36:59 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,9 @@
 #include "variables.h"
 #include "builtins.h"
 #include "opt.h"
+#include "get_next_line.h"
 
-void	shell_exec_cmd(char *cmd)
-{
-	char *tmp;
-
-	if ((tmp = ft_strdup(cmd)))
-		g_return = eval_exec(&tmp);
-}
+char	**g_fc_tab = NULL;
 
 int		fc_get_mode(t_fc_vars *fc)
 {
@@ -41,15 +36,60 @@ void	fc_exec_tab(t_fc_vars *fc)
 {
 	int i;
 
+	if (!(g_fc_tab = ft_2dstrnew(fc->tab_len)))
+		return ;
 	i = 0;
 	while (fc->tab[i])
 	{
-		ft_putendl(fc->tab[i++]);
-		//shell_exec_cmd(fc->tab[i++]);
+		if (!(g_fc_tab[i] = ft_strdup(fc->tab[i])))
+			return (ft_2dstrdel(&g_fc_tab));
+		i++;
 	}
+}
+
+int		fc_get_file_len(void)
+{
+	char	*path;
+	int		fd;
+	char	*line;
+	int		i;
+
+	if (!(path = ft_strpathfile(getenv("HOME"), ".42sh_fc"))
+		|| (fd = open(path, O_RDONLY)) < 0)
+	{
+		ft_strdel(&path);
+		return (-1);
+	}
+	ft_strdel(&path);
+	i = 0;
+	while (get_next_line(fd, &line) > 0)
+	{
+		i++;
+		ft_strdel(&line);
+	}
+	close(fd);
+	return (i);
 }
 
 void	fc_exec_file(void)
 {
-	
+	char	*path;
+	int		fd;
+	char	*line;
+	int		len;
+
+	if ((len = fc_get_file_len()) < 0
+		|| !(g_fc_tab = ft_2dstrnew(len))
+		|| !(path = ft_strpathfile(getenv("HOME"), ".42sh_fc")))
+		return (ft_2dstrdel(&g_fc_tab));
+	if ((fd = open(path, O_RDONLY)) < 0)
+	{
+		ft_2dstrdel(&g_fc_tab);
+		return (ft_strdel(&path));
+	}
+	ft_strdel(&path);
+	len = 0;
+	while (get_next_line(fd, &line) > 0)
+		g_fc_tab[len++] = line;
+	close(fd);
 }

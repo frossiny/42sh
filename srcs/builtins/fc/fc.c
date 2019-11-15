@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 17:13:15 by pcharrie          #+#    #+#             */
-/*   Updated: 2019/11/13 17:11:31 by pcharrie         ###   ########.fr       */
+/*   Updated: 2019/11/15 21:37:27 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,21 +67,12 @@ int		fc_histo_lst_size(void)
 
 void	fc_vars_del(t_fc_vars *fc)
 {
-	ft_2dstrdel(&fc->tab);
-	ft_strdel(&fc->editor);
-}
-
-void	fc_print_debug(t_fc_vars *fc)
-{
-	ft_printf("from:		%d\n", fc->from);
-	ft_printf("to:		%d\n", fc->to);
-	ft_printf("list:		%d\n", fc->list);
-	ft_printf("exec:		%d\n", fc->exec);
-	ft_printf("rm:		%d\n", fc->rm);
-	ft_printf("rv:		%d\n", fc->rv);
-	ft_printf("*editor:	%s\n", fc->editor);
-	ft_printf("i:		%d\n", fc->i);
-	ft_printf("tab_len:	%d\n", fc->tab_len);
+	if (fc->tab)
+		ft_2dstrdel(&fc->tab);
+	if (fc->ed_args)
+		ft_2dstrdel(&fc->ed_args);
+	if (fc->editor)
+		ft_strdel(&fc->editor);
 }
 
 int		b_fc(t_cmd *cmd, t_shell *shell)

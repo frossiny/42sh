@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 06:38:23 by pcharrie          #+#    #+#             */
-/*   Updated: 2019/11/13 17:24:00 by pcharrie         ###   ########.fr       */
+/*   Updated: 2019/11/15 21:37:57 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,63 +35,54 @@ static int	fc_edit_write_file(t_fc_vars *fc)
 		return (0);
 	}
 	ft_strdel(&path);
-	i = -1;
-	while (fc->tab[++i])
+	i = fc->tab_len - 1;
+	while (i >= 0)
 	{
 		write(fd, fc->tab[i], ft_strlen(fc->tab[i]));
 		write(fd, "\n", 1);
+		i--;
 	}
 	close(fd);
 	return (1);
 }
 
-static int	fc_edit_run_editor(t_fc_vars *fc)
+int			fc_ed_args_resize(t_fc_vars *fc)
 {
-	int		pid;
-	char	*args[3];
+	char	**tab;
 	char	*path;
+	int		i;
 
-	if (access(fc->editor, F_OK | X_OK)
-		|| !(path = ft_strpathfile(getenv("HOME"), ".42sh_fc")))
-		return (0);
-	if (!(pid = fork()))
-	{
-		args[0] = fc->editor;
-		args[1] = path;
-		args[2] = NULL;
-		execve(fc->editor, args, NULL);
-	}
-	else if (pid > 0)
-	{
-		waitpid(pid, NULL, 0);
-		ft_strdel(&path);
-	}
-	else
+	if (!(path = ft_strpathfile(getenv("HOME"), ".42sh_fc"))
+		|| !(tab = ft_2dstrnew(ft_2dstrlen(fc->ed_args) + 1)))
 	{
 		ft_strdel(&path);
 		return (0);
 	}
+	i = -1;
+	while (fc->ed_args[++i])
+	{
+		if (!(tab[i] = ft_strdup(fc->ed_args[i])))
+		{
+			ft_strdel(&path);
+			ft_2dstrdel(&tab);
+			return (0);
+		}
+	}
+	tab[i++] = path;
+	tab[i++] = NULL;
+	ft_2dstrdel(&fc->ed_args);
+	fc->ed_args = tab;
 	return (1);
-}
-
-static void	fc_edit_remove_file(void)
-{
-	char *path;
-
-	if (!(path = ft_strpathfile(getenv("HOME"), ".42sh_fc")))
-		return ;
-	unlink(path);
-	ft_strdel(&path);
 }
 
 int			fc_set_editor_path(t_fc_vars *fc)
 {
 	char *tmp;
 
-	if ((tmp = get_exe_path(&g_shell, fc->editor)))
+	if ((tmp = get_exe_path(&g_shell, fc->ed_args[0])))
 	{
-		ft_strdel(&fc->editor);
-		fc->editor = tmp;
+		ft_strdel(&fc->ed_args[0]);
+		fc->ed_args[0] = tmp;
 		return (1);
 	}
 	return (0);
@@ -99,15 +90,17 @@ int			fc_set_editor_path(t_fc_vars *fc)
 
 int			fc_set_editor(t_fc_vars *fc)
 {
-	
-	if (fc->editor[0] == '/' && access(fc->editor, F_OK))
+	if (!(fc->ed_args = ft_strsplit(fc->editor, ' '))
+		|| !fc_ed_args_resize(fc))
+		return (0);
+	if (fc->ed_args[0][0] == '/' && access(fc->ed_args[0], F_OK))
 	{
-		ft_dprintf(2, "42sh: no such file or directory: %s", fc->editor);
+		ft_dprintf(2, "42sh: no such file or directory: %s", fc->ed_args[0]);
 		return (0);
 	}
-	if (fc->editor[0] != '/' && !fc_set_editor_path(fc))
+	if (fc->ed_args[0][0] != '/' && !fc_set_editor_path(fc))
 	{
-		ft_dprintf(2, "42sh: command not found: %s", fc->editor);
+		ft_dprintf(2, "42sh: command not found: %s", fc->ed_args[0]);
 		return (0);
 	}
 	return (1);

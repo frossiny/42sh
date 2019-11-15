@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 17:56:02 by pcharrie          #+#    #+#             */
-/*   Updated: 2019/11/02 17:57:35 by pcharrie         ###   ########.fr       */
+/*   Updated: 2019/11/15 17:39:14 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ void	ft_2dstrdel(char ***tab)
 {
 	int i;
 
-	if (!tab || !*tab)
+	if (!tab
+		|| !*tab)
 		return ;
 	i = 0;
 	while ((*tab)[i])

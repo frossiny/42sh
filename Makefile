@@ -6,7 +6,7 @@
 #    By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/11/12 06:55:51 by pcharrie         ###   ########.fr        #
+#    Updated: 2019/11/15 21:38:54 by pcharrie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,6 +52,7 @@ FILES 	=	main.c									\
 			builtins/fc/edit.c						\
 			builtins/fc/exec.c						\
 			builtins/fc/fc.c						\
+			builtins/fc/fork.c						\
 			builtins/fc/list.c						\
 			builtins/fc/parse.c						\
 			builtins/fc/tab.c						\
