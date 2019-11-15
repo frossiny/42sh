@@ -4,3 +4,5 @@ objs
 libft/objs
 *.a
 *.dSYM
+*.swp
+tags

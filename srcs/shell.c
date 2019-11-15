@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:05:59 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/13 13:32:17 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/11/15 17:31:12 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,26 +72,41 @@ int		quote_error(t_shell *shell, char **input, int ret)
 
 int		handle_input(t_shell *shell, char **input)
 {
-	int		ret;
+	int			ret;
+	int			alias_ret;
+	t_string	*alias_hist;
 
+	alias_hist = NULL;
 	ret = 0;
-	shell->lexer.size = 0;
-	while ((ret = lex(*input, &(shell->lexer))) < 1)
+	alias_ret = 1;
+	while (alias_ret > 0)
 	{
-		lexer_free(&(shell->lexer));
-		if (ret == -3 || ret == -2)
+		shell->lexer.size = 0;
+		while ((ret = lex(*input, &(shell->lexer))) < 1)
 		{
-			if ((ret = quote_error(shell, input, ret)))
+			lexer_free(&(shell->lexer));
+			if (ret == -3 || ret == -2)
+			{
+				if ((ret = quote_error(shell, input, ret)))
+					return (ret);
+			}
+			else if (ret == -4)
+			{
+				if ((ret = bslash_error(shell, input, ret)))
+					return (ret);
+			}
+			else
 				return (ret);
 		}
-		else if (ret == -4)
+		if ((alias_ret = alias_resolve(shell->lexer.tokens, shell->alias,
+															&alias_hist)))
 		{
-			if ((ret = bslash_error(shell, input, ret)))
-				return (ret);
+			alias_build_input(input, shell->lexer.tokens);
+			lexer_free(&(shell->lexer));
 		}
-		else
-			return (ret);
 	}
+	ft_printf("input->%s\n", *input);
+	free_alias_history(&alias_hist);
 	t_token *cur = shell->lexer.tokens;
 	while (cur)
 	{
