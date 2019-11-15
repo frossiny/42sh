@@ -6,35 +6,42 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 16:16:03 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/14 18:31:38 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/15 16:13:27 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "structs.h"
 
-/*
-** Will clear hist and free linked list
-*/
-
-void	empty_hist(t_shell *shell)
+void	delete_last_elem_hist(t_history *hist)
 {
-	t_histo_lst		*history;
-	t_histo_lst		*hist_tmp;
+	t_histo_lst *to_delete;
 
-	if (shell->history.first_element->index - 1 <= 0)
-		shell->history.index = 1;
-	else
-		shell->history.index = shell->history.first_element->index - 1;
-	history = shell->history.lst;
-	while (history)
-	{
-		hist_tmp = history;
-		history = history->next;
-		ft_strdel(&hist_tmp->str);
-		free(hist_tmp);
-	}
-	shell->history.size = 0;
-	shell->history.first_element = NULL;
-	shell->history.lst = NULL;
+	to_delete = hist->lst;
+	hist->lst = hist->lst->next;
+	hist->lst->prev = NULL;
+	ft_strdel(&to_delete->str);
+	free(to_delete);
+	hist->size--;
+}
+
+void	delete_first_elem_hist(t_history *hist)
+{
+	t_histo_lst	*to_delete;
+
+	to_delete = hist->first_element;
+	hist->first_element = hist->first_element->prev;
+	hist->first_element->next = NULL;
+	ft_strdel(&to_delete->str);
+	free(to_delete);
+	hist->size--;
+}
+
+void	delete_elem_hist(t_history *hist, t_histo_lst *elem)
+{
+	elem->prev->next = elem->next;
+	elem->next->prev = elem->prev;
+	ft_strdel(&elem->str);
+	free(elem);
+	hist->size--;
 }

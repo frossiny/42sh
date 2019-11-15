@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:03:36 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/14 18:50:49 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/15 15:45:23 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 #include "opt.h"
 #include "builtins.h"
 #include <fcntl.h>
-
-# include <stdio.h>
 
 /*
 ** Will print last hist var depending on $HISTSIZE
@@ -102,7 +100,7 @@ void	loop_history(t_cmd *cmd, t_shell *shell, t_options *opts)
 	while (opts->opts)
 	{
 		if (!ft_strcmp(opts->opts->opt, "d"))
-			return (delone_hist(&shell->history, cmd->args));
+			return (delone_hist(&shell->history, opts->opts->value));
 		if (!ft_strcmp(opts->opts->opt, "c"))
 			empty_hist(shell);
 		else if (!ft_strcmp(opts->opts->opt, "w"))
@@ -128,7 +126,7 @@ int		b_history(t_cmd *cmd, t_shell *shell)
 		return (1);
 	if (opts->ret != 0)
 		(opts->ret == -1 ? ft_putendl_fd("history: usage: [-c] [-d offset] \
-or history -awrn [filename]", 2) : 0);
+or history -awrn", 2) : 0);
 	else if (cmd->argc == 1)
 		print_hist(shell, shell->history.histsize);
 	else if (ft_strisdigit(cmd->args[1]))

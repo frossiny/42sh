@@ -6,15 +6,15 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 13:54:13 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/14 19:18:32 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/15 16:11:33 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "structs.h"
 #include <fcntl.h>
+#include "builtins.h"
 
-# include <stdio.h>
 /*
 ** Will parse cmd to add good variable to hist
 */
@@ -48,39 +48,58 @@ void	replace_curr_hist(t_cmd *cmd, t_shell *shell)
 	shell->history.lst->str = ret;
 }
 
+/*
+** Will clear hist and free linked list
+*/
+
+void	empty_hist(t_shell *shell)
+{
+	t_histo_lst		*history;
+	t_histo_lst		*hist_tmp;
+
+	if (shell->history.first_element->index - 1 <= 0)
+		shell->history.index = 1;
+	else
+		shell->history.index = shell->history.first_element->index - 1;
+	history = shell->history.lst;
+	while (history)
+	{
+		hist_tmp = history;
+		history = history->next;
+		ft_strdel(&hist_tmp->str);
+		free(hist_tmp);
+	}
+	shell->history.size = 0;
+	shell->history.first_element = NULL;
+	shell->history.lst = NULL;
+}
+
 void	delone_hist(t_history *hist, char *value)
 {
 	size_t		counter;
 	t_histo_lst	*history;
-	t_histo_lst	*start;
-	int			index;
+	size_t		index;
 
 	counter = 0;
 	history = hist->lst;
-	start = hist->lst;
-	if (ft_isdigit(value))
-		index = ft_atoi(value);
-	if (index > hist->size)
-		ft_printf("bash: history: %d: history position out of range", index);
-	while (history->next && counter != hist->size && (int)history->index != index)
+	index = (ft_strisdigit(value)) ? (size_t)ft_atoi(value) : 0;
+	if (index > hist->size || index < 1)
 	{
+		ft_printf("42sh: history: %s: history position out of range", value);
+		return ;
+	}
+	while (history->next && counter != hist->size && history->index != index)
+	{
+		history->index--;
 		history = history->next;
 		counter++;
 	}
-	while (start->next && (int)start->index != index)
-	{
-		start->index--;
-		start = start->next;
-	}
-	if (index == 1)
-		hist->lst = hist->lst->next;
+	if (index == hist->size)
+		delete_last_elem_hist(hist);
+	else if (index == 1)
+		delete_first_elem_hist(hist);
 	else
-	{
-		history->prev->next = history->next;
-		history->next->prev = history->prev;
-	}
-	ft_strdel(&history->str);
-	free(history);
+		delete_elem_hist(hist, history);
 	hist->index--;
 }
 
@@ -103,20 +122,15 @@ void	append_hist(t_histo_lst *histo)
 		free(path);
 		return ;
 	}
-	if ((fd = open(path, O_WRONLY | O_APPEND)))
+	if ((fd = open(path, O_WRONLY | O_APPEND)) != -1)
 	{
-		if (fd != -1)
+		curr = histo;
+		while (curr)
 		{
-			curr = histo;
-			while (curr)
-			{
-				write(fd, curr->str, curr->len);
-				write(fd, "\n", 1);
-				curr = curr->next;
-			}
-			close(fd);
+			ft_dprintf(fd, "%s\n", curr->str);
+			curr = curr->next;
 		}
+		close(fd);
 	}
 	free(path);
 }
-

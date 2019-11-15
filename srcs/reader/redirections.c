@@ -6,14 +6,13 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 15:27:23 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/12 15:43:49 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/15 15:47:34 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include "libft.h"
 #include "shell.h"
-# include <stdio.h>
 
 static void		redirect_output(t_redirect *redir)
 {

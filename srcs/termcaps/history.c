@@ -6,14 +6,13 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 17:47:28 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/14 18:24:16 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/15 15:46:50 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include "get_next_line.h"
 #include "shell.h"
-# include <stdio.h>
 
 void			delete_entry_hist(t_history *history)
 {
@@ -38,7 +37,6 @@ void			add_to_history(char *str, t_history *history)
 		return ;
 	item = new_link(ft_strdup(str));
 	item->index = history->index++;
-	printf("Je lis {%zu %s}\n", item->index, item->str);
 	if (history->lst)
 	{
 		item->next = history->lst;
@@ -108,19 +106,18 @@ void			overwrite_history(t_histo_lst *histo)
 	if (!access(path, F_OK))
 		if (access(path, X_OK))
 			return ;
-	if (fd != -1)
-		if ((fd = open(path, O_CREAT | O_WRONLY | O_TRUNC)))
+	if ((fd = open(path, O_CREAT | O_WRONLY | O_TRUNC)) != -1)
+	{
+		curr = histo;
+		while (curr->next)
+			curr = curr->next;
+		while (curr)
 		{
-			curr = histo;
-			while (curr->next)
-				curr = curr->next;
-			while (curr)
-			{
-				write(fd, curr->str, curr->len);
-				write(fd, "\n", 1);
-				curr = curr->prev;
-			}
-			close(fd);
+			write(fd, curr->str, curr->len);
+			write(fd, "\n", 1);
+			curr = curr->prev;
 		}
+		close(fd);
+	}
 	free(path);
 }

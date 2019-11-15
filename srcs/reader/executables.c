@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:26:37 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/12 15:44:14 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/15 15:47:24 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 #include "utils.h"
 #include "hashtable.h"
 #include "builtins.h"
-# include <stdio.h>
 
 static int	exe_assignements(t_cmd *cmd)
 {
