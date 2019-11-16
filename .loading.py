@@ -6,7 +6,7 @@
 #    By: lubenard <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/06 18:18:56 by lubenard          #+#    #+#              #
-#    Updated: 2019/11/15 17:28:39 by lubenard         ###   ########.fr        #
+#    Updated: 2019/11/16 17:18:24 by lubenard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ def printProgressBar (start_time, iteration, total, prefix = '', suffix = '', de
     ETA = 0
     if iteration > 0:
         ETA = 100 / (100 * iteration / total) * (now() - start_time)
-    print('\r%s %s%%  |{}%s{}| {} %s'.format(bcolors.OKGREEN, bcolors.ENDC, bcolors.OKBLUE + sys.argv[1] + bcolors.ENDC) % ( prefix, percent,bar, suffix), end=printEnd)
+    print('\r%s %s%%  |{}%s{}| {}%s{}%10s'.format(bcolors.OKGREEN, bcolors.ENDC, bcolors.OKBLUE,bcolors.ENDC) % ( prefix, percent,bar,sys.argv[1], suffix), end=printEnd)
     if iteration == total:
         print()
 
@@ -60,7 +60,7 @@ l = len(items) - 5
 start_time = now()
 # Initial call to print 0% progress
 if i < l:
-    printProgressBar(start_time, i + 1, l, length = 50)
+    printProgressBar(start_time, i + 1, l, length = 50, printEnd="")
     makefile_42sh.write(str(i + 1))
     makefile_42sh.close()
 else:
