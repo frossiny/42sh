@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 18:49:29 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/18 19:45:31 by alagroy-         ###   ########.fr       */
+/*   Updated: 2019/11/18 19:51:19 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct		s_cursor_pos
 	long				y_min;
 	long				y_max;
 	char				*o_input;
+	long				compl;
 	size_t				opos;
 	int					visual_mode : 1;
 	long				v_beg;
