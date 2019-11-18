@@ -2,7 +2,7 @@ language: c
 sudo: false
 notifications:
     email: false
-    slack: 42born2code:tHHa6QpZToXZxi2egexXHCkO
+    slack: 42born2code:FVYEa86QLj3yDDiUIGNk9czd
 compiler: clang
 os: osx
 install: make
