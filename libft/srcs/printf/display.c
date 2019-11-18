@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 17:28:10 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/23 14:47:45 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/18 12:43:10 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static size_t	write_buf(char buf[], t_printf_state *s)
 	int c;
 
 	c = s->index;
-	write(1, buf, c);
+	write(s->fd, buf, c);
 	buf[0] = '\0';
 	s->index = 0;
 	return (c);
@@ -33,13 +33,13 @@ static size_t	write_arg(char buf[], t_printf_state *s)
 	if (s->arg->type == 'c' && s->arg->data.c == 0)
 	{
 		s->c += write_buf(buf, s);
-		s->c += write(1, s->arg->str, s->arg->width == 0 ? 1 : s->arg->width);
+		s->c += write(s->fd, s->arg->str, s->arg->width == 0 ? 1 : s->arg->width);
 		return (s->index);
 	}
 	if (str_len >= BUFF_SIZE)
 	{
 		s->c += write_buf(buf, s);
-		s->c += write(1, s->arg->str, str_len);
+		s->c += write(s->fd, s->arg->str, str_len);
 		return (s->index);
 	}
 	if (s->index + ft_strlen(s->arg->str) >= BUFF_SIZE)
@@ -52,7 +52,7 @@ static size_t	write_end(char buf[], char *format, t_printf_state *s)
 {
 	if (ft_strlen(buf) > 0)
 		s->c += write_buf(buf, s);
-	write(1, format, ft_strlen(format));
+	write(s->fd, format, ft_strlen(format));
 	return (s->c + ft_strlen(format));
 }
 

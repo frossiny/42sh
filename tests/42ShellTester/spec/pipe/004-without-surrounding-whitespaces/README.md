@@ -1,32 +1,19 @@
-# 001-binary-path-relative
+# 004-without-surrounding-whitespaces
 
-*[spec > minishell > binary](..) > 001-binary-path-relative*
+*[spec > 21sh > pipe](..) > 004-without-surrounding-whitespaces*
 
-The purpose of this test is to check that the Shell correctly finds binaries within the PATH.
-### What is done before test
-
-```bash
-mkdir -p "./virtual_path/p1" "./virtual_path/p2"
-rm -f "./virtual_path/p1/display_my_name1" "./virtual_path/p2/display_my_name2"
-cp "./display_program_name" "./virtual_path/p1/display_my_name1"
-cp "./display_program_name" "./virtual_path/p2/display_my_name2"
-export PATH="${GLOBAL_TMP_DIRECTORY}/virtual_path/p1:${GLOBAL_TMP_DIRECTORY}/virtual_path/p2"
-
-```
-
+A pipe character `|` that is not enclosed in double-quotes is interpreted as a pipe separator even if it is closely placed to the next and previous command fields.
 ### Shell commands that are sent to the standard entry
 
 ```bash
-display_my_name1
-display_my_name2
+./write_on_stdout ${GLOBAL_TOKEN}|./read_on_stdin
 
 ```
 
 ### What is expected on standard output
 
 ```bash
-expected_to match_regex "display_my_name1"
-expected_to match_regex "display_my_name2"
+expected_to match_regex "${GLOBAL_TOKEN}@$"
 
 ```
 
@@ -34,13 +21,6 @@ expected_to match_regex "display_my_name2"
 
 ```bash
 expected_to be_empty
-
-```
-
-### What miscellaneous behaviors are expected
-
-```bash
-expected_to exit_with_status "0"
 
 ```
 
