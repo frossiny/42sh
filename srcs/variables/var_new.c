@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 17:43:55 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/24 12:55:57 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/18 15:11:37 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ t_var	*var_new(char *key, char *value, int export)
 		free(nvar);
 		return (NULL);
 	}
-	if (!(nvar->value = ft_strdup(value)))
+	if (!value)
+		nvar->value = ft_strdup("");
+	else if (!(nvar->value = ft_strdup(value)))
 	{
 		free(nvar->key);
 		free(nvar);
