@@ -1,0 +1,6 @@
+pwd
+echo "
+pwd
+"
+echo TEST1 ; \
+echo TEST2

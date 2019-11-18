@@ -1,0 +1,4 @@
+toto=tamer
+echo "$toto"$toto'$toto'
+echo \$toto $toto
+echo \\$toto \"$toto"tqmer"

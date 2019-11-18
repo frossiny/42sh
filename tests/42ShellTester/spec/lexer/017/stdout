@@ -1,0 +1,4 @@
+expected_to match_regex 'tamertamer\$toto'
+expected_to match_regex '^\$toto tamer'
+expected_to match_regex "\\tamer \"tamertqmer"
+expected_to have_nb_of_lines 3

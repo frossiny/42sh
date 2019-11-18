@@ -1,0 +1,2 @@
+rm -rf cmp_file
+echo '\""\""\""' > cmp_file

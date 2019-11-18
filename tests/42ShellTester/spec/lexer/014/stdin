@@ -1,0 +1,6 @@
+echo "\"
+okalmos"
+echo $?
+
+echo '\'tamer
+echo $?
