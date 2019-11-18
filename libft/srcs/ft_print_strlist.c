@@ -1,21 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_2dstrlen.c                                      :+:      :+:    :+:   */
+/*   ft_print_strlist.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alagroy- <alagroy-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/16 09:19:10 by alagroy-          #+#    #+#             */
-/*   Updated: 2019/11/18 19:46:48 by alagroy-         ###   ########.fr       */
+/*   Created: 2019/05/24 11:45:42 by alagroy-          #+#    #+#             */
+/*   Updated: 2019/05/24 11:56:24 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_2dstrlen(char **tab)
-{
-	int		i;
+#include "libft.h"
 
-	i = 0;
-	while (tab && tab[i])
-		i++;
-	return (i);
+void	ft_print_strlist(t_list *begin)
+{
+	t_list	*tmp;
+
+	tmp = begin;
+	while (tmp)
+	{
+		if (tmp->content)
+			ft_putendl(tmp->content);
+		else
+			ft_putendl("(null)");
+		tmp = tmp->next;
+	}
 }

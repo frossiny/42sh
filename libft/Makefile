@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/16 11:23:33 by frossiny          #+#    #+#              #
-#    Updated: 2019/11/07 16:45:05 by frossiny         ###   ########.fr        #
+#    Updated: 2019/11/18 19:45:44 by alagroy-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -108,6 +108,9 @@ FILES 	=	ft_2dstrlen.c						\
 			ft_strcut.c							\
 			ft_strfcut.c						\
 			ft_lstend.c							\
+			ft_lstsize.c						\
+			ft_print_strlist.c					\
+			ft_2dstrdel.c						\
 			get_next_line.c						\
 			edit_string.c						\
 			printf/ft_printf.c					\
