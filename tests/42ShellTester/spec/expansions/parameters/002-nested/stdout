@@ -1,0 +1,2 @@
+expected_to have_nb_of_lines 2
+expected_to match_regex "^${GLOBAL_TOKEN}" 2 times

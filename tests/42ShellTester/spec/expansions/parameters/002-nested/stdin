@@ -1,0 +1,3 @@
+echo ${PATH:+${${GLOBAL_TOKEN}:-${TEST:=${GLOBAL_TOKEN}}}}
+echo $TEST
+echo ${CUSTOM_VAR:?${HOME:+$USER}}

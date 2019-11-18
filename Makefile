@@ -6,14 +6,23 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/11/18 15:29:14 by frossiny         ###   ########.fr        #
+#    Updated: 2019/11/18 18:34:32 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC		=	gcc -g3 #-fsanitize=address
-#CFLAGS	+=	-Wall -Werror -Wextra
+CFLAGS	+=	-Wall -Wextra #-Werror
 
 SHELL	=	bash
+
+#Tests related variables
+TARGS	=
+ifdef FILTER
+	TARGS += --filter ${FILTER}
+endif
+ifdef SHOW
+	TARGS += --show-success
+endif
 
 NAME 	=	42sh
 LIBFT	=	libft
@@ -236,6 +245,6 @@ norm:
 	@echo "Norm done!"
 
 tests: all
-	./tests/42ShellTester/42ShellTester.sh "$(PWD)/$(NAME)" --filter ${FILTER}
+	./tests/42ShellTester/42ShellTester.sh "$(PWD)/$(NAME)" ${TARGS}
 
 -include $(OBJSD)

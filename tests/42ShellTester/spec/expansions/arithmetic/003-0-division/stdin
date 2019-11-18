@@ -1,0 +1,2 @@
+echo $((10 / 0))
+echo test
