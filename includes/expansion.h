@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 17:24:02 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/18 15:26:55 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/18 16:34:40 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ typedef struct		s_compare
 
 int					expand(t_token *tokens);
 void				exp_set_struct(t_expansion *exp, char *content);
-void				exp_join(t_expansion *e, char *tmp);
+void				exp_join(t_expansion *e, char *tmp, int noescape);
 
 int					handle_home(t_token *token, t_var *vars);
 int					exp_remove_quotes(t_expansion *e);

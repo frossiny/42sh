@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/08 16:25:20 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/01 17:53:54 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/18 16:48:59 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char		*strjoin_escape(char *s1, char *s2)
 	size_t	i;
 	size_t	j;
 
-	if (!s1 || !s2 || !(new = ft_strnew(ft_strlen(s1) + ft_strlen(s2))))
+	if (!s1 || !s2 || !(new = ft_strnew(ft_strlen(s1) + ft_strlen(s2) + 1)))
 		return (NULL);
 	ft_strcpy(new, s1);
 	i = 0;
@@ -40,6 +40,7 @@ char		*strjoin_escape(char *s1, char *s2)
 		if (s2[i])
 			new[j++] = s2[i++];
 	}
+	new[j] = '\0';
 	free(s1);
 	return (new);
 }
@@ -50,7 +51,7 @@ char		*strdup_escape(char *str)
 	size_t	i;
 	size_t	j;
 
-	if (!str || !(new = ft_strnew(ft_strlen(str))))
+	if (!str || !(new = ft_strnew(ft_strlen(str) + 1)))
 		return (NULL);
 	i = 0;
 	j = 0;
@@ -61,5 +62,6 @@ char		*strdup_escape(char *str)
 		if (str[i])
 			new[j++] = str[i++];
 	}
+	new[j] = '\0';
 	return (new);
 }

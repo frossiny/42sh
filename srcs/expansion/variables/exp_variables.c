@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 15:42:26 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/18 14:24:53 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/18 16:36:30 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	exp_var_loop(t_expansion *exp)
 		if (exp->str[exp->i] == '$' && is_escaped(exp->str, exp->i, 0))
 			continue ;
 		if (exp->i > exp->li)
-			exp_join(exp, ft_strsub(exp->str, exp->li, exp->i - exp->li));
+			exp_join(exp, ft_strsub(exp->str, exp->li, exp->i - exp->li), 1);
 		exp->li = exp->i;
 		if (ft_strnequ(exp->str + exp->i, "${", 2))
 		{
@@ -40,7 +40,7 @@ static int	exp_var_loop(t_expansion *exp)
 			break ;
 	}
 	if (exp->i > exp->li)
-		exp_join(exp, ft_strsub(exp->str, exp->li, exp->i - exp->li));
+		exp_join(exp, ft_strsub(exp->str, exp->li, exp->i - exp->li), 1);
 	return (1);
 }
 

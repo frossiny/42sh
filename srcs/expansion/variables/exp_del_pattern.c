@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exp_del_pattern.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 14:50:35 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/14 13:39:48 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/11/18 16:37:22 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int		exp_del_pattern(t_expansion *exp, t_var *var)
 		next_char(&cmp, 0, 0);
 		res = ft_strdup(cmp.file + cmp.len_find);
 	}
-	exp_join(exp, res);
+	exp_join(exp, res, 1);
 	ft_multifree(&cmp.cmp, &cmp.file, NULL);
 	return (1);
 }

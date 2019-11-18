@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 14:53:45 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/08 17:22:43 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/18 16:56:21 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ size_t	get_var_size(char *key)
 	if (!key)
 		return (0);
 	ret = -1;
+	if (ft_strchr(EXP_SPECIAL, key[0]))
+			return (1);
 	while (key[++ret])
 	{
-		if (ft_strchr(EXP_SPECIAL, key[ret]))
-			return (1);
 		if (!ft_isalnum(key[ret]) && key[ret] != '_')
 			break ;
 	}
