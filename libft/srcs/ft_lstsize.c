@@ -1,21 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_2dstrlen.c                                      :+:      :+:    :+:   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alagroy- <alagroy-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alagroy- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/16 09:19:10 by alagroy-          #+#    #+#             */
-/*   Updated: 2019/11/18 19:46:48 by alagroy-         ###   ########.fr       */
+/*   Created: 2018/11/13 18:31:20 by alagroy-          #+#    #+#             */
+/*   Updated: 2019/02/02 19:17:00 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_2dstrlen(char **tab)
-{
-	int		i;
+#include "libft.h"
 
-	i = 0;
-	while (tab && tab[i])
-		i++;
-	return (i);
+size_t	ft_lstsize(t_list *begin)
+{
+	size_t	size;
+	t_list	*tmp;
+
+	tmp = begin;
+	size = 0;
+	while (tmp)
+	{
+		size++;
+		tmp = tmp->next;
+	}
+	return (size);
 }
