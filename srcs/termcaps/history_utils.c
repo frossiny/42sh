@@ -6,22 +6,12 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 12:19:22 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/15 17:26:02 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/18 11:53:50 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
-
-char				*search_in_history(t_shell *shell, char *command)
-{
-	char	*result;
-	
-	(void)shell;
-	(void)command;
-	result = NULL;
-	return (result);
-}
 
 void				free_history(t_history *history)
 {

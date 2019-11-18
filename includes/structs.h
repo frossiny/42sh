@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 14:23:53 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/14 15:53:41 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/18 16:06:31 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,8 @@ typedef enum		e_token_type
 	TOKEN_REDIRO,
 	TOKEN_PIPE,
 	TOKEN_AGGR,
-	TOKEN_IGN
+	TOKEN_IGN,
+	TOKEN_JOBS
 }					t_token_type;
 
 typedef struct		s_ex_token
@@ -260,6 +261,20 @@ typedef struct		s_builtin
 }					t_builtin;
 
 /*
+** Jobs linked list
+**
+** status: 0->suspended, 1 -> running
+*/
+typedef struct		s_jobs
+{
+	t_anode			*ast;
+	size_t			pid;
+	size_t			status;
+	struct s_jobs	*prev;
+	struct s_jobs	*next;
+}					t_jobs;
+
+/*
 ** Hashtable structure
 */
 typedef struct		s_hashval
@@ -308,6 +323,7 @@ typedef struct		s_shell
 	t_lexer			lexer;
 	t_anode			*ast;
 	t_hashtable		bin_ht;
+	t_jobs			*jobs;
 	t_history		history;
 	struct termios	prev_term;
 }					t_shell;

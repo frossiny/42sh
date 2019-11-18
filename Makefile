@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/11/14 14:08:28 by lubenard         ###   ########.fr        #
+#    Updated: 2019/11/18 14:13:06 by lubenard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,7 @@ FILES	=	shell.c											\
 			builtins/exit.c									\
 			builtins/echo.c									\
 			builtins/export.c								\
+			builtins/jobs.c									\
 			builtins/cd/build_path.c						\
 			builtins/cd/cd.c								\
 			builtins/history/history.c						\
