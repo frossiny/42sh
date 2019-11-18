@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 17:27:04 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/13 14:12:41 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/18 16:13:20 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ static char	*get_exe_path(t_shell *shell, char *name)
 	char			*file;
 	static size_t	is_called_twice = 0;
 
-	if (!(path = var_get(shell->vars, "PATH")) || !ft_strlen(path->value))
-		return (NULL);
 	file = ht_get(shell, name);
+	if (!(path = var_get(shell->vars, "PATH")) || ft_strlen(path->value) == 0)
+		return (handle_relative(name, 0));
 	i = -1;
 	dirs = ft_strsplit(path->value, ':');
 	while (dirs && dirs[++i])

@@ -1,0 +1,3 @@
+unset TEST_UNSET_VAR
+unset fdgadfgfadg
+set | grep 'TEST_UNSET_VAR'

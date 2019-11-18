@@ -6,7 +6,7 @@
 /*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 16:59:25 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/05 17:17:39 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/11/13 14:04:32 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_alias		*alias_get(t_alias *alias, char *key)
 	while (alias)
 	{
 		if (ft_strcmp(alias->key, key) == 0)
-			return (alias);	
+			return (alias);
 		alias = alias->next;
 	}
 	return (NULL);

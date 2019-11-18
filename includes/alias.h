@@ -6,7 +6,7 @@
 /*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 17:03:49 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/06 16:32:15 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/11/15 17:27:08 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,27 @@
 
 # include "structs.h"
 
-void		alias_display_all(t_alias *alias);
-void		alias_display_one(t_alias *alias, char *key);
-int			alias_new(t_alias **alias, char *key, char *value);
-t_alias		*alias_get(t_alias *alias, char *key);
-void		alias_free_all(t_alias **list);
-void		alias_free_one(t_alias *alias);
+typedef struct		s_string
+{
+	char			*str;
+	struct s_string	*next;
+}					t_string;
 
+void				alias_display_all(t_alias *alias);
+void				alias_display_one(t_alias *alias, char *key);
+int					alias_new(t_alias **alias, char *key, char *value);
+t_alias				*alias_get(t_alias *alias, char *key);
+void				alias_free_all(t_alias **list);
+void				alias_free_one(t_alias *alias);
+int					alias_resolve(t_token *token, t_alias *alias,
+													t_string **hist);
+void				alias_build_input(char **dest, t_token *token);
+
+void				free_alias_history(t_string **list);
+
+void				set_loop(t_alias *alias);
+int					is_already_solve(t_string *list, char *str);
+void				maj_alias_history(t_string *list, t_string **hist);
+void				add_alias_history(t_string **list, char *str);
+void				free_alias_history(t_string **list);
 #endif

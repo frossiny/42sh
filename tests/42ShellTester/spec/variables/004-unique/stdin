@@ -1,0 +1,2 @@
+TEST_UNIQUE=OUI env | grep 'TEST_UNIQUE'
+set | grep 'TEST_UNIQUE'

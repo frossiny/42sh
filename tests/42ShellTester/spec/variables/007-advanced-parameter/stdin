@@ -1,0 +1,6 @@
+echo ${USER:+42SH}
+echo ${TEST:-21sh}
+echo ${TEST:=$USER}
+echo $TEST
+echo ${TEST:?Error}
+echo ${UNSET_VAR:?Error}

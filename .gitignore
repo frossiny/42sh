@@ -7,3 +7,5 @@ vgcore.*
 .vscode
 .DS_Store
 *.dSYM
+*.swp
+tags

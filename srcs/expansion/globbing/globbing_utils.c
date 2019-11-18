@@ -6,12 +6,29 @@
 /*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 13:45:40 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/10/31 16:52:55 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/11/13 17:10:20 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expansion.h"
 #include "libft.h"
+
+int					is_close_bracket(char *str, int i)
+{
+	if (!str[i] || str[i] != '[')
+		return (0);
+	i++;
+	if (!str[i])
+		return (0);
+	i++;
+	while (str[i] && str[i] != ']')
+	{
+		i++;
+	}
+	if (!str[i])
+		return (0);
+	return (i);
+}
 
 void				free_globbing(t_globbing_list *list)
 {

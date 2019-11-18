@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:26:37 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/15 15:47:24 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/18 16:10:53 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	start_process(char *file, t_cmd *cmd, char **env)
 	if ((g_child = fork()) == 0)
 	{
 		unregister_signals();
-		restore_shell(g_shell.prev_term);
+		g_shell.able_termcaps ? restore_shell(g_shell.prev_term) : 0;
 		handle_redirections(cmd->redir);
 		if (execve(file, cmd->args, env) == -1)
 			exit(EXIT_FAILURE);
@@ -51,8 +51,7 @@ static int	start_process(char *file, t_cmd *cmd, char **env)
 	if (g_child == -1)
 		return (g_child = 0);
 	waitpid(g_child, &status, 0);
-	termcaps_init(NULL);
-	g_lpid = g_child;
+	g_shell.able_termcaps ? termcaps_init(NULL) : 0;
 	g_child = 0;
 	if (WIFSIGNALED(status))
 		return (display_signal(status));

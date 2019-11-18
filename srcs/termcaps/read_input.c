@@ -95,10 +95,23 @@ int			get_input(int fd, char **dest, t_shell *shell)
 
 	g_clear_buffer = 0;
 	*dest = NULL;
-	if (!memset_all(&(g_pos.str), &(shell->history), &g_pos))
-		return (-1);
-	signal(SIGWINCH, &resize);
-	ret = termcaps_gnl(fd, dest, shell);
-	signal(SIGWINCH, SIG_DFL);
+	if (shell->able_termcaps)
+	{
+		if (!memset_all(&(g_pos.str), &(shell->history), &g_pos))
+			return (-1);
+		signal(SIGWINCH, &resize);
+		ret = termcaps_gnl(fd, dest, shell);
+		signal(SIGWINCH, SIG_DFL);
+	}
+	else
+	{
+		prompt();
+		ret = get_next_line(fd, dest);
+		if (g_clear_buffer)
+		{
+			ft_strdel(dest);
+			g_clear_buffer = 0;
+		}
+	}
 	return (ret);
 }

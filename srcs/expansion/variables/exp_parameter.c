@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 15:10:45 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/09 16:33:50 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/18 16:14:51 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ int				exp_parameter(t_expansion *exp)
 	var = exp_get_var(exp);
 	if (exp->str[exp->i] == ':')
 		ret = exp_par_colon(exp, var, name);
+	else if (exp->str[exp->i] == '#' || exp->str[exp->i] == '%')
+		ret = exp_del_pattern(exp, var);
 	else
 		ret = exp_noflag(exp, var, name);
 	free(name);

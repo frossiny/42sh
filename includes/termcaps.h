@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 18:49:29 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/06 18:33:12 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/18 14:39:30 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void				resize(int sig);
 int					memset_pos(t_cursor_pos *pos);
 void				move_cursor(int x, int y);
 void				final_position(t_cursor_pos *pos);
+void				term_print(char *str);
 void				reprint(char *str, t_cursor_pos *pos, int cursor_pos);
 void				visual_delete(char **str, t_cursor_pos *pos);
 void				visual_replace(char **str, char *buf, t_cursor_pos *pos);

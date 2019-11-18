@@ -1,0 +1,2 @@
+TOKEN54654=42SH
+set | grep 'TOKEN54654'

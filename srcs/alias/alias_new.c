@@ -6,7 +6,7 @@
 /*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 15:51:03 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/09 16:28:05 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/18 16:15:44 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int			alias_maj(t_alias *alias, char *key, char *value)
 	{
 		if (ft_strcmp(key, alias->key) == 0)
 		{
+			free(alias->value);
 			alias->value = value;
 			return (1);
 		}

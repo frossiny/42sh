@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 17:24:02 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/07 16:30:35 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/18 15:26:55 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ typedef struct		s_compare
 {
 	char					*cmp;
 	char					*file;
+	int						l_pattern;
+	int						len_find;
 }					t_compare;
 
 int					expand(t_token *tokens);
@@ -62,6 +64,7 @@ char				*exp_get_varname(t_expansion *exp);
 int					exp_simple_var(t_expansion *exp);
 int					exp_parameter(t_expansion *exp);
 char				*exp_get_word(t_expansion *exp);
+int					exp_del_pattern(t_expansion *exp, t_var *var);
 
 char				*exp_par_len(t_expansion *exp);
 int					exp_par_colon(t_expansion *exp, t_var *var, char *name);
@@ -77,11 +80,11 @@ int					exp_minus(t_expansion *exp, t_var *var, \
 int					dir_globbing(t_globbing *glob,
 						t_globbing_list *list, char *path);
 int					complete_str(char *cmp, char *file);
-int					next_char(t_compare s, int x, int y);
+int					next_char(t_compare *s, int x, int y);
 
-int					wildcard_question(t_compare s, int x, int y);
-int					wildcard_star(t_compare s, int x, int y);
-int					wildcard_bracket(t_compare s, int x, int y);
+int					wildcard_question(t_compare *s, int x, int y);
+int					wildcard_star(t_compare *s, int x, int y);
+int					wildcard_bracket(t_compare *s, int x, int y);
 
 void				free_globbing(t_globbing_list *list);
 t_globbing_list		*create_globbing(char *str);
@@ -93,6 +96,7 @@ void				remove_token(t_token *curr);
 
 int					is_glob_char(char c);
 int					is_glob_str(char *str);
+int					is_close_bracket(char *str, int i);
 char				*pull_multi_occ(char *str, char occ);
 
 #endif
