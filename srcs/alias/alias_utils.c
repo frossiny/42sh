@@ -6,7 +6,7 @@
 /*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 14:12:47 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/15 17:11:33 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/11/18 13:47:44 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,22 +34,14 @@ void		free_alias_history(t_string **list)
 void		add_alias_history(t_string **list, char *str)
 {
 	t_string	*new;
-	char		**tab;
-	int			i;
 
 	if (!list || !str)
 		return ;
-	if (!(tab = ft_strsplit(str, ' ')))
+	if (!(new = (t_string *)malloc(sizeof(t_string))))
 		return ;
-	i = -1;
-	while (tab[++i])
-	{
-		if (!(new = (t_string *)malloc(sizeof(t_string))))
-			return ;
-		new->str = tab[i];
-		new->next = *list;
-		*list = new;
-	}
+	new->str = ft_strdup(str);
+	new->next = *list;
+	*list = new;
 }
 
 void		maj_alias_history(t_string *list, t_string **hist)

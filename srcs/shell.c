@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:05:59 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/15 17:31:12 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/11/18 15:23:49 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ int		handle_input(t_shell *shell, char **input)
 	alias_hist = NULL;
 	ret = 0;
 	alias_ret = 1;
+	add_to_history(*input, &(g_shell.history));
 	while (alias_ret > 0)
 	{
 		shell->lexer.size = 0;
@@ -105,7 +106,6 @@ int		handle_input(t_shell *shell, char **input)
 			lexer_free(&(shell->lexer));
 		}
 	}
-	ft_printf("input->%s\n", *input);
 	free_alias_history(&alias_hist);
 	t_token *cur = shell->lexer.tokens;
 	while (cur)
@@ -134,7 +134,6 @@ static int	eval_exec(char **input)
 	{
 		if (!input)
 			return (1);
-		add_to_history(*input, &(g_shell.history));
 		ft_strdel(input);
 		build_ast(&g_shell);
 		g_shell.ast ? ret = reader(&g_shell, g_shell.ast) : 0;

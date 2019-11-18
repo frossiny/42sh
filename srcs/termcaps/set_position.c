@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 14:59:44 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/05/15 15:36:40 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/18 14:42:25 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,22 @@ static void		last_line(char *str, t_cursor_pos *pos)
 	}
 }
 
+void			term_print(char *str)
+{
+	char	*tmp;
+	int		i;
+
+	tmp = ft_strdup(str);
+	i = -1;
+	while (tmp[++i])
+	{
+		if (tmp[i] == '\n')
+			tmp[i] = ' ';
+	}
+	write(1, tmp, ft_strlen(tmp));
+	free(tmp);
+}
+
 void			reprint(char *str, t_cursor_pos *pos, int cursor_pos)
 {
 	move_cursor(0, (pos->y_min >= 0 ? pos->y_min : 0));
@@ -73,7 +89,7 @@ void			reprint(char *str, t_cursor_pos *pos, int cursor_pos)
 	if (pos->visual_mode)
 		visual_print(str, pos);
 	else
-		write(1, str, ft_strlen(str));
+		term_print(str);
 	if (pos->search_mode)
 		ft_printf("\nhistory_search: %s_", pos->s_str);
 	move_pos(str, pos, cursor_pos);
