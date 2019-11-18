@@ -6,13 +6,13 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 12:43:39 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/14 20:24:35 by alagroy-         ###   ########.fr       */
+/*   Updated: 2019/11/18 19:19:24 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "completion.h"
 
-static t_list	*(*g_func_tab[4])(char *, t_shell *) =\
+static t_list	*(*g_func_tab[4])(char *, t_shell *, int *) =\
 {
 	NULL,
 	compl_cmd,
@@ -26,7 +26,7 @@ static char	*find_compl_word(t_cursor_pos *pos)
 	int		beg;
 
 	beg = 0;
-	i = pos->x_rel == pos->len_str ? pos->x_rel : pos->x_rel + 1;
+	i = pos->x_rel == pos->len_str ? pos->x_rel - 1 : pos->x_rel;
 	while (--i >= 0)
 		if (ft_strchr(" |&<>'\"", pos->str[i]))
 		{
@@ -45,16 +45,19 @@ void		termcaps_completion(char **str, t_cursor_pos *pos, t_shell *shell)
 {
 	int		mode;
 	char	*compl;
+	int		len;
 	t_list	*compl_lst;
 
+	len = 0;
 	if (pos->visual_mode || !str || !*str || !ft_strlen(*str))
 		return ;
 	if (!(mode = lite_parser(pos)))
 		return ;
 	if (!(compl = find_compl_word(pos)))
 		return ;
-	ft_printf("\ncompl: %s\n", compl);
-	compl_lst = g_func_tab[mode](compl, shell);
-	(void)shell;
+	compl_lst = g_func_tab[mode](compl, shell, &len);
+	if (!compl_lst)
+		return ;
+	disp_compl(pos, str, compl_lst, len);
 	ft_strdel(&compl);
 }

@@ -6,11 +6,11 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/11/14 20:24:56 by alagroy-         ###   ########.fr        #
+#    Updated: 2019/11/18 18:08:00 by alagroy-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC		=	gcc #-g3 -fsanitize=address
+CC		=	gcc -g3 -fsanitize=address
 CFLAGS	+=	-Wall -Werror -Wextra
 
 SHELL	=	bash
@@ -97,6 +97,7 @@ FILES 	=	main.c									\
 			termcaps/completion/files.c				\
 			termcaps/completion/cmd.c				\
 			termcaps/completion/var.c				\
+			termcaps/completion/disp_compl.c		\
 			termcaps/t_up.c							\
 			termcaps/t_down.c						\
 			termcaps/t_history_next.c				\

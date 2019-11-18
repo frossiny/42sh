@@ -6,11 +6,37 @@
 /*   By: alagroy- <alagroy-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 18:33:26 by alagroy-          #+#    #+#             */
-/*   Updated: 2019/11/14 20:30:26 by alagroy-         ###   ########.fr       */
+/*   Updated: 2019/11/18 19:19:23 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "completion.h"
+
+static void	improve_compl(t_list *new, char *path)
+{
+	t_stat	infos;
+	char	*file_name;
+	char	*tmp;
+
+	if (!(file_name = ft_strjoin(path, "/")))
+		return ;
+	tmp = file_name;
+	if (!(file_name = ft_strjoin(file_name, new->content)) || stat(file_name,
+				&infos))
+	{
+		ft_strdel(&tmp);
+		ft_strdel(&file_name);
+		return ;
+	}
+	ft_strdel(&tmp);
+	tmp = new->content;
+	if (S_ISDIR(infos.st_mode))
+		new->content = ft_strjoin(new->content, "/");
+	else
+		new->content = ft_strjoin(new->content, " ");
+	ft_strdel(&tmp);
+	ft_strdel(&file_name);
+}
 
 t_list		*find_file(char *path, char *file)
 {
@@ -33,12 +59,24 @@ t_list		*find_file(char *path, char *file)
 			begin = new;
 		else
 			ft_lstend(&begin, new);
+		improve_compl(new, path);
 	}
 	closedir(dir);
 	return (begin);
 }
 
-t_list		*compl_file(char *compl, t_shell *shell)
+static char	*expand_tilde(char *path, t_shell *shell)
+{
+	t_var	*home_var;
+
+	if (!(home_var = var_get(shell->vars, "HOME")))
+		return (path);
+	path = ft_strdelpart(path, 0, 1);
+	path = ft_insert_str(path, ft_strdup(home_var->value), 0);
+	return (path);
+}
+
+t_list		*compl_file(char *compl, t_shell *shell, int *len)
 {
 	t_list		*compl_list;
 	char		*slash_ptr;
@@ -55,8 +93,11 @@ t_list		*compl_file(char *compl, t_shell *shell)
 		return (NULL);
 	if (!(path = ft_strsub(compl, 0, beg)))
 		return (NULL);
+	if (!ft_strncmp(path, "~/", 2))
+		path = expand_tilde(path, shell);
 	if (beg == 0)
 		path = ft_strdup(".");
+	*len = ft_strlen(file);
 	compl_list = find_file(path, file);
 	return (compl_list);
 }
