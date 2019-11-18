@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 15:10:45 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/18 15:28:27 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/18 16:01:12 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,11 @@ static int		exp_noflag(t_expansion *exp, t_var *var, char *name)
 {
 	(void)name;
 	if (!var || !var->value)
+	{
+		exp->li += 2 + ft_strlen(name) + 1;
+		exp->i = exp->li;
 		return (1);
+	}
 	exp_join(exp, ft_strdup(var->value));
 	exp->i++;
 	exp->li = exp->i;
@@ -51,7 +55,6 @@ int				exp_parameter(t_expansion *exp)
 {
 	int		ret;
 	t_var	*var;
-	char	*tmp;
 	char	*name;
 
 	if (!exp || !ft_strnequ(exp->str + exp->i, "${", 2))

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 13:23:37 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/18 15:07:06 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/18 16:11:21 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static void		parse_assignements(t_cmd *cmd, t_token **exe)
 		if (!(tmp = ft_strsplit((*exe)->content, '=')))
 			break ;
 		var_set(&(cmd->tenv), tmp[0], tmp[1], 1);
+		ft_strddel(&tmp);
 		(*exe) = (*exe)->next;
 	}
 }
