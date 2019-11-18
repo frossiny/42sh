@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 19:10:03 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/30 18:56:25 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/11/13 14:55:20 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*var_get_value(t_var *vars, char *key)
 	while (vars)
 	{
 		if (ft_strequ(vars->key, key))
-			return (vars->value);
+			return (ft_strdup(vars->value));
 		vars = vars->next;
 	}
 	return (NULL);

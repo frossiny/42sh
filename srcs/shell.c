@@ -6,11 +6,10 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:05:59 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/07 18:11:53 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/18 15:28:14 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 #include "libft.h"
 #include "shell.h"
 #include "lexer.h"
@@ -72,26 +71,41 @@ int		quote_error(t_shell *shell, char **input, int ret)
 
 int		handle_input(t_shell *shell, char **input)
 {
-	int		ret;
+	int			ret;
+	int			alias_ret;
+	t_string	*alias_hist;
 
+	alias_hist = NULL;
 	ret = 0;
-	shell->lexer.size = 0;
-	while ((ret = lex(*input, &(shell->lexer))) < 1)
+	alias_ret = 1;
+	add_to_history(*input, &(g_shell.history));
+	while (alias_ret > 0)
 	{
-		lexer_free(&(shell->lexer));
-		if (ret == -3 || ret == -2)
+		shell->lexer.size = 0;
+		while ((ret = lex(*input, &(shell->lexer))) < 1)
 		{
-			if ((ret = quote_error(shell, input, ret)))
+			lexer_free(&(shell->lexer));
+			if (ret == -3 || ret == -2)
+			{
+				if ((ret = quote_error(shell, input, ret)))
+					return (ret);
+			}
+			else if (ret == -4)
+			{
+				if ((ret = bslash_error(shell, input, ret)))
+					return (ret);
+			}
+			else
 				return (ret);
 		}
-		else if (ret == -4)
+		if ((alias_ret = alias_resolve(shell->lexer.tokens, shell->alias,
+															&alias_hist)))
 		{
-			if ((ret = bslash_error(shell, input, ret)))
-				return (ret);
+			alias_build_input(input, shell->lexer.tokens);
+			lexer_free(&(shell->lexer));
 		}
-		else
-			return (ret);
 	}
+	free_alias_history(&alias_hist);
 	if (!parse(shell->lexer.tokens))
 	{
 		lexer_free(&(shell->lexer));

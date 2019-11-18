@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 14:23:53 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/08 16:10:55 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/18 15:27:11 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ typedef struct		s_alias
 {
 	char			*key;
 	char			*value;
+	int				loop;
 	struct s_alias	*next;
 }					t_alias;
 
@@ -303,7 +304,7 @@ typedef struct		s_shell
 	t_anode			*ast;
 	t_hashtable		bin_ht;
 	t_history		history;
-	int			able_termcaps;
+	int				able_termcaps;
 	struct termios	prev_term;
 }					t_shell;
 

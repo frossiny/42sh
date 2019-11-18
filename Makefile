@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/11/18 13:18:08 by frossiny         ###   ########.fr        #
+#    Updated: 2019/11/18 15:29:14 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,8 @@ FILES	=	shell.c											\
 			alias/alias_get.c								\
 			alias/alias_display.c							\
 			alias/alias_free.c								\
+			alias/alias_resolve.c							\
+			alias/alias_utils.c								\
 			ast/build_ast.c									\
 			ast/create_node.c								\
 			ast/build_args.c								\
@@ -67,6 +69,7 @@ FILES	=	shell.c											\
 			expansion/variables/exp_par_colon_op.c			\
 			expansion/variables/exp_get_var.c				\
 			expansion/variables/exp_get_word.c				\
+			expansion/variables/exp_del_pattern.c			\
 			expansion/arithmetic/comp.c						\
 			expansion/arithmetic/convert_base.c				\
 			expansion/arithmetic/eval.c						\
