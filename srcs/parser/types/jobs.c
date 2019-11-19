@@ -1,21 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_2dstrlen.c                                      :+:      :+:    :+:   */
+/*   jobs.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alagroy- <alagroy-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/16 09:19:10 by alagroy-          #+#    #+#             */
-/*   Updated: 2019/11/18 19:46:48 by alagroy-         ###   ########.fr       */
+/*   Created: 2019/11/18 17:49:24 by lubenard          #+#    #+#             */
+/*   Updated: 2019/11/18 18:48:42 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_2dstrlen(char **tab)
-{
-	int		i;
+#include "libft.h"
+#include "parser.h"
+#include "lexer.h"
+# include <stdio.h>
 
-	i = 0;
-	while (tab && tab[i])
-		i++;
-	return (i);
+int		par_type_jobs(t_parser *par)
+{
+	(void)par;
+	printf("Je suis appele %s\n", par->tokens->content);
+	par_next(par, 1);
+	return (1);
 }

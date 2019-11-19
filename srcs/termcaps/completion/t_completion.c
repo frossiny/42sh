@@ -6,90 +6,58 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 12:43:39 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/08/12 18:07:15 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/18 19:19:24 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "shell.h"
+#include "completion.h"
 
-static const char *g_builtins_c[] =
+static t_list	*(*g_func_tab[4])(char *, t_shell *, int *) =\
 {
-	"echo",
-	"cd",
-	"setenv",
-	"unsetenv",
-	"env",
-	"exit",
 	NULL,
+	compl_cmd,
+	compl_file,
+	compl_var,
 };
 
-static char	*actual_word(char *str, t_cursor_pos *pos)
-{
-	char	*res;
-	size_t	i;
-	size_t	j;
-
-	res = NULL;
-	i = pos->x_rel;
-	while (i > 0 && !ft_isspace(str[i - 1]))
-		i--;
-	j = i;
-	while (str[j] && !ft_isspace(str[j]))
-		j++;
-	res = ft_strndup(str + i, j - i);
-	return (res);
-}
-
-static int	complete_builtins(t_compl_info *infos)
+static char	*find_compl_word(t_cursor_pos *pos)
 {
 	int		i;
+	int		beg;
 
-	i = -1;
-	while (g_builtins_c[++i])
-	{
-		if (ft_strnequ(infos->word, g_builtins_c[i], ft_strlen(infos->word)))
+	beg = 0;
+	i = pos->x_rel == pos->len_str ? pos->x_rel - 1 : pos->x_rel;
+	while (--i >= 0)
+		if (ft_strchr(" |&<>'\"", pos->str[i]))
 		{
-			if (infos->index == 0)
-			{
-				include_word((char *)g_builtins_c[i], infos->str, infos->pos);
-				return (1);
-			}
+			beg = i + 1;
+			break ;
 		}
-	}
-	return (0);
-}
-
-static void	init_ci(t_compl_info *ci, char **str, t_cursor_pos *pos)
-{
-	ci->str = str;
-	ci->pos = pos;
-	ci->word = actual_word(*str, pos);
+		else if (pos->str[i] == '$')
+		{
+			beg = i;
+			break ;
+		}
+	return (ft_strsub(pos->str, beg, pos->x_rel - beg));
 }
 
 void		termcaps_completion(char **str, t_cursor_pos *pos, t_shell *shell)
 {
-	t_compl_info	ci;
+	int		mode;
+	char	*compl;
+	int		len;
+	t_list	*compl_lst;
 
+	len = 0;
 	if (pos->visual_mode || !str || !*str || !ft_strlen(*str))
 		return ;
-	ci.index = pos->compl;
-	if (ci.index > 0 && pos->o_input)
-	{
-		free(*str);
-		*str = ft_strdup(pos->o_input);
-		pos->x_rel = pos->opos;
-	}
-	init_ci(&ci, str, pos);
-	if (ft_strcmp(ci.word, ""))
-		if (!complete_builtins(&ci))
-			if (!complete_files(&ci, shell))
-				if (!complete_path(&ci, shell))
-				{
-					ci.pos->compl = 0;
-					free(ci.word);
-					return ;
-				}
-	free(ci.word);
-	pos->compl++;
+	if (!(mode = lite_parser(pos)))
+		return ;
+	if (!(compl = find_compl_word(pos)))
+		return ;
+	compl_lst = g_func_tab[mode](compl, shell, &len);
+	if (!compl_lst)
+		return ;
+	disp_compl(pos, str, compl_lst, len);
+	ft_strdel(&compl);
 }

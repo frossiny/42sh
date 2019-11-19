@@ -1,21 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_2dstrlen.c                                      :+:      :+:    :+:   */
+/*   ft_print_2da.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alagroy- <alagroy-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/16 09:19:10 by alagroy-          #+#    #+#             */
-/*   Updated: 2019/11/18 19:46:48 by alagroy-         ###   ########.fr       */
+/*   Created: 2019/04/09 20:12:36 by alagroy-          #+#    #+#             */
+/*   Updated: 2019/04/15 08:07:15 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_2dstrlen(char **tab)
-{
-	int		i;
+#include "libft.h"
 
-	i = 0;
-	while (tab && tab[i])
-		i++;
-	return (i);
+void	ft_print_2da(char **array)
+{
+	int	i;
+
+	i = -1;
+	while (array[++i])
+		ft_putendl(array[i]);
 }
