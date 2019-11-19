@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 16:04:58 by pcharrie          #+#    #+#             */
-/*   Updated: 2019/11/07 18:12:37 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/09 16:10:39 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,7 @@ static char	*cd_get_var(t_shell *shell, char *key)
 static int	cd_pathcheck(char *path, char *arg)
 {
 	struct stat	buf;
-	char		buf2[8192];
 	char		*error;
-	int			c;
 
 	error = NULL;
 	if (!path)
@@ -102,6 +100,7 @@ int			b_cd(t_cmd *cmd, t_shell *shell)
 	char		*path;
 	t_var		*cdpath;
 
+	path = NULL;
 	opts = opt_parse(cmd, "LP", "cd");
 	while (opts->opts && opts->opts->next)
 		opts->opts = opts->opts->next;

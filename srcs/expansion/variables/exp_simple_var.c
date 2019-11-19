@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 14:24:33 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/08 17:09:35 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/09 16:33:13 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 
 int			exp_simple_var(t_expansion *exp)
 {
-	size_t	vsize;
 	t_var	*var;
 
 	if (!exp)

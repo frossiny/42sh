@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 17:27:04 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/18 14:40:56 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/18 16:13:20 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,27 +59,33 @@ static char	*handle_relative(char *name, int verbose)
 
 static char	*get_exe_path(t_shell *shell, char *name)
 {
-	t_var		*path;
-	char		**dirs;
-	size_t		i;
-	char		*file;
+	t_var			*path;
+	char			**dirs;
+	size_t			i;
+	char			*file;
+	static size_t	is_called_twice = 0;
 
-	if ((file = ht_get(shell, name)))
-		return (file);
+	file = ht_get(shell, name);
 	if (!(path = var_get(shell->vars, "PATH")) || ft_strlen(path->value) == 0)
 		return (handle_relative(name, 0));
 	i = -1;
 	dirs = ft_strsplit(path->value, ':');
 	while (dirs && dirs[++i])
 	{
+		ft_strdel(&file);
 		if (access(file = format_path_exe(dirs[i], name), F_OK) == 0)
 			break ;
-		ft_strdel(&file);
 	}
 	ft_strddel(&dirs);
 	if (file && access(file, F_OK) == 0)
 	{
-		ht_put(shell, name, file);
+		if (is_called_twice)
+			is_called_twice = 0;
+		else if (!is_called_twice)
+		{
+			ht_put(shell, name, file);
+			is_called_twice = 1;
+		}
 		return (file);
 	}
 	ft_strdel(&file);

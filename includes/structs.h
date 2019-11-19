@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 14:23:53 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/18 15:27:11 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/19 10:34:32 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,8 @@ typedef enum		e_token_type
 	TOKEN_REDIRO,
 	TOKEN_PIPE,
 	TOKEN_AGGR,
-	TOKEN_IGN
+	TOKEN_IGN,
+	TOKEN_JOBS
 }					t_token_type;
 
 typedef struct		s_ex_token
@@ -261,12 +262,27 @@ typedef struct		s_builtin
 }					t_builtin;
 
 /*
+** Jobs linked list
+**
+** status: 0->suspended, 1 -> running
+*/
+typedef struct		s_jobs
+{
+	t_anode			*ast;
+	size_t			pid;
+	size_t			status;
+	struct s_jobs	*prev;
+	struct s_jobs	*next;
+}					t_jobs;
+
+/*
 ** Hashtable structure
 */
 typedef struct		s_hashval
 {
 	char	*key;
 	char	*value;
+	size_t	occurence;
 }					t_hashval;
 
 typedef struct		s_hashtable
@@ -282,14 +298,19 @@ typedef struct		s_histo_lst
 {
 	char				*str;
 	size_t				len;
+	size_t				index;
+	struct s_histo_lst	*prev;
 	struct s_histo_lst	*next;
 }					t_histo_lst;
 
 typedef struct		s_history
 {
 	t_histo_lst			*lst;
+	t_histo_lst			*first_element;
 	size_t				pos;
 	size_t				size;
+	size_t				index;
+	size_t				histsize;
 	char				*first_command;
 }					t_history;
 
@@ -303,6 +324,7 @@ typedef struct		s_shell
 	t_lexer			lexer;
 	t_anode			*ast;
 	t_hashtable		bin_ht;
+	t_jobs			*jobs;
 	t_history		history;
 	int				able_termcaps;
 	struct termios	prev_term;

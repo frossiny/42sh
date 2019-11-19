@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ft_print_strlist.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alagroy- <alagroy-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/06 12:18:44 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/31 15:03:20 by lubenard         ###   ########.fr       */
+/*   Created: 2019/05/24 11:45:42 by alagroy-          #+#    #+#             */
+/*   Updated: 2019/05/24 11:56:24 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_bzero(void *s, size_t n)
+void	ft_print_strlist(t_list *begin)
 {
-	char		*str;
+	t_list	*tmp;
 
-	if (n <= 0)
-		return ;
-	str = (char *)s;
-	while (n--)
-		*str++ = '\0';
+	tmp = begin;
+	while (tmp)
+	{
+		if (tmp->content)
+			ft_putendl(tmp->content);
+		else
+			ft_putendl("(null)");
+		tmp = tmp->next;
+	}
 }

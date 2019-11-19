@@ -6,11 +6,11 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/16 11:23:33 by frossiny          #+#    #+#              #
-#    Updated: 2019/11/07 16:45:05 by frossiny         ###   ########.fr        #
+#    Updated: 2019/11/19 10:34:05 by lubenard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC		=	gcc
+CC		=	clang
 CFLAGS	+=	-Wall -Werror -Wextra -g3
 
 SHELL	=	bash
@@ -69,6 +69,7 @@ FILES 	=	ft_2dstrlen.c						\
 			ft_strsplit.c						\
 			ft_strisalnum.c						\
 			ft_strisdigit.c						\
+			ft_strisascii.c						\
 			ft_atoi.c							\
 			ft_itoa.c							\
 			ft_islower.c						\
@@ -108,6 +109,9 @@ FILES 	=	ft_2dstrlen.c						\
 			ft_strcut.c							\
 			ft_strfcut.c						\
 			ft_lstend.c							\
+			ft_lstsize.c						\
+			ft_print_strlist.c					\
+			ft_2dstrdel.c						\
 			get_next_line.c						\
 			edit_string.c						\
 			printf/ft_printf.c					\
@@ -146,9 +150,11 @@ _WHITE=\x1b[37m
 
 .PHONY: all clean fclean re
 
+.SILENT:
+
 $(NAME): $(OBJS)
 	@echo -e -n "\n${_BLUE}${_BOLD}[Linking] $(NAME)${_END}"
-	@ar rc $(NAME) $(OBJS)
+	@ar rcs $(NAME) $(OBJS)
 	@echo -e -n "\n${_GREEN}${_BOLD}$(NAME) done.${_END}"
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
@@ -168,6 +174,7 @@ clean:
 fclean: clean
 	@echo -e "${_RED}${_BOLD}Removing $(NAME)...${_END}"
 	@rm -f $(NAME)
+	@rm -rf $(OBJDIR)
 
 re: fclean
 	$(MAKE) $(NAME)

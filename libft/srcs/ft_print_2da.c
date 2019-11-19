@@ -1,24 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ft_print_2da.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alagroy- <alagroy-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/06 12:18:44 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/31 15:03:20 by lubenard         ###   ########.fr       */
+/*   Created: 2019/04/09 20:12:36 by alagroy-          #+#    #+#             */
+/*   Updated: 2019/04/15 08:07:15 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_bzero(void *s, size_t n)
+void	ft_print_2da(char **array)
 {
-	char		*str;
+	int	i;
 
-	if (n <= 0)
-		return ;
-	str = (char *)s;
-	while (n--)
-		*str++ = '\0';
+	i = -1;
+	while (array[++i])
+		ft_putendl(array[i]);
 }

@@ -3,19 +3,19 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
+#    By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/11/18 16:38:45 by vsaltel          ###   ########.fr        #
+#    Created: 2019/11/19 17:28:40 by vsaltel           #+#    #+#              #
+#    Updated: 2019/11/19 17:29:39 by vsaltel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC		=	gcc -g3 #-fsanitize=address
-#CFLAGS	+=	-Wall -Werror -Wextra
+CC		=	clang #-fsanitize=address
+CFLAGS	+=	-Wall -Werror -Wextra -g3
 
 SHELL	=	bash
 
-NAME 	=	42sh
+NAME	=	42sh
 LIBFT	=	libft
 SRCDIR	=	srcs
 INCDIR	=	includes
@@ -49,8 +49,13 @@ FILES	=	shell.c											\
 			builtins/exit.c									\
 			builtins/echo.c									\
 			builtins/export.c								\
+			builtins/jobs.c									\
 			builtins/cd/build_path.c						\
 			builtins/cd/cd.c								\
+			builtins/history/history.c						\
+			builtins/history/history_utils.c				\
+			builtins/history/history_options.c				\
+			builtins/hash.c									\
 			builtins/options/opt_parse.c					\
 			builtins/options/opt_add.c						\
 			builtins/options/opt_get.c						\
@@ -137,12 +142,6 @@ FILES	=	shell.c											\
 			termcaps/initialization.c						\
 			termcaps/set_position.c							\
 			termcaps/set_position_utils.c					\
-			termcaps/completion/t_completion.c				\
-			termcaps/completion/files.c						\
-			termcaps/completion/path.c						\
-			termcaps/completion/include_word.c				\
-			termcaps/completion/get_tilde.c					\
-			termcaps/completion/get_file_start.c			\
 			termcaps/t_up.c									\
 			termcaps/t_down.c								\
 			termcaps/t_history_next.c						\
@@ -163,6 +162,12 @@ FILES	=	shell.c											\
 			termcaps/history.c								\
 			termcaps/history_utils.c						\
 			termcaps/signal.c								\
+			termcaps/completion/t_completion.c				\
+			termcaps/completion/lite_parser.c				\
+			termcaps/completion/files.c						\
+			termcaps/completion/cmd.c						\
+			termcaps/completion/var.c						\
+			termcaps/completion/disp_compl.c				\
 			utils/is_escaped.c								\
 			utils/dup_argv.c								\
 			utils/display_signal.c							\
@@ -185,8 +190,8 @@ FILES	=	shell.c											\
 			variables/var_export.c
 
 SRCS	=	$(addprefix $(SRCDIR)/, $(FILES))
-OBJS 	=	$(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
-OBJSD 	=	$(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.d)
+OBJS	=	$(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
+OBJSD	=	$(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.d)
 
 ##### Colors #####
 _END=\x1b[0m
@@ -204,18 +209,20 @@ _WHITE=\x1b[37m
 
 .PHONY: all clean fclean re norm tests $(LIBFT)
 
+.SILENT:
+
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@$(MAKE) -q -C $(LIBFT) || $(MAKE) -C $(LIBFT)
+	@$(MAKE) -q -C $(LIBFT) || $(MAKE) -j4 -C $(LIBFT)
 	@echo -e -n "\n${_BLUE}${_BOLD}[Create Executable] $(NAME)${_END}"
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -L./$(LIBFT) -lft -ltermcap
 	@echo -e "\n${_GREEN}${_BOLD}$(NAME) done.${_END}"
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.c
+$(OBJDIR)/%.o: $(SRCDIR)/%.c Makefile
 	@mkdir -p $(@D)
-	@echo -n -e "\r\033[K${_PURPLE}${BOLD}[${NAME}] Compiling $<${_END}"
 	@$(CC) $(CFLAGS) -I $(INCDIR) -I $(LIBFT)/$(INCDIR) -MMD -o $@ -c $<
+#	@python3 .loading.py $@
 
 clean:
 	@$(MAKE) -C $(LIBFT) clean
@@ -228,6 +235,10 @@ fclean: clean
 	@$(MAKE) -C $(LIBFT) fclean
 	@echo -e "${_RED}${_BOLD}Cleaning project...${_END}"
 	@rm -f $(NAME)
+	@rm -rf $(OBJDIR)
+	@rm -rf $(NAME).dSYM
+	@rm -rf ~/.$(NAME)_history
+	@rm -rf /tmp/makefile_42sh
 
 re: fclean
 	@$(MAKE)
@@ -235,6 +246,10 @@ re: fclean
 norm:
 	@norminette $(INCDIR) $(SRCDIR) | grep "Warning\|Error" || true
 	@echo "Norm done!"
+
+check_error:
+	@grep -rn "printf" srcs | grep -v "ft_"
+	@grep -rn "stdio.h" srcs
 
 tests: all
 	./tests/42ShellTester/42ShellTester.sh "$(PWD)/$(NAME)" --filter ${FILTER}

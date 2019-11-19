@@ -6,7 +6,7 @@
 /*   By: alagroy- <alagroy-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 18:45:05 by alagroy-          #+#    #+#             */
-/*   Updated: 2019/11/08 17:11:38 by alagroy-         ###   ########.fr       */
+/*   Updated: 2019/11/09 16:34:47 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,29 +59,9 @@ static int	convert_base_str(char **str, int i)
 	return (i += len - 1);
 }
 
-static char	*var_ae_replace(char *str, int i, int j)
-{
-	char	*sub;
-	t_var	*var;
-
-	if (!(sub = ft_strsub(str, i, j)))
-		return (str);
-	if (!(var = var_get(g_shell->vars, sub)))
-	{
-		ft_strdel(&sub);
-		return (str);
-	}
-	str = ft_strdelpart(str, i, j);
-	str = ft_insert_str(str, ft_strdup(var->value), i);
-	ft_strdel(&sub);
-	return (str);
-}
-
 char		*ae_base10(char *str)
 {
 	int		i;
-	int		j;
-	char	*sub;
 
 /*	i = -1;
 	while (str[++i])

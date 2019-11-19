@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 11:59:10 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/08 17:21:48 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/09 16:15:12 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include <stdlib.h>
 # include <termios.h>
+# include <signal.h>
+# include <sys/wait.h>
 
 # include "structs.h"
 # include "termcaps.h"

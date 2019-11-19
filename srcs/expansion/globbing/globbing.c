@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   globbing.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/30 13:25:26 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/18 19:30:46 by vsaltel          ###   ########.fr       */
+/*   Created: 2019/11/19 17:28:24 by vsaltel           #+#    #+#             */
+/*   Updated: 2019/11/19 17:28:27 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int			replace_globbing(t_token *token)
 {
 	t_token		*begin;
 	t_token		*token_next;
-	char		*tmp;
 	t_globbing	glob;
 
 	begin = token;

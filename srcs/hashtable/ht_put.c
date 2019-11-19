@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/01 14:10:11 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/14 15:04:50 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/13 14:13:44 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,5 @@ void	ht_put(t_shell *shell, char *key, char *value)
 		shell->bin_ht.table[hash].key = ft_strdup(key);
 		shell->bin_ht.table[hash].value = ft_strdup(value);
 	}
+	shell->bin_ht.table[hash].occurence++;
 }

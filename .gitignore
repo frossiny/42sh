@@ -1,8 +1,11 @@
-42sh
-.vscode
-objs
-libft/objs
 *.a
+/libft/objs
+objs
+*.o
+42sh
+vgcore.*
+.vscode
+.DS_Store
 *.dSYM
 *.swp
 tags

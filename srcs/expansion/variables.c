@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/28 13:16:59 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/01 14:14:02 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/01 19:43:38 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ static char	*handle_var(t_var *vars, char *var_name)
 	var = var_get(vars, var_name);
 	if (var_name[0] == '?')
 		ret = ft_itoa(g_return);
+	else if (!ft_strcmp(var_name, "HISTSIZE"))
+		ret = ft_strdup("500");
 	else if (!var)
 		ret = NULL;
 	else
