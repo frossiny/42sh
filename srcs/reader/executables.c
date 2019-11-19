@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:26:37 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/18 16:10:53 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/19 18:02:46 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,18 @@ static int	exe_assignements(t_cmd *cmd)
 	return (0);
 }
 
+#include <stdio.h>
+
 static int	start_process(char *file, t_cmd *cmd, char **env)
 {
 	int		status;
 
 	if (!get_here_doc(cmd->redir, &g_shell))
 		return (EXIT_FAILURE);
-	if ((g_child = fork()) == 0)
+	g_child = fork();
+	if (g_shell.jobs && g_shell.jobs->is_jobs)
+		g_shell.jobs->lst->pid = g_child; //getting procsssus id before execution
+	if (g_child == 0)
 	{
 		unregister_signals();
 		g_shell.able_termcaps ? restore_shell(g_shell.prev_term) : 0;

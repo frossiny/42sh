@@ -6,18 +6,18 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 14:25:57 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/19 14:38:40 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/19 18:43:42 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void	delete_job(t_shell *shell, size_t pid)
+void	delete_job(t_shell *shell, int pid)
 {
-	t_jobs *jobs;
-	t_jobs *to_delete;
+	t_jobs_lst *jobs;
+	t_jobs_lst *to_delete;
 
-	jobs = shell->jobs;
+	jobs = shell->jobs->lst;
 	while (jobs)
 	{
 		if (pid == jobs->next->pid)
