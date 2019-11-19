@@ -6,11 +6,12 @@
 /*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 16:48:56 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/13 14:23:09 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/11/18 18:42:51 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expansion.h"
+#include "utils.h"
 
 int			wildcard_bracket_normal(t_compare *s, int x, int y, int end)
 {
@@ -69,9 +70,9 @@ int			wildcard_bracket(t_compare *s, int x, int y)
 	if (!s->file[y])
 		return (0);
 	end = x + 1;
-	while ((s->cmp[end] && s->cmp[end] != ']')
+	while (s->cmp[end] && (s->cmp[end] != ']'
 			|| (s->cmp[end] == ']' && x + 1 == end)
-			|| (end == x + 2 && s->cmp[end - 1] == '!' && s->cmp[end] == ']'))
+			|| (end == x + 2 && s->cmp[end - 1] == '!' && s->cmp[end] == ']')) && !is_escaped(s->cmp, end, 0))
 		end++;
 	if (!s->cmp[end])
 		return (0);

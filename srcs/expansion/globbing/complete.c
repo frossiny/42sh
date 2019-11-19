@@ -6,11 +6,12 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 13:56:44 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/13 15:31:11 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/11/18 19:30:51 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expansion.h"
+#include "utils.h"
 
 int			quote_char(t_compare *s, int x, int y, char c)
 {
@@ -33,7 +34,7 @@ int			standard_char(t_compare *s, int x, int y)
 	int x_beg;
 
 	x_beg = x;
-	while (s->cmp[x] && s->file[y] && (!is_glob_char(s->cmp[x]) || x_beg == x) && s->cmp[x] != '"')
+	while (s->cmp[x] && s->file[y] && (!is_glob_char(s->cmp[x]) || x_beg == x || is_escaped(s->cmp, x, 0)) && s->cmp[x] != '"')
 	{
 		if (s->cmp[x] != s->file[y])
 			return (0);
@@ -45,14 +46,18 @@ int			standard_char(t_compare *s, int x, int y)
 
 int			next_char(t_compare *s, int x, int y)
 {
-	if (s->cmp[x] == '*')
-		return (wildcard_star(s, x, y));
-	if (s->cmp[x] == '?')
-		return (wildcard_question(s, x, y));
-	if (s->cmp[x] == '[' && is_close_bracket(s->cmp, x))
-		return (wildcard_bracket(s, x, y));
-	if (s->cmp[x] == '"' || s->cmp[x] == '\'')
-		return (quote_char(s, x, y, s->cmp[x]));
+	if (!is_escaped(s->cmp, x, 0))
+	{
+		//ft_printf("str->%s index->%d, char->%c, file->%s\n", s->cmp, x, s->cmp[x], s->file);
+		if (s->cmp[x] == '*')
+			return (wildcard_star(s, x, y));
+		if (s->cmp[x] == '?')
+			return (wildcard_question(s, x, y));
+		if (s->cmp[x] == '[' && is_close_bracket(s->cmp, x))
+			return (wildcard_bracket(s, x, y));
+		if (s->cmp[x] == '"' || s->cmp[x] == '\'')
+			return (quote_char(s, x, y, s->cmp[x]));
+	}
 	if (s->cmp[x])
 	{
 		if (!(s->file[y]))

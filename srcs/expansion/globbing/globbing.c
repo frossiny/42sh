@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 13:25:26 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/06 18:22:42 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/18 19:30:46 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,13 @@ int			replace_globbing(t_token *token)
 		token_next = token->next;
 		if (tok_is_word(token) && is_glob_str(token->content))
 		{
+			//ft_printf("token->%s, %p, %p\n", token->content, token, token_next);
 			set_glob(&glob, token);
 			dir_globbing(&glob, glob.list, glob.root
 				? ft_strdup("/") : ft_strdup("./"));
 			token->is_glob_sub = glob.nb_file;
 			free_globbing(glob.list);
+			//ft_printf("token->%s, %p, %p\n", token->content, token, token_next);
 		}
 		token = token_next;
 	}
