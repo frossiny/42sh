@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 06:37:24 by pcharrie          #+#    #+#             */
-/*   Updated: 2019/11/15 21:36:59 by pcharrie         ###   ########.fr       */
+/*   Updated: 2019/11/19 04:37:37 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	fc_exec_tab(t_fc_vars *fc)
 {
 	int i;
 
-	if (!(g_fc_tab = ft_2dstrnew(fc->tab_len)))
+	if (!fc->tab || !(g_fc_tab = ft_2dstrnew(fc->tab_len)))
 		return ;
 	i = 0;
 	while (fc->tab[i])

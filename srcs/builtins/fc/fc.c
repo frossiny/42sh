@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 17:13:15 by pcharrie          #+#    #+#             */
-/*   Updated: 2019/11/15 21:37:27 by pcharrie         ###   ########.fr       */
+/*   Updated: 2019/11/19 04:27:24 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	fc_vars_init(t_fc_vars *fc)
 	fc->rm = 0;
 	fc->rv = 0;
 	fc->editor = NULL;
+	fc->ed_args = NULL;
+	fc->s_cmd = NULL;
 	fc->i = 0;
 	fc->tab_len = 0;
 	fc->tab = NULL;
@@ -37,7 +39,11 @@ void	fc_vars_init(t_fc_vars *fc)
 void	fc_proceed(t_fc_vars *fc)
 {
 	if (fc->exec)
+	{
+		if (fc->s_cmd)
+			fc_set_exec_cmd(fc);
 		fc_exec_tab(fc);
+	}
 	else if (fc->list)
 		fc_list(fc);
 	else
@@ -73,6 +79,7 @@ void	fc_vars_del(t_fc_vars *fc)
 		ft_2dstrdel(&fc->ed_args);
 	if (fc->editor)
 		ft_strdel(&fc->editor);
+	ft_strdel(&fc->s_cmd);
 }
 
 int		b_fc(t_cmd *cmd, t_shell *shell)

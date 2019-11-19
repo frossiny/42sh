@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 01:34:27 by pcharrie          #+#    #+#             */
-/*   Updated: 2019/11/13 15:31:23 by pcharrie         ###   ########.fr       */
+/*   Updated: 2019/11/19 04:35:03 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,16 @@ int			fc_parse_options(t_cmd *cmd, t_fc_vars *fc)
 						return (-1);
 					}
 					break ;
+				}
+				else if (cmd->args[i][j] == 's')
+				{
+					fc->exec = 1;
+					if (cmd->args[i + 1] && !ft_isnumeric(cmd->args[i + 1]))
+					{
+						fc->s_cmd = ft_strdup(cmd->args[i + 1]);
+						++i;
+						break ;
+					}
 				}
 				else if (cmd->args[i][j] == 'l' || cmd->args[i][j] == 's')
 					cmd->args[i][j] == 'l' ? (fc->list = 1) : (fc->exec = 1);

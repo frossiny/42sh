@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:40:21 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/15 21:38:32 by pcharrie         ###   ########.fr       */
+/*   Updated: 2019/11/19 04:31:49 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct	t_fc_vars
 	int				rv;
 	char			*editor;
 	char			**ed_args;
+	char			*s_cmd;
 	int				i;
 	t_histo_lst_fc	*lst;
 	char			**tab;
@@ -88,5 +89,6 @@ void			fc_exec_file(void);
 int				fc_get_mode(t_fc_vars *fc);
 int				fc_edit_run_editor(t_fc_vars *fc);
 void			fc_edit_remove_file(void);
+void			fc_set_exec_cmd(t_fc_vars *fc);
 
 #endif
