@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/11/19 10:35:17 by lubenard         ###   ########.fr        #
+#    Updated: 2019/11/19 15:46:06 by lubenard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -125,6 +125,7 @@ FILES	=	shell.c											\
 			parser/types/name.c								\
 			parser/types/redirections.c						\
 			parser/types/operators.c						\
+			parser/types/jobs.c								\
 			parser/types/semic.c							\
 			reader/reader.c									\
 			reader/pipe.c									\
@@ -186,7 +187,10 @@ FILES	=	shell.c											\
 			variables/var_disp_env.c						\
 			variables/var_is_key_valid.c					\
 			variables/var_merge.c							\
-			variables/var_export.c
+			variables/var_export.c							\
+			jobcontrol/create_job.c							\
+			jobcontrol/delete_job.c							\
+			jobcontrol/destroy_all_jobs.c
 
 SRCS	=	$(addprefix $(SRCDIR)/, $(FILES))
 OBJS	=	$(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)

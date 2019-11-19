@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   jobs.c                                             :+:      :+:    :+:   */
+/*   create_job.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/18 17:49:24 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/19 14:37:26 by lubenard         ###   ########.fr       */
+/*   Created: 2019/11/19 13:58:29 by lubenard          #+#    #+#             */
+/*   Updated: 2019/11/19 14:49:32 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
 #include "shell.h"
-#include "jobcontrol.h"
 # include <stdio.h>
 
-int		par_type_jobs(t_parser *par)
+t_jobs	*new_jobs(t_anode *ast)
 {
-	(void)par;
-	printf("Je suis appele %s\n", par->tokens->content);
-	new_jobs(g_shell.ast);
-	par_next(par, 1);
-	return (1);
+	t_jobs *new_elem;
+
+	if (!(new_elem = malloc(sizeof(t_jobs))))
+		return (NULL);
+	new_elem->ast = ast;
+	new_elem->pid = 0;
+	new_elem->status = 0;
+	new_elem->prev = NULL; //basic connection, insert it at the right place after
+	new_elem->next = (g_shell.jobs) ? g_shell.jobs : NULL; //basic connection
+	g_shell.jobs = new_elem;
+	return (new_elem);
 }

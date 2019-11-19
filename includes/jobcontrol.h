@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   jobs.c                                             :+:      :+:    :+:   */
+/*   jobcontrol.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/18 17:49:24 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/19 14:37:26 by lubenard         ###   ########.fr       */
+/*   Created: 2019/11/19 14:08:11 by lubenard          #+#    #+#             */
+/*   Updated: 2019/11/19 14:30:09 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#ifndef JOBCONTROL_H
+# define JOBCONTROL_H
 #include "shell.h"
-#include "jobcontrol.h"
-# include <stdio.h>
 
-int		par_type_jobs(t_parser *par)
-{
-	(void)par;
-	printf("Je suis appele %s\n", par->tokens->content);
-	new_jobs(g_shell.ast);
-	par_next(par, 1);
-	return (1);
-}
+/*
+** If needed, you cam remove shell var from proto and use global instead
+*/
+
+t_jobs	*new_jobs(t_anode *ast);
+void	delete_job(t_shell *shell, size_t pid);
+void	destroy_all_jobs(t_shell *shell);
+
+#endif

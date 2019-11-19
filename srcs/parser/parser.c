@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 15:36:46 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/30 15:24:15 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/19 13:09:08 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ const static t_type_func	g_type_funcs[] =
 	{ TOKEN_PIPE, &par_type_redir },
 	{ TOKEN_AGGR, &par_type_redir },
 	{ TOKEN_VAR, &par_type_name },
+	{ TOKEN_JOBS, &par_type_jobs },
 	{ TOKEN_ASSIGNMENT, NULL },
 	{ TOKEN_NULL, NULL }
 };

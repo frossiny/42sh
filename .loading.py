@@ -6,7 +6,7 @@
 #    By: lubenard <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/06 18:18:56 by lubenard          #+#    #+#              #
-#    Updated: 2019/11/16 17:18:24 by lubenard         ###   ########.fr        #
+#    Updated: 2019/11/19 15:46:04 by lubenard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ import sys
 from time import sleep
 from time import time as now
 import os
-import subprocess
+from pathlib import Path
 
 class bcolors:
     HEADER = '\033[95m'
@@ -48,19 +48,20 @@ for path, subdirs, files in os.walk(root):
         items.append(os.path.join(path, name))
 
 if os.path.isfile("/tmp/makefile_42sh"):
-    result = subprocess.run(['cat', '/tmp/makefile_42sh'], stdout=subprocess.PIPE)
-    i = int(result.stdout.decode('utf-8'))
-    makefile_42sh = open("/tmp/makefile_42sh", 'w')
+    result = Path("/tmp/makefile_42sh").read_text().strip()
+    if result:
+        i = int(result)
+    else:
+        i = 0
 else:
-    i = -1
-    #print("File does not exist")
-    makefile_42sh = open("/tmp/makefile_42sh", 'w')
+    i = 0
 
-l = len(items) - 5
+l = len(items) - 1
 start_time = now()
 # Initial call to print 0% progress
 if i < l:
     printProgressBar(start_time, i + 1, l, length = 50, printEnd="")
+    makefile_42sh = open("/tmp/makefile_42sh", 'w')
     makefile_42sh.write(str(i + 1))
     makefile_42sh.close()
 else:

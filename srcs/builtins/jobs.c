@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:05:36 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/18 16:05:07 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/19 14:27:42 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ int		print_jobs(t_shell *shell)
 	size_t			counter;
 	t_jobs			*jobs;
 
-	counter = 0;
+	counter = 1;
 	jobs = shell->jobs;
 	while (jobs)
 	{
 		//ft_printf("command = %s\n", jobs->ast->cmd->argv[0]);
-		ft_printf("[%zu] \n", counter);
+		ft_printf("[%zu] command\n", counter++);
 		jobs = jobs->next;
 	}
 	return (0);

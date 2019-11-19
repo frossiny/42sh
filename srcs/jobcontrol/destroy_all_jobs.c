@@ -1,25 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   jobs.c                                             :+:      :+:    :+:   */
+/*   destroy_all_jobs.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/18 17:49:24 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/19 14:37:26 by lubenard         ###   ########.fr       */
+/*   Created: 2019/11/19 14:38:09 by lubenard          #+#    #+#             */
+/*   Updated: 2019/11/19 14:53:11 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
 #include "shell.h"
-#include "jobcontrol.h"
-# include <stdio.h>
 
-int		par_type_jobs(t_parser *par)
+void	destroy_all_jobs(t_shell *shell)
 {
-	(void)par;
-	printf("Je suis appele %s\n", par->tokens->content);
-	new_jobs(g_shell.ast);
-	par_next(par, 1);
-	return (1);
+	t_jobs *curr;
+
+	while (shell->jobs)
+	{
+		curr = shell->jobs;
+		shell->jobs = shell->jobs->next;
+		free(curr);
+	}
+	shell->jobs = NULL;
 }
