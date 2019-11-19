@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 12:19:22 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/05/15 14:49:07 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/18 11:53:50 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,12 @@ t_histo_lst			*new_link(char *str)
 {
 	t_histo_lst			*item;
 
-	if (!(item = malloc(sizeof(t_history))))
+	if (!(item = malloc(sizeof(t_histo_lst))))
 		return (NULL);
 	item->str = str;
+	item->index = 1;
 	item->len = ft_strlen(str);
 	item->next = NULL;
+	item->prev = NULL;
 	return (item);
 }

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 15:27:23 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/23 14:58:03 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/15 15:47:34 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,9 @@ int				handle_redirections(t_redirect *redir)
 	while (redir && redir->value)
 	{
 		if (redir->type == TOKEN_REDIRO)
+		{
 			redirect_output(redir);
+		}
 		else if (redir->type == TOKEN_REDIRI)
 		{
 			if (redir->append)

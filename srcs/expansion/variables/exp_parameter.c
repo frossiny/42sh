@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 15:10:45 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/18 16:35:54 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/19 14:51:08 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,6 @@ static void		clean_var(t_var *var)
 	if (var_is_key_valid(var->key, ft_strlen(var->key)))
 		return ;
 	var_delete(&var, var->key);
-}
-
-static t_var	*getvar(t_expansion *exp, size_t vsize)
-{
-	t_var	*var;
-	char	*tmp;
-
-	if (!(tmp = ft_strsub(exp->str, exp->i, vsize)))
-		return (NULL);
-	var = var_get(g_shell.vars, tmp);
-	free(tmp);
-	return (var);
 }
 
 static int		exp_noflag(t_expansion *exp, t_var *var, char *name)

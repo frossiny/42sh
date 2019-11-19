@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 13:25:26 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/06 18:22:42 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/09 16:35:14 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int			replace_globbing(t_token *token)
 {
 	t_token		*begin;
 	t_token		*token_next;
-	char		*tmp;
 	t_globbing	glob;
 
 	begin = token;

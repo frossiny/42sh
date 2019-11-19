@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/04 16:14:27 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/12 16:31:36 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/18 16:15:22 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static int	build_args_arr(char ***args, t_token *tokens)
 	return (argc);
 }
 
-int			build_args(t_cmd *cmd, t_var *vars)
+int			build_args(t_cmd *cmd)
 {
 	char	**argv;
 

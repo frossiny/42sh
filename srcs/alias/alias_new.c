@@ -6,7 +6,7 @@
 /*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 15:51:03 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/18 15:13:38 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/11/18 16:15:44 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ t_alias		*alias_malloc(char *key, char *value)
 
 int			add_alias_aft(t_alias *alias, char *key, char *value)
 {
-	t_alias *tmp;
 	t_alias *bef;
 
 	bef = NULL;

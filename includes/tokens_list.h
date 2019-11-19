@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/15 14:34:54 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/08 14:47:28 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/18 16:07:03 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static const t_ex_token	g_tokens_list[] =
 	{">", 1, TOKEN_REDIRO, ST_OPERATOR},
 	{";", 1, TOKEN_SEMI, ST_OPERATOR},
 	{" ", 1, TOKEN_IGN, ST_OPERATOR},
+	{"&", 1, TOKEN_JOBS, ST_OPERATOR},
 	{"\n", 1, TOKEN_IGN, ST_OPERATOR},
 	{"\v", 1, TOKEN_IGN, ST_OPERATOR},
 	{"\t", 1, TOKEN_IGN, ST_OPERATOR},
