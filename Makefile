@@ -6,11 +6,11 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/11/19 14:56:37 by frossiny         ###   ########.fr        #
+#    Updated: 2019/11/19 17:42:38 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC		=	gcc -g3 #-fsanitize=address
+CC		=	gcc -g3 -fsanitize=address
 CFLAGS	+=	-Wall -Wextra #-Werror
 
 SHELL	=	bash
@@ -230,7 +230,7 @@ $(NAME): $(OBJS)
 $(OBJDIR)/%.o: $(SRCDIR)/%.c Makefile
 	@mkdir -p $(@D)
 	@$(CC) $(CFLAGS) -I $(INCDIR) -I $(LIBFT)/$(INCDIR) -MMD -o $@ -c $<
-	#@python3 .loading.py $@
+	@python3 .loading.py $@
 
 clean:
 	@$(MAKE) -C $(LIBFT) clean
@@ -245,7 +245,6 @@ fclean: clean
 	@rm -f $(NAME)
 	@rm -rf $(OBJDIR)
 	@rm -rf $(NAME).dSYM
-	@rm -rf ~/.$(NAME)_history
 	@rm -rf /tmp/makefile_42sh
 
 re: fclean

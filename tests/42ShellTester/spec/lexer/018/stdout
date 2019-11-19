@@ -1,3 +1,3 @@
-expected_to match_regex 'pospos\$okok\"pos\"'
+expected_to match_eq 'pospos$okok"pos"'
 expected_to match_regex "^0$"
 expected_to have_nb_of_lines 3
