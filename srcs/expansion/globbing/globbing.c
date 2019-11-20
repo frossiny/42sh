@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   globbing.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 17:28:24 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/20 15:19:32 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/11/20 15:49:36 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ int			replace_globbing(t_token *token, t_token **next)
 	*next = token->next;
 	if (!(token->content))
 		return (0);
-	//ft_printf("token->%s, %p, %p\n", token->content, token, *next);
+	glob.nb_file = 0;
+	ft_printf("token->%s, %p, %p\n", token->content, token, *next);
 	if (tok_is_word(token) && is_glob_str(token->content))
 	{
 		set_glob(&glob, token);

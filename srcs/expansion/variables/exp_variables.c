@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 15:42:26 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/18 14:24:53 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/20 15:53:42 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int			exp_variables(t_token *token)
 	if (!token || !token->content)
 		return (0);
 	exp_set_struct(&exp, token->content);
+	exp.isquote = 1;
 	if (!exp_var_loop(&exp))
 		return (0);
 	tok_replace(token, exp.new ? exp.new : ft_strdup(""));
