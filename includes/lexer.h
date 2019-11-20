@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 11:23:56 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/08 14:35:52 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/20 17:57:00 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int			tok_is_word(t_token *token);
 int			tok_is_redirection(t_token *token);
 int			tok_is_varexp(t_token *token);
 void		tok_replace(t_token *token, char *str);
+void		tok_free(t_token *token);
 int			lex_is_expansion(t_lexer *lex);
 size_t		lex_get_expansion(t_lexer *lex);
 t_exp_tok	*lex_new_exp(t_lexer *lexer, const char *op);

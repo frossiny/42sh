@@ -8,10 +8,11 @@
 
 run_verb_match_eq()
 {
-  if [ `grep ${EXPECTED_TO_ARGS[0]} ${RESPONSE}` == "${EXPECTED_TO_ARGS[0]}" ]
-  then
-    return 0
-  else
-    return 1
-  fi
+	while IFS= read -r line; do
+		if [ $line == ${EXPECTED_TO_ARGS[0]} ]
+		then
+			return 0
+		fi
+	done < ${RESPONSE}
+	return 1
 }

@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/11/20 15:01:47 by frossiny         ###   ########.fr        #
+#    Updated: 2019/11/20 17:56:53 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -123,6 +123,7 @@ FILES	=	shell.c											\
 			lexer/tokens/tok_push.c							\
 			lexer/tokens/tok_replace.c						\
 			lexer/tokens/tok_is_varexp.c					\
+			lexer/tokens/tok_free.c							\
 			lexer/states/general.c							\
 			lexer/states/quotes.c							\
 			lexer/states/comment.c							\
