@@ -6,7 +6,7 @@
 /*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:40:24 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/04 14:38:32 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/11/09 16:31:02 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int			find_builtin(char *arg, size_t *find)
 
 int			b_type(t_cmd *cmd, t_shell *shell)
 {
-	size_t	i;
+	int		i;
 	size_t	find;
 
 	find = 0;

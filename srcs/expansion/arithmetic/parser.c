@@ -6,7 +6,7 @@
 /*   By: alagroy- <alagroy-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 18:45:57 by alagroy-          #+#    #+#             */
-/*   Updated: 2019/11/02 19:04:14 by alagroy-         ###   ########.fr       */
+/*   Updated: 2019/11/14 10:33:47 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int		parse_aetoken(t_list *token_list)
 	{
 		j = -1;
 		while (++j < NBR_TYPE)
-			if (((t_ae_token *)tmp->content)->type == j)
+			if ((int)((t_ae_token *)tmp->content)->type == j)
 				break ;
 		if (j < NBR_TYPE)
 			state = g_ae_parse_tab[state][j];

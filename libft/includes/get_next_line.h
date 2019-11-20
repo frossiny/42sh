@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 13:45:44 by frossiny          #+#    #+#             */
-/*   Updated: 2019/04/04 17:25:02 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/10/31 15:11:21 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 
 # ifndef BUFF_SIZE
 #  define BUFF_SIZE	2048
+# endif
+
+# ifndef OPEN_MAX
+#  define OPEN_MAX 256
 # endif
 
 # include "libft.h"

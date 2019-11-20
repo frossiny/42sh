@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   jobs.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/06 12:18:44 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/31 15:03:20 by lubenard         ###   ########.fr       */
+/*   Created: 2019/11/18 17:49:24 by lubenard          #+#    #+#             */
+/*   Updated: 2019/11/18 18:48:42 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "parser.h"
+#include "lexer.h"
+# include <stdio.h>
 
-void	ft_bzero(void *s, size_t n)
+int		par_type_jobs(t_parser *par)
 {
-	char		*str;
-
-	if (n <= 0)
-		return ;
-	str = (char *)s;
-	while (n--)
-		*str++ = '\0';
+	(void)par;
+	printf("Je suis appele %s\n", par->tokens->content);
+	par_next(par, 1);
+	return (1);
 }

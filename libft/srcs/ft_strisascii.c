@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ft_strisascii.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/06 12:18:44 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/31 15:03:20 by lubenard         ###   ########.fr       */
+/*   Created: 2019/11/13 18:06:47 by lubenard          #+#    #+#             */
+/*   Updated: 2019/11/13 18:08:21 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_bzero(void *s, size_t n)
+int		ft_strisascii(char *str)
 {
-	char		*str;
-
-	if (n <= 0)
-		return ;
-	str = (char *)s;
-	while (n--)
-		*str++ = '\0';
+	while (*str)
+	{
+		if (!ft_isascii(*str))
+			return (0);
+		str++;
+	}
+	return (1);
 }

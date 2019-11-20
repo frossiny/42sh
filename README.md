@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.com/frossiny/42sh.svg?token=GMLTFAz14akzGAbryz21&branch=dev_lubenard)](https://travis-ci.com/frossiny/42sh)
 
 **References:**
 
