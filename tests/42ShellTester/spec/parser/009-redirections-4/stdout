@@ -1,0 +1,1 @@
+expected_to create_file ${GLOBAL_TOKEN}_FILE match_regex ${GLOBAL_TOKEN}
