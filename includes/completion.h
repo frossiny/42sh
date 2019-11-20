@@ -6,7 +6,7 @@
 /*   By: alagroy- <alagroy-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 15:47:31 by alagroy-          #+#    #+#             */
-/*   Updated: 2019/11/18 19:19:20 by alagroy-         ###   ########.fr       */
+/*   Updated: 2019/11/20 16:34:35 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,7 @@ t_list					*compl_var(char *compl, t_shell *shell, int *len);
 t_list					*find_file(char *path, char *file);
 void					disp_compl(t_cursor_pos *pos, char **str, t_list *list,
 						int len);
+t_list					*compl_alias_builtins(t_list *compl_lst, char *compl,
+						t_shell *shell);
 
 #endif
