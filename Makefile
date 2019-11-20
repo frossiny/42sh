@@ -6,11 +6,11 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/11/19 10:35:17 by lubenard         ###   ########.fr        #
+#    Updated: 2019/11/20 19:30:16 by alagroy-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC		=	clang #-fsanitize=address
+CC		=	clang -fsanitize=address
 CFLAGS	+=	-Wall -Werror -Wextra -g3
 
 SHELL	=	bash
@@ -221,7 +221,7 @@ $(NAME): $(OBJS)
 $(OBJDIR)/%.o: $(SRCDIR)/%.c Makefile
 	@mkdir -p $(@D)
 	@$(CC) $(CFLAGS) -I $(INCDIR) -I $(LIBFT)/$(INCDIR) -MMD -o $@ -c $<
-	@python3 .loading.py $@
+	#@python3 .loading.py $@
 
 clean:
 	@$(MAKE) -C $(LIBFT) clean

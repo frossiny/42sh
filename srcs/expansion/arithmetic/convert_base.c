@@ -6,7 +6,7 @@
 /*   By: alagroy- <alagroy-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 18:45:05 by alagroy-          #+#    #+#             */
-/*   Updated: 2019/11/09 16:34:47 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/20 19:32:27 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,33 @@
 
 extern t_shell	*g_shell;
 
+/*static char	*replace_ae_var(char *str)
+{
+	int		i;
+	int		j;
+	char	*sub;
+
+	i = -1;
+	while (str[++i])
+	{
+		j = 0;
+		while (str[i + ++j - 1])
+		{
+			sub = ft_strsub(str, i, j);
+			if (sub && g_shell->vars && var_get_value(g_shell->vars, "PATH"))
+			{
+				str = ft_strdelpart(str, i, j);
+				str = ft_insert_str(str, var_get_value(g_shell->vars, sub), i);
+				ft_strdel(&sub);
+				i += j;
+				break ;
+			}
+			ft_strdel(&sub);
+		}
+	}
+	return (str);
+}
+*/
 static int	parse_base(char *str)
 {
 	int		i;
@@ -30,10 +57,11 @@ static int	parse_base(char *str)
 	len = 2;
 	while (ft_isdigit(str[++i]) || ft_isalpha(str[i]))
 	{
-		if ((hex && ft_isalpha(str[i]) && ((str[i] > 'F' && str[i] < 'A')
-					|| (str[i] > 'f' && str[i] < 'a'))) || ft_isalpha(str[i]))
+		if ((hex && ft_isalpha(str[i]) && !((str[i] <= 'F' && str[i] >= 'A')
+					|| (str[i] <= 'f' && str[i] >= 'a'))))
 			return (0);
-		if (!hex && ft_isdigit(str[i]) && str[i] > '7')
+		if (!hex && ((ft_isdigit(str[i]) && str[i] > '7')
+					|| ft_isalpha(str[i])))
 			return (0);
 		len++;
 	}
@@ -63,24 +91,8 @@ char		*ae_base10(char *str)
 {
 	int		i;
 
-/*	i = -1;
-	while (str[++i])
-	{
-		j = -1;
-		while (str[i + ++j])
-		{
-			sub = ft_strsub(str, i, j);
-			if (sub && var_get(g_shell->vars, sub))
-			{
-				str = var_ae_replace(str, i, j);
-				ft_strdel(&sub);
-				i += j;
-				break ;
-			}
-			ft_strdel(&sub);
-		}
-	}
-*/	i = -1;
+	i = -1;
+	//str = replace_ae_var(str);
 	while (str[++i])
 	{
 		if (str[i] == '0' && (i == 0 || !ft_isdigit(str[i - 1])))
