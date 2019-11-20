@@ -6,7 +6,7 @@
 /*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 16:48:56 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/18 18:42:51 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/11/20 15:26:52 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ int			wildcard_bracket(t_compare *s, int x, int y)
 	end = x + 1;
 	while (s->cmp[end] && (s->cmp[end] != ']'
 			|| (s->cmp[end] == ']' && x + 1 == end)
-			|| (end == x + 2 && s->cmp[end - 1] == '!' && s->cmp[end] == ']')) && !is_escaped(s->cmp, end, 0))
+			|| (end == x + 2 && s->cmp[end - 1] == '!' && s->cmp[end] == ']'))
+			&& !is_escaped(s->cmp, end, 0))
 		end++;
 	if (!s->cmp[end])
 		return (0);

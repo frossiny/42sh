@@ -6,12 +6,12 @@
 #    By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/19 17:28:40 by vsaltel           #+#    #+#              #
-#    Updated: 2019/11/19 17:29:39 by vsaltel          ###   ########.fr        #
+#    Updated: 2019/11/19 17:45:40 by vsaltel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC		=	clang #-fsanitize=address
-CFLAGS	+=	-Wall -Werror -Wextra -g3
+CC		=	gcc -g3 -fsanitize=address
+CFLAGS	+=	-Wall -Werror -Wextra
 
 SHELL	=	bash
 

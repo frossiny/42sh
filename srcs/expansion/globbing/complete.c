@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 13:56:44 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/18 19:30:51 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/11/20 15:24:36 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ int			standard_char(t_compare *s, int x, int y)
 	int x_beg;
 
 	x_beg = x;
-	while (s->cmp[x] && s->file[y] && (!is_glob_char(s->cmp[x]) || x_beg == x || is_escaped(s->cmp, x, 0)) && s->cmp[x] != '"')
+	while (s->cmp[x] && s->file[y] &&
+		(!is_glob_char(s->cmp[x]) || x_beg == x || is_escaped(s->cmp, x, 0))
+		&& s->cmp[x] != '"')
 	{
 		if (s->cmp[x] != s->file[y])
 			return (0);
