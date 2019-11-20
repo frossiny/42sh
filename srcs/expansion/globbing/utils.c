@@ -6,12 +6,13 @@
 /*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 13:37:41 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/10/29 18:34:22 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/11/20 15:57:09 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "expansion.h"
+#include "utils.h"
 
 void			strswitch(char **dest, char *new)
 {
@@ -35,7 +36,7 @@ int				is_glob_str(char *str)
 
 	i = -1;
 	while (str[++i])
-		if (is_glob_char(str[i]))
+		if (is_glob_char(str[i]) && !is_escaped(str, i, 0))
 			return (1);
 	return (0);
 }

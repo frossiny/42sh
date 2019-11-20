@@ -6,7 +6,7 @@
 /*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 16:48:56 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/20 15:26:52 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/11/20 17:02:32 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@ int			wildcard_bracket_normal(t_compare *s, int x, int y, int end)
 {
 	int	i;
 
-	while (++x != end)
+	while (++x < end)
 	{
+		if (s->cmp[x] == '\\')
+			x++;
 		if (s->cmp[x + 1] == '-' && s->cmp[x + 2] != ']'
 				&& s->cmp[x] <= s->cmp[x + 2])
 		{
@@ -32,9 +34,8 @@ int			wildcard_bracket_normal(t_compare *s, int x, int y, int end)
 			}
 			x = x + 2;
 		}
-		else if (s->cmp[x] == s->file[y])
-			if (next_char(s, end + 1, y + 1))
-				return (1);
+		else if (s->cmp[x] == s->file[y] && next_char(s, end + 1, y + 1))
+			return (1);
 	}
 	return (0);
 }
@@ -43,8 +44,10 @@ int			wildcard_bracket_inverse(t_compare *s, int x, int y, int end)
 {
 	int	i;
 
-	while (++x != end)
+	while (++x < end)
 	{
+		if (s->cmp[x] == '\\')
+			x++;
 		if (s->cmp[x + 1] == '-' && s->cmp[x + 2] != ']'
 				&& s->cmp[x] <= s->cmp[x + 2])
 		{
@@ -70,10 +73,9 @@ int			wildcard_bracket(t_compare *s, int x, int y)
 	if (!s->file[y])
 		return (0);
 	end = x + 1;
-	while (s->cmp[end] && (s->cmp[end] != ']'
+	while (s->cmp[end] && ((s->cmp[end] != ']' || is_escaped(s->cmp, end, 0))
 			|| (s->cmp[end] == ']' && x + 1 == end)
-			|| (end == x + 2 && s->cmp[end - 1] == '!' && s->cmp[end] == ']'))
-			&& !is_escaped(s->cmp, end, 0))
+			|| (end == x + 2 && s->cmp[end - 1] == '!' && s->cmp[end] == ']')))
 		end++;
 	if (!s->cmp[end])
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 13:56:44 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/20 15:24:36 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/11/20 17:15:25 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,14 @@ int			standard_char(t_compare *s, int x, int y)
 		(!is_glob_char(s->cmp[x]) || x_beg == x || is_escaped(s->cmp, x, 0))
 		&& s->cmp[x] != '"')
 	{
-		if (s->cmp[x] != s->file[y])
-			return (0);
+		if (!(s->cmp[x] == '\\') || is_escaped(s->cmp, x, 0))
+		{
+			//ft_printf("standard str->%s index->%d, char->%c, file->%s\n", s->cmp, x, s->cmp[x], s->file);
+			if (s->cmp[x] != s->file[y])
+				return (0);
+			y++;
+		}
 		x++;
-		y++;
 	}
 	return (next_char(s, x, y));
 }
