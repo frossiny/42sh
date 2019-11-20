@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 17:24:02 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/18 16:34:40 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/20 17:58:23 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef struct		s_compare
 	int						len_find;
 }					t_compare;
 
-int					expand(t_token *tokens);
+int					expand(t_token *tokens, int do_globbing);
 void				exp_set_struct(t_expansion *exp, char *content);
 void				exp_join(t_expansion *e, char *tmp, int noescape);
 
@@ -91,8 +91,7 @@ t_globbing_list		*create_globbing(char *str);
 
 void				add_token(t_globbing *glob, char *content);
 void				free_token(t_token *token);
-void				remove_first_token(t_token **token);
-void				remove_token(t_token *curr);
+void				remove_first_token(t_token *token);
 
 int					is_glob_char(char c);
 int					is_glob_str(char *str);

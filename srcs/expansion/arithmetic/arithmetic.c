@@ -6,7 +6,7 @@
 /*   By: alagroy- <alagroy-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 13:40:41 by alagroy-          #+#    #+#             */
-/*   Updated: 2019/11/08 17:19:05 by alagroy-         ###   ########.fr       */
+/*   Updated: 2019/11/19 17:54:39 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int			replace_ae_token(t_token *token)
 		return (1);
 	tmp.content = ft_strsub(token->content, beg + 3, end - beg - 3);
 	tmp.len = ft_strlen(tmp.content);
-	if (!(expand(&tmp)))
+	if (!(expand(&tmp, 0)))
 		return (0);
 	if (!(ae_process(&tmp)))
 		return (0);

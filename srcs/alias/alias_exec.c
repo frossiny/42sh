@@ -1,22 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shell.c                                            :+:      :+:    :+:   */
+/*   alias_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/21 12:05:59 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/20 19:04:14 by frossiny         ###   ########.fr       */
+/*   Created: 2019/11/18 15:55:33 by vsaltel           #+#    #+#             */
+/*   Updated: 2019/11/20 19:07:27 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "shell.h"
-#include "lexer.h"
-#include "parser.h"
-#include "ast.h"
 #include "alias.h"
-#include "hashtable.h"
+#include "shell.h"
+#include "structs.h"
+#include "lexer.h"
 
 static int		bslash_error(t_shell *shell, char **input, int ret)
 {
@@ -68,80 +65,43 @@ static int		not_closed_error(t_shell *shell, char **input, int ret)
 	return (0);
 }
 
-int		handle_input(t_shell *shell, char **input)
+static int		lexing(t_shell *shell, char **input)
 {
 	int			ret;
 
 	ret = 0;
+	alias_build_input(input, shell->lexer.tokens);
+	lexer_free(&(shell->lexer));
 	shell->lexer.size = 0;
 	while ((ret = lex(*input, &(shell->lexer))) < 1)
 	{
 		lexer_free(&(shell->lexer));
-		if (ret == -2)
-		{
-			if ((ret = not_closed_error(shell, input, ret)))
-				return (ret);
-		}
-		else if (ret == -3)
-		{
-			if ((ret = bslash_error(shell, input, ret)))
-				return (ret);
-		}
+		if (ret == -2 && (ret = not_closed_error(shell, input, ret)))
+			return (ret);
+		else if (ret == -3 && (ret = bslash_error(shell, input, ret)))
+			return (ret);
 		else
 			return (ret);
 	}
-	add_to_history(*input, &(g_shell.history));
-	alias_exec(shell, input);
-	if (!parse(shell->lexer.tokens))
-	{
-		lexer_free(&(shell->lexer));
-		return (1);
-	}
-	return (0);
-}
-
-static int	eval_exec(char **input)
-{
-	int		ret;
-
-	if (ft_strcmp(*input, "") == 0)
-	{
-		ft_strdel(input);
-		return (g_return);
-	}
-	if ((ret = handle_input(&g_shell, input)) == 0)
-	{
-		if (!input)
-			return (1);
-		ft_strdel(input);
-		build_ast(&g_shell);
-		g_shell.ast ? ret = reader(&g_shell, g_shell.ast) : 0;
-		lexer_free(&(g_shell.lexer));
-		destroy_ast(&g_shell);
-	}
-	else
-		ft_strdel(input);
 	return (ret);
 }
 
-int		shell(void)
+int				alias_exec(t_shell *shell, char **input)
 {
-	char	*input;
+	int			ret;
+	int			alias_ret;
+	t_string	*alias_hist;
 
-	while ((get_input(0, &input, &g_shell)) > 0)
+	ret = 0;
+	alias_hist = NULL;
+	alias_ret = alias_resolve(shell->lexer.tokens, shell->alias, &alias_hist);
+	while (alias_ret > 0)
 	{
-		if (!input)
-			g_return = 1;
-		else
-			g_return = eval_exec(&input);
+		if ((ret = lexing(shell, input)))
+			return (ret);
+		alias_ret = alias_resolve(shell->lexer.tokens, shell->alias,
+															&alias_hist);
 	}
-	if (input)
-		ft_strdel(&input);
-	isatty(0) ? ft_putchar('\n') : 0;
-	var_destroy(&(g_shell.vars));
-	alias_free_all(&(g_shell.alias));
-	ht_delete(g_shell);
-	free_termcaps(&g_shell);
-	free(g_pwd);
-	return (g_return);
+	free_alias_history(&alias_hist);
+	return (0);
 }
