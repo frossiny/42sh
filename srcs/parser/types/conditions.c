@@ -1,22 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tok_is_varexp.c                                    :+:      :+:    :+:   */
+/*   conditions.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/29 16:23:35 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/20 15:03:29 by frossiny         ###   ########.fr       */
+/*   Created: 2019/11/20 14:59:32 by frossiny          #+#    #+#             */
+/*   Updated: 2019/11/20 15:00:44 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "parser.h"
 #include "lexer.h"
 
-int		tok_is_varexp(t_token *token)
+int		par_type_conditions(t_parser *par)
 {
-	if (!token)
+	if (par->i == 0)
 		return (0);
-	if (token->type == TOKEN_VAR)
-		return (1);
-	return (0);
+	if (!tok_is_word(par->tokens->next) && !tok_is_varexp(par->tokens->next))
+	{
+		par_next(par, 1);
+		return (0);
+	}
+	par_next(par, 1);
+	return (1);
 }

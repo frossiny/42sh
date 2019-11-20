@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/11/19 17:42:38 by frossiny         ###   ########.fr        #
+#    Updated: 2019/11/20 15:01:47 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -135,6 +135,7 @@ FILES	=	shell.c											\
 			parser/types/redirections.c						\
 			parser/types/operators.c						\
 			parser/types/semic.c							\
+			parser/types/conditions.c						\
 			reader/reader.c									\
 			reader/pipe.c									\
 			reader/pipeline.c								\
@@ -230,7 +231,7 @@ $(NAME): $(OBJS)
 $(OBJDIR)/%.o: $(SRCDIR)/%.c Makefile
 	@mkdir -p $(@D)
 	@$(CC) $(CFLAGS) -I $(INCDIR) -I $(LIBFT)/$(INCDIR) -MMD -o $@ -c $<
-	@python3 .loading.py $@
+	#@python3 .loading.py $@
 
 clean:
 	@$(MAKE) -C $(LIBFT) clean

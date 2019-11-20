@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 15:36:46 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/30 15:24:15 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/20 15:01:18 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ const static t_type_func	g_type_funcs[] =
 	{ TOKEN_NAME, &par_type_name },
 	{ TOKEN_IO_FD, &par_type_io_fd },
 	{ TOKEN_SEMI, &par_type_semic },
-	{ TOKEN_AND, &par_type_operator },
-	{ TOKEN_OR, &par_type_operator },
+	{ TOKEN_AND, &par_type_conditions },
+	{ TOKEN_OR, &par_type_conditions },
 	{ TOKEN_REDIRI, &par_type_redir },
 	{ TOKEN_REDIRO, &par_type_redir },
 	{ TOKEN_PIPE, &par_type_redir },
