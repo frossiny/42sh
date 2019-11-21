@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 14:23:53 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/19 18:56:50 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/21 17:41:55 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -263,16 +263,15 @@ typedef struct		s_builtin
 
 /*
 ** Jobs linked list
-**
-** status: 0->suspended, 1 -> running
 */
 
 typedef struct		s_jobs_lst
 {
-	t_anode				*ast;
-	int					pid;
 	int					job_number;
-	size_t				status;
+	int					pid;
+	char				current;
+	char				*state;
+	t_anode				*command;
 	struct s_jobs_lst	*prev;
 	struct s_jobs_lst	*next;
 }					t_jobs_lst;
@@ -282,6 +281,7 @@ typedef struct		s_jobs
 	size_t			is_jobs;
 	size_t			index;
 	t_jobs_lst		*lst;
+	t_jobs_lst		*last_job;
 }					t_jobs;
 
 /*

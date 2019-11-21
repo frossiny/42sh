@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:26:37 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/19 18:02:46 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/21 17:42:55 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,15 @@ static int	start_process(char *file, t_cmd *cmd, char **env)
 	if (!get_here_doc(cmd->redir, &g_shell))
 		return (EXIT_FAILURE);
 	g_child = fork();
-	if (g_shell.jobs && g_shell.jobs->is_jobs)
-		g_shell.jobs->lst->pid = g_child; //getting procsssus id before execution
-	if (g_child == 0)
+	if (g_shell.jobs && g_shell.jobs->is_jobs && g_child)
 	{
+		printf("g_child = %d ira dans l'id %d\n", g_child, g_shell.jobs->last_job->job_number);
+		g_shell.jobs->last_job->pid = g_child; //to put after the exec
+	}
+	if (!g_child)
+	{
+		if (g_shell.jobs && g_shell.jobs->is_jobs) // FOR TEST ONLY
+			exit(EXIT_SUCCESS); // FOR TEST ONLY
 		unregister_signals();
 		g_shell.able_termcaps ? restore_shell(g_shell.prev_term) : 0;
 		handle_redirections(cmd->redir);
