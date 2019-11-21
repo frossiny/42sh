@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 17:24:02 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/21 15:34:35 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/21 16:45:52 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int					exp_equ(t_expansion *exp, t_var *var, \
 int					exp_minus(t_expansion *exp, t_var *var, \
 												char *word, char *name);
 
+int					replace_globbing(t_token *token);
 int					dir_globbing(t_globbing *glob,
 						t_globbing_list *list, char *path);
 int					complete_str(char *cmp, char *file);

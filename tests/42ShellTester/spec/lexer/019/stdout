@@ -1,1 +1,1 @@
-expected_to match_eq 'pospos\\$okok\"pos\"'
+expected_to match_eq 'pospos$okok"pos"'

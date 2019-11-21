@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/11/21 15:50:28 by frossiny         ###   ########.fr        #
+#    Updated: 2019/11/21 17:26:15 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -262,7 +262,7 @@ check_error:
 	@grep -rn "printf" srcs | grep -v "ft_"
 	@grep -rn "stdio.h" srcs
 
-valgrind:
+valgrind: all
 	valgrind --leak-check=full --show-leak-kinds=all --suppressions="${PWD}/valgrind.supp" "${PWD}/${NAME}"
 
 tests: all

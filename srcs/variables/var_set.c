@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 17:50:15 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/12 16:05:54 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/21 17:38:44 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,9 @@ int		var_set(t_var **vars, char *key, char *value, int export)
 		}
 	}
 	else
+	{
+		export ? curr->export = 1 : 0;
 		return (var_replace(curr, value));
+	}
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 13:23:37 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/21 15:24:42 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/21 17:29:57 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_cmd			*create_cmd(t_token *exe)
 	if (!(cmd = (t_cmd *)malloc(sizeof(t_cmd))))
 		return (NULL);
 	parse_assignements(cmd, &exe);
-	cmd->exe = exe;
+	cmd->exe = exe && exe->type == TOKEN_NAME ? exe : NULL;
 	cmd->argc = -1;
 	cmd->args = NULL;
 	cmd->redir = NULL;

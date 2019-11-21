@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 17:28:24 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/20 17:52:27 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/11/21 16:45:21 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,12 @@ void		set_glob(t_globbing *glob, t_token *token)
 	glob->list = create_globbing(pull_multi_occ(token->content, '*'));
 }
 
-int			replace_globbing(t_token *token, t_token **next)
+int			replace_globbing(t_token *token)
 {
 	t_globbing	glob;
 
 	if (!token || !(token->content))
 		return (0);
-	*next = token->next;
 	if (!(token->content))
 		return (0);
 	glob.nb_file = 0;
