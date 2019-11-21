@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_job.c                                       :+:      :+:    :+:   */
+/*   job_create.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/19 13:58:29 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/19 19:07:57 by lubenard         ###   ########.fr       */
+/*   Created: 2019/11/21 10:48:31 by lubenard          #+#    #+#             */
+/*   Updated: 2019/11/21 10:49:53 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void		jobs_insert(t_jobs_lst *job)
 	}
 }
 
-t_jobs_lst	*new_job(t_anode *ast)
+t_jobs_lst	*job_new(t_anode *ast)
 {
 	t_jobs_lst *new_elem;
 

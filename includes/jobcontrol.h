@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 14:08:11 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/19 19:03:21 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/21 10:50:52 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 ** If needed, you cam remove shell var from proto and use global instead
 */
 
-t_jobs	*new_job(t_anode *ast);
-void	delete_job(t_shell *shell, size_t pid);
-void	destroy_all_jobs(t_shell *shell);
+t_jobs	*job_new(t_anode *ast);
+void	job_delete(t_shell *shell, size_t pid);
+void	job_destroy_all(t_shell *shell);
 
 #endif

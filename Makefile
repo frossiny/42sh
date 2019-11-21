@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/11/19 15:46:06 by lubenard         ###   ########.fr        #
+#    Updated: 2019/11/21 10:50:26 by lubenard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -188,9 +188,9 @@ FILES	=	shell.c											\
 			variables/var_is_key_valid.c					\
 			variables/var_merge.c							\
 			variables/var_export.c							\
-			jobcontrol/create_job.c							\
-			jobcontrol/delete_job.c							\
-			jobcontrol/destroy_all_jobs.c
+			jobcontrol/job_create.c							\
+			jobcontrol/job_delete.c							\
+			jobcontrol/job_destroy_all.c
 
 SRCS	=	$(addprefix $(SRCDIR)/, $(FILES))
 OBJS	=	$(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)

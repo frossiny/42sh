@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   destroy_all_jobs.c                                 :+:      :+:    :+:   */
+/*   jobs_destroy_all.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/19 14:38:09 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/19 16:29:00 by lubenard         ###   ########.fr       */
+/*   Created: 2019/11/21 10:49:02 by lubenard          #+#    #+#             */
+/*   Updated: 2019/11/21 10:49:18 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void	destroy_all_jobs(t_shell *shell)
+void	jobs_destroy_all(t_shell *shell)
 {
 	t_jobs_lst *curr;
 
