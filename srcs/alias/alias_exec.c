@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 15:55:33 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/20 19:07:27 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/21 12:34:38 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,11 @@ static int		lexing(t_shell *shell, char **input)
 	while ((ret = lex(*input, &(shell->lexer))) < 1)
 	{
 		lexer_free(&(shell->lexer));
-		if (ret == -2 && (ret = not_closed_error(shell, input, ret)))
+		if (ret > -2)
+			return (ret);
+		else if (ret == -2 && (ret = not_closed_error(shell, input, ret)))
 			return (ret);
 		else if (ret == -3 && (ret = bslash_error(shell, input, ret)))
-			return (ret);
-		else
 			return (ret);
 	}
 	return (ret);

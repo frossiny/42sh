@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:05:59 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/20 19:04:14 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/21 12:34:27 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,20 +77,14 @@ int		handle_input(t_shell *shell, char **input)
 	while ((ret = lex(*input, &(shell->lexer))) < 1)
 	{
 		lexer_free(&(shell->lexer));
-		if (ret == -2)
-		{
-			if ((ret = not_closed_error(shell, input, ret)))
-				return (ret);
-		}
-		else if (ret == -3)
-		{
-			if ((ret = bslash_error(shell, input, ret)))
-				return (ret);
-		}
-		else
+		if (ret > -2)
+			return (ret);
+		else if (ret == -2 && (ret = not_closed_error(shell, input, ret)))
+			return (ret);
+		else if (ret == -3 && (ret = bslash_error(shell, input, ret)))
 			return (ret);
 	}
-	add_to_history(*input, &(g_shell.history));
+	add_to_history(*input, &(shell->history));
 	alias_exec(shell, input);
 	if (!parse(shell->lexer.tokens))
 	{
