@@ -6,11 +6,11 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/11/20 17:59:21 by frossiny         ###   ########.fr        #
+#    Updated: 2019/11/21 15:50:28 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC		=	gcc -g3 -fsanitize=address
+CC		=	gcc -g3 #-fsanitize=address
 CFLAGS	+=	-Wall -Wextra #-Werror
 
 SHELL	=	bash
@@ -85,6 +85,7 @@ FILES	=	shell.c											\
 			expansion/variables/exp_get_var.c				\
 			expansion/variables/exp_get_word.c				\
 			expansion/variables/exp_del_pattern.c			\
+			expansion/variables/exp_tok_clean.c				\
 			expansion/arithmetic/comp.c						\
 			expansion/arithmetic/convert_base.c				\
 			expansion/arithmetic/eval.c						\
@@ -260,6 +261,9 @@ norm:
 check_error:
 	@grep -rn "printf" srcs | grep -v "ft_"
 	@grep -rn "stdio.h" srcs
+
+valgrind:
+	valgrind --leak-check=full --show-leak-kinds=all --suppressions="${PWD}/valgrind.supp" "${PWD}/${NAME}"
 
 tests: all
 	./tests/42ShellTester/42ShellTester.sh "$(PWD)/$(NAME)" ${TARGS}

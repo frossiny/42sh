@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 17:24:02 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/20 17:58:23 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/21 15:34:35 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef struct		s_compare
 	int						len_find;
 }					t_compare;
 
-int					expand(t_token *tokens, int do_globbing);
+int					expand(t_token *tokens, int do_globbing, t_cmd *cmd);
 void				exp_set_struct(t_expansion *exp, char *content);
 void				exp_join(t_expansion *e, char *tmp, int noescape);
 
@@ -65,6 +65,7 @@ int					exp_simple_var(t_expansion *exp);
 int					exp_parameter(t_expansion *exp);
 char				*exp_get_word(t_expansion *exp);
 int					exp_del_pattern(t_expansion *exp, t_var *var);
+void				exp_tok_clean(t_token *token);
 
 char				*exp_par_len(t_expansion *exp);
 int					exp_par_colon(t_expansion *exp, t_var *var, char *name);

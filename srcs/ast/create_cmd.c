@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 13:23:37 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/20 17:58:28 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/21 15:24:42 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void		parse_assignements(t_cmd *cmd, t_token **exe)
 	cmd->tenv = NULL;
 	while (*exe && (*exe)->type == TOKEN_ASSIGNMENT)
 	{
-		if (!expand(*exe, 1))
+		if (!expand(*exe, 1, NULL))
 			break ;
 		if (!(tmp = ft_strsplit((*exe)->content, '=')))
 			break ;

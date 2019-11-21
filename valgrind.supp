@@ -1,0 +1,89 @@
+# OS X 10.8 isn't supported, has a bunch of 'leaks' in the loader
+{
+   osx_1080_loader_false_positive_1
+   Memcheck:Leak
+   ...
+   fun:_ZN11ImageLoader23recursiveInitializationERKNS_11LinkContextEjRNS_21InitializerTimingListE
+   ...
+}
+{
+   osx_1080_loader_false_positive_2
+   Memcheck:Leak
+   ...
+   fun:_ZN16ImageLoaderMachO16doInitializationERKN11ImageLoader11LinkContextE
+   ...
+}
+{
+   osx_1080_loader_false_positive_3
+   Memcheck:Leak
+   ...
+   fun:map_images_nolock
+   ...
+}
+{
+   osx_1080_loader_false_positive_4
+   Memcheck:Leak
+   ...
+   fun:_objc_fetch_pthread_data
+   fun:_ZL27_fetchInitializingClassLista
+   fun:_class_initialize
+   fun:_class_initialize
+   fun:_class_initialize
+   fun:_class_initialize
+   fun:prepareForMethodLookup
+   fun:lookUpMethod
+   fun:objc_msgSend
+   fun:_libxpc_initializer
+   fun:libSystem_initializer
+}
+{
+   osx_weird_leak
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc_zone_malloc
+   fun:_ZL12_NXMapRehashP11_NXMapTable
+   fun:NXMapInsert
+   fun:_ZL18__sel_registerNamePKcbb
+   fun:_ZL15fixupMethodListP13method_list_tbb
+   fun:_ZL18prepareMethodListsP10objc_classPP13method_list_tibb
+   fun:_ZL24realizeClassWithoutSwiftP10objc_class
+   fun:_ZL24realizeClassWithoutSwiftP10objc_class
+   fun:_ZL24realizeClassWithoutSwiftP10objc_class
+   fun:_ZL24realizeClassWithoutSwiftP10objc_class
+   fun:_ZL24realizeClassWithoutSwiftP10objc_class
+   fun:_read_images
+}
+{
+   osx_another_weird_leaks
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc_zone_calloc
+   fun:_NXHashRehashToCapacity
+   fun:NXHashInsert
+   fun:NXCreateMapTableFromZone
+   fun:NXCreateMapTable
+   fun:_ZL28unattachedCategoriesForClassP10objc_classb
+   fun:_ZL24realizeClassWithoutSwiftP10objc_class
+   fun:_ZL24realizeClassWithoutSwiftP10objc_class
+   fun:_ZL24realizeClassWithoutSwiftP10objc_class
+   fun:_ZL24realizeClassWithoutSwiftP10objc_class
+   fun:_ZL24realizeClassWithoutSwiftP10objc_class
+   fun:_read_images
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:tgetent
+   fun:termcaps_init
+   fun:shell_init
+   fun:main
+}
+{
+   name
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:_nc_doalloc
+}
