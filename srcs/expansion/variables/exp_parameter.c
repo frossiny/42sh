@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 15:10:45 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/25 10:36:05 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/25 11:32:19 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int				exp_parameter(t_expansion *exp)
 	t_var	*var;
 	char	*name;
 
-	if (!exp || !ft_strnequ(exp->str + exp->i, "${", 2))
+	if (!exp_parameter_parse(exp))
 		return (0);
 	if (exp->li > exp->i)
 		exp_join(exp, ft_strsub(exp->str, exp->li, exp->i - exp->li), 1);

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 17:24:02 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/25 10:28:23 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/25 11:32:45 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void				exp_set_struct(t_expansion *exp, char *content);
 void				exp_join(t_expansion *e, char *tmp, int noescape);
 t_token				*exp_del_empty_tokens(t_token *token, t_cmd *cmd);
 
+
 int					handle_home(t_token *token, t_var *vars);
 int					exp_remove_quotes(t_token *token);
 char				*strjoin_escape(char *s1, char *s2);
@@ -64,6 +65,7 @@ t_var				*exp_get_var(t_expansion *exp);
 char				*exp_get_varname(t_expansion *exp);
 int					exp_simple_var(t_expansion *exp);
 int					exp_parameter(t_expansion *exp);
+int					exp_parameter_parse(t_expansion *exp);
 char				*exp_get_word(t_expansion *exp);
 int					exp_del_pattern(t_expansion *exp, t_var *var);
 void				exp_tok_clean(t_token *token);

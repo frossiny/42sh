@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/11/25 11:20:51 by frossiny         ###   ########.fr        #
+#    Updated: 2019/11/25 11:34:22 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -79,6 +79,7 @@ FILES	=	shell.c											\
 			expansion/variables/exp_get_varname.c			\
 			expansion/variables/exp_simple_var.c			\
 			expansion/variables/exp_parameter.c				\
+			expansion/variables/exp_parameter_parse.c		\
 			expansion/variables/exp_par_len.c				\
 			expansion/variables/exp_par_colon.c				\
 			expansion/variables/exp_par_colon_op.c			\
