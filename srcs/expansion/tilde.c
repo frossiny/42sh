@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:49:15 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/14 19:01:10 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/25 16:53:36 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ static int	handle_home_spec(t_token *token, t_var *vars)
 	{
 		if (!(var = var_get(vars, token->content[1] == '+'
 					? "PWD" : "OLDPWD")))
-			return (0);
+			return (1);
 		if (!(path = ft_strjoin(var->value, token->content + 2)))
 			return (0);
 	}
 	else
-		return (0);
+		return (1);
 	free(token->content);
 	token->content = path;
 	return (1);
@@ -75,11 +75,11 @@ int			handle_home(t_token *token, t_var *vars)
 	else
 	{
 		if (!(pwd = getpwnam(token->content + 1)))
-			return (0);
+			return (1);
 		path = ft_strdup(pwd->pw_dir);
 	}
-	path = path ? path : ft_strdup("");
-	free(token->content);
-	token->content = path;
+	ft_printf("%s\n", path);
+	path = path ? path : ft_strdup("n->content");
+	path ? token->content = path : 0;
 	return (1);
 }
