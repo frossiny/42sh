@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 15:42:26 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/20 18:30:17 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/25 10:49:51 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,29 @@
 #include "expansion.h"
 #include "utils.h"
 
+static void	new_tok(t_expansion *exp)
+{
+	if (exp->i > exp->li)
+		exp_join(exp, ft_strsub(exp->str, exp->li, exp->i - exp->li), 1);
+	exp->li = exp->i;
+}
+
+static void	quote(t_expansion *exp)
+{
+	exp->isquote = !exp->isquote;
+	exp->i++;
+}
+
 static int	exp_var_loop(t_expansion *exp)
 {
 	while (exp->str[exp->i])
 	{
 		if (exp->str[exp->i] == '\'')
+			quote(exp);
+		else if (exp->str[exp->i] == '$' && !exp->isquote
+					&& !is_escaped(exp->str, exp->i, 0))
 		{
-			exp->isquote = !exp->isquote;
-			exp->i++;
-		}
-		else if (exp->str[exp->i] == '$' && !exp->isquote && !is_escaped(exp->str, exp->i, 0))
-		{
-			if (exp->i > exp->li)
-				exp_join(exp, ft_strsub(exp->str, exp->li, exp->i - exp->li), 1);
-			exp->li = exp->i;
+			new_tok(exp);
 			if (ft_strnequ(exp->str + exp->i, "${", 2))
 			{
 				if (!exp_parameter(exp))
@@ -45,8 +54,7 @@ static int	exp_var_loop(t_expansion *exp)
 		else
 			exp->i++;
 	}
-	if (exp->i > exp->li)
-		exp_join(exp, ft_strsub(exp->str, exp->li, exp->i - exp->li), 1);
+	new_tok(exp);
 	return (1);
 }
 

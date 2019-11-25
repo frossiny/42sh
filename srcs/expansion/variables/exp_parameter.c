@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 15:10:45 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/19 14:51:08 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/25 10:36:05 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 #include "shell.h"
 #include "variables.h"
 
-static void		clean_var(t_var *var)
+static void		clean_var(t_var *var, char *name)
 {
+	free(name);
 	if (!var)
 		return ;
 	if (var_is_key_valid(var->key, ft_strlen(var->key)))
@@ -64,7 +65,6 @@ int				exp_parameter(t_expansion *exp)
 		ret = exp_del_pattern(exp, var);
 	else
 		ret = exp_noflag(exp, var, name);
-	free(name);
-	clean_var(var);
+	clean_var(var, name);
 	return (ret);
 }

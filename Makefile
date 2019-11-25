@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/11/21 17:26:15 by frossiny         ###   ########.fr        #
+#    Updated: 2019/11/25 10:28:06 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,12 +69,12 @@ FILES	=	shell.c											\
 			builtins/options/opt_add.c						\
 			builtins/options/opt_get.c						\
 			builtins/options/opt_free.c			 			\
-			expansion/variables.c							\
 			expansion/tilde.c								\
 			expansion/expansion.c							\
 			expansion/exp_join.c							\
 			expansion/exp_set_struct.c						\
 			expansion/exp_remove_quotes.c					\
+			expansion/exp_del_empty_tokens.c				\
 			expansion/variables/exp_variables.c				\
 			expansion/variables/exp_get_varname.c			\
 			expansion/variables/exp_simple_var.c			\
