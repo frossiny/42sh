@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 17:49:24 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/21 17:59:34 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/25 12:19:10 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		par_type_jobs(t_parser *par)
 		par_next(par, 1);
 		return (0);
 	}*/
-	job_new(g_shell.ast);
+	job_new();
 	g_shell.jobs->is_jobs = 1;
 	par_next(par, 1);
 	return (1);

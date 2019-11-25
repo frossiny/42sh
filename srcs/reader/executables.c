@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:26:37 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/21 17:42:55 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/25 17:05:03 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,28 @@ static int	exe_assignements(t_cmd *cmd)
 
 #include <stdio.h>
 
+char	*reconstruct_command_jobs(char **command)
+{
+	int		i;
+	int		e;
+	char	*ret;
+
+	i = 0;
+	e = 0;
+	while (command[e])
+		i += ft_strlen(command[e++]) + 1;
+	if (!(ret = ft_strnew(i++)))
+		return (NULL);
+	e = 0;
+	while (command[e])
+	{
+		ft_strcat(ret, command[e++]);
+		ft_strcat(ret, " ");
+	}
+	ft_strcat(ret, "&");
+	return (ret);
+}
+
 static int	start_process(char *file, t_cmd *cmd, char **env)
 {
 	int		status;
@@ -43,8 +65,11 @@ static int	start_process(char *file, t_cmd *cmd, char **env)
 	g_child = fork();
 	if (g_shell.jobs && g_shell.jobs->is_jobs && g_child)
 	{
-		printf("g_child = %d ira dans l'id %d\n", g_child, g_shell.jobs->last_job->job_number);
-		g_shell.jobs->last_job->pid = g_child; //to put after the exec
+		//to put after the exec
+		g_shell.jobs->last_job->pid = g_child;
+		ft_printf("[%d] %d\n", g_shell.jobs->last_job->job_number,
+		g_child);
+		g_shell.jobs->last_job->command = reconstruct_command_jobs(cmd->args);
 	}
 	if (!g_child)
 	{

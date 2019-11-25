@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 10:48:31 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/21 17:43:30 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/25 18:28:46 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,19 @@ void		jobs_insert(t_jobs_lst *job)
 		job->next = NULL;
 		curr->next = job;
 	}
+	if (g_shell.jobs->index > 3)
+		g_shell.jobs->last_job->prev->current = ' ';
+	if (g_shell.jobs->index > 2)
+	{
+		g_shell.jobs->minus = g_shell.jobs->last_job;
+		g_shell.jobs->last_job->current = '-';
+	}
 	g_shell.jobs->last_job = job;
+	g_shell.jobs->plus = job;
 }
 
-t_jobs_lst	*job_new(t_anode *ast)
+t_jobs_lst	*job_new(void)
+
 {
 	t_jobs_lst *new_elem;
 
@@ -51,9 +60,10 @@ t_jobs_lst	*job_new(t_anode *ast)
 		init_jobs_struct();
 	if (!(new_elem = malloc(sizeof(t_jobs_lst))))
 		return (NULL);
-	new_elem->command = ast;
+	new_elem->command = NULL;
 	new_elem->job_number = g_shell.jobs->index++;
 	new_elem->pid = 0;
+	new_elem->current = '+';
 	new_elem->state = NULL;
 	new_elem->prev = NULL;
 	new_elem->next = NULL;
