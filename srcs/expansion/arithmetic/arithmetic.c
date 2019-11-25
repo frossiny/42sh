@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 13:40:41 by alagroy-          #+#    #+#             */
-/*   Updated: 2019/11/21 15:24:49 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/25 11:20:56 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	find_ae_limits(char *str, int *beg, int *end)
 	i = -1;
 	while (str[++i])
 	{
-		if (!ft_strncmp(str + i, "$((", 3))
+		if (!ft_strncmp(str + i, "((", 2))
 		{
 			bool++;
 			if (!bool)
@@ -81,7 +81,7 @@ int			replace_ae_token(t_token *token)
 	find_ae_limits(token->content, &beg, &end);
 	if (beg == -1 || end == -1)
 		return (1);
-	tmp.content = ft_strsub(token->content, beg + 3, end - beg - 3);
+	tmp.content = ft_strsub(token->content, beg + 2, end - beg - 2);
 	tmp.len = ft_strlen(tmp.content);
 	if (!(expand(&tmp, 0, NULL)))
 		return (0);
