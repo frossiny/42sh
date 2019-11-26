@@ -1,0 +1,3 @@
+rm -rf "/tmp/42_test"
+mkdir "/tmp/42_test"
+cd "/tmp/42_test"

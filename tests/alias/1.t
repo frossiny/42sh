@@ -1,0 +1,8 @@
+alias " a"="b "
+alias "\`c"="\`d "
+alias "[e"="[f "
+alias "]g"="]h "
+alias "$i"="$j "
+alias "\k"="\l "
+alias "/m"="/n "
+alias "*o"="*p "
