@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 13:08:41 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/26 19:37:20 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/26 19:44:19 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*find_path_jobs(t_shell *shell, char *first_command)
 	}
 	ft_strddel(&dirs);
 	ft_printf("42sh: hash: %s: not found", first_command);
-	return (0);
+	return (NULL);
 }
 
 int		job_add_value(t_shell *shell, t_cmd *cmd)
@@ -50,7 +50,8 @@ int		job_add_value(t_shell *shell, t_cmd *cmd)
 		i++;
 	while (cmd->args[i])
 	{
-		if ((file = find_path_jobs(&g_shell, cmd->args[i])))
+		if ((file = find_path_jobs(&g_shell, cmd->args[i]))
+		&& !is_builtin(cmd->args[i]))
 		{
 			if (ht_exists(shell, cmd->args[i]))
 				ht_delone(cmd->args[i], shell);
@@ -92,10 +93,10 @@ int		b_hash(t_cmd *cmd, t_shell *shell)
 		if (shell->bin_ht.table)
 			ht_delete();
 	}
+	else if (!shell->bin_ht.table)
+		ft_putendl("hash: hash table empty");
 	if (cmd->argc - opts->last)
 		job_add_value(shell, cmd);
-	if (!shell->bin_ht.table)
-		ft_putendl("hash: hash table empty");
 	opt_free(opts);
 	return (0);
 }
