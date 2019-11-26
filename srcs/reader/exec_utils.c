@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 17:27:04 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/18 16:13:20 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/26 18:47:26 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static char	*get_exe_path(t_shell *shell, char *name)
 			is_called_twice = 0;
 		else if (!is_called_twice)
 		{
-			ht_put(shell, name, file);
+			ht_put(shell, name, file, 1);
 			is_called_twice = 1;
 		}
 		return (file);

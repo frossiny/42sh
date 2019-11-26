@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:26:37 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/26 13:36:06 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/26 17:30:33 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ int			execute(t_cmd *cmd)
 	cmd->redir = parse_redirections(cmd->exe);
 	if (!validate_redirection(cmd->redir))
 		return (1);
-	var_merge(&(cmd->tenv), g_shell.vars);
+	//var_merge(&(cmd->tenv), g_shell.vars); //disabled because breaking hashtable
 	env = var_build_env(cmd->tenv);
 	ret = start(cmd, env);
 	var_destroy(&(cmd->tenv));

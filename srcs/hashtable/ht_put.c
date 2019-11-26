@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/01 14:10:11 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/13 14:13:44 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/26 19:35:28 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "shell.h"
 #include "hashtable.h"
 
-void	ht_put(t_shell *shell, char *key, char *value)
+void	ht_put(t_shell *shell, char *key, char *value, int increment)
 {
 	int		hash;
 
@@ -35,5 +35,6 @@ void	ht_put(t_shell *shell, char *key, char *value)
 		shell->bin_ht.table[hash].key = ft_strdup(key);
 		shell->bin_ht.table[hash].value = ft_strdup(value);
 	}
-	shell->bin_ht.table[hash].occurence++;
+	if (increment)
+		shell->bin_ht.table[hash].occurence++;
 }
