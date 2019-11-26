@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 15:11:08 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/24 16:47:57 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/26 14:02:42 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ t_redirect			*parse_redirections(t_token *tok)
 	if (!tok || !tok->next)
 		return (NULL);
 	red = NULL;
-	while (tok && (tok_is_redirection(tok) || tok_is_word(tok)))
+	while (tok_is_cmd_comp(tok))
 	{
 		if (tok_is_redirection(tok))
 		{

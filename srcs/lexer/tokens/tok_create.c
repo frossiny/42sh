@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 15:03:37 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/23 17:34:34 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/26 10:44:39 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ t_token	*tok_create(t_lexer *lexer, char *content,
 	if (!lexer || !(token = (t_token *)malloc(sizeof(t_token))))
 		return (NULL);
 	if (!(token->content = ft_strndup(content, len)))
+	{
+		free(token);
 		return (NULL);
+	}
 	token->len = len;
 	token->type = type;
 	token->next = NULL;

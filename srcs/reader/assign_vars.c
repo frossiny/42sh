@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reader.h                                           :+:      :+:    :+:   */
+/*   assign_vars.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/10 20:33:56 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/26 14:06:38 by frossiny         ###   ########.fr       */
+/*   Created: 2019/11/26 14:04:58 by frossiny          #+#    #+#             */
+/*   Updated: 2019/11/26 14:05:51 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef READER_H
-# define READER_H
+#include "shell.h"
+#include "variables.h"
+#include "ast.h"
 
-# include "structs.h"
+int		assign_vars(t_cmd *cmd)
+{
+	t_var	*cur;
 
-int					assign_vars(t_cmd *cmd);
-
-t_anode				*create_node(t_token *ope, t_cmd *cmd);
-t_token				*create_ope_node(t_anode **tree, t_token *tokens);
-t_token				*create_cmd_node(t_anode **tree, t_token *tokens);
-t_cmd				*create_cmd(t_token *exe);
-
-#endif
+	cur = cmd->tenv;
+	while (cur)
+	{
+		var_set(&(g_shell.vars), cur->key, cur->value, 0);
+		cur = cur->next;
+	}
+	var_destroy(&(cmd->tenv));
+	return (0);
+}

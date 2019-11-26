@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 14:03:28 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/09 16:17:00 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/26 15:03:39 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int					handle_builtin(t_cmd *cmd, t_shell *shell)
 	int			ret;
 	int			fd[3];
 
-	if (!cmd->exe->content)
+	if (!cmd->exe || !cmd->exe->content)
 		return (-1);
 	if (!(builtin = get_builtin(cmd->exe->content)).func)
 		return (-1);
@@ -72,7 +72,7 @@ int					handle_builtin(t_cmd *cmd, t_shell *shell)
 		fd[1] = dup2(1, 51);
 		fd[2] = dup2(2, 52);
 	}
-	if (!handle_redirections(cmd->redir))
+	if (!handle_redirections(cmd->redir, 0))
 		return (1);
 	ret = builtin.func(cmd, shell);
 	if (cmd->redir)

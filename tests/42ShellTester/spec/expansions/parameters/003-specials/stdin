@@ -1,0 +1,5 @@
+echo $$
+false
+echo $?
+echo $0
+echo $!

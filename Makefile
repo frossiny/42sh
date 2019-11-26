@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/11/25 11:34:22 by frossiny         ###   ########.fr        #
+#    Updated: 2019/11/26 15:55:50 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -119,6 +119,7 @@ FILES	=	shell.c											\
 			lexer/lex_update_state.c						\
 			lexer/lex_is_expansion.c						\
 			lexer/lex_exp_utils.c							\
+			lexer/tokens/tok_new.c							\
 			lexer/tokens/tok_create.c						\
 			lexer/tokens/tok_destroy.c						\
 			lexer/tokens/tok_is_word.c						\
@@ -126,6 +127,7 @@ FILES	=	shell.c											\
 			lexer/tokens/tok_push.c							\
 			lexer/tokens/tok_replace.c						\
 			lexer/tokens/tok_is_varexp.c					\
+			lexer/tokens/tok_is_cmd_comp.c					\
 			lexer/tokens/tok_free.c							\
 			lexer/states/general.c							\
 			lexer/states/quotes.c							\
@@ -149,6 +151,7 @@ FILES	=	shell.c											\
 			reader/get_pipes_docs.c							\
 			reader/exec_utils.c								\
 			reader/child_add.c								\
+			reader/assign_vars.c							\
 			termcaps/read_input.c							\
 			termcaps/read_utils.c							\
 			termcaps/termcaps.c								\
@@ -234,8 +237,8 @@ $(NAME): $(OBJS)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c Makefile
 	@mkdir -p $(@D)
+	@echo -n -e "\r\033[K${_PURPLE}${BOLD}[${NAME}] Compiling $<${_END}"
 	@$(CC) $(CFLAGS) -I $(INCDIR) -I $(LIBFT)/$(INCDIR) -MMD -o $@ -c $<
-	#@python3 .loading.py $@
 
 clean:
 	@$(MAKE) -C $(LIBFT) clean

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 15:32:30 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/25 10:31:53 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/26 12:51:43 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,6 @@
 #include "expansion.h"
 #include "arithmetic.h"
 
-static	int		can_expand(t_token *token)
-{
-	return (token && (tok_is_word(token) || tok_is_redirection(token)
-				|| token->type == TOKEN_ASSIGNMENT));
-}
-
 int				expand(t_token *tokens, int do_globbing, t_cmd *cmd)
 {
 	t_token		*next;
@@ -29,7 +23,7 @@ int				expand(t_token *tokens, int do_globbing, t_cmd *cmd)
 	int			t;
 
 	i = 0;
-	while (can_expand(tokens))
+	while (tok_is_cmd_comp(tokens))
 	{
 		next = tokens->next;
 		if (!(exp_variables(tokens)))

@@ -6,12 +6,33 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 10:27:05 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/25 10:32:09 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/26 14:01:46 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "expansion.h"
+
+static t_token	*get_exe_token(t_token *exe)
+{
+	t_token		*prev;
+
+	prev = NULL;
+	while (tok_is_cmd_comp(exe))
+	{
+		if (prev && tok_is_redirection(prev))
+		{
+			prev = exe;
+			exe = exe->next;
+			continue ;
+		}
+		if (exe && exe->type == TOKEN_NAME)
+			return (exe);
+		prev = exe;
+		exe = exe->next;
+	}
+	return (exe && exe->type == TOKEN_NAME ? exe : NULL);
+}
 
 t_token		*exp_del_empty_tokens(t_token *token, t_cmd *cmd)
 {
@@ -20,12 +41,12 @@ t_token		*exp_del_empty_tokens(t_token *token, t_cmd *cmd)
 	t_token	*next;
 
 	exp_tok_clean(token);
-	if (cmd->exe == token)
-		cmd->exe = token->next;
-	else if (cmd->exe->next)
+	if (cmd->tokens == token)
+		cmd->tokens = token->next;
+	else if (cmd->tokens->next)
 	{
 		prev = NULL;
-		curr = cmd->exe->next;
+		curr = cmd->tokens->next;
 		while (curr)
 		{
 			next = curr->next;
@@ -34,6 +55,7 @@ t_token		*exp_del_empty_tokens(t_token *token, t_cmd *cmd)
 			curr = next;
 		}
 	}
+	cmd->exe = get_exe_token(cmd->tokens);
 	next = token->next;
 	tok_free(token);
 	if (!next)

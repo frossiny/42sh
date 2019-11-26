@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 14:23:53 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/20 15:07:30 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/11/26 12:00:08 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,6 +196,7 @@ typedef struct		s_redirect
 
 typedef struct		s_cmd
 {
+	t_token			*tokens;
 	t_token			*exe;
 	char			**args;
 	int				argc;

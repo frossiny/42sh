@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 11:59:10 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/21 16:45:57 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/26 15:03:26 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_pipel				*build_pipeline(t_anode *node, t_shell *shell,
 															t_anode **cn);
 t_redirect			*parse_redirections(t_token *tok);
 void				del_pipeline(t_pipel *pline);
-int					handle_redirections(t_redirect *redir);
+int					handle_redirections(t_redirect *redir, int create_only);
 int					get_here_doc(t_redirect *redir, t_shell *shell);
 void				apply_here_doc(t_redirect *redir);
 void				close_here_docs(t_redirect *redir);

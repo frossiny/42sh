@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reader.h                                           :+:      :+:    :+:   */
+/*   tok_new.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/10 20:33:56 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/26 14:06:38 by frossiny         ###   ########.fr       */
+/*   Created: 2019/11/26 10:41:29 by frossiny          #+#    #+#             */
+/*   Updated: 2019/11/26 10:44:51 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef READER_H
-# define READER_H
+#include "lexer.h"
 
-# include "structs.h"
+t_token		*tok_new(t_token_type type, char *content)
+{
+	t_token		*new;
 
-int					assign_vars(t_cmd *cmd);
-
-t_anode				*create_node(t_token *ope, t_cmd *cmd);
-t_token				*create_ope_node(t_anode **tree, t_token *tokens);
-t_token				*create_cmd_node(t_anode **tree, t_token *tokens);
-t_cmd				*create_cmd(t_token *exe);
-
-#endif
+	if (!(new = (t_token *)malloc(sizeof(t_token))))
+		return (NULL);
+	if (!(new->content = ft_strdup(content)))
+	{
+		free(new);
+		return (NULL);
+	}
+	new->len = content ? ft_strlen(content) : 0;
+	new->type = type;
+	new->next = NULL;
+	return (new);
+}
