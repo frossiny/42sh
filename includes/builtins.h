@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:40:21 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/18 14:09:38 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/26 13:20:13 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,12 @@ void		append_hist(t_histo_lst *hist);
 void		delete_last_elem_hist(t_history *hist);
 void		delete_first_elem_hist(t_history *hist);
 void		delete_elem_hist(t_history *hist, t_histo_lst *elem);
+
+/*
+** Jobs internal functions
+*/
+int			*get_default_array(t_shell *shell, int *size);
+int			*build_options(t_shell *shell, t_cmd *cmd, int *size);
 
 static const t_builtin g_builtins[] =
 {

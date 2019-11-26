@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 10:48:31 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/25 18:28:46 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/26 11:27:53 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ void		jobs_insert(t_jobs_lst *job)
 }
 
 t_jobs_lst	*job_new(void)
-
 {
 	t_jobs_lst *new_elem;
 
@@ -64,7 +63,7 @@ t_jobs_lst	*job_new(void)
 	new_elem->job_number = g_shell.jobs->index++;
 	new_elem->pid = 0;
 	new_elem->current = '+';
-	new_elem->state = NULL;
+	new_elem->state = "Undefinited_status";
 	new_elem->prev = NULL;
 	new_elem->next = NULL;
 	jobs_insert(new_elem);
