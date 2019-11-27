@@ -1,0 +1,3 @@
+expected_to match_regex "hits    command"
+expected_to match_regex "   0    /bin/ls"
+expected_to match_regex "   0    /bin/pwd"

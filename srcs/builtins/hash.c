@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 13:08:41 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/26 19:44:19 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/27 08:54:24 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int		b_hash(t_cmd *cmd, t_shell *shell)
 		if (shell->bin_ht.table)
 			ht_delete();
 	}
-	else if (!shell->bin_ht.table)
+	else if (!shell->bin_ht.table && !(cmd->argc - opts->last))
 		ft_putendl("hash: hash table empty");
 	if (cmd->argc - opts->last)
 		job_add_value(shell, cmd);
