@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:26:37 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/27 16:17:08 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/27 16:48:52 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,17 +77,17 @@ static int	start_process(char *file, t_cmd *cmd, char **env)
 	}
 	if (!g_child)
 	{
-		//if (g_shell.jobs && g_shell.jobs->is_jobs) // FOR TEST ONLY
-		//	exit(EXIT_SUCCESS); // FOR TEST ONLY
+		if (g_shell.jobs && g_shell.jobs->is_jobs) // FOR TEST ONLY
+			exit(EXIT_SUCCESS); // FOR TEST ONLY
 		unregister_signals();
 		g_shell.able_termcaps ? restore_shell(g_shell.prev_term) : 0;
 		handle_redirections(cmd->redir, 0);
-		if (g_shell.jobs && g_shell.jobs->is_jobs)
+		/*if (g_shell.jobs && g_shell.jobs->is_jobs)
 		{
 			printf("I am bg job\n");
 			setpgid(0, 0);
 			g_shell.jobs->is_jobs = 0;
-		}
+		}*/
 		if (execve(file, cmd->args, env) == -1)
 			exit(EXIT_FAILURE);
 		exit(EXIT_SUCCESS);

@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 10:48:51 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/21 10:49:32 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/27 17:01:02 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,19 @@ void	job_delete(t_shell *shell, int pid)
 	jobs = shell->jobs->lst;
 	while (jobs)
 	{
-		if (pid == jobs->next->pid)
+		if (pid == jobs->pid)
 		{
-			to_delete = jobs->next;
-			jobs->next = jobs->next->next;
+			to_delete = jobs;
+			if (prev)
+			{
+				jobs->prev->next = jobs->next;
+				jobs->next->prev = jobs->prev;
+			}
+			else
+			{
+				shell->jobs->lst = jobs->next;
+				shell->jobs->lst->prev = NULL;
+			}
 			free(to_delete);
 			break ;
 		}
