@@ -6,7 +6,7 @@
 /*   By: alagroy- <alagroy-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 03:03:15 by alagroy-          #+#    #+#             */
-/*   Updated: 2019/11/27 05:34:40 by alagroy-         ###   ########.fr       */
+/*   Updated: 2019/11/27 11:51:59 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,11 @@ void		load_42shrc(void)
 	if (!home || !file)
 		return (error_message(file, join));
 	if ((fd = open(join, O_RDONLY)) == -1)
-		return (error_message(file, join));
+	{
+		ft_strdel(&join);
+		ft_strdel(&file);
+		return ;
+	}
 	read_file(fd);
 	ft_strdel(&join);
 	ft_strdel(&file);
