@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 11:43:47 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/09 16:10:11 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/27 03:43:29 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,6 @@ int			main(int argc, char *argv[], char *envp[])
 	if (!shell_init(envp))
 		return (0);
 	init_default_vars();
+	load_42shrc();
 	return (shell());
 }

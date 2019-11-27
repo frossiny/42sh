@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:05:59 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/21 12:34:27 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/27 13:59:59 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static int		not_closed_error(t_shell *shell, char **input, int ret)
 		{
 			ft_dprintf(2, "42sh: unexpected EOF\n");
 			g_ignore_signals = 0;
-			return (1);
+			return (2);
 		}
 		return (258);
 	}
@@ -68,7 +68,7 @@ static int		not_closed_error(t_shell *shell, char **input, int ret)
 	return (0);
 }
 
-int		handle_input(t_shell *shell, char **input)
+int		handle_input(t_shell *shell, char **input, int history)
 {
 	int			ret;
 
@@ -84,7 +84,7 @@ int		handle_input(t_shell *shell, char **input)
 		else if (ret == -3 && (ret = bslash_error(shell, input, ret)))
 			return (ret);
 	}
-	add_to_history(*input, &(shell->history));
+	history ? add_to_history(*input, &(shell->history)) : 0;
 	alias_exec(shell, input);
 	if (!parse(shell->lexer.tokens))
 	{
@@ -94,7 +94,7 @@ int		handle_input(t_shell *shell, char **input)
 	return (0);
 }
 
-static int	eval_exec(char **input)
+int		eval_exec(char **input, int history)
 {
 	int		ret;
 
@@ -103,7 +103,7 @@ static int	eval_exec(char **input)
 		ft_strdel(input);
 		return (g_return);
 	}
-	if ((ret = handle_input(&g_shell, input)) == 0)
+	if ((ret = handle_input(&g_shell, input, history)) == 0)
 	{
 		if (!input)
 			return (1);
@@ -127,7 +127,7 @@ int		shell(void)
 		if (!input)
 			g_return = 1;
 		else
-			g_return = eval_exec(&input);
+			g_return = eval_exec(&input, 1);
 	}
 	if (input)
 		ft_strdel(&input);

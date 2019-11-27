@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 15:55:33 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/21 12:34:38 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/27 14:00:06 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int		bslash_error(t_shell *shell, char **input, int ret)
 		if (g_ignore_signals)
 		{
 			g_ignore_signals = 0;
-			return (1);
+			return (2);
 		}
 		return (258);
 	}
