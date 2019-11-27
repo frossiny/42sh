@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:05:59 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/18 15:28:14 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/27 03:50:09 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int		quote_error(t_shell *shell, char **input, int ret)
 	return (0);
 }
 
-int		handle_input(t_shell *shell, char **input)
+int		handle_input(t_shell *shell, char **input, int history)
 {
 	int			ret;
 	int			alias_ret;
@@ -78,7 +78,8 @@ int		handle_input(t_shell *shell, char **input)
 	alias_hist = NULL;
 	ret = 0;
 	alias_ret = 1;
-	add_to_history(*input, &(g_shell.history));
+	if(history)
+		add_to_history(*input, &(g_shell.history));
 	while (alias_ret > 0)
 	{
 		shell->lexer.size = 0;
@@ -114,7 +115,7 @@ int		handle_input(t_shell *shell, char **input)
 	return (0);
 }
 
-static int	eval_exec(char **input)
+int		eval_exec(char **input, int history)
 {
 	int		ret;
 
@@ -123,7 +124,7 @@ static int	eval_exec(char **input)
 		ft_strdel(input);
 		return (g_return);
 	}
-	if ((ret = handle_input(&g_shell, input)) == 0)
+	if ((ret = handle_input(&g_shell, input, history)) == 0)
 	{
 		if (!input)
 			return (1);
@@ -147,7 +148,7 @@ int		shell(void)
 		if (!input)
 			g_return = 1;
 		else
-			g_return = eval_exec(&input);
+			g_return = eval_exec(&input, 1);
 	}
 	if (input)
 		ft_strdel(&input);

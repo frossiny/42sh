@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/11/20 19:30:16 by alagroy-         ###   ########.fr        #
+#    Updated: 2019/11/27 03:39:07 by alagroy-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -173,6 +173,7 @@ FILES	=	shell.c											\
 			utils/get_var_size.c							\
 			utils/str_escape.c								\
 			utils/copy_tab.c								\
+			utils/42shrc.c									\
 			variables/var_build_env.c						\
 			variables/var_delete.c							\
 			variables/var_destroy.c							\
@@ -220,8 +221,10 @@ $(NAME): $(OBJS)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c Makefile
 	@mkdir -p $(@D)
+	@echo -n -e "\r\033[K${_PURPLE}${BOLD}[${NAME}] Compiling $<${_END}"
 	@$(CC) $(CFLAGS) -I $(INCDIR) -I $(LIBFT)/$(INCDIR) -MMD -o $@ -c $<
 	#@python3 .loading.py $@
+
 
 clean:
 	@$(MAKE) -C $(LIBFT) clean

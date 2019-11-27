@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 11:59:10 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/09 16:15:12 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/27 03:50:44 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int					shell(void);
 void				prompt(void);
 int					prompt_len(void);
 int					check_quotes(char *str, char c);
+int					eval_exec(char **input, int history);
 
 int					reader(t_shell *shell, t_anode *ast);
 int					execute_pipes(t_anode *node, t_shell *shell, t_anode **cn);
@@ -69,5 +70,7 @@ int					display_signal(int sigid);
 
 t_childs			*child_add(t_childs **childs, int pid);
 void				child_del(t_childs *childs);
+
+void				load_42shrc(void);
 
 #endif
