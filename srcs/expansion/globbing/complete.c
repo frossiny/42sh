@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 13:56:44 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/20 17:15:25 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/11/27 12:25:30 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int			standard_char(t_compare *s, int x, int y)
 	{
 		if (!(s->cmp[x] == '\\') || is_escaped(s->cmp, x, 0))
 		{
-			//ft_printf("standard str->%s index->%d, char->%c, file->%s\n", s->cmp, x, s->cmp[x], s->file);
 			if (s->cmp[x] != s->file[y])
 				return (0);
 			y++;
@@ -54,7 +53,6 @@ int			next_char(t_compare *s, int x, int y)
 {
 	if (!is_escaped(s->cmp, x, 0))
 	{
-		//ft_printf("str->%s index->%d, char->%c, file->%s\n", s->cmp, x, s->cmp[x], s->file);
 		if (s->cmp[x] == '*')
 			return (wildcard_star(s, x, y));
 		if (s->cmp[x] == '?')

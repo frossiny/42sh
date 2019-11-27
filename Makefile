@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/11/27 17:48:47 by frossiny         ###   ########.fr        #
+#    Updated: 2019/11/27 18:51:18 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -178,6 +178,7 @@ FILES	=	shell.c											\
 			termcaps/t_delete_right.c						\
 			termcaps/t_home.c								\
 			termcaps/t_end.c								\
+			termcaps/t_escape.c								\
 			termcaps/t_visual_mode.c						\
 			termcaps/t_visual_cut.c							\
 			termcaps/t_visual_paste.c						\
@@ -280,5 +281,8 @@ valgrind: all
 
 tests: all
 	./tests/42ShellTester/42ShellTester.sh "$(PWD)/$(NAME)" ${TARGS}
+
+pytest:
+	python3 ./tests/python_test/err.py ./tests/python_test/$(FILTER)
 
 -include $(OBJSD)

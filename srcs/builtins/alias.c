@@ -6,7 +6,7 @@
 /*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 14:16:26 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/18 15:14:48 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/11/27 17:24:13 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void			add_alias(t_alias **alias, char *str)
 	key = ft_strndup(str, tmp - str);
 	if (!check_key_chain(key))
 	{
-		ft_printf("42sh: alias: %s: invalid alias name\n", key);
+		ft_dprintf(2, "42sh: alias: `%s': invalid alias name\n", key);
 		free(key);
 		return ;
 	}
