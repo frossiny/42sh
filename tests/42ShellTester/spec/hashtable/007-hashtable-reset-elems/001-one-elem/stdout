@@ -1,4 +1,0 @@
-expected_to match_regex "hits	command"
-expected_to match_regex "   1	/bin/date"
-expected_to match_regex "   0	/bin/df"
-expected_to match_regex "   1	/bin/ps"
