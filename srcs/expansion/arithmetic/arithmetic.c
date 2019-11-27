@@ -6,7 +6,7 @@
 /*   By: alagroy- <alagroy-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 13:40:41 by alagroy-          #+#    #+#             */
-/*   Updated: 2019/11/27 12:07:53 by alagroy-         ###   ########.fr       */
+/*   Updated: 2019/11/27 14:46:09 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static void	find_ae_limits(char *str, int *beg, int *end)
 			bool++;
 			if (!bool)
 				*beg = i;
+			i++;
 		}
 		if (!ft_strncmp(str + i, "))", 2))
 		{
