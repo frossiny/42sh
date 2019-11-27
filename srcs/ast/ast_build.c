@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   build_ast.c                                        :+:      :+:    :+:   */
+/*   ast_build.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 15:17:59 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/26 12:14:11 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/27 17:26:02 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	parse_tree(t_token *tokens, t_anode **ast)
 	return (1);
 }
 
-int			build_ast(t_shell *shell)
+int			ast_build(t_shell *shell)
 {
 	return (parse_tree(shell->lexer.tokens, &(shell->ast)));
 }

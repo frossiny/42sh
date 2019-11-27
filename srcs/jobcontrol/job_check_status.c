@@ -1,39 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   job_delete.c                                       :+:      :+:    :+:   */
+/*   job_check_status.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/21 10:48:51 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/27 18:19:24 by frossiny         ###   ########.fr       */
+/*   Created: 2019/11/27 17:37:47 by frossiny          #+#    #+#             */
+/*   Updated: 2019/11/27 18:19:41 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+#include "jobcontrol.h"
 
-void	job_delete(t_shell *shell, int pid)
+void	job_check_status(void)
 {
-	t_jobs_lst *curr;
-	t_jobs_lst *prev;
-	t_jobs_lst *next;
+	t_jobs_lst	*jobs;
+	t_jobs_lst	*next;
+	int			status;
 
-	curr = shell->jobs.lst;
-	prev = NULL;
-	while (curr)
+	if (!(jobs = g_shell.jobs.lst))
+		return ;
+	while (jobs)
 	{
-		next = curr->next;
-		if (curr->pid == pid)
+		next = jobs->next;
+		waitpid(jobs->pid, &status, WNOHANG);
+		if (WIFEXITED(status))
 		{
-			if (prev)
-				prev->next = next;
-			else
-				shell->jobs.lst = next;
-			if (shell->jobs.last_job == curr)
-				shell->jobs.last_job = NULL;
-			free(curr);
-			break ;
+			ft_printf("[%d]%c Done %s\n", jobs->job_number, jobs->current, jobs->command);
+			job_delete(&g_shell, jobs->pid);
 		}
-		curr = next;
+		jobs = next;
 	}
 }

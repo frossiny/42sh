@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/11/27 15:49:27 by lubenard         ###   ########.fr        #
+#    Updated: 2019/11/27 17:48:47 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,12 +42,13 @@ FILES	=	shell.c											\
 			alias/alias_resolve.c							\
 			alias/alias_exec.c								\
 			alias/alias_utils.c								\
-			ast/build_ast.c									\
+			ast/ast_build.c									\
 			ast/create_node.c								\
-			ast/build_args.c								\
+			ast/ast_build_args.c							\
 			ast/redirections.c								\
-			ast/destroy_ast.c								\
+			ast/ast_destroy.c								\
 			ast/create_cmd.c								\
+			ast/ast_is_bg.c									\
 			builtins/alias.c								\
 			builtins/unalias.c								\
 			builtins/type.c									\
@@ -114,6 +115,10 @@ FILES	=	shell.c											\
 			hashtable/ht_put.c								\
 			hashtable/ht_get.c								\
 			hashtable/ht_exists.c							\
+			jobcontrol/job_create.c							\
+			jobcontrol/job_delete.c							\
+			jobcontrol/job_destroy_all.c					\
+			jobcontrol/job_check_status.c					\
 			lexer/lexer.c									\
 			lexer/lex_free.c								\
 			lexer/lex_search.c								\
@@ -206,10 +211,7 @@ FILES	=	shell.c											\
 			variables/var_disp_env.c						\
 			variables/var_is_key_valid.c					\
 			variables/var_merge.c							\
-			variables/var_export.c							\
-			jobcontrol/job_create.c							\
-			jobcontrol/job_delete.c							\
-			jobcontrol/job_destroy_all.c
+			variables/var_export.c
 
 SRCS	=	$(addprefix $(SRCDIR)/, $(FILES))
 OBJS	=	$(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)

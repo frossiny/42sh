@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:26:37 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/27 15:47:15 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/27 18:21:55 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,20 +67,17 @@ static int	start_process(char *file, t_cmd *cmd, char **env)
 	if (!get_here_doc(cmd->redir, &g_shell))
 		return (EXIT_FAILURE);
 	g_child = fork();
-	if (g_shell.jobs && g_shell.jobs->is_jobs && g_child)
+	if (cmd->is_bg && g_child)
 	{
-		//to put after the exec
-		g_shell.jobs->last_job->pid = g_child;
-		ft_printf("[%d] %d\n", g_shell.jobs->last_job->job_number,
-		g_child);
-		g_shell.jobs->last_job->command = reconstruct_command_jobs(cmd->args);
+		g_shell.jobs.last_job->pid = g_child;
+		ft_printf("[%d] %d\n", g_shell.jobs.last_job->job_number, g_child);
+		g_shell.jobs.last_job->command = reconstruct_command_jobs(cmd->args);
 	}
 	if (!g_child)
 	{
-		if (g_shell.jobs && g_shell.jobs->is_jobs) // FOR TEST ONLY
-			exit(EXIT_SUCCESS); // FOR TEST ONLY
 		unregister_signals();
-		g_shell.able_termcaps ? restore_shell(g_shell.prev_term) : 0;
+		!cmd->is_bg && g_shell.able_termcaps ? restore_shell(g_shell.prev_term) : 0;
+		cmd->is_bg ? setpgid(0, 0) : 0;
 		handle_redirections(cmd->redir, 0);
 		if (execve(file, cmd->args, env) == -1)
 			exit(EXIT_FAILURE);
@@ -89,8 +86,8 @@ static int	start_process(char *file, t_cmd *cmd, char **env)
 	close_here_docs(cmd->redir);
 	if (g_child == -1)
 		return (g_child = 0);
-	waitpid(g_child, &status, 0);
-	g_shell.able_termcaps ? termcaps_init(NULL) : 0;
+	waitpid(g_child, &status, cmd->is_bg ? WNOHANG : 0);
+	!cmd->is_bg && g_shell.able_termcaps ? termcaps_init(NULL) : 0;
 	g_child = 0;
 	if (WIFSIGNALED(status))
 		return (display_signal(status));
@@ -124,7 +121,7 @@ int			execute(t_cmd *cmd)
 
 	if (!cmd)
 		return (1);
-	if (build_args(cmd, g_shell.vars) < 0)
+	if (ast_build_args(cmd, g_shell.vars) < 0)
 		return (1);
 	cmd->redir = parse_redirections(cmd->tokens);
 	if (!validate_redirection(cmd->redir))

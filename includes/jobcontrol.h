@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   jobcontrol.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 14:08:11 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/25 12:19:36 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/27 17:46:54 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,6 @@
 t_jobs	*job_new(void);
 void	job_delete(t_shell *shell, size_t pid);
 void	job_destroy_all(t_shell *shell);
+void	job_check_status(void);
 
 #endif

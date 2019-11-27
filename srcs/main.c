@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 11:43:47 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/27 15:48:12 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/27 18:16:04 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,10 @@ static int	shell_init(char *envp[])
 	g_shell.lexer.lstate = ST_GENERAL;
 	g_shell.ast = NULL;
 	g_shell.bin_ht.table = NULL;
-	g_shell.jobs = NULL;
+	g_shell.jobs.minus = NULL;
+	g_shell.jobs.plus = NULL;
+	g_shell.jobs.lst = NULL;
+	g_shell.jobs.last_job = NULL;
 	return (1);
 }
 
@@ -89,6 +92,6 @@ int			main(int argc, char *argv[], char *envp[])
 	if (!shell_init(envp))
 		return (0);
 	init_default_vars();
-	load_42shrc();
+	//load_42shrc();
 	return (shell());
 }

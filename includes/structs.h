@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 14:23:53 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/27 15:48:35 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/27 18:15:28 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,6 +203,7 @@ typedef struct		s_cmd
 	t_redirect		*redir;
 	int				allow_builtins : 1;
 	t_var			*tenv;
+	int				is_bg;
 }					t_cmd;
 
 typedef struct		s_anode
@@ -335,7 +336,7 @@ typedef struct		s_shell
 	t_lexer			lexer;
 	t_anode			*ast;
 	t_hashtable		bin_ht;
-	t_jobs			*jobs;
+	t_jobs			jobs;
 	t_history		history;
 	int				able_termcaps;
 	struct termios	prev_term;

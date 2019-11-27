@@ -6,12 +6,13 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 13:23:37 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/26 12:51:06 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/27 17:34:13 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 #include "lexer.h"
+#include "ast.h"
 #include "expansion.h"
 
 static void		parse_assignements(t_cmd *cmd, t_token **exe)
@@ -79,5 +80,6 @@ t_cmd			*create_cmd(t_token *exe)
 	cmd->args = NULL;
 	cmd->redir = NULL;
 	cmd->allow_builtins = 1;
+	cmd->is_bg = ast_is_bg(exe);
 	return (cmd);
 }

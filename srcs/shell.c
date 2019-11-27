@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:05:59 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/27 14:09:32 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/27 17:27:20 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,10 +108,10 @@ int		eval_exec(char **input, int history)
 		if (!input)
 			return (1);
 		ft_strdel(input);
-		build_ast(&g_shell);
+		ast_build(&g_shell);
 		g_shell.ast ? ret = reader(&g_shell, g_shell.ast) : 0;
 		lexer_free(&(g_shell.lexer));
-		destroy_ast(&g_shell);
+		ast_destroy(&g_shell);
 	}
 	else
 		ft_strdel(input);

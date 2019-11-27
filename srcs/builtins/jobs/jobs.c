@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   jobs.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:05:36 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/27 14:14:06 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/27 18:18:59 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int		print_job(t_shell *shell, int options, int job_number)
 {
 	t_jobs_lst		*jobs;
 
-	jobs = shell->jobs->lst;
+	jobs = shell->jobs.lst;
 	while (jobs)
 	{
 		if (jobs->job_number == job_number)
@@ -77,7 +77,7 @@ int		b_jobs(t_cmd *cmd, t_shell *shell)
 {
 	t_options	*opts;
 
-	if (shell->jobs)
+	if (shell->jobs.lst)
 	{
 		opts = opt_parse(cmd, "lp", "jobs");
 		if (opts->ret != 0)

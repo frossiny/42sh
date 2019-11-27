@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   build_args.c                                       :+:      :+:    :+:   */
+/*   ast_build_args.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/04 16:14:27 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/26 12:49:38 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/27 17:27:52 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static int	build_args_arr(char ***args, t_token *tokens)
 	return (argc);
 }
 
-int			build_args(t_cmd *cmd)
+int			ast_build_args(t_cmd *cmd)
 {
 	char	**argv;
 
