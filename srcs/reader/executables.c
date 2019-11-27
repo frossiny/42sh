@@ -6,30 +6,35 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:26:37 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/18 16:10:53 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/26 15:04:57 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 #include "libft.h"
 #include "shell.h"
 #include "ast.h"
+#include "reader.h"
 #include "utils.h"
 #include "hashtable.h"
 #include "builtins.h"
 
-static int	exe_assignements(t_cmd *cmd)
+static int	exe_specials(t_cmd *cmd)
 {
-	t_var	*cur;
+	int		ret;
 
-	cur = cmd->tenv;
-	while (cur)
+	ret = 0;
+	if (!cmd)
+		return (1);
+	if (cmd->tenv)
+		ret = assign_vars(cmd);
+	if (cmd->redir)
 	{
-		var_set(&(g_shell.vars), cur->key, cur->value, 0);
-		cur = cur->next;
+		if (!get_here_doc(cmd->redir, &g_shell))
+			return (EXIT_FAILURE);
+		handle_redirections(cmd->redir, 1);
+		close_here_docs(cmd->redir);
 	}
-	var_destroy(&(cmd->tenv));
-	return (0);
+	return (ret);
 }
 
 static int	start_process(char *file, t_cmd *cmd, char **env)
@@ -42,7 +47,7 @@ static int	start_process(char *file, t_cmd *cmd, char **env)
 	{
 		unregister_signals();
 		g_shell.able_termcaps ? restore_shell(g_shell.prev_term) : 0;
-		handle_redirections(cmd->redir);
+		handle_redirections(cmd->redir, 0);
 		if (execve(file, cmd->args, env) == -1)
 			exit(EXIT_FAILURE);
 		exit(EXIT_SUCCESS);
@@ -85,13 +90,13 @@ int			execute(t_cmd *cmd)
 
 	if (!cmd)
 		return (1);
-	if (build_args(cmd, g_shell.vars) < 1)
+	if (build_args(cmd, g_shell.vars) < 0)
 		return (1);
-	if (!cmd->exe && cmd->tenv)
-		return (exe_assignements(cmd));
-	cmd->redir = parse_redirections(cmd->exe);
+	cmd->redir = parse_redirections(cmd->tokens);
 	if (!validate_redirection(cmd->redir))
 		return (1);
+	if (!cmd->exe)
+		return (exe_specials(cmd));
 	var_merge(&(cmd->tenv), g_shell.vars);
 	env = var_build_env(cmd->tenv);
 	ret = start(cmd, env);

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 20:33:56 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/23 15:35:15 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/26 14:06:38 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define READER_H
 
 # include "structs.h"
+
+int					assign_vars(t_cmd *cmd);
 
 t_anode				*create_node(t_token *ope, t_cmd *cmd);
 t_token				*create_ope_node(t_anode **tree, t_token *tokens);

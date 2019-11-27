@@ -6,7 +6,7 @@
 /*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 13:41:50 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/10/30 13:23:54 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/11/20 15:08:08 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,44 +39,16 @@ void			add_token(t_globbing *glob, char *content)
 	glob->nb_file++;
 }
 
-void			remove_first_token(t_token **token)
+void			remove_first_token(t_token *token)
 {
 	t_token *tmp;
-	t_token *curr;
 
-	curr = *token;
-	free(curr->content);
-	curr->content = curr->next->content;
-	tmp = curr->next;
-	curr->next = curr->next->next;
+	if (!token || !(token->next))
+		return ;
+	free(token->content);
+	token->content = token->next->content;
+	token->len = token->next->len;
+	tmp = token->next;
+	token->next = token->next->next;
 	free(tmp);
-	*token = curr->next;
-}
-
-void			remove_token(t_token *curr)
-{
-	t_token *prev;
-	t_token *beg;
-
-	beg = curr;
-	prev = NULL;
-	while (curr)
-	{
-		if (is_glob_str(curr->content) && curr->is_glob_sub)
-		{
-			if (curr == beg)
-				remove_first_token(&curr);
-			else
-			{
-				prev->next = curr->next;
-				free_token(curr);
-				curr = prev->next;
-			}
-		}
-		else
-		{
-			prev = curr;
-			curr = curr->next;
-		}
-	}
 }

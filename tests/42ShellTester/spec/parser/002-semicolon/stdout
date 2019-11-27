@@ -1,0 +1,4 @@
+expected_to match_regex `pwd` once
+expected_to match_regex "^test" once
+expected_to match_regex ";" once
+expected_to match_regex "oui" once

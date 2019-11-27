@@ -1,0 +1,1 @@
+TEST=${GLOBAL_TOKEN} 2>&1 ls unexistant_file_i_hope

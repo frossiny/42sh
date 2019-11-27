@@ -1,0 +1,3 @@
+expected_to have_nb_of_lines 3
+expected_to match_regex "^${PATH:+${USER:-UNDEFINED}}"
+expected_to match_regex "^$HOME" 2 times

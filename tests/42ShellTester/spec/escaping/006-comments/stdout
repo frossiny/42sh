@@ -1,0 +1,3 @@
+expected_to match_regex "^oui" once
+expected_to match_regex ${GLOBAL_TOKEN} once
+expected_to_not match_regex "pwd"

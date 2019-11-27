@@ -1,0 +1,4 @@
+expected_to match_regex "[0-9]{3,5}" once
+expected_to match_regex "^1$" once
+expected_to match_regex "^42sh$" once
+expected_to match_regex "^0$" once

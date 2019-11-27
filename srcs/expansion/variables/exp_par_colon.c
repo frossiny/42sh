@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 14:20:01 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/07 17:52:28 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/21 15:24:55 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 int			exp_wordtok(t_token *tok)
 {
-	return (expand(tok));
+	return (expand(tok, 0, NULL));
 }
 
 int			exp_word(t_expansion *exp, char **word)

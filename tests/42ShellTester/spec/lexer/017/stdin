@@ -1,0 +1,3 @@
+toto=tamer
+echo "$toto"$toto'$toto'
+echo \$toto $toto

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 15:17:59 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/09 16:36:01 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/21 16:47:57 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,14 @@ static int	parse_condition(int *ret, t_anode *cond)
 	if (cond->ope->type == TOKEN_AND)
 	{
 		if (*ret != 0)
-			return (0);
+			return (1);
 		*ret = execute(cond->right->cmd);
 		return (1);
 	}
 	else if (cond->ope->type == TOKEN_OR)
 	{
 		if (*ret == 0)
-			return (0);
+			return (1);
 		*ret = execute(cond->right->cmd);
 		return (1);
 	}
