@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 14:23:53 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/25 14:44:26 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/27 15:48:35 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,6 @@ typedef struct		s_token
 {
 	char			*content;
 	size_t			len;
-	int				is_glob_sub;
 	t_token_type	type;
 	struct s_token	*next;
 }					t_token;
@@ -197,6 +196,7 @@ typedef struct		s_redirect
 
 typedef struct		s_cmd
 {
+	t_token			*tokens;
 	t_token			*exe;
 	char			**args;
 	int				argc;

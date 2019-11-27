@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 17:27:04 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/26 18:47:26 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/27 15:47:31 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,10 @@ char		*get_exe(t_shell *shell, char *name, int verbose)
 	struct stat	stats;
 
 	if (!name || name[0] == '\0')
-		return (ft_strdup(""));
+	{
+		verbose ? not_found(name) : 0;
+		return (NULL);
+	}
 	file = NULL;
 	if (name[0] == '/')
 		return (handle_absolute(name, verbose));

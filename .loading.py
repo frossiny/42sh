@@ -3,10 +3,11 @@
 #                                                         :::      ::::::::    #
 #    .loading.py                                        :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lubenard <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/06 18:18:56 by lubenard          #+#    #+#              #
-#    Updated: 2019/11/19 15:46:04 by lubenard         ###   ########.fr        #
+#    Updated: 2019/11/27 15:50:16 by lubenard         ###   ########.fr        #
+#    Updated: 2019/11/19 16:17:55 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,4 +66,4 @@ if i < l:
     makefile_42sh.write(str(i + 1))
     makefile_42sh.close()
 else:
-    os.system("rm /tmp/makefile_42sh")
+    os.system("rm /tmp/frossiny/makefile_42sh")

@@ -1,0 +1,3 @@
+echo oui > ; pwd
+echo oui > << EOF
+echo oui > | cat -e

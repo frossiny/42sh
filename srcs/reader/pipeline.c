@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 20:28:42 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/24 15:18:54 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/26 12:06:37 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ static t_pipel	*create_pipel(t_pipel *prev, t_cmd *cmd, t_shell *shell)
 		return (NULL);
 	if (build_args(cmd, shell->vars) == -1)
 		return (NULL);
-	cmd->redir = parse_redirections(cmd->exe);
+	var_merge(&(cmd->tenv), g_shell.vars);
+	cmd->redir = parse_redirections(cmd->tokens);
 	new->cmd = cmd;
 	new->previous = prev;
 	new->next = NULL;
@@ -75,6 +76,7 @@ void			del_pipeline(t_pipel *pline)
 	{
 		next = pline->next;
 		close_here_docs(pline->cmd->redir);
+		var_destroy(&(pline->cmd->tenv));
 		free(pline);
 		pline = next;
 	}

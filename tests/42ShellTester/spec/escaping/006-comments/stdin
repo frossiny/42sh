@@ -1,0 +1,4 @@
+echo oui #non
+echo ${GLOBAL_TOKEN} #Ceci est un test oui
+#Pas de ligne en plus ici pwd
+#echo ${GLOBAL_TOKEN}

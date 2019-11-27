@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 15:22:13 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/08 17:24:16 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/26 11:05:37 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static t_var	*get_special_var_pid(char *key)
 	else if (ft_strequ(key, "!"))
 	{
 		if (g_lpid < 0)
-			return (NULL);
+			g_lpid = 0;
 		tmp = ft_itoa(g_lpid);
 		ret = var_new(key, tmp, 0);
 		free(tmp);

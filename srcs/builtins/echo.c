@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/28 10:50:50 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/07 17:55:32 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/18 16:47:43 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,43 +14,11 @@
 #include "shell.h"
 #include "opt.h"
 
-static int		get_char(char c)
-{
-	if (c == 'n')
-		return ('\n');
-	else if (c == 'r')
-		return ('\r');
-	else if (c == 'a')
-		return ('\a');
-	else if (c == 'b')
-		return ('\b');
-	else if (c == 'f')
-		return ('\f');
-	else if (c == 't')
-		return ('\t');
-	else if (c == 'v')
-		return ('\v');
-	else if (c == '\\')
-		return ('\\');
-	else
-		return (0);
-}
-
 static void		disp(int argc, char **argv)
 {
-	size_t	i;
-
 	while (argc--)
 	{
-		i = 0;
-		while (*argv && (*argv)[i])
-		{
-			if ((*argv)[i] == '\\' && (*argv)[i + 1])
-				ft_putchar(get_char((*argv)[++i]));
-			else
-				ft_putchar((*argv)[i]);
-			i++;
-		}
+		ft_putstr(*argv);
 		if (argc)
 			ft_putchar(' ');
 		argv++;
@@ -78,7 +46,7 @@ int				b_echo(t_cmd *cmd, t_shell *shell)
 	opt = opt_get(options, "n") ? 1 : 0;
 	if (cmd->argc < 2)
 		return (empty_args());
-	disp(cmd->argc - 1 - opt, cmd->args + 1 + opt);
+	disp(cmd->argc - options->last, cmd->args + options->last);
 	opt ? 0 : ft_putchar('\n');
 	opt_free(options);
 	return (0);

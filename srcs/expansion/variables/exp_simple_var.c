@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 14:24:33 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/09 16:33:13 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/19 16:38:56 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ int			exp_simple_var(t_expansion *exp)
 	if (!exp)
 		return (0);
 	if (exp->li > exp->i)
-		exp_join(exp, ft_strsub(exp->str, exp->li, exp->i - exp->li));
+		exp_join(exp, ft_strsub(exp->str, exp->li, exp->i - exp->li), 1);
 	exp->li = exp->i;
 	if (exp->str[exp->i] != '$')
 		return (0);
 	exp->i++;
 	if ((var = exp_get_var(exp)))
-		exp_join(exp, ft_strdup(var->value));
+		exp_join(exp, ft_strdup(var->value), 1);
 	else
 		exp->i += get_var_size(exp->str + exp->i);
 	exp->li = exp->i;

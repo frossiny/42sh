@@ -1,0 +1,4 @@
+expected_to have_nb_of_lines 5
+expected_to match_regex "^106" 2 times
+expected_to match_regex "^-19" 2 times
+expected_to match_regex "^55"

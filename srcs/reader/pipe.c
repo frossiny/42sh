@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 20:32:11 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/18 16:38:11 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/26 15:03:55 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	init_fd(t_pipel *pline, int op[], int np[])
 		dup2(np[1], 1);
 		close(np[1]);
 	}
-	handle_redirections(pline->cmd->redir);
+	handle_redirections(pline->cmd->redir, 0);
 }
 
 static int	execute_pipe_cmd(t_pipel *pline, t_fd *fd, t_shell *shell)
@@ -49,7 +49,7 @@ static int	execute_pipe_cmd(t_pipel *pline, t_fd *fd, t_shell *shell)
 		shell->able_termcaps ? restore_shell(shell->prev_term) : 0;
 		init_fd(pline, fd->op, fd->np);
 		if (execve(get_exe(shell, cmd->exe->content, 1),
-								cmd->args, var_build_env(shell->vars)) == -1)
+								cmd->args, var_build_env(cmd->tenv)) == -1)
 			exit(EXIT_FAILURE);
 	}
 	else if (pline->previous)
@@ -82,7 +82,7 @@ static int	execute_pipe_builtin(t_pipel *pline, t_fd *fd, t_shell *shell)
 	}
 	if (pline->next)
 		dup2(fd->np[1], 1);
-	handle_redirections(cmd->redir);
+	handle_redirections(cmd->redir, 0);
 	ret = builtin.func(cmd, shell);
 	cmd->redir ? restore_fd(sfd) : dup2(fd->sfd, 1);
 	return (ret);

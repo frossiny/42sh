@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 14:59:44 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/18 14:42:25 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/11/20 15:57:47 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ void			term_print(char *str)
 	char	*tmp;
 	int		i;
 
+	if (!str)
+		return ;
 	tmp = ft_strdup(str);
 	i = -1;
 	while (tmp[++i])

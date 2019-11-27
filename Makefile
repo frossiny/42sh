@@ -6,16 +6,25 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/11/26 19:07:37 by lubenard         ###   ########.fr        #
+#    Updated: 2019/11/27 15:49:27 by lubenard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC		=	clang #-fsanitize=address
-CFLAGS	+=	-Wall -Werror -Wextra -g3
+CC		=	gcc -g3 #-fsanitize=address
+CFLAGS	+=	-Wall -Wextra #-Werror
 
 SHELL	=	bash
 
-NAME	=	42sh
+#Tests related variables
+TARGS	=
+ifdef FILTER
+	TARGS += --filter ${FILTER}
+endif
+ifdef SHOW
+	TARGS += --show-success
+endif
+
+NAME 	=	42sh
 LIBFT	=	libft
 SRCDIR	=	srcs
 INCDIR	=	includes
@@ -31,6 +40,7 @@ FILES	=	shell.c											\
 			alias/alias_display.c							\
 			alias/alias_free.c								\
 			alias/alias_resolve.c							\
+			alias/alias_exec.c								\
 			alias/alias_utils.c								\
 			ast/build_ast.c									\
 			ast/create_node.c								\
@@ -60,22 +70,24 @@ FILES	=	shell.c											\
 			builtins/options/opt_add.c						\
 			builtins/options/opt_get.c						\
 			builtins/options/opt_free.c			 			\
-			expansion/variables.c							\
 			expansion/tilde.c								\
 			expansion/expansion.c							\
 			expansion/exp_join.c							\
 			expansion/exp_set_struct.c						\
 			expansion/exp_remove_quotes.c					\
+			expansion/exp_del_empty_tokens.c				\
 			expansion/variables/exp_variables.c				\
 			expansion/variables/exp_get_varname.c			\
 			expansion/variables/exp_simple_var.c			\
 			expansion/variables/exp_parameter.c				\
+			expansion/variables/exp_parameter_parse.c		\
 			expansion/variables/exp_par_len.c				\
 			expansion/variables/exp_par_colon.c				\
 			expansion/variables/exp_par_colon_op.c			\
 			expansion/variables/exp_get_var.c				\
 			expansion/variables/exp_get_word.c				\
 			expansion/variables/exp_del_pattern.c			\
+			expansion/variables/exp_tok_clean.c				\
 			expansion/arithmetic/comp.c						\
 			expansion/arithmetic/convert_base.c				\
 			expansion/arithmetic/eval.c						\
@@ -108,6 +120,7 @@ FILES	=	shell.c											\
 			lexer/lex_update_state.c						\
 			lexer/lex_is_expansion.c						\
 			lexer/lex_exp_utils.c							\
+			lexer/tokens/tok_new.c							\
 			lexer/tokens/tok_create.c						\
 			lexer/tokens/tok_destroy.c						\
 			lexer/tokens/tok_is_word.c						\
@@ -115,6 +128,8 @@ FILES	=	shell.c											\
 			lexer/tokens/tok_push.c							\
 			lexer/tokens/tok_replace.c						\
 			lexer/tokens/tok_is_varexp.c					\
+			lexer/tokens/tok_is_cmd_comp.c					\
+			lexer/tokens/tok_free.c							\
 			lexer/states/general.c							\
 			lexer/states/quotes.c							\
 			lexer/states/comment.c							\
@@ -128,6 +143,7 @@ FILES	=	shell.c											\
 			parser/types/operators.c						\
 			parser/types/jobs.c								\
 			parser/types/semic.c							\
+			parser/types/conditions.c						\
 			reader/reader.c									\
 			reader/pipe.c									\
 			reader/pipeline.c								\
@@ -137,6 +153,7 @@ FILES	=	shell.c											\
 			reader/get_pipes_docs.c							\
 			reader/exec_utils.c								\
 			reader/child_add.c								\
+			reader/assign_vars.c							\
 			termcaps/read_input.c							\
 			termcaps/read_utils.c							\
 			termcaps/termcaps.c								\
@@ -175,6 +192,7 @@ FILES	=	shell.c											\
 			utils/get_var_size.c							\
 			utils/str_escape.c								\
 			utils/copy_tab.c								\
+			utils/42shrc.c									\
 			variables/var_build_env.c						\
 			variables/var_delete.c							\
 			variables/var_destroy.c							\
@@ -225,8 +243,9 @@ $(NAME): $(OBJS)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c Makefile
 	@mkdir -p $(@D)
+	@echo -n -e "\r\033[K${_PURPLE}${BOLD}[${NAME}] Compiling $<${_END}"
 	@$(CC) $(CFLAGS) -I $(INCDIR) -I $(LIBFT)/$(INCDIR) -MMD -o $@ -c $<
-	@python3 .loading.py $@
+
 
 clean:
 	@$(MAKE) -C $(LIBFT) clean
@@ -241,7 +260,6 @@ fclean: clean
 	@rm -f $(NAME)
 	@rm -rf $(OBJDIR)
 	@rm -rf $(NAME).dSYM
-	@rm -rf ~/.$(NAME)_history
 	@rm -rf /tmp/makefile_42sh
 
 re: fclean
@@ -255,7 +273,10 @@ check_error:
 	@grep -rn "printf" srcs | grep -v "ft_"
 	@grep -rn "stdio.h" srcs
 
+valgrind: all
+	valgrind --leak-check=full --show-leak-kinds=all --suppressions="${PWD}/valgrind.supp" "${PWD}/${NAME}"
+
 tests: all
-	./tests/42ShellTester/42ShellTester.sh "$(PWD)/$(NAME)" --filter ${FILTER}
+	./tests/42ShellTester/42ShellTester.sh "$(PWD)/$(NAME)" ${TARGS}
 
 -include $(OBJSD)

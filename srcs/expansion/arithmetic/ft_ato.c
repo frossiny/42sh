@@ -6,7 +6,7 @@
 /*   By: alagroy- <alagroy-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 16:42:22 by alagroy-          #+#    #+#             */
-/*   Updated: 2019/11/06 18:25:55 by alagroy-         ###   ########.fr       */
+/*   Updated: 2019/11/27 12:06:19 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,14 @@
 
 char		*ft_ltoa(long nb)
 {
-	int		nb_digit;
-	int		tmp;
-	char	*rtrn;
+	int				nb_digit;
+	unsigned long	tmp;
+	char			*rtrn;
+	int				neg;
 
-	nb_digit = 1;
-	tmp = nb;
+	neg = nb < 0 ? 1 : 0;
+	nb_digit = 1 + neg;
+	tmp = neg ? nb * -1 : neg;
 	while (tmp >= 10)
 	{
 		tmp /= 10;
@@ -28,11 +30,13 @@ char		*ft_ltoa(long nb)
 	if (!(rtrn = (char *)malloc((nb_digit + 1) * sizeof(char))))
 		return (NULL);
 	rtrn[nb_digit] = '\0';
-	while (--nb_digit >= 0)
+	nb *= neg ? -1 : 1;
+	while (--nb_digit >= neg)
 	{
 		rtrn[nb_digit] = nb % 10 + '0';
 		nb /= 10;
 	}
+	neg ? rtrn[0] = '-' : 0;
 	return (rtrn);
 }
 

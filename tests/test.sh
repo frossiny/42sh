@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    test.sh                                            :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lubenard <lubenard@student.42.fr>          +#+  +:+       +#+         #
+#    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/03 15:04:01 by lubenard          #+#    #+#              #
-#    Updated: 2019/11/19 15:57:03 by lubenard         ###   ########.fr        #
+#    Updated: 2019/11/27 15:46:38 by lubenard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,4 +21,3 @@ if [[ $output > 0 ]]; then
 fi
 echo "DONE ! All tests passed !"
 rm log_test
-

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 15:27:23 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/15 15:47:34 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/26 15:02:58 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 #include "shell.h"
 
-static void		redirect_output(t_redirect *redir)
+static void		redirect_output(t_redirect *redir, int create_only)
 {
 	int		fd;
 	int		otype;
@@ -23,8 +23,11 @@ static void		redirect_output(t_redirect *redir)
 	otype |= (redir->append) ? O_APPEND : O_TRUNC;
 	if ((fd = open(redir->value->content, otype, 420)) == -1)
 		return ;
-	dup2(fd, redir->filedes);
-	close(fd);
+	if (!create_only)
+	{
+		dup2(fd, redir->filedes);
+		close(fd);
+	}
 }
 
 static void		redirect_input(t_redirect *redir)
@@ -60,7 +63,7 @@ static int		handle_aggregate(t_redirect *redir)
 	return (1);
 }
 
-int				handle_redirections(t_redirect *redir)
+int				handle_redirections(t_redirect *redir, int create_only)
 {
 	t_redirect	*save;
 
@@ -68,10 +71,8 @@ int				handle_redirections(t_redirect *redir)
 	while (redir && redir->value)
 	{
 		if (redir->type == TOKEN_REDIRO)
-		{
-			redirect_output(redir);
-		}
-		else if (redir->type == TOKEN_REDIRI)
+			redirect_output(redir, create_only);
+		else if (!create_only && redir->type == TOKEN_REDIRI)
 		{
 			if (redir->append)
 				apply_here_doc(redir);
@@ -80,7 +81,7 @@ int				handle_redirections(t_redirect *redir)
 		}
 		redir = redir->next;
 	}
-	if (!handle_aggregate(save))
+	if (!create_only && !handle_aggregate(save))
 		return (0);
 	return (1);
 }
