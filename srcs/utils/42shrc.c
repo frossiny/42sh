@@ -6,7 +6,7 @@
 /*   By: alagroy- <alagroy-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 03:03:15 by alagroy-          #+#    #+#             */
-/*   Updated: 2019/11/27 03:49:58 by alagroy-         ###   ########.fr       */
+/*   Updated: 2019/11/27 05:34:40 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,18 @@ static void	read_file(int fd)
 {
 	char	*line;
 	int		ret;
+	int		tmp;
 
+	tmp = g_shell.able_termcaps;
+	(&g_shell)->able_termcaps = 0;
 	while ((ret = get_next_line(fd, &line)) == 1)
 	{
 		eval_exec(&line, 0);
 		ft_strdel(&line);
 	}
 	if (ret == -1)
-		ft_dprintf(2, "Failed to load ~/.42shrc.\n");
+		ft_dprintf(2, "Failed to load ~/.42shrc\n");
+	(&g_shell)->able_termcaps = tmp;
 }
 
 void		load_42shrc(void)
