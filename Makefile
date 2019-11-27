@@ -6,11 +6,11 @@
 #    By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/19 17:28:40 by vsaltel           #+#    #+#              #
-#    Updated: 2019/11/19 17:45:40 by vsaltel          ###   ########.fr        #
+#    Updated: 2019/11/27 18:08:12 by vsaltel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC		=	gcc -g3 -fsanitize=address
+CC		=	gcc -g3 #-fsanitize=address
 CFLAGS	+=	-Wall -Werror -Wextra
 
 SHELL	=	bash
@@ -155,6 +155,7 @@ FILES	=	shell.c											\
 			termcaps/t_delete_right.c						\
 			termcaps/t_home.c								\
 			termcaps/t_end.c								\
+			termcaps/t_escape.c								\
 			termcaps/t_visual_mode.c						\
 			termcaps/t_visual_cut.c							\
 			termcaps/t_visual_paste.c						\
@@ -237,7 +238,6 @@ fclean: clean
 	@rm -f $(NAME)
 	@rm -rf $(OBJDIR)
 	@rm -rf $(NAME).dSYM
-	@rm -rf ~/.$(NAME)_history
 	@rm -rf /tmp/makefile_42sh
 
 re: fclean
@@ -253,5 +253,7 @@ check_error:
 
 tests: all
 	./tests/42ShellTester/42ShellTester.sh "$(PWD)/$(NAME)" --filter ${FILTER}
+pytest:
+	python3 ./tests/python_test/err.py ./tests/python_test/$(FILTER)
 
 -include $(OBJSD)

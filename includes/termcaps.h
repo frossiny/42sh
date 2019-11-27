@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 18:49:29 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/18 19:51:19 by alagroy-         ###   ########.fr       */
+/*   Updated: 2019/11/27 15:14:12 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@
 **	y; 			position y dans le shell
 **	x_min; 		position x apres le prompt dans le shell
 **	x_max; 		position x du dernier char de la ligne
-**	x_lastc; 	postion x du dernier char rentre dans le shell
-**	y_lastc; 	postion y du dernier char rentre dans le shell
+**	x_lastc; 	postion x du dernier char dans l'input
+**	y_lastc; 	postion y du dernier char dans l'input
 **	x_rel; 		postion x dans la string
 **	y_min; 		position y initiale de la ligne du prompt dans le shell
-**	y_max; 		position y de la derniere affichable dans le shell
+**	y_max; 		position y de la derniere ligne affichable dans le shell
 */
 
 typedef struct		s_cursor_pos
@@ -44,7 +44,7 @@ typedef struct		s_cursor_pos
 	int					visual_mode : 1;
 	long				v_beg;
 	char				*v_str;
-	int					search_mode : 1;
+	int					search_mode;
 	char				*s_str;
 }					t_cursor_pos;
 
@@ -91,6 +91,8 @@ t_histo_lst			*new_link(char *str);
 void				add_to_history(char *str, t_history *history);
 
 void				termcaps_completion(char **str, t_cursor_pos *pos,
+														t_shell *shell);
+void				termcaps_escape(char **str, t_cursor_pos *pos,
 														t_shell *shell);
 void				termcaps_up(char **str, t_cursor_pos *pos,
 														t_shell *shell);

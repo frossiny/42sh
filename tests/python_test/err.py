@@ -7,8 +7,11 @@ def execute_test(command, fi):
 	print("----- ", fi, ": ", end='')
 
 	before_test = ("").encode("UTF-8")
-	if (os.path.exists("./tests/before_test.err")):
-		before_test = open("./tests/before_test.err", "r").read().encode("UTF-8")
+	if (os.path.exists("./tests/python_test/before_test.err")):
+		before_test = open("./tests/python_test/before_test.err", "r").read().encode("UTF-8")
+	else:
+		print("need ./tests/python_test/before_test.err")
+		exit()
 
 	proc = subprocess.Popen("./42sh", stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
 	proc.stdin.write(before_test)
@@ -32,7 +35,6 @@ def execute_test(command, fi):
 			while shell_stderr[index_end].isdigit():
 				index_end = index_end + 1
 			shell_stderr = shell_stderr[0 : index] + shell_stderr[index_end + 2:]
-	#print(shell_stderr)
 
 	if shell_stdout[0] != proc_stdout[0] or shell_value != proc_value or proc_stderr != shell_stderr:
 		print("\033[31m[ERROR]\033[0m")
@@ -61,7 +63,7 @@ for arg in sys.argv:
 		show = 1
 	argc = argc + 1
 if argc < 2:
-	for r, d, f in os.walk("./tests"):
+	for r, d, f in os.walk("./tests/python_test"):
 		for file in f:
 			if ".t" in file and ".swp" not in file:
 				with open(os.path.join(r, file), "r") as content_file:

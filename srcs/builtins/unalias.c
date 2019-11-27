@@ -6,7 +6,7 @@
 /*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 16:48:26 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/13 14:06:57 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/11/27 18:43:13 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,9 @@ void			alias_del(t_alias **list, char *key)
 int				b_unalias(t_cmd *cmd, t_shell *shell)
 {
 	size_t	i;
-	size_t	unfined;
+	size_t	unfind;
 
-	unfined = 0;
+	unfind = 0;
 	i = 0;
 	while (cmd->args[++i])
 	{
@@ -64,11 +64,11 @@ int				b_unalias(t_cmd *cmd, t_shell *shell)
 			alias_del(&(shell->alias), cmd->args[i]);
 		else
 		{
-			ft_printf("42sh: unalias: %s: not found\n", cmd->args[i]);
-			unfined++;
+			ft_dprintf(2, "42sh: unalias: %s: not found\n", cmd->args[i]);
+			unfind++;
 		}
 	}
-	if (unfined)
+	if (unfind)
 		return (1);
 	return (0);
 }

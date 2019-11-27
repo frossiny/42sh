@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 16:54:50 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/16 14:18:46 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/26 15:40:47 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,37 +15,27 @@
 
 void	inexistant(char *name)
 {
-	write(2, "42sh: no such file or directory: ", 33);
-	write(2, name, ft_strlen(name));
-	ft_putchar_fd('\n', 2);
+	ft_dprintf(2, "42sh: %s: no such file or directory\n", name);
 }
 
 void	not_found(char *name)
 {
-	write(2, "42sh: command not found: ", 25);
-	write(2, name, ft_strlen(name));
-	ft_putchar_fd('\n', 2);
+	ft_dprintf(2, "42sh: %s: command not found\n", name);
 }
 
 int		permission_denied(char *name)
 {
-	write(2, "42sh: permission denied: ", 25);
-	write(2, name, ft_strlen(name));
-	ft_putchar_fd('\n', 2);
+	ft_dprintf(2, "42sh: %s: permission denied\n", name);
 	return (126);
 }
 
 void	no_user(char *name)
 {
-	write(2, "42sh: no such user or named directory: ", 39);
-	write(2, name, ft_strlen(name));
-	ft_putchar_fd('\n', 2);
+	ft_dprintf(2, "42sh: %s: no such user or named directory\n", name);
 }
 
 int		is_directory_err(char *name)
 {
-	write(2, "42sh: ", 6);
-	write(2, name, ft_strlen(name));
-	write(2, ": is a directory\n", 17);
+	ft_dprintf(2, "42sh: %s: is a directory\n", name);
 	return (126);
 }
