@@ -1,4 +1,4 @@
 expected_to_not be_empty
-expected_to match_regex "^42sh: command not found: ls"
-expected_to match_regex "^-A$"
+expected_to match_regex "^42sh: ls$"
+expected_to match_regex "^-A: command not found$"
 expected_to have_nb_of_lines 2
