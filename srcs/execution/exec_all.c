@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reader.c                                           :+:      :+:    :+:   */
+/*   exec_all.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 15:17:59 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/21 16:47:57 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/28 11:35:42 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+#include "execution.h"
 
 static int	is_pipe_node(t_anode *node)
 {
@@ -32,30 +33,30 @@ static int	parse_condition(int *ret, t_anode *cond)
 	{
 		if (*ret != 0)
 			return (1);
-		*ret = execute(cond->right->cmd);
+		*ret = exec_command(cond->right->cmd);
 		return (1);
 	}
 	else if (cond->ope->type == TOKEN_OR)
 	{
 		if (*ret == 0)
 			return (1);
-		*ret = execute(cond->right->cmd);
+		*ret = exec_command(cond->right->cmd);
 		return (1);
 	}
 	else
 		return (1);
 }
 
-int			reader(t_shell *shell, t_anode *ast)
+int			exec_all(t_shell *shell, t_anode *ast)
 {
 	while (ast->left)
 		ast = ast->left;
 	while (ast)
 	{
 		if (!ast->ope && !is_pipe_node(ast->parent))
-			g_return = execute(ast->cmd);
+			g_return = exec_command(ast->cmd);
 		else if (is_pipe_node(ast->parent))
-			g_return = execute_pipes(ast, shell, &ast);
+			g_return = exec_pipes(ast, shell, &ast);
 		else if (is_cond_node(ast))
 		{
 			if (!parse_condition(&g_return, ast))

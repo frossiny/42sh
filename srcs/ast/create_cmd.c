@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 13:23:37 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/27 17:34:13 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/28 11:04:22 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "lexer.h"
 #include "ast.h"
 #include "expansion.h"
+#include "jobcontrol.h"
 
 static void		parse_assignements(t_cmd *cmd, t_token **exe)
 {

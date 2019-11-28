@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 10:48:51 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/27 18:49:09 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/28 10:39:15 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	job_delete(t_shell *shell, int pid)
 			if (shell->jobs.last_job == curr)
 				shell->jobs.last_job = NULL;
 			free(curr);
+			shell->jobs.index--;
 			break ;
 		}
 		curr = next;

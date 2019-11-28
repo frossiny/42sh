@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipeline.c                                         :+:      :+:    :+:   */
+/*   exec_pipeline.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 20:28:42 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/27 17:28:10 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/28 11:55:32 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
-#include "libft.h"
 #include "shell.h"
+#include "execution.h"
 #include "ast.h"
 #include "builtins.h"
 
@@ -45,7 +45,7 @@ static void		init_redirect_output(t_redirect *redir)
 	close(fd);
 }
 
-t_pipel			*build_pipeline(t_anode *node, t_shell *shell, t_anode **cn)
+t_pipel			*exec_build_pipeline(t_anode *node, t_shell *shell, t_anode **cn)
 {
 	t_pipel	*pipel;
 	t_pipel *curr;
@@ -66,7 +66,7 @@ t_pipel			*build_pipeline(t_anode *node, t_shell *shell, t_anode **cn)
 	return (pipel);
 }
 
-void			del_pipeline(t_pipel *pline)
+void			exec_del_pipeline(t_pipel *pline)
 {
 	t_pipel		*next;
 

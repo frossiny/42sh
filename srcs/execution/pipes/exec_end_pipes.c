@@ -1,29 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   assign_vars.c                                      :+:      :+:    :+:   */
+/*   exec_end_pipes.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/26 14:04:58 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/26 14:05:51 by frossiny         ###   ########.fr       */
+/*   Created: 2019/11/28 11:42:11 by frossiny          #+#    #+#             */
+/*   Updated: 2019/11/28 11:56:22 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
-#include "variables.h"
-#include "ast.h"
+#include "execution.h"
 
-int		assign_vars(t_cmd *cmd)
+void	exec_end_pipes(t_childs *childs, t_fd *fd)
 {
-	t_var	*cur;
+	int		ret;
 
-	cur = cmd->tenv;
-	while (cur)
+	while (childs)
 	{
-		var_set(&(g_shell.vars), cur->key, cur->value, 0);
-		cur = cur->next;
+		waitpid(childs->pid, &ret, 0);
+		if (!childs->next)
+		{
+			if (WIFSIGNALED(ret))
+				g_return = display_signal(ret);
+			else
+				g_return = WEXITSTATUS(ret);
+		}
+		childs = childs->next;
 	}
-	var_destroy(&(cmd->tenv));
-	return (0);
+	g_shell.able_termcaps ? termcaps_init(NULL) : 0;
+	g_child = 0;
+	close(fd->np[0]);
+	close(fd->np[1]);
+	close(fd->op[0]);
+	close(fd->op[1]);
 }

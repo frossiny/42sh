@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executables.c                                      :+:      :+:    :+:   */
+/*   exec_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:26:37 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/27 18:48:41 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/28 11:38:20 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
 #include "ast.h"
-#include "reader.h"
+#include "execution.h"
 #include "utils.h"
 #include "hashtable.h"
 #include "builtins.h"
@@ -26,36 +26,13 @@ static int	exe_specials(t_cmd *cmd)
 	if (!cmd)
 		return (1);
 	if (cmd->tenv)
-		ret = assign_vars(cmd);
+		ret = exec_assign_vars(cmd);
 	if (cmd->redir)
 	{
 		if (!get_here_doc(cmd->redir, &g_shell))
 			return (EXIT_FAILURE);
 		handle_redirections(cmd->redir, 1);
 		close_here_docs(cmd->redir);
-	}
-	return (ret);
-}
-
-#include <stdio.h>
-
-char	*reconstruct_command_jobs(char **command)
-{
-	int		i;
-	int		e;
-	char	*ret;
-
-	i = 0;
-	e = 0;
-	while (command[e])
-		i += ft_strlen(command[e++]) + 1;
-	if (!(ret = ft_strnew(i)))
-		return (NULL);
-	e = 0;
-	while (command[e])
-	{
-		ft_strcat(ret, command[e++]);
-		ft_strcat(ret, " ");
 	}
 	return (ret);
 }
@@ -71,7 +48,6 @@ static int	start_process(char *file, t_cmd *cmd, char **env)
 	{
 		g_shell.jobs.last_job->pid = g_child;
 		ft_printf("[%d] %d\n", g_shell.jobs.last_job->job_number, g_child);
-		g_shell.jobs.last_job->command = reconstruct_command_jobs(cmd->args);
 	}
 	if (!g_child)
 	{
@@ -114,7 +90,7 @@ static int	start(t_cmd *cmd, char **env)
 	return (ret);
 }
 
-int			execute(t_cmd *cmd)
+int			exec_command(t_cmd *cmd)
 {
 	int		ret;
 	char	**env;

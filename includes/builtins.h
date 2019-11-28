@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:40:21 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/26 13:20:13 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/28 11:54:01 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,11 @@ void		delete_elem_hist(t_history *hist, t_histo_lst *elem);
 */
 int			*get_default_array(t_shell *shell, int *size);
 int			*build_options(t_shell *shell, t_cmd *cmd, int *size);
+
+/*
+**	Utils functions
+*/
+void		restore_fd(int fd[]);
 
 static const t_builtin g_builtins[] =
 {

@@ -1,34 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prompt.c                                           :+:      :+:    :+:   */
+/*   exec_assign_vars.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/05/01 14:41:10 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/28 10:43:29 by frossiny         ###   ########.fr       */
+/*   Created: 2019/11/26 14:04:58 by frossiny          #+#    #+#             */
+/*   Updated: 2019/11/28 11:25:18 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
 #include "shell.h"
-#include "jobcontrol.h"
+#include "variables.h"
+#include "ast.h"
 
-void	prompt(void)
+int		exec_assign_vars(t_cmd *cmd)
 {
-	if (!isatty(0))
-		return ;
-	if (g_ignore_signals == 0)
-		ft_printf("\033[1;%dm$> \033[0m", g_return ? 31 : 32);
-	else if (g_ignore_signals == 1)
-		ft_printf("> ");
-}
+	t_var	*cur;
 
-int		prompt_len(void)
-{
-	if (g_ignore_signals == 0)
-		return (ft_strlen("$> "));
-	else if (g_ignore_signals == 1)
-		return (ft_strlen("> "));
+	cur = cmd->tenv;
+	while (cur)
+	{
+		var_set(&(g_shell.vars), cur->key, cur->value, 0);
+		cur = cur->next;
+	}
+	var_destroy(&(cmd->tenv));
 	return (0);
 }

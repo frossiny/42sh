@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   child_add.c                                        :+:      :+:    :+:   */
+/*   exec_child_add.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/28 16:58:30 by frossiny          #+#    #+#             */
-/*   Updated: 2019/05/29 16:09:51 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/11/28 11:25:46 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-t_childs	*child_add(t_childs **childs, int pid)
+t_childs	*exec_child_add(t_childs **childs, int pid)
 {
 	t_childs	*curr;
 	t_childs	*new;
@@ -33,7 +33,7 @@ t_childs	*child_add(t_childs **childs, int pid)
 	return (new);
 }
 
-void		child_del(t_childs *childs)
+void		exec_child_del(t_childs *childs)
 {
 	t_childs *list;
 

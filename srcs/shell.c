@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:05:59 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/27 17:27:20 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/28 11:36:47 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "ast.h"
 #include "alias.h"
 #include "hashtable.h"
+#include "execution.h"
 
 static int		bslash_error(t_shell *shell, char **input, int ret)
 {
@@ -109,7 +110,7 @@ int		eval_exec(char **input, int history)
 			return (1);
 		ft_strdel(input);
 		ast_build(&g_shell);
-		g_shell.ast ? ret = reader(&g_shell, g_shell.ast) : 0;
+		g_shell.ast ? ret = exec_all(&g_shell, g_shell.ast) : 0;
 		lexer_free(&(g_shell.lexer));
 		ast_destroy(&g_shell);
 	}

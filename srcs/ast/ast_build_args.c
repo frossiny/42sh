@@ -6,15 +6,16 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/04 16:14:27 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/27 17:27:52 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/28 11:17:10 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
-#include "reader.h"
+#include "execution.h"
 #include "lexer.h"
 #include "expansion.h"
+#include "jobcontrol.h"
 
 static int	is_arg(t_token *token)
 {
@@ -73,5 +74,6 @@ int			ast_build_args(t_cmd *cmd)
 		return (-1);
 	cmd->argc = build_args_arr(&argv, cmd->exe);
 	cmd->args = argv;
+	cmd->is_bg ? job_new(cmd) : 0;
 	return (cmd->argc);
 }

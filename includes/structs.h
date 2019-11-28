@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 14:23:53 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/27 18:15:28 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/28 10:42:08 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -279,7 +279,6 @@ typedef struct		s_jobs_lst
 
 typedef struct		s_jobs
 {
-	size_t			is_jobs;
 	size_t			index;
 	t_jobs_lst		*lst;
 	t_jobs_lst		*last_job;

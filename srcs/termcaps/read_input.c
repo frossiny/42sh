@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 19:12:36 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/27 18:50:00 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/28 10:44:22 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <term.h>
 #include <termios.h>
 #include "get_next_line.h"
+#include "jobcontrol.h"
 #include "shell.h"
 
 static void	new_entry(char **str, char *buf, t_cursor_pos *pos
@@ -93,6 +94,7 @@ int			get_input(int fd, char **dest, t_shell *shell)
 {
 	int				ret;
 
+	job_check_status();
 	g_clear_buffer = 0;
 	*dest = NULL;
 	if (shell->able_termcaps)

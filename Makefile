@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/11/27 18:51:18 by frossiny         ###   ########.fr        #
+#    Updated: 2019/11/28 11:51:39 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,6 +71,19 @@ FILES	=	shell.c											\
 			builtins/options/opt_add.c						\
 			builtins/options/opt_get.c						\
 			builtins/options/opt_free.c			 			\
+			execution/exec_all.c							\
+			execution/exec_redirections.c					\
+			execution/exec_command.c						\
+			execution/exec_here_doc.c						\
+			execution/exec_utils.c							\
+			execution/pipes/exec_pipes.c					\
+			execution/pipes/exec_pipe_builtin.c				\
+			execution/pipes/exec_pipe_cmd.c					\
+			execution/pipes/exec_pipeline.c					\
+			execution/pipes/exec_end_pipes.c				\
+			execution/pipes/exec_get_pipes_docs.c			\
+			execution/exec_child_add.c						\
+			execution/exec_assign_vars.c					\
 			expansion/tilde.c								\
 			expansion/expansion.c							\
 			expansion/exp_join.c							\
@@ -115,10 +128,11 @@ FILES	=	shell.c											\
 			hashtable/ht_put.c								\
 			hashtable/ht_get.c								\
 			hashtable/ht_exists.c							\
-			jobcontrol/job_create.c							\
+			jobcontrol/job_new.c							\
 			jobcontrol/job_delete.c							\
 			jobcontrol/job_destroy_all.c					\
 			jobcontrol/job_check_status.c					\
+			jobcontrol/job_get_command.c					\
 			lexer/lexer.c									\
 			lexer/lex_free.c								\
 			lexer/lex_search.c								\
@@ -149,16 +163,6 @@ FILES	=	shell.c											\
 			parser/types/jobs.c								\
 			parser/types/semic.c							\
 			parser/types/conditions.c						\
-			reader/reader.c									\
-			reader/pipe.c									\
-			reader/pipeline.c								\
-			reader/redirections.c							\
-			reader/executables.c							\
-			reader/here_doc.c								\
-			reader/get_pipes_docs.c							\
-			reader/exec_utils.c								\
-			reader/child_add.c								\
-			reader/assign_vars.c							\
 			termcaps/read_input.c							\
 			termcaps/read_utils.c							\
 			termcaps/termcaps.c								\
