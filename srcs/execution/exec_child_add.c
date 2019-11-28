@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/28 16:58:30 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/28 11:25:46 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/28 14:18:30 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@ t_childs	*exec_child_add(t_childs **childs, int pid)
 
 void		exec_child_del(t_childs *childs)
 {
-	t_childs *list;
+	t_childs *next;
 
 	while (childs)
 	{
-		list = childs->next;
+		next = childs->next;
 		free(childs);
-		childs = list;
+		childs = next;
 	}
 }

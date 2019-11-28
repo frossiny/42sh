@@ -6,11 +6,11 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 10:48:51 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/28 10:39:15 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/28 15:18:30 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "jobcontrol.h"
 
 void	job_delete(t_shell *shell, int pid)
 {
@@ -31,7 +31,7 @@ void	job_delete(t_shell *shell, int pid)
 				shell->jobs.lst = next;
 			if (shell->jobs.last_job == curr)
 				shell->jobs.last_job = NULL;
-			free(curr);
+			job_free(curr);
 			shell->jobs.index--;
 			break ;
 		}

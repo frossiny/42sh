@@ -1,31 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   job_destroy_all.c                                  :+:      :+:    :+:   */
+/*   exec_del_pipeline.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/21 10:49:02 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/28 14:18:08 by frossiny         ###   ########.fr       */
+/*   Created: 2019/11/28 15:34:05 by frossiny          #+#    #+#             */
+/*   Updated: 2019/11/28 15:38:32 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "variables.h"
 #include "execution.h"
 
-void	jobs_destroy_all(t_shell *shell)
+void	exec_del_pipeline(t_pipel *pline)
 {
-	t_jobs_lst *curr;
+	t_pipel		*next;
 
-	while (shell->jobs.lst)
+	while (pline && pline->previous)
+		pline = pline->previous;
+	while (pline)
 	{
-		curr = shell->jobs.lst;
-		shell->jobs.lst = shell->jobs.lst->next;
-		exec_child_del(curr->childs);
-		free(curr);
+		next = pline->next;
+		close_here_docs(pline->cmd->redir);
+		var_destroy(&(pline->cmd->tenv));
+		free(pline);
+		pline = next;
 	}
-	shell->jobs.lst = NULL;
-	shell->jobs.minus = NULL;
-	shell->jobs.plus = NULL;
-	shell->jobs.last_job = NULL;
-	shell->jobs.index = 0;
 }

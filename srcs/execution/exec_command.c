@@ -6,36 +6,16 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:26:37 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/28 11:38:20 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/28 15:47:30 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "shell.h"
 #include "ast.h"
 #include "execution.h"
 #include "utils.h"
-#include "hashtable.h"
 #include "builtins.h"
-
-static int	exe_specials(t_cmd *cmd)
-{
-	int		ret;
-
-	ret = 0;
-	if (!cmd)
-		return (1);
-	if (cmd->tenv)
-		ret = exec_assign_vars(cmd);
-	if (cmd->redir)
-	{
-		if (!get_here_doc(cmd->redir, &g_shell))
-			return (EXIT_FAILURE);
-		handle_redirections(cmd->redir, 1);
-		close_here_docs(cmd->redir);
-	}
-	return (ret);
-}
+#include "jobcontrol.h"
 
 static int	start_process(char *file, t_cmd *cmd, char **env)
 {
@@ -43,21 +23,17 @@ static int	start_process(char *file, t_cmd *cmd, char **env)
 
 	if (!get_here_doc(cmd->redir, &g_shell))
 		return (EXIT_FAILURE);
-	g_child = fork();
-	if (cmd->is_bg && g_child)
-	{
-		g_shell.jobs.last_job->pid = g_child;
-		ft_printf("[%d] %d\n", g_shell.jobs.last_job->job_number, g_child);
-	}
+	if ((g_child = fork()) > 0 && cmd->is_bg)
+		job_new(cmd, g_child);
 	if (!g_child)
 	{
 		unregister_signals();
-		!cmd->is_bg && g_shell.able_termcaps ? restore_shell(g_shell.prev_term) : 0;
+		if (!cmd->is_bg && g_shell.able_termcaps)
+			restore_shell(g_shell.prev_term);
 		cmd->is_bg ? setpgid(0, 0) : 0;
 		handle_redirections(cmd->redir, 0);
 		if (execve(file, cmd->args, env) == -1)
 			exit(EXIT_FAILURE);
-		exit(EXIT_SUCCESS);
 	}
 	close_here_docs(cmd->redir);
 	if (g_child == -1)
