@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:40:21 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/28 11:54:01 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/28 13:45:35 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int			b_alias(t_cmd *cmd, t_shell *shell);
 int			b_unalias(t_cmd *cmd, t_shell *shell);
 int			b_hash(t_cmd *cmd, t_shell *shell);
 int			b_jobs(t_cmd *cmd, t_shell *shell);
+int			b_fg(t_cmd *cmd, t_shell *shell);
 
 /*
 ** Cd internal functions
@@ -54,9 +55,8 @@ void		delete_elem_hist(t_history *hist, t_histo_lst *elem);
 /*
 ** Jobs internal functions
 */
-int			*get_default_array(t_shell *shell, int *size);
-int			*build_options(t_shell *shell, t_cmd *cmd, int *size);
-
+int			job_check_valid_number(t_shell *shell, t_cmd *cmd, int j);
+int			handle_job_percent(char *percent);
 /*
 **	Utils functions
 */
@@ -76,6 +76,7 @@ static const t_builtin g_builtins[] =
 	{ "history", &b_history},
 	{ "hash", &b_hash},
 	{ "jobs", &b_jobs},
+	{ "fg", &b_fg},
 	{ NULL, NULL }
 };
 

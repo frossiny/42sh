@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:05:36 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/27 18:18:59 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/28 14:27:42 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ int		print_job(t_shell *shell, int options, int job_number)
 	t_jobs_lst		*jobs;
 
 	jobs = shell->jobs.lst;
+	if (!job_number)
+		return (0);
 	while (jobs)
 	{
 		if (jobs->job_number == job_number)
@@ -56,20 +58,32 @@ int		print_job(t_shell *shell, int options, int job_number)
 	return (0);
 }
 
-int		print_jobs(t_shell *shell, t_cmd *cmd, t_options *opts, int options)
+int		print_jobs(t_shell *shell, t_cmd *cmd, t_options *opts, int opti)
 {
-	int			job_number;
-	int			*default_array;
-	int			size;
+	int			job_num;
+	t_jobs_lst	*display;
 
-	job_number = 0;
-	default_array = (cmd->argc - opts->last) ? build_options(shell, cmd, &size)
-	: get_default_array(shell, &size);
-	if (!default_array)
-		return (1);
-	while (job_number != size)
-		print_job(shell, options, default_array[job_number++]);
-	free(default_array);
+	job_num = 1;
+	display = shell->jobs.lst;
+	if (cmd->argc - opts->last)
+	{
+		while (cmd->args[job_num])
+		{
+			if (cmd->args[job_num][0] == '%')
+				print_job(shell, opti, handle_job_percent(cmd->args[job_num]));
+			else if (job_check_valid_number(shell, cmd, job_num))
+				print_job(shell, opti, ft_atoi(cmd->args[job_num]));
+			job_num++;
+		}
+	}
+	else
+	{
+		while (display)
+		{
+			print_job(shell, opti, display->job_number);
+			display = display->next;
+		}
+	}
 	return (0);
 }
 
