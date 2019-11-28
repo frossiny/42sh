@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 12:10:28 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/28 15:11:54 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/28 16:21:37 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,41 +25,40 @@ int		job_check_valid_number(t_shell *shell, t_cmd *cmd, int j)
 	return (1);
 }
 
-int		handle_job_percent_alpha(char *args)
+int		handle_job_percent_alpha(char *args, char *builtin)
 {
 	int			number;
-	char		*extracted_char;
+	char		*extract_char;
 	t_jobs_lst	*jobs;
 	int			occurence;
 
 	number = 0;
 	occurence = 0;
 	jobs = g_shell.jobs.lst;
-	if (args[1] == '?')
-		extracted_char = ft_strsub(args, 2, ft_strlen(args));
-	else
-		extracted_char = ft_strsub(args, 1, ft_strlen(args));
+	extract_char = (args[1] == '?') ? ft_strsub(args, 2, ft_strlen(args))
+	: ft_strsub(args, 1, ft_strlen(args));
 	while (jobs)
 	{
 		if (occurence > 0 || (args[1] == '?' && !args[2]))
 		{
-			ft_dprintf(2, "42sh: jobs: %s: ambiguous job spec\n",
-			extracted_char);
+			ft_dprintf(2, "42sh: %s: %s: ambiguous job spec\n", builtin ,extract_char);
 			number = -1;
 			break ;
 		}
-		if ((args[1] != '?' && !ft_strncmp(jobs->command, extracted_char, ft_strlen(extracted_char))) || (args[1] == '?' && ft_strstr(jobs->command, extracted_char)))
+		if ((args[1] != '?'
+		&& !ft_strncmp(jobs->command, extract_char, ft_strlen(extract_char)))
+		|| (args[1] == '?' && ft_strstr(jobs->command, extract_char)))
 		{
 			number = jobs->job_number;
 			occurence++;
 		}
 		jobs = jobs->next;
 	}
-	ft_strdel(&extracted_char);
+	ft_strdel(&extract_char);
 	return (number);
 }
 
-int		handle_job_percent(char *args)
+int		job_percent(char *args, char *builtin)
 {
 	char	*extracted_number;
 	int		converted_number;
@@ -69,7 +68,7 @@ int		handle_job_percent(char *args)
 	else if (args[1] == '-')
 		converted_number = g_shell.jobs.minus->job_number;
 	else if (ft_isalpha(args[1]) || args[1] == '?')
-		converted_number = handle_job_percent_alpha(args);
+		converted_number = handle_job_percent_alpha(args, builtin);
 	else
 	{
 		extracted_number = ft_strsub(args, 1, ft_strlen(args));
@@ -80,7 +79,7 @@ int		handle_job_percent(char *args)
 		return (0);
 	if (converted_number >= (int)g_shell.jobs.index || !converted_number)
 	{
-		ft_dprintf(2, "42sh: jobs: %s: no such job\n", args);
+		ft_dprintf(2, "42sh: %s: %s: no such job\n", builtin ,args);
 		return (0);
 	}
 	return (converted_number);

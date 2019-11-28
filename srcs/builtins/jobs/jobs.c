@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:05:36 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/28 14:27:42 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/28 16:20:15 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int		print_jobs(t_shell *shell, t_cmd *cmd, t_options *opts, int opti)
 		while (cmd->args[job_num])
 		{
 			if (cmd->args[job_num][0] == '%')
-				print_job(shell, opti, handle_job_percent(cmd->args[job_num]));
+				print_job(shell, opti, job_percent(cmd->args[job_num], "jobs"));
 			else if (job_check_valid_number(shell, cmd, job_num))
 				print_job(shell, opti, ft_atoi(cmd->args[job_num]));
 			job_num++;
@@ -97,7 +97,8 @@ int		b_jobs(t_cmd *cmd, t_shell *shell)
 		if (opts->ret != 0)
 			(opts->ret == -1 ? ft_putendl_fd("Usage: jobs [-l|-p] [job_id...]"
 			, 2) : 0);
-		print_jobs(shell, cmd, opts, handle_options(opts));
+		else
+			print_jobs(shell, cmd, opts, handle_options(opts));
 		opt_free(opts);
 	}
 	return (0);

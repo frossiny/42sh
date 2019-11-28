@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/11/28 12:17:48 by lubenard         ###   ########.fr        #
+#    Updated: 2019/11/28 18:01:03 by lubenard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -134,6 +134,7 @@ FILES	=	shell.c											\
 			jobcontrol/job_destroy_all.c					\
 			jobcontrol/job_check_status.c					\
 			jobcontrol/job_get_command.c					\
+			jobcontrol/job_search.c							\
 			lexer/lexer.c									\
 			lexer/lex_free.c								\
 			lexer/lex_search.c								\

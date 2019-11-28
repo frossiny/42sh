@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:40:21 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/28 13:45:35 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/28 16:20:22 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void		delete_elem_hist(t_history *hist, t_histo_lst *elem);
 ** Jobs internal functions
 */
 int			job_check_valid_number(t_shell *shell, t_cmd *cmd, int j);
-int			handle_job_percent(char *percent);
+int			job_percent(char *percent, char *builtins);
 /*
 **	Utils functions
 */
