@@ -6,25 +6,33 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 17:37:47 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/28 12:01:32 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/28 15:21:52 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 #include "jobcontrol.h"
 
-/* static void debug(void)
+static void	check_pids(t_jobs_lst *job, int *status)
 {
-	t_jobs_lst	*jobs = g_shell.jobs.lst;
-	while (jobs)
-	{
-		ft_printf("Still running: [%d] %d %s\n",
-			jobs->job_number, jobs->pid, jobs->command);
-		jobs = jobs->next;
-	}
-}*/
+	t_childs	*tmp;
 
-void	job_check_status(void)
+	if (!job)
+		return ;
+	if (job->childs)
+	{
+		tmp = job->childs;
+		while (tmp)
+		{
+			waitpid(tmp->pid, status, WNOHANG);
+			tmp = tmp->next;
+		}
+	}
+	else
+		waitpid(job->pid, status, WNOHANG);
+}
+
+void		job_check_status(void)
 {
 	t_jobs_lst	*jobs;
 	t_jobs_lst	*next;
@@ -32,11 +40,10 @@ void	job_check_status(void)
 
 	if (!(jobs = g_shell.jobs.lst))
 		return ;
-	// debug();
 	while (jobs)
 	{
 		next = jobs->next;
-		waitpid(jobs->pid, &status, WNOHANG);
+		check_pids(jobs, &status);
 		if (WIFEXITED(status))
 		{
 			ft_printf("[%d]%c Done %s\n",

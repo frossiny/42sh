@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 14:23:53 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/28 10:42:08 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/29 11:23:52 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,6 +235,7 @@ typedef struct		s_fd
 typedef struct		s_childs
 {
 	int				pid;
+	t_cmd			*cmd;
 	struct s_childs	*next;
 }					t_childs;
 
@@ -273,6 +274,7 @@ typedef struct		s_jobs_lst
 	char				current;
 	char				*state;
 	char				*command;
+	t_childs			*childs;
 	struct s_jobs_lst	*prev;
 	struct s_jobs_lst	*next;
 }					t_jobs_lst;
@@ -338,6 +340,7 @@ typedef struct		s_shell
 	t_jobs			jobs;
 	t_history		history;
 	int				able_termcaps;
+	int				stopped_jobs;
 	struct termios	prev_term;
 }					t_shell;
 

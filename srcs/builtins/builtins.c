@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 14:03:28 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/28 11:37:23 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/29 10:46:03 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ int					handle_builtin(t_cmd *cmd, t_shell *shell)
 
 	if (!cmd->exe || !cmd->exe->content)
 		return (-1);
+	if (cmd->is_bg)
+		return (exec_fork_builtin(cmd));
 	if (!(builtin = get_builtin(cmd->exe->content)).func)
 		return (-1);
 	if (cmd->redir)

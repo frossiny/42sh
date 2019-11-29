@@ -1,31 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   job_destroy_all.c                                  :+:      :+:    :+:   */
+/*   exec_is_pipe_bg.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/21 10:49:02 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/29 11:31:29 by frossiny         ###   ########.fr       */
+/*   Created: 2019/11/28 13:31:42 by frossiny          #+#    #+#             */
+/*   Updated: 2019/11/28 15:08:20 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-void	jobs_destroy_all(t_shell *shell)
+int		exec_is_pipe_bg(t_pipel *pipeline)
 {
-	t_jobs_lst *curr;
-
-	while (shell->jobs.lst)
-	{
-		curr = shell->jobs.lst;
-		shell->jobs.lst = shell->jobs.lst->next;
-		exec_child_del(curr->childs);
-		free(curr);
-	}
-	shell->jobs.lst = NULL;
-	shell->jobs.minus = NULL;
-	shell->jobs.plus = NULL;
-	shell->jobs.last_job = NULL;
-	shell->jobs.index = 0;
+	if (!pipeline)
+		return (0);
+	while (pipeline->next)
+		pipeline = pipeline->next;
+	return (pipeline->cmd && pipeline->cmd->is_bg);
 }

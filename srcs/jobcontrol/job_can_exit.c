@@ -1,31 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   job_destroy_all.c                                  :+:      :+:    :+:   */
+/*   job_can_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/21 10:49:02 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/29 11:31:29 by frossiny         ###   ########.fr       */
+/*   Created: 2019/11/29 11:23:26 by frossiny          #+#    #+#             */
+/*   Updated: 2019/11/29 11:26:25 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
+#include "shell.h"
+#include "jobcontrol.h"
 
-void	jobs_destroy_all(t_shell *shell)
+int		job_can_exit(void)
 {
-	t_jobs_lst *curr;
+	t_jobs_lst	*jobs;
 
-	while (shell->jobs.lst)
+	if (!(jobs = g_shell.jobs.lst))
+		return (1);
+	while (jobs)
 	{
-		curr = shell->jobs.lst;
-		shell->jobs.lst = shell->jobs.lst->next;
-		exec_child_del(curr->childs);
-		free(curr);
+		if (ft_strequ(jobs->state, "Stopped"))
+			return (0);
+		jobs = jobs->next;
 	}
-	shell->jobs.lst = NULL;
-	shell->jobs.minus = NULL;
-	shell->jobs.plus = NULL;
-	shell->jobs.last_job = NULL;
-	shell->jobs.index = 0;
+	return (1);
 }

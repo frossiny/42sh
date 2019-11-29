@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 15:36:57 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/27 17:29:13 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/29 11:05:53 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static void	free_cmd(t_cmd *cmd)
 	{
 		next = cmd->redir->next;
 		free(cmd->redir);
+		var_destroy(&(cmd->tenv));
 		cmd->redir = next;
 	}
 	free(cmd);

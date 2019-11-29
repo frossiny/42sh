@@ -1,31 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   job_destroy_all.c                                  :+:      :+:    :+:   */
+/*   exec_pipeline_alloc.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/21 10:49:02 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/29 11:31:29 by frossiny         ###   ########.fr       */
+/*   Created: 2019/11/28 15:35:53 by frossiny          #+#    #+#             */
+/*   Updated: 2019/11/28 15:37:54 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "shell.h"
+#include "ast.h"
 #include "execution.h"
 
-void	jobs_destroy_all(t_shell *shell)
+t_pipel		*exec_pipeline_alloc(t_pipel *prev, t_cmd *cmd, t_shell *shell)
 {
-	t_jobs_lst *curr;
+	t_pipel		*new;
 
-	while (shell->jobs.lst)
-	{
-		curr = shell->jobs.lst;
-		shell->jobs.lst = shell->jobs.lst->next;
-		exec_child_del(curr->childs);
-		free(curr);
-	}
-	shell->jobs.lst = NULL;
-	shell->jobs.minus = NULL;
-	shell->jobs.plus = NULL;
-	shell->jobs.last_job = NULL;
-	shell->jobs.index = 0;
+	if (!cmd || !(new = (t_pipel *)malloc(sizeof(t_pipel))))
+		return (NULL);
+	if (ast_build_args(cmd, shell->vars) == -1)
+		return (NULL);
+	var_merge(&(cmd->tenv), g_shell.vars);
+	cmd->redir = parse_redirections(cmd->tokens);
+	new->cmd = cmd;
+	new->previous = prev;
+	new->next = NULL;
+	return (new);
 }

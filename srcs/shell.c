@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:05:59 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/28 11:36:47 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/29 11:32:58 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,11 @@ int		shell(void)
 	}
 	if (input)
 		ft_strdel(&input);
+	if (g_shell.jobs.lst)
+	{
+		ft_printf("There are stopped jobs.\n");
+		return (shell());
+	}
 	isatty(0) ? ft_putchar('\n') : 0;
 	var_destroy(&(g_shell.vars));
 	alias_free_all(&(g_shell.alias));

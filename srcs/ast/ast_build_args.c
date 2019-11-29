@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/04 16:14:27 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/28 11:17:10 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/28 13:50:25 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,5 @@ int			ast_build_args(t_cmd *cmd)
 		return (-1);
 	cmd->argc = build_args_arr(&argv, cmd->exe);
 	cmd->args = argv;
-	cmd->is_bg ? job_new(cmd) : 0;
 	return (cmd->argc);
 }
