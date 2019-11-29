@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 12:10:28 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/28 16:21:37 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/29 13:12:31 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 int		job_check_valid_number(t_shell *shell, t_cmd *cmd, int j)
 {
 	if (!ft_atoi(cmd->args[j])
-	|| ft_atoi(cmd->args[j]) >= (int)shell->jobs.index)
+	|| ft_atoi(cmd->args[j]) >= (int)shell->jobs.len)
 	{
 		ft_dprintf(2, "42sh: jobs: %s: no such job\n", cmd->args[j]);
 		return (0);
@@ -77,7 +77,7 @@ int		job_percent(char *args, char *builtin)
 	}
 	if (converted_number == -1)
 		return (0);
-	if (converted_number >= (int)g_shell.jobs.index || !converted_number)
+	if (converted_number >= (int)g_shell.jobs.len || !converted_number)
 	{
 		ft_dprintf(2, "42sh: %s: %s: no such job\n", builtin ,args);
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 10:48:31 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/29 11:44:00 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/29 13:20:27 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,18 @@ static void			jobs_insert(t_jobs_lst *job)
 		job->next = NULL;
 		curr->next = job;
 	}
-	if (g_shell.jobs.index > 3)
+	if (g_shell.jobs.len > 2)
 		g_shell.jobs.last_job->prev->current = ' ';
-	if (g_shell.jobs.index > 2)
+	if (g_shell.jobs.len > 1)
 	{
 		g_shell.jobs.minus = g_shell.jobs.last_job;
 		g_shell.jobs.last_job->current = '-';
 	}
-	if (g_shell.jobs.index == 2)
+	if (g_shell.jobs.len == 1)
 		g_shell.jobs.minus = job;
 	g_shell.jobs.last_job = job;
 	g_shell.jobs.plus = job;
+	g_shell.jobs.len++;
 }
 
 static t_jobs_lst	*new(void)

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 10:49:02 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/29 11:31:29 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/29 13:17:35 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,6 @@ void	jobs_destroy_all(t_shell *shell)
 	shell->jobs.minus = NULL;
 	shell->jobs.plus = NULL;
 	shell->jobs.last_job = NULL;
-	shell->jobs.index = 0;
+	shell->jobs.index = 1;
+	shell->jobs.len = 1;
 }
