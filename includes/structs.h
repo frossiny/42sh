@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 14:23:53 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/29 13:10:01 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/29 16:36:19 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -340,6 +340,7 @@ typedef struct		s_shell
 	t_hashtable		bin_ht;
 	t_jobs			jobs;
 	t_history		history;
+	int				pid;
 	int				able_termcaps;
 	int				stopped_jobs;
 	struct termios	prev_term;
