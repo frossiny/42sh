@@ -6,7 +6,7 @@
 #    By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/19 17:28:40 by vsaltel           #+#    #+#              #
-#    Updated: 2019/11/28 13:38:16 by vsaltel          ###   ########.fr        #
+#    Updated: 2019/11/28 14:22:52 by vsaltel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -254,6 +254,6 @@ check_error:
 tests: all
 	./tests/42ShellTester/42ShellTester.sh "$(PWD)/$(NAME)" --filter ${FILTER}
 pytest:
-	python3 ./tests/python_test/err.py $(FILTER) ./tests/python_test/$(TEST)
+	python3 ./tests/python_test/err.py $(FILTER) ./tests/python_test/$(FILE)
 
 -include $(OBJSD)
