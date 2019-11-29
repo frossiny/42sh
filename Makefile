@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/11/28 15:36:39 by frossiny         ###   ########.fr        #
+#    Updated: 2019/11/29 11:27:03 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,6 +76,7 @@ FILES	=	shell.c											\
 			execution/exec_command.c						\
 			execution/exec_specials.c						\
 			execution/exec_here_doc.c						\
+			execution/exec_fork_builtin.c					\
 			execution/exec_utils.c							\
 			execution/pipes/exec_pipes.c					\
 			execution/pipes/exec_pipe_builtin.c				\
@@ -138,6 +139,7 @@ FILES	=	shell.c											\
 			jobcontrol/job_destroy_all.c					\
 			jobcontrol/job_check_status.c					\
 			jobcontrol/job_get_command.c					\
+			jobcontrol/job_can_exit.c						\
 			lexer/lexer.c									\
 			lexer/lex_free.c								\
 			lexer/lex_search.c								\
@@ -208,6 +210,7 @@ FILES	=	shell.c											\
 			utils/str_escape.c								\
 			utils/copy_tab.c								\
 			utils/42shrc.c									\
+			utils/u_free_shell.c							\
 			variables/var_build_env.c						\
 			variables/var_delete.c							\
 			variables/var_destroy.c							\

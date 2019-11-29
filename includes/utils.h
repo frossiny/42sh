@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 14:30:04 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/24 12:54:54 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/29 10:59:48 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,7 @@ void				no_user(char *name);
 int					cd_exists(char *file, char *name);
 void				env_invalid_arg(int *argc, char ***argv);
 int					is_directory_err(char *name);
+
+void				u_free_shell(void);
 
 #endif

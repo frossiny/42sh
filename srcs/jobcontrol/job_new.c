@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 10:48:31 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/28 15:22:35 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/29 11:12:54 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ t_jobs_lst			*job_new_pipe(t_pipel *pline, t_childs *childs)
 		return (NULL);
 	job->command = job_get_pipe_command(pline);
 	job->childs = childs;
+	if (!childs)
+		return (job);
 	while (childs->next)
 		childs = childs->next;
 	ft_printf("[%d] %d\n", job->job_number, childs->pid);

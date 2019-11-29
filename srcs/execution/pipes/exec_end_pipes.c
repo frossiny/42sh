@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:42:11 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/28 16:50:05 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/29 10:29:20 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	exec_end_pipes(t_pipel *pline, t_childs *childs, t_fd *fd)
 	int		ret;
 	int		bg;
 
-	ft_printf("Return: %d\n", g_return);
 	bg = exec_is_pipe_bg(pline);
 	while (childs)
 	{

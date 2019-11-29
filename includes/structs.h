@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 14:23:53 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/28 14:14:37 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/29 11:23:52 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -340,6 +340,7 @@ typedef struct		s_shell
 	t_jobs			jobs;
 	t_history		history;
 	int				able_termcaps;
+	int				stopped_jobs;
 	struct termios	prev_term;
 }					t_shell;
 
