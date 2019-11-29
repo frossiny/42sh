@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 16:51:40 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/28 18:07:02 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/29 17:34:40 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,31 @@
 int		change_grp(t_shell *shell, int converted)
 {
 	t_jobs_lst *searched;
+	int			cont;
 
-	signal(SIGTTOU, SIG_IGN);
+	cont = 1;
+	//signal(SIGTTOU, SIG_IGN);
 	searched = job_search(shell, converted);
-	ft_printf("getting %d\n", searched->pid);
-	/*if (!tcsetpgrp(STDERR_FILENO, shell->jobs.last_job->pid))
+	if (tcsetpgrp(STDERR_FILENO, searched->pid) < 0)
+		ft_printf("tcsetpgrp failed\n");
+	ft_printf("%s\n", searched->command);
+	/* Send the job a continue signal, if necessary.  */
+	if (cont)
 	{
-		perror("tcsetpgrp failed\n");
-	}*/
+		tcsetattr(STDERR_FILENO, TCSADRAIN, &shell->prev_term);
+		if (kill(searched->pid, SIGCONT) < 0)
+			perror ("kill (SIGCONT)");
+	}
+	//wait(&searched->pid);
+	/* Put the shell back in the foreground.  */
+	ft_printf("J'en suis la de mon exec\n");
+	if (tcsetpgrp(0, shell->pid) < 0)
+	{
+		ft_printf("Shell back failed");
+	}
+	/* Restore the shell's terminal modes.  */
+	//tcgetattr (STDERR_FILENO, &shell->prev_term);
+	//tcsetattr (STDERR_FILENO, TCSADRAIN, &shell->prev_term); 
 	job_delete(shell, searched->pid);
 	return (0);
 }
