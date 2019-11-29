@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:26:37 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/29 11:40:32 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/29 16:44:15 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 static int	start_process(char *file, t_cmd *cmd, char **env)
 {
 	int		status;
+	int		wpid;
 
 	if (!get_here_doc(cmd->redir, &g_shell))
 		return (EXIT_FAILURE);
@@ -27,20 +28,27 @@ static int	start_process(char *file, t_cmd *cmd, char **env)
 		job_new(cmd, g_child);
 	if (!g_child)
 	{
-		unregister_signals();
 		if (!cmd->is_bg && g_shell.able_termcaps)
 			restore_shell(g_shell.prev_term);
+		unregister_signals();
 		cmd->is_bg ? setpgid(0, 0) : 0;
 		handle_redirections(cmd->redir, 0);
 		if (execve(file, cmd->args, env) == -1)
 			exit(EXIT_FAILURE);
 	}
 	close_here_docs(cmd->redir);
+	g_shell.current_cmd = cmd;
 	if (g_child == -1)
 		return (g_child = 0);
-	waitpid(g_child, &status, cmd->is_bg ? WNOHANG : 0);
+	wpid = 0;
+	while (g_child && !wpid && !cmd->is_bg)
+	{
+		pause();
+		wpid = waitpid(g_child, &status, WNOHANG);
+	}
 	!cmd->is_bg && g_shell.able_termcaps ? termcaps_init(NULL) : 0;
 	g_child = 0;
+	g_shell.current_cmd = NULL;
 	if (WIFSIGNALED(status))
 		return (display_signal(status));
 	return (WEXITSTATUS(status));

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:05:59 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/29 14:10:13 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/29 17:53:37 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,8 +133,9 @@ int		shell(void)
 	}
 	if (input)
 		ft_strdel(&input);
-	if (!job_can_exit())
+	if (!g_shell.stopped_jobs && !job_can_exit())
 	{
+		g_shell.stopped_jobs = 1;
 		ft_printf("There are stopped jobs.\n");
 		return (shell());
 	}
@@ -144,5 +145,6 @@ int		shell(void)
 	ht_delete(g_shell);
 	free_termcaps(&g_shell);
 	free(g_pwd);
+	jobs_destroy_all(&g_shell);
 	return (g_return);
 }

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 17:37:47 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/28 15:21:52 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/29 16:51:20 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 static void	check_pids(t_jobs_lst *job, int *status)
 {
 	t_childs	*tmp;
+	pid_t		cpid;
 
 	if (!job)
 		return ;
@@ -30,6 +31,8 @@ static void	check_pids(t_jobs_lst *job, int *status)
 	}
 	else
 		waitpid(job->pid, status, WNOHANG);
+	while ((cpid = waitpid(-1, NULL, WNOHANG)) > 0)
+		;
 }
 
 void		job_check_status(void)
@@ -48,7 +51,6 @@ void		job_check_status(void)
 		{
 			ft_printf("[%d]%c Done %s\n",
 				jobs->job_number, jobs->current, jobs->command);
-			waitpid(jobs->pid, &status, 0);
 			job_delete(&g_shell, jobs->pid);
 		}
 		jobs = next;
