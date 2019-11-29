@@ -6,22 +6,20 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 10:48:51 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/29 11:45:30 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/29 13:38:51 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
-#include "libft.h" //Only for ft_printf
 
 void	update_current_job(t_shell *shell)
 {
-	if (shell->jobs.index > 2)
+	if (shell->jobs.len >= 2)
 	{
-		ft_printf("Je rentre dans cette condition");
 		shell->jobs.last_job->prev->current = '-';
 		shell->jobs.minus = shell->jobs.last_job->prev;
 	}
-	if (shell->jobs.index > 1)
+	if (shell->jobs.len > 1)
 	{
 		shell->jobs.plus = shell->jobs.last_job;
 		shell->jobs.last_job->current = '+';
@@ -47,11 +45,12 @@ void	job_free_elem(t_shell *shell, t_jobs_lst *curr)
 	if (!curr->next && curr->prev)
 	{
 		curr->prev->next = NULL;
+		shell->jobs.index--;
 		shell->jobs.last_job = curr->prev;
 	}
 	curr->next ? curr->next->prev = curr->prev : 0;
 	free(curr);
-	shell->jobs.index--;
+	shell->jobs.len--;
 	update_current_job(shell);
 }
 

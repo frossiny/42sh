@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 11:43:47 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/29 11:44:07 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/29 13:18:44 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ static int	shell_init(char *envp[])
 	g_shell.ast = NULL;
 	g_shell.bin_ht.table = NULL;
 	g_shell.jobs.index = 1;
+	g_shell.jobs.len = 0;
 	g_shell.jobs.minus = NULL;
 	g_shell.jobs.plus = NULL;
 	g_shell.jobs.lst = NULL;
