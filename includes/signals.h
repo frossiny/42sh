@@ -6,16 +6,19 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 14:16:18 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/29 12:02:25 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/29 14:38:10 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef SIGNALS_H
+# define SIGNALS_H
+
 #include <signal.h>
 #include <stdlib.h>
+#include "jobcontrol.h"
 
 void		catch_sigint(int signal);
 void		catch_sigquit(int signal);
-void		catch_sigstp(int signal);
 
 void		sig_ignored(int signal);
 void		register_signals(void);
@@ -46,7 +49,7 @@ static const t_signals	g_signals[] =
 	{ 15, &sig_ignored },
 	{ 16, &sig_ignored },
 	{ 17, &sig_ignored },
-	{ 18, &catch_sigstp },
+	{ 18, &job_catch_sigstp },
 	{ 19, &sig_ignored },
 	{ 20, &sig_ignored },
 	{ 21, &sig_ignored },
@@ -97,3 +100,5 @@ static const t_signals	g_signals[] =
 **	30    SIGUSR1 		default 
 **	31    SIGUSR2 		default 
 */
+
+#endif
