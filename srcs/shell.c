@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:05:59 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/29 11:32:58 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/29 14:10:13 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "alias.h"
 #include "hashtable.h"
 #include "execution.h"
+#include "jobcontrol.h"
 
 static int		bslash_error(t_shell *shell, char **input, int ret)
 {
@@ -132,7 +133,7 @@ int		shell(void)
 	}
 	if (input)
 		ft_strdel(&input);
-	if (g_shell.jobs.lst)
+	if (!job_can_exit())
 	{
 		ft_printf("There are stopped jobs.\n");
 		return (shell());
