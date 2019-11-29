@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 11:53:12 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/07 18:17:51 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/27 17:29:01 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int			b_exit(t_cmd *cmd, t_shell *shell)
 	alias_free_all(&(shell->alias));
 	free_termcaps(shell);
 	lexer_free(&(shell->lexer));
-	destroy_ast(shell);
+	ast_destroy(shell);
 	ht_delete(shell);
 	free(g_pwd);
 	exit(ret);

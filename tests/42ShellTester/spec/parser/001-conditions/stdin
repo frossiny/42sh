@@ -1,0 +1,22 @@
+true &&
+true ||
+|| true
+&& true
+false &&
+false ||
+|| false
+&& false
+
+true && pwd
+true || pwd
+false && pwd
+false || pwd
+
+true && true && pwd
+true && false && pwd
+false && true && pwd
+false && false && pwd
+true || true || pwd
+true || false || pwd
+false || true || pwd
+false || false || pwd

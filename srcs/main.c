@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 11:43:47 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/09 16:10:11 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/29 13:18:44 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ static int	shell_init(char *envp[])
 	g_ignore_signals = 0;
 	g_return = 0;
 	g_lpid = -1;
+	g_shell.stopped_jobs = 0;
 	g_shell.vars = var_init(envp);
 	g_shell.alias = NULL;
 	if (var_get(g_shell.vars, "HOME"))
@@ -77,6 +78,12 @@ static int	shell_init(char *envp[])
 	g_shell.lexer.lstate = ST_GENERAL;
 	g_shell.ast = NULL;
 	g_shell.bin_ht.table = NULL;
+	g_shell.jobs.index = 1;
+	g_shell.jobs.len = 0;
+	g_shell.jobs.minus = NULL;
+	g_shell.jobs.plus = NULL;
+	g_shell.jobs.lst = NULL;
+	g_shell.jobs.last_job = NULL;
 	return (1);
 }
 
@@ -88,5 +95,6 @@ int			main(int argc, char *argv[], char *envp[])
 	if (!shell_init(envp))
 		return (0);
 	init_default_vars();
+	//load_42shrc();
 	return (shell());
 }

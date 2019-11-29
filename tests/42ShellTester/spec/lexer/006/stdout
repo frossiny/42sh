@@ -1,0 +1,5 @@
+expected_to have_nb_of_lines 6
+expected_to match_regex `pwd` once
+expected_to match_regex "pwd" once
+expected_to match_regex "^TEST[12]$" 2 times
+expected_to match_regex "^$" 2 times

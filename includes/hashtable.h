@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 12:26:56 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/01 17:51:24 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/26 18:32:01 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "shell.h"
 
-void			ht_put(t_shell *shell, char *key, char *value);
+void			ht_put(t_shell *shell, char *key, char *value, int increment);
 char			*ht_get(t_shell *shell, char *key);
 int				ht_exists(t_shell *shell, char *key);
 int				ht_delone(char *key, t_shell *shell);

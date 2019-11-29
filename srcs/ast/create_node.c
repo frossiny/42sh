@@ -6,13 +6,13 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/04 15:52:54 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/24 13:24:42 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/28 11:37:05 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 #include "lexer.h"
-#include "reader.h"
+#include "ast.h"
 
 static t_token	*get_cmd_end(t_token *tok)
 {

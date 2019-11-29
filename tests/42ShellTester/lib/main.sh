@@ -48,6 +48,9 @@ run_main()
     [ ! -f "${GLOBAL_PROG}" -a ! -f "$(which "${GLOBAL_PROG}")" ] && printf "%s\n" "Wrong argument: no such file '"${GLOBAL_PROG}"'" && return
   fi
 
+  #Compile support binairies
+  make -C "${GLOBAL_INSTALLDIR}/support/" TARGET_DIR="${GLOBAL_INSTALLDIR}/support/tmp" 1>- 2>-
+
   IFS=$'\n'
   for TEST in $(${FIND} "${GLOBAL_INSTALLDIR}/spec" -type d -regex "${GLOBAL_INSTALLDIR}/spec/.*${GLOBAL_SPECS_FILTER}.*")
   do
@@ -55,8 +58,8 @@ run_main()
     if [ -f "${TEST}/stdin" ] && [ ! -f "${TEST}/non-posix" -o "${GLOBAL_RUN_POSIX_ONLY}" == "0" ] && [ ! -f "${TEST}/pending" -o "${GLOBAL_RUN_PENDING_TESTS}" == "1" -o "${GLOBAL_RUN_ALL_TESTS}" == "1" ] && [ ! -f "${TEST}/hard" -o "${GLOBAL_RUN_HARD_TESTS}" == "1" -o "${GLOBAL_RUN_ALL_TESTS}" == "1" ]
     then
 
-      # compile support binaries
-      make -C "${GLOBAL_INSTALLDIR}/support/" TARGET_DIR=${GLOBAL_TMP_DIRECTORY} 1>- 2>-
+      # copy support binaries
+      cp "${GLOBAL_INSTALLDIR}/support/tmp/*" ${GLOBAL_TMP_DIRECTORY} 1>- 2>-
 
       TEST_NAME="${TEST##*/}"
       TEST_FULLNAME="${TEST##*spec/}"
@@ -276,5 +279,6 @@ run_main()
 
     fi
   done
+  rm -rf "${GLOBAL_INSTALLDIR}/support/tmp" 1>- 2>-
   IFS="${OLD_IFS}"
 }

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 14:23:53 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/20 15:07:30 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/11/29 13:10:01 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,12 +196,14 @@ typedef struct		s_redirect
 
 typedef struct		s_cmd
 {
+	t_token			*tokens;
 	t_token			*exe;
 	char			**args;
 	int				argc;
 	t_redirect		*redir;
 	int				allow_builtins : 1;
 	t_var			*tenv;
+	int				is_bg;
 }					t_cmd;
 
 typedef struct		s_anode
@@ -233,6 +235,7 @@ typedef struct		s_fd
 typedef struct		s_childs
 {
 	int				pid;
+	t_cmd			*cmd;
 	struct s_childs	*next;
 }					t_childs;
 
@@ -262,16 +265,28 @@ typedef struct		s_builtin
 
 /*
 ** Jobs linked list
-**
-** status: 0->suspended, 1 -> running
 */
+
+typedef struct		s_jobs_lst
+{
+	int					job_number;
+	int					pid;
+	char				current;
+	char				*state;
+	char				*command;
+	t_childs			*childs;
+	struct s_jobs_lst	*prev;
+	struct s_jobs_lst	*next;
+}					t_jobs_lst;
+
 typedef struct		s_jobs
 {
-	t_anode			*ast;
-	size_t			pid;
-	size_t			status;
-	struct s_jobs	*prev;
-	struct s_jobs	*next;
+	size_t			len;
+	size_t			index;
+	t_jobs_lst		*lst;
+	t_jobs_lst		*last_job;
+	t_jobs_lst		*plus;
+	t_jobs_lst		*minus;
 }					t_jobs;
 
 /*
@@ -323,9 +338,10 @@ typedef struct		s_shell
 	t_lexer			lexer;
 	t_anode			*ast;
 	t_hashtable		bin_ht;
-	t_jobs			*jobs;
+	t_jobs			jobs;
 	t_history		history;
 	int				able_termcaps;
+	int				stopped_jobs;
 	struct termios	prev_term;
 }					t_shell;
 

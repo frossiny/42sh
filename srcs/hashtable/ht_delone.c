@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/07 15:18:09 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/14 15:05:55 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/26 19:34:14 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int		ht_delone(char *key, t_shell *shell)
 		shell->bin_ht.table[hash].key = NULL;
 		free(shell->bin_ht.table[hash].value);
 		shell->bin_ht.table[hash].value = NULL;
+		shell->bin_ht.table[hash].occurence = 0;
 		return (1);
 	}
 	return (0);

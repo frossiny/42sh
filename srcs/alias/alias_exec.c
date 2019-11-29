@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   alias_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 15:55:33 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/18 17:51:55 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/11/27 14:00:06 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,15 @@ static int		bslash_error(t_shell *shell, char **input, int ret)
 	char	*ninput;
 	char	*tmp;
 
-	g_ignore_signals = 3;
+	g_ignore_signals = 1;
 	if (!(ret = get_input(0, &ninput, shell)))
 	{
 		if (g_ignore_signals)
 		{
-			write(1, "\n", 1);
 			g_ignore_signals = 0;
 			return (2);
 		}
-		return (130);
+		return (258);
 	}
 	if (ninput)
 	{
@@ -42,21 +41,21 @@ static int		bslash_error(t_shell *shell, char **input, int ret)
 	return (0);
 }
 
-static int		quote_error(t_shell *shell, char **input, int ret)
+static int		not_closed_error(t_shell *shell, char **input, int ret)
 {
 	char	*ninput;
 	char	*tmp;
 
-	g_ignore_signals = ret == -3 ? 2 : 1;
+	g_ignore_signals = 1;
 	if (!(ret = get_input(0, &ninput, shell)))
 	{
 		if (g_ignore_signals)
 		{
-			ft_dprintf(2, "42sh: unexpected EOF while looking for quote\n");
+			ft_dprintf(2, "42sh: unexpected EOF\n");
 			g_ignore_signals = 0;
-			return (2);
+			return (1);
 		}
-		return (130);
+		return (258);
 	}
 	tmp = ft_strjoint(*input, "\n", ninput);
 	free(*input);
@@ -77,17 +76,11 @@ static int		lexing(t_shell *shell, char **input)
 	while ((ret = lex(*input, &(shell->lexer))) < 1)
 	{
 		lexer_free(&(shell->lexer));
-		if (ret == -3 || ret == -2)
-		{
-			if ((ret = quote_error(shell, input, ret)))
-				return (ret);
-		}
-		else if (ret == -4)
-		{
-			if ((ret = bslash_error(shell, input, ret)))
-				return (ret);
-		}
-		else
+		if (ret > -2)
+			return (ret);
+		else if (ret == -2 && (ret = not_closed_error(shell, input, ret)))
+			return (ret);
+		else if (ret == -3 && (ret = bslash_error(shell, input, ret)))
 			return (ret);
 	}
 	return (ret);

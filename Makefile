@@ -3,19 +3,28 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+         #
+#    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/19 17:28:40 by vsaltel           #+#    #+#              #
-#    Updated: 2019/11/28 14:22:52 by vsaltel          ###   ########.fr        #
+#    Updated: 2019/11/29 14:33:53 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC		=	gcc -g3 #-fsanitize=address
-CFLAGS	+=	-Wall -Werror -Wextra
+CFLAGS	+=	-Wall -Wextra #-Werror
 
 SHELL	=	bash
 
-NAME	=	42sh
+#Tests related variables
+TARGS	=
+ifdef FILTER
+	TARGS += --filter ${FILTER}
+endif
+ifdef SHOW
+	TARGS += --show-success
+endif
+
+NAME 	=	42sh
 LIBFT	=	libft
 SRCDIR	=	srcs
 INCDIR	=	includes
@@ -33,12 +42,13 @@ FILES	=	shell.c											\
 			alias/alias_resolve.c							\
 			alias/alias_exec.c								\
 			alias/alias_utils.c								\
-			ast/build_ast.c									\
+			ast/ast_build.c									\
 			ast/create_node.c								\
-			ast/build_args.c								\
+			ast/ast_build_args.c							\
 			ast/redirections.c								\
-			ast/destroy_ast.c								\
+			ast/ast_destroy.c								\
 			ast/create_cmd.c								\
+			ast/ast_is_bg.c									\
 			builtins/alias.c								\
 			builtins/unalias.c								\
 			builtins/type.c									\
@@ -49,7 +59,9 @@ FILES	=	shell.c											\
 			builtins/exit.c									\
 			builtins/echo.c									\
 			builtins/export.c								\
-			builtins/jobs.c									\
+			builtins/fg.c									\
+			builtins/jobs/jobs.c							\
+			builtins/jobs/build_options.c					\
 			builtins/cd/build_path.c						\
 			builtins/cd/cd.c								\
 			builtins/history/history.c						\
@@ -60,22 +72,42 @@ FILES	=	shell.c											\
 			builtins/options/opt_add.c						\
 			builtins/options/opt_get.c						\
 			builtins/options/opt_free.c			 			\
-			expansion/variables.c							\
+			execution/exec_all.c							\
+			execution/exec_redirections.c					\
+			execution/exec_command.c						\
+			execution/exec_specials.c						\
+			execution/exec_here_doc.c						\
+			execution/exec_fork_builtin.c					\
+			execution/exec_utils.c							\
+			execution/pipes/exec_pipes.c					\
+			execution/pipes/exec_pipe_builtin.c				\
+			execution/pipes/exec_pipe_cmd.c					\
+			execution/pipes/exec_pipeline.c					\
+			execution/pipes/exec_pipeline_alloc.c			\
+			execution/pipes/exec_del_pipeline.c				\
+			execution/pipes/exec_end_pipes.c				\
+			execution/pipes/exec_get_pipes_docs.c			\
+			execution/pipes/exec_is_pipe_bg.c				\
+			execution/exec_child_add.c						\
+			execution/exec_assign_vars.c					\
 			expansion/tilde.c								\
 			expansion/expansion.c							\
 			expansion/exp_join.c							\
 			expansion/exp_set_struct.c						\
 			expansion/exp_remove_quotes.c					\
+			expansion/exp_del_empty_tokens.c				\
 			expansion/variables/exp_variables.c				\
 			expansion/variables/exp_get_varname.c			\
 			expansion/variables/exp_simple_var.c			\
 			expansion/variables/exp_parameter.c				\
+			expansion/variables/exp_parameter_parse.c		\
 			expansion/variables/exp_par_len.c				\
 			expansion/variables/exp_par_colon.c				\
 			expansion/variables/exp_par_colon_op.c			\
 			expansion/variables/exp_get_var.c				\
 			expansion/variables/exp_get_word.c				\
 			expansion/variables/exp_del_pattern.c			\
+			expansion/variables/exp_tok_clean.c				\
 			expansion/arithmetic/comp.c						\
 			expansion/arithmetic/convert_base.c				\
 			expansion/arithmetic/eval.c						\
@@ -102,12 +134,21 @@ FILES	=	shell.c											\
 			hashtable/ht_put.c								\
 			hashtable/ht_get.c								\
 			hashtable/ht_exists.c							\
+			jobcontrol/job_new.c							\
+			jobcontrol/job_free.c							\
+			jobcontrol/job_delete.c							\
+			jobcontrol/job_destroy_all.c					\
+			jobcontrol/job_check_status.c					\
+			jobcontrol/job_get_command.c					\
+			jobcontrol/job_search.c							\
+			jobcontrol/job_can_exit.c						\
 			lexer/lexer.c									\
 			lexer/lex_free.c								\
 			lexer/lex_search.c								\
 			lexer/lex_update_state.c						\
 			lexer/lex_is_expansion.c						\
 			lexer/lex_exp_utils.c							\
+			lexer/tokens/tok_new.c							\
 			lexer/tokens/tok_create.c						\
 			lexer/tokens/tok_destroy.c						\
 			lexer/tokens/tok_is_word.c						\
@@ -115,6 +156,8 @@ FILES	=	shell.c											\
 			lexer/tokens/tok_push.c							\
 			lexer/tokens/tok_replace.c						\
 			lexer/tokens/tok_is_varexp.c					\
+			lexer/tokens/tok_is_cmd_comp.c					\
+			lexer/tokens/tok_free.c							\
 			lexer/states/general.c							\
 			lexer/states/quotes.c							\
 			lexer/states/comment.c							\
@@ -126,16 +169,9 @@ FILES	=	shell.c											\
 			parser/types/name.c								\
 			parser/types/redirections.c						\
 			parser/types/operators.c						\
+			parser/types/jobs.c								\
 			parser/types/semic.c							\
-			reader/reader.c									\
-			reader/pipe.c									\
-			reader/pipeline.c								\
-			reader/redirections.c							\
-			reader/executables.c							\
-			reader/here_doc.c								\
-			reader/get_pipes_docs.c							\
-			reader/exec_utils.c								\
-			reader/child_add.c								\
+			parser/types/conditions.c						\
 			termcaps/read_input.c							\
 			termcaps/read_utils.c							\
 			termcaps/termcaps.c								\
@@ -175,6 +211,8 @@ FILES	=	shell.c											\
 			utils/get_var_size.c							\
 			utils/str_escape.c								\
 			utils/copy_tab.c								\
+			utils/42shrc.c									\
+			utils/u_free_shell.c							\
 			variables/var_build_env.c						\
 			variables/var_delete.c							\
 			variables/var_destroy.c							\
@@ -222,8 +260,9 @@ $(NAME): $(OBJS)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c Makefile
 	@mkdir -p $(@D)
+	@echo -n -e "\r\033[K${_PURPLE}${BOLD}[${NAME}] Compiling $<${_END}"
 	@$(CC) $(CFLAGS) -I $(INCDIR) -I $(LIBFT)/$(INCDIR) -MMD -o $@ -c $<
-#	@python3 .loading.py $@
+
 
 clean:
 	@$(MAKE) -C $(LIBFT) clean
@@ -251,8 +290,12 @@ check_error:
 	@grep -rn "printf" srcs | grep -v "ft_"
 	@grep -rn "stdio.h" srcs
 
+valgrind: all
+	valgrind --leak-check=full --show-leak-kinds=all --suppressions="${PWD}/valgrind.supp" "${PWD}/${NAME}"
+
 tests: all
-	./tests/42ShellTester/42ShellTester.sh "$(PWD)/$(NAME)" --filter ${FILTER}
+	./tests/42ShellTester/42ShellTester.sh "$(PWD)/$(NAME)" ${TARGS}
+
 pytest:
 	python3 ./tests/python_test/err.py $(FILTER) ./tests/python_test/$(FILE)
 

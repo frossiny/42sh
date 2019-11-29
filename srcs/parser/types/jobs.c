@@ -3,22 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   jobs.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 17:49:24 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/18 18:48:42 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/28 10:56:59 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "parser.h"
+#include "shell.h"
 #include "lexer.h"
-# include <stdio.h>
+#include "jobcontrol.h"
 
-int		par_type_jobs(t_parser *par)
+int			par_type_jobs(t_parser *par)
 {
-	(void)par;
-	printf("Je suis appele %s\n", par->tokens->content);
+	if (!par->i)
+		return (0);
+	if (par->tokens->next && !tok_is_word(par->tokens->next))
+	{
+		par_next(par, 1);
+		return (0);
+	}
 	par_next(par, 1);
 	return (1);
 }

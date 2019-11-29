@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 10:40:59 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/21 16:36:04 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/11/29 12:06:17 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,17 @@ void		catch_sigint(int signal)
 	{
 		g_return = 1;
 		ioctl(0, TIOCSTI, "\n");
+	}
+}
+
+void		catch_sigstp(int signal)
+{
+	ft_printf("CATCH\n");
+	(void)signal;
+	if (g_child)
+	{
+		kill(g_child, 17);
+		
 	}
 }
 

@@ -6,12 +6,12 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 14:03:28 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/09 16:17:00 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/29 10:46:03 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "shell.h"
+#include "execution.h"
 #include "builtins.h"
 
 int					is_builtin(char *name)
@@ -62,8 +62,10 @@ int					handle_builtin(t_cmd *cmd, t_shell *shell)
 	int			ret;
 	int			fd[3];
 
-	if (!cmd->exe->content)
+	if (!cmd->exe || !cmd->exe->content)
 		return (-1);
+	if (cmd->is_bg)
+		return (exec_fork_builtin(cmd));
 	if (!(builtin = get_builtin(cmd->exe->content)).func)
 		return (-1);
 	if (cmd->redir)
@@ -72,7 +74,7 @@ int					handle_builtin(t_cmd *cmd, t_shell *shell)
 		fd[1] = dup2(1, 51);
 		fd[2] = dup2(2, 52);
 	}
-	if (!handle_redirections(cmd->redir))
+	if (!handle_redirections(cmd->redir, 0))
 		return (1);
 	ret = builtin.func(cmd, shell);
 	if (cmd->redir)

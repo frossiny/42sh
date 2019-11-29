@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 15:32:30 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/20 17:32:40 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/11/27 11:04:15 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,33 +16,29 @@
 #include "expansion.h"
 #include "arithmetic.h"
 
-int				expand(t_token *tokens, int do_globbing)
+int				expand(t_token *tokens, int do_globbing, t_cmd *cmd)
 {
-	t_expansion		exp;
-	t_token			*next;
-	size_t			i;
-	int				t;
+	t_token		*next;
+	size_t		i;
+	int			t;
 
 	i = 0;
-	while (tokens)
+	while (tok_is_cmd_comp(tokens))
 	{
-		next = NULL;
-		t = 0;
-		if (tokens->content[0] == '~')
-			if (!(handle_home(tokens, g_shell.vars)))
-				return (0);
+		next = tokens->next;
 		if (!(exp_variables(tokens)))
+			return (0);
+		if (cmd && ft_strequ("", tokens->content) \
+				&& !(tokens = exp_del_empty_tokens(tokens, cmd)))
+			break ;
+		if (tokens->content[0] == '~' && !(handle_home(tokens, g_shell.vars)))
 			return (0);
 		if (!(replace_ae_token(tokens)))
 			return (0);
-		if (do_globbing)
-			t = replace_globbing(tokens, &next);
-		exp_set_struct(&exp, tokens->content);
-		if (!t && !exp_remove_quotes(&exp))
+		t = do_globbing ? replace_globbing(tokens) : 0;
+		if (!t && !exp_remove_quotes(tokens))
 			return (0);
-		if (exp.new)
-			tok_replace(tokens, exp.new);
-		tokens = do_globbing ? next : tokens->next;
+		tokens = next;
 	}
 	return (1);
 }
