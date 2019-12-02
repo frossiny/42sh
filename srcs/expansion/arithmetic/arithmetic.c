@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 13:40:41 by alagroy-          #+#    #+#             */
-/*   Updated: 2019/12/02 18:44:24 by alagroy-         ###   ########.fr       */
+/*   Updated: 2019/12/02 19:20:44 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,27 @@ static int	check_incr(char *str)
 	return (1);
 }
 
+static int	check_fpe(t_list *token_list)
+{
+	t_list	*tmp;
+
+	tmp = token_list;
+	while (tmp)
+	{
+		if ((((t_ae_token *)tmp->content)->value == DIV
+					|| ((t_ae_token *)tmp->content)->value == MOD)
+				&& (((t_ae_token *)tmp->next->content)->type == WORD
+					|| (((t_ae_token *)tmp->next->content)->type == NUM))
+				&& (((t_ae_token *)tmp->next->content)->num_value == 0))
+		{
+			ft_dprintf(2, "42sh: division by 0\n");
+			return (0);
+		}
+		tmp= tmp->next;
+	}
+	return (1);
+}
+
 int			ae_process(t_token *token)
 {
 	t_list	*token_list;
@@ -74,10 +95,9 @@ int			ae_process(t_token *token)
 	if (!check_incr(token->content) ||
 			!(str = ae_base10(ft_strdup(token->content))))
 		return (0);
-	if (!(token_list = lex_ae_str(str))
+	if (!(token_list = lex_ae_str(str)) || !check_fpe(token_list)
 			|| (status = parse_aetoken(token_list) != AEPSUCCESS))
 	{
-		ft_dprintf(2, "42sh: syntax error in expression\n");
 		ft_strdel(&token->content);
 		ft_strdel(&str);
 		ft_lstdel(&token_list, del_ae_token);
