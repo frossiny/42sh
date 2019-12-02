@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 16:51:40 by lubenard          #+#    #+#             */
-/*   Updated: 2019/12/02 16:51:34 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/12/02 18:41:38 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,14 @@
 #include "libft.h"
 #include "opt.h"
 #include "signal.h"
+# include <stdio.h>
 
 int		change_grp(t_shell *shell, int converted)
 {
-	t_jobs_lst *searched;
+	t_jobs_lst	*searched;
 	int			cont;
+	int			wpid;
+	int			status;
 
 	cont = 1;
 	signal(SIGTTOU, SIG_IGN);
@@ -31,11 +34,18 @@ int		change_grp(t_shell *shell, int converted)
 	/* Send the job a continue signal, if necessary.  */
 	if (cont)
 	{
+		//tcgetattr (STDERR_FILENO, &shell->prev_term); //making this buggy
 		//tcsetattr(STDERR_FILENO, TCSADRAIN, &shell->prev_term); //causing bug in termcaps when uncommented
-		if (kill(searched->pid, SIGCONT) < 0)
+		if (kill(-searched->pid, SIGCONT) < 0)
 			return (EXIT_FAILURE);
 	}
-	wait(&searched->pid);
+	wpid = 0;
+	status = 0;
+	while (!wpid)
+	{
+		pause();
+		wpid = waitpid(searched->pid, &status, WNOHANG);
+	}
 	if (tcsetpgrp(0, shell->pid) < 0)
 		return (EXIT_FAILURE);
 	/* Restore the shell's terminal modes.  */

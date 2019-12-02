@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 10:48:51 by lubenard          #+#    #+#             */
-/*   Updated: 2019/12/02 11:13:39 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/12/02 18:31:37 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void		job_free_elem(t_shell *shell, t_jobs_lst *curr)
 		shell->jobs.last_job = NULL;
 		shell->jobs.plus = NULL;
 		shell->jobs.minus = NULL;
+		shell->jobs.index--;
 	}
 	if (curr->prev)
 		curr->prev->next = curr->next;

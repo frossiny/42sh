@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 10:48:31 by lubenard          #+#    #+#             */
-/*   Updated: 2019/12/02 16:39:52 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/12/02 17:19:56 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static void			jobs_insert(t_jobs_lst *job)
 {
 	t_jobs_lst	*curr;
 
+	g_shell.jobs.len++;
 	curr = g_shell.jobs.lst;
 	if (!curr)
 		g_shell.jobs.lst = job;
@@ -39,7 +40,6 @@ static void			jobs_insert(t_jobs_lst *job)
 		g_shell.jobs.minus = job;
 	g_shell.jobs.last_job = job;
 	g_shell.jobs.plus = job;
-	g_shell.jobs.len++;
 }
 
 static t_jobs_lst	*new(void)
@@ -54,7 +54,6 @@ static t_jobs_lst	*new(void)
 	job->childs = NULL;
 	job->current = '+';
 	job->state = "Running";
-	tcgetattr(STDIN_FILENO, &job->terms);
 	job->prev = NULL;
 	job->next = NULL;
 	jobs_insert(job);
