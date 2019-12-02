@@ -6,7 +6,7 @@
 /*   By: alagroy- <alagroy-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 18:45:57 by alagroy-          #+#    #+#             */
-/*   Updated: 2019/12/02 17:38:08 by alagroy-         ###   ########.fr       */
+/*   Updated: 2019/12/02 18:44:12 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,7 @@ int		parse_aetoken(t_list *token_list)
 		if (j < NBR_TYPE)
 			state = g_ae_parse_tab[state][j];
 		else
-		{
-			ft_dprintf(2, "42sh: syntax error in expression\n");
 			return (AEPFAILURE);
-		}
 		tmp = tmp->next;
 		if (!tmp)
 			break ;

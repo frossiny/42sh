@@ -6,7 +6,7 @@
 /*   By: alagroy- <alagroy-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 18:45:05 by alagroy-          #+#    #+#             */
-/*   Updated: 2019/12/02 16:14:25 by alagroy-         ###   ########.fr       */
+/*   Updated: 2019/12/02 18:19:11 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static int	convert_base_str(char **str, int i)
 	return (i + len - 1);
 }
 
-char	*ae_base10(char *str)
+char		*ae_base10(char *str)
 {
 	int		i;
 

@@ -6,7 +6,7 @@
 /*   By: alagroy- <alagroy-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 14:56:11 by alagroy-          #+#    #+#             */
-/*   Updated: 2019/12/02 17:09:59 by alagroy-         ###   ########.fr       */
+/*   Updated: 2019/12/02 18:18:49 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	incr(char *str, int i, char *key, t_token *token)
 
 void		eval_var(char *str)
 {
-	t_token 	token;
+	t_token		token;
 	char		*sub;
 	int			i;
 	int			j;

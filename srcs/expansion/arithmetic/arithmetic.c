@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 13:40:41 by alagroy-          #+#    #+#             */
-/*   Updated: 2019/12/02 17:59:21 by alagroy-         ###   ########.fr       */
+/*   Updated: 2019/12/02 18:44:24 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	find_ae_limits(char *str, int *beg, int *end)
 	}
 }
 
-static int			check_incr(char *str)
+static int	check_incr(char *str)
 {
 	int		i;
 	int		j;
@@ -55,11 +55,11 @@ static int			check_incr(char *str)
 			while (j > 0 && ft_isalnum(str[j]))
 				j--;
 			if (j == 0 && ft_isdigit(str[j]))
-					return (ft_dprintf(2,
-								"42sh: syntax error: operand expected\n") * 0);
+				return (ft_dprintf(2,
+							"42sh: syntax error: operand expected\n") * 0);
 			else if (ft_isdigit(str[j + 1]))
 				return (ft_dprintf(2,
-								"42sh: syntax error: operand expected\n") * 0);
+							"42sh: syntax error: operand expected\n") * 0);
 		}
 	return (1);
 }
@@ -74,11 +74,10 @@ int			ae_process(t_token *token)
 	if (!check_incr(token->content) ||
 			!(str = ae_base10(ft_strdup(token->content))))
 		return (0);
-	if (!(token_list = lex_ae_str(str)))
-		return (0);
-	status = parse_aetoken(token_list);
-	if (status != AEPSUCCESS)
+	if (!(token_list = lex_ae_str(str))
+			|| (status = parse_aetoken(token_list) != AEPSUCCESS))
 	{
+		ft_dprintf(2, "42sh: syntax error in expression\n");
 		ft_strdel(&token->content);
 		ft_strdel(&str);
 		ft_lstdel(&token_list, del_ae_token);
