@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 13:40:41 by alagroy-          #+#    #+#             */
-/*   Updated: 2019/12/02 17:35:34 by alagroy-         ###   ########.fr       */
+/*   Updated: 2019/12/02 17:59:21 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ int			replace_ae_token(t_token *token)
 	find_ae_limits(token->content, &beg, &end);
 	if (beg == -1 || end == -1)
 		return (1);
+	tmp.type = TOKEN_NAME;
 	tmp.content = ft_strsub(token->content, beg + 3, end - beg - 3);
 	tmp.len = ft_strlen(tmp.content);
 	if (!(expand(&tmp, 0, NULL)))
