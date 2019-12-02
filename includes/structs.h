@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 14:23:53 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/29 18:00:53 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/12/02 16:27:46 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -275,6 +275,7 @@ typedef struct		s_jobs_lst
 	char				*state;
 	char				*command;
 	t_childs			*childs;
+	struct termios		terms;
 	struct s_jobs_lst	*prev;
 	struct s_jobs_lst	*next;
 }					t_jobs_lst;

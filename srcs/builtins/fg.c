@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 16:51:40 by lubenard          #+#    #+#             */
-/*   Updated: 2019/12/02 14:55:25 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/12/02 16:51:34 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,16 @@ int		change_grp(t_shell *shell, int converted)
 	/* Send the job a continue signal, if necessary.  */
 	if (cont)
 	{
-		tcsetattr(STDERR_FILENO, TCSADRAIN, &shell->prev_term);
+		//tcsetattr(STDERR_FILENO, TCSADRAIN, &shell->prev_term); //causing bug in termcaps when uncommented
 		if (kill(searched->pid, SIGCONT) < 0)
 			return (EXIT_FAILURE);
 	}
 	wait(&searched->pid);
 	if (tcsetpgrp(0, shell->pid) < 0)
 		return (EXIT_FAILURE);
-	ft_printf("J'en suis la de mon exec\n");
 	/* Restore the shell's terminal modes.  */
 	tcgetattr (STDERR_FILENO, &shell->prev_term);
-	//tcsetattr (STDERR_FILENO, TCSADRAIN, &shell->prev_term); 
+	tcsetattr (STDERR_FILENO, TCSADRAIN, &shell->prev_term);
 	job_delete(shell, searched->pid);
 	return (EXIT_SUCCESS);
 }
