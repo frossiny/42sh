@@ -6,33 +6,33 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 17:37:47 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/29 16:51:20 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/12/02 11:20:24 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 #include "jobcontrol.h"
 
-static void	check_pids(t_jobs_lst *job, int *status)
+static int	check_pids(t_jobs_lst *job, int *status)
 {
 	t_childs	*tmp;
-	pid_t		cpid;
+	int			ret;
 
 	if (!job)
-		return ;
+		return (0);
 	if (job->childs)
 	{
+		ret = 0;
 		tmp = job->childs;
 		while (tmp)
 		{
-			waitpid(tmp->pid, status, WNOHANG);
+			if (waitpid(tmp->pid, status, WNOHANG) == 0)
+				ret = 1;
 			tmp = tmp->next;
 		}
+		return (ret);
 	}
-	else
-		waitpid(job->pid, status, WNOHANG);
-	while ((cpid = waitpid(-1, NULL, WNOHANG)) > 0)
-		;
+	return (waitpid(job->pid, status, WNOHANG) > 0);
 }
 
 void		job_check_status(void)
@@ -40,14 +40,17 @@ void		job_check_status(void)
 	t_jobs_lst	*jobs;
 	t_jobs_lst	*next;
 	int			status;
+	pid_t		cpid;
 
+	while ((cpid = waitpid(-1, NULL, WNOHANG)) > 0)
+		;
 	if (!(jobs = g_shell.jobs.lst))
 		return ;
+	status = 0;
 	while (jobs)
 	{
 		next = jobs->next;
-		check_pids(jobs, &status);
-		if (WIFEXITED(status))
+		if (check_pids(jobs, &status) && WIFEXITED(status))
 		{
 			ft_printf("[%d]%c Done %s\n",
 				jobs->job_number, jobs->current, jobs->command);

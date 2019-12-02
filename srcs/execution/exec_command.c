@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:26:37 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/29 16:44:15 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/12/02 10:53:14 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static int	start_process(char *file, t_cmd *cmd, char **env)
 	int		status;
 	int		wpid;
 
+	status = 0;
 	if (!get_here_doc(cmd->redir, &g_shell))
 		return (EXIT_FAILURE);
 	if ((g_child = fork()) > 0 && cmd->is_bg)

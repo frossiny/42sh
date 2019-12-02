@@ -6,13 +6,15 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 10:48:51 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/29 13:38:51 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/12/02 11:13:39 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+#include "jobcontrol.h"
+#include "execution.h"
 
-void	update_current_job(t_shell *shell)
+static void	update_current_job(t_shell *shell)
 {
 	if (shell->jobs.len >= 2)
 	{
@@ -26,7 +28,7 @@ void	update_current_job(t_shell *shell)
 	}
 }
 
-void	job_free_elem(t_shell *shell, t_jobs_lst *curr)
+void		job_free_elem(t_shell *shell, t_jobs_lst *curr)
 {
 	if (!curr->prev && !curr->next)
 	{
@@ -49,12 +51,12 @@ void	job_free_elem(t_shell *shell, t_jobs_lst *curr)
 		shell->jobs.last_job = curr->prev;
 	}
 	curr->next ? curr->next->prev = curr->prev : 0;
-	free(curr);
+	job_free(curr);
 	shell->jobs.len--;
 	update_current_job(shell);
 }
 
-void	job_delete(t_shell *shell, int pid)
+void		job_delete(t_shell *shell, int pid)
 {
 	t_jobs_lst *curr;
 

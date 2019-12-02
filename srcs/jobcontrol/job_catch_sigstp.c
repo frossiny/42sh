@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 14:36:45 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/29 15:38:19 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/12/02 11:10:26 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 void	job_catch_sigstp(int signal)
 {
 	t_jobs_lst	*job;
+
 	(void)signal;
 	if (g_child && g_shell.current_cmd)
 	{
