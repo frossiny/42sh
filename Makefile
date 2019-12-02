@@ -6,12 +6,12 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/11/27 11:01:32 by frossiny         ###   ########.fr        #
+#    Updated: 2019/12/02 17:39:31 by alagroy-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC		=	gcc -g3 #-fsanitize=address
-CFLAGS	+=	-Wall -Wextra #-Werror
+CFLAGS	+=	-Wall -Wextra -Werror
 
 SHELL	=	bash
 
@@ -90,6 +90,7 @@ FILES	=	shell.c											\
 			expansion/arithmetic/comp.c						\
 			expansion/arithmetic/convert_base.c				\
 			expansion/arithmetic/eval.c						\
+			expansion/arithmetic/eval_var.c					\
 			expansion/arithmetic/eval_expr.c				\
 			expansion/arithmetic/eval_test.c				\
 			expansion/arithmetic/ft_ato.c					\
