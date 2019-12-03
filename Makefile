@@ -6,12 +6,12 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/11/29 14:38:33 by frossiny         ###   ########.fr        #
+#    Updated: 2019/12/03 13:33:55 by lubenard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC		=	gcc -g3 #-fsanitize=address
-CFLAGS	+=	-Wall -Wextra #-Werror
+CFLAGS	+=	-Wall -Wextra  #-Werror
 
 SHELL	=	bash
 
@@ -60,6 +60,7 @@ FILES	=	shell.c											\
 			builtins/echo.c									\
 			builtins/export.c								\
 			builtins/fg.c									\
+			builtins/bg.c									\
 			builtins/jobs/jobs.c							\
 			builtins/jobs/build_options.c					\
 			builtins/cd/build_path.c						\

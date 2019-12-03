@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 12:10:28 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/29 13:12:31 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/12/03 14:33:18 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int		job_percent(char *args, char *builtin)
 	}
 	if (converted_number == -1)
 		return (0);
-	if (converted_number >= (int)g_shell.jobs.len || !converted_number)
+	if (converted_number > (int)g_shell.jobs.len || !converted_number)
 	{
 		ft_dprintf(2, "42sh: %s: %s: no such job\n", builtin ,args);
 		return (0);
