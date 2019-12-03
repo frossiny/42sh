@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:26:37 by frossiny          #+#    #+#             */
-/*   Updated: 2019/12/02 10:53:14 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/12/03 13:09:55 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ static int	start_process(char *file, t_cmd *cmd, char **env)
 	if (g_child == -1)
 		return (g_child = 0);
 	wpid = 0;
-	while (g_child && !wpid && !cmd->is_bg)
+	while (!cmd->is_bg && g_child && wpid <= 0)
 	{
 		pause();
-		wpid = waitpid(g_child, &status, WNOHANG);
+		wpid = g_child ? waitpid(g_child, &status, WNOHANG) : 0;
 	}
 	!cmd->is_bg && g_shell.able_termcaps ? termcaps_init(NULL) : 0;
 	g_child = 0;

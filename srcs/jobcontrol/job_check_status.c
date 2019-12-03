@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 17:37:47 by frossiny          #+#    #+#             */
-/*   Updated: 2019/12/02 11:20:24 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/12/03 13:09:44 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,22 @@ static int	check_pids(t_jobs_lst *job, int *status)
 	return (waitpid(job->pid, status, WNOHANG) > 0);
 }
 
+static void	remove_ghosts(void)
+{
+	pid_t		cpid;
+
+	while ((cpid = waitpid(-1, NULL, WNOHANG)) > 0)
+		;
+}
+
 void		job_check_status(void)
 {
 	t_jobs_lst	*jobs;
 	t_jobs_lst	*next;
 	int			status;
-	pid_t		cpid;
-
-	while ((cpid = waitpid(-1, NULL, WNOHANG)) > 0)
-		;
+	
 	if (!(jobs = g_shell.jobs.lst))
-		return ;
+		return (remove_ghosts());
 	status = 0;
 	while (jobs)
 	{
@@ -58,4 +63,5 @@ void		job_check_status(void)
 		}
 		jobs = next;
 	}
+	remove_ghosts();
 }
