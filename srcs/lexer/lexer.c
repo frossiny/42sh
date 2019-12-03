@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 11:23:45 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/20 18:53:59 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/29 15:48:28 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,15 @@ static int			lex_end(t_lexer *lexer)
 	return (1);
 }
 
-static int			lex_loop(t_lexer *lexer)
+int					lex(char *s, t_lexer *lexer)
 {
 	int				ret;
 	t_state_func	cur;
 
+	if (!s)
+		return (1);
+	lexer->in = s;
+	lexer->pin = s;
 	while (lexer->in && *(lexer->in))
 	{
 		cur = get_func(lexer->state);
@@ -80,13 +84,4 @@ static int			lex_loop(t_lexer *lexer)
 			return (-1);
 	}
 	return (lex_end(lexer));
-}
-
-int					lex(char *s, t_lexer *lexer)
-{
-	if (!s)
-		return (1);
-	lexer->in = s;
-	lexer->pin = s;
-	return (lex_loop(lexer));
 }

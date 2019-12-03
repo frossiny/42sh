@@ -6,13 +6,14 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 14:59:12 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/10/31 17:47:04 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/11/29 16:53:14 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <term.h>
 #include "shell.h"
+#include "history.h"
 #include "ft_printf.h"
 
 int				termcaps_init(struct termios *prev_term)

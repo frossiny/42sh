@@ -6,36 +6,12 @@
 /*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 14:00:31 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/15 17:23:13 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/11/29 15:08:25 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "alias.h"
-
-void		alias_build_input(char **dest, t_token *token)
-{
-	char	*str;
-	char	*tmp;
-
-	if (!token)
-		return ;
-	str = NULL;
-	while (token)
-	{
-		if (!str)
-			str = ft_strdup(token->content);
-		else
-		{
-			tmp = str;
-			str = ft_strjoint(str, " ", token->content);
-			free(tmp);
-		}
-		token = token->next;
-	}
-	free(*dest);
-	*dest = str;
-}
 
 char		*alias_solver(t_alias *alias, t_alias *curr, t_string **list,
 																t_string *hist)

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 15:55:33 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/27 14:00:06 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/29 15:32:19 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,77 +14,6 @@
 #include "shell.h"
 #include "structs.h"
 #include "lexer.h"
-
-static int		bslash_error(t_shell *shell, char **input, int ret)
-{
-	char	*ninput;
-	char	*tmp;
-
-	g_ignore_signals = 1;
-	if (!(ret = get_input(0, &ninput, shell)))
-	{
-		if (g_ignore_signals)
-		{
-			g_ignore_signals = 0;
-			return (2);
-		}
-		return (258);
-	}
-	if (ninput)
-	{
-		tmp = ft_strjoin(*input, (*ninput == '\\') ? ninput + 1 : ninput);
-		free(*input);
-		free(ninput);
-		*input = tmp;
-	}
-	g_ignore_signals = 0;
-	return (0);
-}
-
-static int		not_closed_error(t_shell *shell, char **input, int ret)
-{
-	char	*ninput;
-	char	*tmp;
-
-	g_ignore_signals = 1;
-	if (!(ret = get_input(0, &ninput, shell)))
-	{
-		if (g_ignore_signals)
-		{
-			ft_dprintf(2, "42sh: unexpected EOF\n");
-			g_ignore_signals = 0;
-			return (1);
-		}
-		return (258);
-	}
-	tmp = ft_strjoint(*input, "\n", ninput);
-	free(*input);
-	free(ninput);
-	*input = tmp;
-	g_ignore_signals = 0;
-	return (0);
-}
-
-static int		lexing(t_shell *shell, char **input)
-{
-	int			ret;
-
-	ret = 0;
-	alias_build_input(input, shell->lexer.tokens);
-	lexer_free(&(shell->lexer));
-	shell->lexer.size = 0;
-	while ((ret = lex(*input, &(shell->lexer))) < 1)
-	{
-		lexer_free(&(shell->lexer));
-		if (ret > -2)
-			return (ret);
-		else if (ret == -2 && (ret = not_closed_error(shell, input, ret)))
-			return (ret);
-		else if (ret == -3 && (ret = bslash_error(shell, input, ret)))
-			return (ret);
-	}
-	return (ret);
-}
 
 int				alias_exec(t_shell *shell, char **input)
 {
@@ -97,7 +26,9 @@ int				alias_exec(t_shell *shell, char **input)
 	alias_ret = alias_resolve(shell->lexer.tokens, shell->alias, &alias_hist);
 	while (alias_ret > 0)
 	{
-		if ((ret = lexing(shell, input)))
+		tok_to_input(input, shell->lexer.tokens);
+		lexer_free(&(shell->lexer));
+		if ((ret = lex_build(shell, input)))
 			return (ret);
 		alias_ret = alias_resolve(shell->lexer.tokens, shell->alias,
 															&alias_hist);

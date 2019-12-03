@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:03:36 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/28 17:11:33 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/11/29 16:57:43 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "shell.h"
 #include "opt.h"
 #include "builtins.h"
+#include "history.h"
 #include <fcntl.h>
 
 /*

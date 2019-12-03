@@ -6,13 +6,14 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 17:47:28 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/28 17:23:05 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/11/29 16:49:23 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include "get_next_line.h"
-#include "shell.h"
+#include "libft.h"
+#include "history.h"
 
 void			delete_entry_hist(t_history *history)
 {
@@ -49,7 +50,7 @@ void			add_to_history(char *str, t_history *history)
 	delete_entry_hist(history);
 }
 
-void			read_history(int fd, t_history *hist)
+static void		read_history(int fd, t_history *hist)
 {
 	t_histo_lst			*last;
 	int					ret;

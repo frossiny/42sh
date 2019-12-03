@@ -6,11 +6,11 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/19 17:28:40 by vsaltel           #+#    #+#              #
-#    Updated: 2019/11/29 14:33:53 by frossiny         ###   ########.fr        #
+#    Updated: 2019/12/03 14:40:03 by vsaltel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC		=	gcc -g3 #-fsanitize=address
+CC		=	gcc -g3 -fsanitize=address
 CFLAGS	+=	-Wall -Wextra #-Werror
 
 SHELL	=	bash
@@ -134,6 +134,10 @@ FILES	=	shell.c											\
 			hashtable/ht_put.c								\
 			hashtable/ht_get.c								\
 			hashtable/ht_exists.c							\
+			history/history.c								\
+			history/history_utils.c							\
+			history/histo_expansion.c						\
+			history/histo_exp_utils.c						\
 			jobcontrol/job_new.c							\
 			jobcontrol/job_free.c							\
 			jobcontrol/job_delete.c							\
@@ -143,6 +147,7 @@ FILES	=	shell.c											\
 			jobcontrol/job_search.c							\
 			jobcontrol/job_can_exit.c						\
 			lexer/lexer.c									\
+			lexer/lex_build.c								\
 			lexer/lex_free.c								\
 			lexer/lex_search.c								\
 			lexer/lex_update_state.c						\
@@ -158,6 +163,7 @@ FILES	=	shell.c											\
 			lexer/tokens/tok_is_varexp.c					\
 			lexer/tokens/tok_is_cmd_comp.c					\
 			lexer/tokens/tok_free.c							\
+			lexer/tokens/tok_to_input.c						\
 			lexer/states/general.c							\
 			lexer/states/quotes.c							\
 			lexer/states/comment.c							\
@@ -196,8 +202,6 @@ FILES	=	shell.c											\
 			termcaps/t_visual_cut.c							\
 			termcaps/t_visual_paste.c						\
 			termcaps/t_visual_copy.c						\
-			termcaps/history.c								\
-			termcaps/history_utils.c						\
 			termcaps/signal.c								\
 			termcaps/completion/t_completion.c				\
 			termcaps/completion/lite_parser.c				\

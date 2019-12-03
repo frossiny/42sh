@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 11:23:56 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/26 12:13:38 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/29 15:35:35 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include "structs.h"
 
+int			lex_loop(t_shell *shell, char **input, int history);
+int			lex_build(t_shell *shell, char **input);
 int			lex(char *s, t_lexer *lexer);
 t_ex_token	lexer_search(const char *s);
 void		lexer_free(t_lexer *lexer);
@@ -29,6 +31,7 @@ int			tok_is_redirection(t_token *token);
 int			tok_is_varexp(t_token *token);
 int			tok_is_cmd_comp(t_token *token);
 void		tok_replace(t_token *token, char *str);
+void		tok_to_input(char **dest, t_token *token);
 void		tok_free(t_token *token);
 int			lex_is_expansion(t_lexer *lex);
 size_t		lex_get_expansion(t_lexer *lex);
