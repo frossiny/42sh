@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:26:37 by frossiny          #+#    #+#             */
-/*   Updated: 2019/12/03 13:09:55 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/12/04 17:11:17 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,17 @@ static int	start_process(char *file, t_cmd *cmd, char **env)
 		job_new(cmd, g_child);
 	if (!g_child)
 	{
+		unregister_signals();
 		if (!cmd->is_bg && g_shell.able_termcaps)
 			restore_shell(g_shell.prev_term);
-		unregister_signals();
-		cmd->is_bg ? setpgid(0, 0) : 0;
+		setpgid(getpid(), getpid());
+		!cmd->is_bg ? tcsetpgrp(g_shell.pgrp, getpid()) : 0;
 		handle_redirections(cmd->redir, 0);
 		if (execve(file, cmd->args, env) == -1)
 			exit(EXIT_FAILURE);
 	}
+	setpgid(g_child, g_child);
+	!cmd->is_bg ? tcsetpgrp(g_shell.pgrp, g_child) : 0;
 	close_here_docs(cmd->redir);
 	g_shell.current_cmd = cmd;
 	if (g_child == -1)
@@ -47,6 +50,7 @@ static int	start_process(char *file, t_cmd *cmd, char **env)
 		pause();
 		wpid = g_child ? waitpid(g_child, &status, WNOHANG) : 0;
 	}
+	!cmd->is_bg ? tcsetpgrp(g_shell.pgrp, getpgrp()) : 0;
 	!cmd->is_bg && g_shell.able_termcaps ? termcaps_init(NULL) : 0;
 	g_child = 0;
 	g_shell.current_cmd = NULL;

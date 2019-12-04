@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 14:08:11 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/29 14:37:36 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/12/04 16:56:44 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,6 @@ t_jobs_lst	*job_search(t_shell *shell, int job_number);
 char		*job_get_command(t_cmd *cmd);
 char		*job_get_pipe_command(t_pipel *pline);
 int			job_can_exit(void);
-void		job_catch_sigstp(int signal);
+void		job_catch_sigchld(int signal);
 
 #endif

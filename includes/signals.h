@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 14:16:18 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/12/03 13:08:27 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/12/04 17:14:12 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 void		catch_sigint(int signal);
 void		catch_sigquit(int signal);
 
-void		sig_ignored(int signal);
 void		register_signals(void);
 void		unregister_signals(void);
 
@@ -44,23 +43,23 @@ static const t_signals	g_signals[] =
 	{ 10, NULL },
 	{ 11, NULL },
 	{ 12, NULL },
-	{ 13, &sig_ignored },
+	{ 13, SIG_IGN },
 	{ 14, NULL },
-	{ 15, &sig_ignored },
-	{ 16, &sig_ignored },
-	{ 17, &sig_ignored },
-	{ 18, &job_catch_sigstp },
-	{ 19, &sig_ignored },
-	{ 20, &sig_ignored },
-	{ 21, &sig_ignored },
-	{ 22, &sig_ignored },
-	{ 23, &sig_ignored },
+	{ 15, SIG_IGN },
+	{ 16, SIG_IGN },
+	{ 17, SIG_IGN },
+	{ 18, NULL },
+	{ 19, SIG_IGN },
+	{ 20, &job_catch_sigchld },
+	{ 21, SIG_IGN },
+	{ 22, SIG_IGN },
+	{ 23, SIG_IGN },
 	{ 24, NULL },
 	{ 25, NULL },
 	{ 26, NULL },
 	{ 27, NULL },
-	{ 28, &sig_ignored },
-	{ 29, &sig_ignored },
+	{ 28, SIG_IGN },
+	{ 29, SIG_IGN },
 	{ 30, NULL },
 	{ 31, NULL },
 	{ 0, NULL }

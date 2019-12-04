@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 10:35:21 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/29 11:18:30 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/12/04 14:22:16 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int		exec_fork_builtin(t_cmd *cmd)
 	if (!g_child)
 	{
 		unregister_signals();
-		cmd->is_bg ? setpgid(0, 0) : 0;
+		setpgid(0, 0);
 		handle_redirections(cmd->redir, 0);
 		status = builtin.func(cmd, &g_shell);
 		var_destroy(&(cmd->tenv));

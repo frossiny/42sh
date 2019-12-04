@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 14:59:12 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/10/31 17:47:04 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/12/04 15:35:48 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ int				termcaps_init(struct termios *prev_term)
 	term.c_lflag &= ~(OPOST);
 	term.c_cc[VMIN] = 1;
 	term.c_cc[VTIME] = 0;
-	tcsetattr(0, TCSADRAIN, &term);
+	if (tcsetattr(g_shell.pgrp, TCSADRAIN, &term))
+		return (0);
 	g_shell.able_termcaps = 1;
 	return (1);
 }
@@ -47,7 +48,7 @@ void			restore_shell(struct termios prev_term)
 {
 	if (!isatty(0))
 		return ;
-	tcsetattr(0, TCSANOW, &prev_term);
+	tcsetattr(g_shell.pgrp, TCSANOW, &prev_term);
 }
 
 void			free_termcaps(t_shell *shell)

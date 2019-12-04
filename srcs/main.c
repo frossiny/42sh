@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 11:43:47 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/29 17:59:09 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/12/04 15:06:52 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,20 +53,15 @@ static void	init_default_vars(void)
 		var_set(&g_shell.vars, "SHLVL", "1", 1);
 }
 
-static int	shell_init(char *envp[])
+static int	shell_config(char *envp[])
 {
-	if (!termcaps_init(&(g_shell.prev_term)))
-	{
-		ft_printf("42sh: can not load termcaps\n");
-		ft_printf("Verify TERM variable \"TERM=xterm-256color\"\n");
-		return (0);
-	}
 	g_child = 0;
 	g_ignore_signals = 0;
 	g_return = 0;
 	g_lpid = -1;
 	g_shell.stopped_jobs = 0;
 	g_shell.pid = getpid();
+	g_shell.pgrp = STDIN_FILENO;
 	g_shell.vars = var_init(envp);
 	g_shell.alias = NULL;
 	g_shell.current_cmd = NULL;
@@ -89,12 +84,33 @@ static int	shell_init(char *envp[])
 	return (1);
 }
 
+static int	shell_init(void)
+{
+	if (isatty(STDIN_FILENO))
+	{
+		if (setpgid (g_shell.pid, g_shell.pid) < 0)
+		{
+			ft_dprintf(2, "42sh: Couldn't put the shell in its own process group");
+			exit (1);
+		}
+		if (tcsetpgrp (g_shell.pgrp, g_shell.pid))
+			perror("tcset:");
+	}
+	if (!termcaps_init(&(g_shell.prev_term)))
+	{
+		ft_printf("42sh: can not load termcaps\n");
+		ft_printf("Verify TERM variable \"TERM=xterm-256color\"\n");
+		return (0);
+	}
+	return (1);
+}
+
 int			main(int argc, char *argv[], char *envp[])
 {
 	(void)argc;
 	(void)argv;
 	register_signals();
-	if (!shell_init(envp))
+	if (!shell_config(envp) || !shell_init())
 		return (0);
 	init_default_vars();
 	//load_42shrc();

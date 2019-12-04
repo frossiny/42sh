@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 14:23:53 by frossiny          #+#    #+#             */
-/*   Updated: 2019/12/02 17:18:36 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/12/04 14:25:44 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -341,7 +341,8 @@ typedef struct		s_shell
 	t_jobs			jobs;
 	t_history		history;
 	t_cmd			*current_cmd;
-	int				pid;
+	pid_t			pid;
+	int				pgrp;
 	int				able_termcaps;
 	int				stopped_jobs;
 	struct termios	prev_term;
