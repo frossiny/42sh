@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 19:12:36 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/28 10:44:22 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/12/04 17:22:49 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,21 @@ static void	new_entry(char **str, char *buf, t_cursor_pos *pos
 	if (pos->search_mode)
 	{
 		history_search_replace(str, buf, pos, histo);
-		return (reprint(*str, pos, pos->x_rel));
+		return (reprint(*str, pos, pos->x_rel, 0));
 	}
 	else if (!*str)
 		*str = ft_strdup(buf);
 	else if (pos->visual_mode)
 	{
 		visual_replace(str, buf, pos);
-		return (reprint(*str, pos, pos->x_rel));
+		return (reprint(*str, pos, pos->x_rel, 0));
 	}
 	else if ((*str)[pos->x_rel])
 		*str = ft_strjoinf(ft_strndup(*str, pos->x_rel),
 				ft_strfjoin(buf, *str + pos->x_rel, *str));
 	else
 		*str = ft_strfjoin(*str, buf, *str);
-	reprint(*str, pos, pos->x_rel + ft_strlen(buf));
+	reprint(*str, pos, pos->x_rel + ft_strlen(buf), 0);
 }
 
 static int	check_input(char *buf, char **str, t_cursor_pos *pos
@@ -99,15 +99,13 @@ int			get_input(int fd, char **dest, t_shell *shell)
 	*dest = NULL;
 	if (shell->able_termcaps)
 	{
-		if (!memset_all(&(g_pos.str), &(shell->history), &g_pos))
-			return (-1);
+		memset_all(&(g_pos.str), &(shell->history), &g_pos);
 		signal(SIGWINCH, &resize);
 		ret = termcaps_gnl(fd, dest, shell);
 		signal(SIGWINCH, SIG_DFL);
 	}
 	else
 	{
-		//prompt();
 		ret = get_next_line(fd, dest);
 		if (g_clear_buffer)
 		{

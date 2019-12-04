@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 17:30:28 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/18 14:39:13 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/12/04 17:23:40 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,12 @@ void		visual_delete(char **str, t_cursor_pos *pos)
 	if (pos->v_beg < pos->x_rel)
 	{
 		*str = ft_strfcut(*str, pos->v_beg, pos->x_rel);
-		reprint(*str, pos, pos->v_beg);
+		reprint(*str, pos, pos->v_beg, 0);
 	}
 	else
 	{
 		*str = ft_strfcut(*str, pos->x_rel, pos->v_beg);
-		reprint(*str, pos, pos->x_rel);
+		reprint(*str, pos, pos->x_rel, 0);
 	}
 	pos->visual_mode = 0;
 	pos->v_beg = 0;

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 11:02:25 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/27 15:23:24 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/12/04 17:23:16 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int					execute_termcaps(char *buf, char **str
 			pos->compl = 0;
 		}
 		termcaps.func(str, pos, shell);
-		reprint(*str, pos, pos->x_rel);
+		reprint(*str, pos, pos->x_rel, 0);
 	}
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 12:18:13 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/12/03 16:25:19 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/12/04 15:17:47 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int				histo_expansion(t_shell *shell, char **input)
 				return (1);
 			}
 	}
-	e.new = ft_strfjoin(e.new, ft_strsub(e.str, e.li, e.i - e.li), e.new);
+	e.new = ft_strjoinf(e.new, ft_strsub(e.str, e.li, e.i - e.li));
 	free(*input);
 	*input = e.new;
 	if (find)

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 12:24:22 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/05/22 17:43:58 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/12/04 17:55:34 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,39 +46,44 @@ int				get_pos(t_cursor_pos *pos)
 	return (1);
 }
 
-static void		check_cursor_pos(t_cursor_pos *pos)
+static void		memset_cursor(t_cursor_pos *pos)
 {
-	if (pos->x > 0)
-		ft_putchar('\n');
-	prompt();
-	get_pos(pos);
+	int				ret;
+
+	ret = get_pos(pos);
+	if (!ret)
+	{
+		move_cursor(0, 0);
+		prompt();
+		tputs(tgetstr("cd", NULL), 1, ft_putchar);
+		pos->y = 0;
+		pos->x = prompt_len();
+		move_cursor(pos->x, pos->y);
+	}
+	else
+	{
+		if (pos->x > 0)
+		{
+			ft_putchar('\n');
+			if (pos->y != pos->y_max)
+				pos->y++;
+		}
+		prompt();
+		pos->x = prompt_len();
+		move_cursor(pos->x, pos->y);
+	}
 }
 
-int				memset_pos(t_cursor_pos *pos)
+void			memset_pos(t_cursor_pos *pos)
 {
 	struct winsize	w;
 
 	ioctl(0, TIOCGWINSZ, &w);
-	if (!get_pos(pos))
-	{
-		move_cursor(0, 0);
-		tputs(tgetstr("cd", NULL), 1, ft_putchar);
-		pos->y = 0;
-		pos->x = prompt_len();
-		return (0);
-	}
-	check_cursor_pos(pos);
-	pos->len_str = 0;
-	pos->x_min = pos->x;
-	pos->x_rel = 0;
 	pos->x_max = w.ws_col - 1;
-	pos->y_min = pos->y;
 	pos->y_max = w.ws_row;
-	pos->compl = 0;
-	pos->o_input = NULL;
-	pos->visual_mode = 0;
-	pos->v_beg = 0;
-	pos->search_mode = 0;
-	pos->s_str = NULL;
-	return (1);
+	memset_cursor(pos);
+	pos->x_min = pos->x;
+	pos->y_min = pos->y;
+	pos->lx = pos->x;
+	pos->ly = pos->y;
 }
