@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 10:48:51 by lubenard          #+#    #+#             */
-/*   Updated: 2019/12/02 18:31:37 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/12/03 11:08:51 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "jobcontrol.h"
 #include "execution.h"
 
-static void	update_current_job(t_shell *shell)
+static void		update_current_job(t_shell *shell)
 {
 	if (shell->jobs.len >= 2)
 	{
@@ -22,10 +22,8 @@ static void	update_current_job(t_shell *shell)
 		shell->jobs.minus = shell->jobs.last_job->prev;
 	}
 	if (shell->jobs.len > 1)
-	{
-		shell->jobs.plus = shell->jobs.last_job;
 		shell->jobs.last_job->current = '+';
-	}
+	shell->jobs.plus = shell->jobs.last_job;
 }
 
 void		job_free_elem(t_shell *shell, t_jobs_lst *curr)

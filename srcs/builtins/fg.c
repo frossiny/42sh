@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 16:51:40 by lubenard          #+#    #+#             */
-/*   Updated: 2019/12/02 18:41:38 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/12/03 17:19:59 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,23 +18,25 @@
 #include "signal.h"
 # include <stdio.h>
 
-int		change_grp(t_shell *shell, int converted)
+int		change_grp(t_shell *shell, int converted, int cont)
 {
 	t_jobs_lst	*searched;
-	int			cont;
 	int			wpid;
 	int			status;
 
-	cont = 1;
 	signal(SIGTTOU, SIG_IGN);
 	searched = job_search(shell, converted);
+	printf("searched->pid = %d, STDERR_FILENO = %d\n", searched->pid, STDERR_FILENO);
 	if (tcsetpgrp(STDERR_FILENO, searched->pid) < 0)
+	{
+		perror("Fail");
 		return (EXIT_FAILURE);
+	}
+	printf("Je suis la\n");
 	ft_printf("%s\n", searched->command);
 	/* Send the job a continue signal, if necessary.  */
 	if (cont)
 	{
-		//tcgetattr (STDERR_FILENO, &shell->prev_term); //making this buggy
 		//tcsetattr(STDERR_FILENO, TCSADRAIN, &shell->prev_term); //causing bug in termcaps when uncommented
 		if (kill(-searched->pid, SIGCONT) < 0)
 			return (EXIT_FAILURE);
@@ -59,7 +61,6 @@ int		handle_options_fg(t_shell *shell, t_cmd *cmd)
 {
 	int converted;
 
-	(void)shell;
 	if (cmd->args[1] && cmd->args[1][0] == '%')
 		converted = job_percent(cmd->args[1], "fg");
 	else if (cmd->args[1])
@@ -68,13 +69,15 @@ int		handle_options_fg(t_shell *shell, t_cmd *cmd)
 		converted = shell->jobs.plus->job_number;
 	if (!converted)
 		return (1);
-	return (change_grp(shell, converted));
+	return (change_grp(shell, converted, 1));
 }
 
 int		b_fg(t_cmd *cmd, t_shell *shell)
 {
 	t_options	*opts;
+	int			ret_code;
 
+	ret_code = 0;
 	opts = opt_parse(cmd, "", "fg");
 	if (opts->ret != 0)
 		(opts->ret == -1 ? ft_putendl_fd("fg: usage: fg [job_spec]",
@@ -86,8 +89,8 @@ int		b_fg(t_cmd *cmd, t_shell *shell)
 		else if (!shell->jobs.lst && (cmd->argc - opts->last))
 			ft_dprintf(2, "42sh: fg: %s: no such job\n", cmd->args[1]);
 		else
-			handle_options_fg(shell, cmd);
+			ret_code = handle_options_fg(shell, cmd);
 	}
 	opt_free(opts);
-	return (0);
+	return (ret_code);
 }
