@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 10:48:31 by lubenard          #+#    #+#             */
-/*   Updated: 2019/12/02 17:19:56 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/12/03 15:26:11 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ t_jobs_lst			*job_new(t_cmd *cmd, int pid)
 		return (NULL);
 	job->command = job_get_command(cmd);
 	job->pid = pid;
-	ft_printf("[%d] %d\n", job->job_number, pid);
+	isatty(0) ? ft_printf("[%d] %d\n", job->job_number, pid) : 0;
 	return (job);
 }
 
@@ -84,6 +84,6 @@ t_jobs_lst			*job_new_pipe(t_pipel *pline, t_childs *childs)
 		return (job);
 	while (childs->next)
 		childs = childs->next;
-	ft_printf("[%d] %d\n", job->job_number, childs->pid);
+	isatty(0) ? ft_printf("[%d] %d\n", job->job_number, childs->pid) : 0;
 	return (job);
 }

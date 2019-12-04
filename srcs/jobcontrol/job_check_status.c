@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 17:37:47 by frossiny          #+#    #+#             */
-/*   Updated: 2019/12/03 13:09:44 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/12/03 15:30:42 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ void		job_check_status(void)
 		next = jobs->next;
 		if (check_pids(jobs, &status) && WIFEXITED(status))
 		{
-			ft_printf("[%d]%c Done %s\n",
-				jobs->job_number, jobs->current, jobs->command);
+			isatty(0) ? ft_printf("[%d]%c Done %s\n",
+				jobs->job_number, jobs->current, jobs->command) : 0;
 			job_delete(&g_shell, jobs->pid);
 		}
 		jobs = next;
