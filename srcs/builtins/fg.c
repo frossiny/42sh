@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 16:51:40 by lubenard          #+#    #+#             */
-/*   Updated: 2019/12/03 17:19:59 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/12/06 17:55:11 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,41 +18,44 @@
 #include "signal.h"
 # include <stdio.h>
 
+/*int		job_wait(int )
+{
+	
+
+	return (0);
+}*/
+
 int		change_grp(t_shell *shell, int converted, int cont)
 {
 	t_jobs_lst	*searched;
-	int			wpid;
-	int			status;
 
-	signal(SIGTTOU, SIG_IGN);
+	//signal(SIGTTOU, SIG_IGN);
 	searched = job_search(shell, converted);
-	printf("searched->pid = %d, STDERR_FILENO = %d\n", searched->pid, STDERR_FILENO);
-	if (tcsetpgrp(STDERR_FILENO, searched->pid) < 0)
+	//printf("searched->pid = %d, STDERR_FILENO = %d\n", searched->pid, STDERR_FILENO);
+	if (tcsetpgrp(STDIN_FILENO, searched->pid) < 0)
 	{
-		perror("Fail");
+		perror("Fail to set put pid in foreground");
 		return (EXIT_FAILURE);
 	}
-	printf("Je suis la\n");
+	//printf("Je suis la\n");
 	ft_printf("%s\n", searched->command);
 	/* Send the job a continue signal, if necessary.  */
 	if (cont)
 	{
-		//tcsetattr(STDERR_FILENO, TCSADRAIN, &shell->prev_term); //causing bug in termcaps when uncommented
+		tcsetattr(STDERR_FILENO, TCSADRAIN, &shell->prev_term); //causing bug in termcaps when uncommented
 		if (kill(-searched->pid, SIGCONT) < 0)
 			return (EXIT_FAILURE);
 	}
-	wpid = 0;
-	status = 0;
-	while (!wpid)
-	{
-		pause();
-		wpid = waitpid(searched->pid, &status, WNOHANG);
-	}
 	if (tcsetpgrp(0, shell->pid) < 0)
+	{
+		perror("Failed to put the shell in foreground");
 		return (EXIT_FAILURE);
+	}
 	/* Restore the shell's terminal modes.  */
-	tcgetattr (STDERR_FILENO, &shell->prev_term);
-	tcsetattr (STDERR_FILENO, TCSADRAIN, &shell->prev_term);
+	if (tcgetattr(STDERR_FILENO, &shell->prev_term) < 0)
+		perror("Error 1");
+	if (tcsetattr(STDERR_FILENO, TCSADRAIN, &shell->prev_term) < 0)
+		perror("Error 2");
 	job_delete(shell, searched->pid);
 	return (EXIT_SUCCESS);
 }
