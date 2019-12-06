@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/12/04 16:56:54 by frossiny         ###   ########.fr        #
+#    Updated: 2019/12/06 18:11:55 by lubenard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -144,6 +144,7 @@ FILES	=	shell.c											\
 			jobcontrol/job_search.c							\
 			jobcontrol/job_can_exit.c						\
 			jobcontrol/job_catch_sigchld.c					\
+			jobcontrol/job_utils.c							\
 			lexer/lexer.c									\
 			lexer/lex_free.c								\
 			lexer/lex_search.c								\
