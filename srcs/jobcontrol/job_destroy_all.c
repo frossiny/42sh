@@ -6,12 +6,13 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 10:49:02 by lubenard          #+#    #+#             */
-/*   Updated: 2019/12/03 15:38:45 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/12/10 16:12:44 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 #include "execution.h"
+#include "jobcontrol.h"
 
 static void	kill_jobs(t_shell *shell)
 {
@@ -20,14 +21,14 @@ static void	kill_jobs(t_shell *shell)
 	jobs = shell->jobs.lst;
 	while (jobs)
 	{
-		if (ft_strequ(jobs->state, "Stopped"))
+		if (jobs->state == JOB_SUSPENDED)//ft_strequ(jobs->state, "Stopped"))
 			kill(jobs->pid, SIGCONT);
 		kill(jobs->pid, SIGHUP);
 		jobs = jobs->next;
 	}
 }
 
-void		jobs_destroy_all(t_shell *shell, int kill)
+void		jobs_destroy_all(t_shell *shell)
 {
 	t_jobs_lst *curr;
 	t_jobs_lst *next;

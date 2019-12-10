@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 14:23:53 by frossiny          #+#    #+#             */
-/*   Updated: 2019/12/06 16:22:12 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/12/10 11:58:11 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -272,7 +272,8 @@ typedef struct		s_jobs_lst
 	int					job_number;
 	int					pid;
 	char				current;
-	char				*state;
+	char				*status;
+	int					state;
 	char				*command;
 	t_childs			*childs;
 	struct termios		tmodes;

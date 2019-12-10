@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 14:08:11 by lubenard          #+#    #+#             */
-/*   Updated: 2019/12/06 18:37:03 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/12/10 16:12:48 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,14 @@
 # define JOBCONTROL_H
 
 # include "structs.h"
+
+enum	job_state
+{
+	JOB_COMPLETED,
+	JOB_SUSPENDED,
+	JOB_RUNNING,
+	JOB_CONTINUED
+};
 
 /*
 ** If needed, you can remove shell var from proto and use global instead
@@ -36,5 +44,6 @@ void		job_catch_sigchld(int signal);
 */
 
 int			job_is_stopped(t_jobs_lst *jobs);
+int			job_is_completed(t_jobs_lst *jobs);
 
 #endif

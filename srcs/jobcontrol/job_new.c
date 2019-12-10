@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 10:48:31 by lubenard          #+#    #+#             */
-/*   Updated: 2019/12/06 16:23:28 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/12/10 18:37:02 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ static t_jobs_lst	*new(void)
 	job->pid = 0;
 	job->childs = NULL;
 	job->current = '+';
-	job->state = "Running";
+	job->status = "Running";
+	job->state = JOB_RUNNING;
 	tcgetattr(STDIN_FILENO, &job->tmodes);
 	job->prev = NULL;
 	job->next = NULL;

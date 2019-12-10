@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 13:32:46 by lubenard          #+#    #+#             */
-/*   Updated: 2019/12/06 15:08:03 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/12/10 14:28:42 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,15 @@ int		set_bg(t_shell *shell, int converted, int cont)
 {
 	t_jobs_lst *searched;
 
-	(void)cont;
 	searched = job_search(shell, converted);
 	ft_printf("[%d]%c %s\n", searched->job_number, searched->current,
 	searched->command);
-	searched->state = "Running";
-	if (kill(-searched->pid, SIGCONT) < 0)
-		return (EXIT_FAILURE);
+	if (searched->state == JOB_SUSPENDED)
+		searched->state = JOB_CONTINUED;
+	searched->status = "Running";
+	if (cont)
+		if (kill(-searched->pid, SIGCONT) < 0)
+			return (EXIT_FAILURE);
 	return (0);
 }
 
