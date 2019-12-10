@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 16:51:40 by lubenard          #+#    #+#             */
-/*   Updated: 2019/12/10 19:08:39 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/12/10 22:13:37 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,29 @@
 #include "jobcontrol.h"
 #include "shell.h"
 
+int		mark_process_status(pid_t pid, int status)
+{
+	t_jobs_lst	*plist;
+	int			signo;
+
+	if ((plist = job_search(&g_shell, pid)))
+	{
+		if (WIFSTOPPED(status))
+			plist->state = JOB_SUSPENDED;
+		else
+		{
+			plist->state = JOB_COMPLETED;
+			if (WIFSIGNALED(status) && (signo = WTERMSIG(status)))
+			{
+				if (signo != SIGPIPE && signo != SIGINT)
+					ft_dprintf(2, "%d\n", signo);
+			}
+		}
+		return (0);
+	}
+	return (1);
+}
+
 int		wait_for_job(int pid)
 {
 	pid_t	wait;
@@ -27,7 +50,8 @@ int		wait_for_job(int pid)
 	{
 		if ((wait = waitpid(-pid, &status, WUNTRACED)) == -1)
 			return (1);
-		if (pid <= 1 || job_is_stopped(g_shell.jobs.lst)
+		if (pid <= 1 || mark_process_status(wait, status)
+		|| job_is_stopped(g_shell.jobs.lst)
 		|| job_is_completed(g_shell.jobs.lst))
 			break ;
 	}
@@ -58,10 +82,10 @@ int		put_foreground(t_shell *shell, int converted, int cont)
 		return (EXIT_FAILURE);
 	}
 	/* Restore the shell's terminal modes.  */
-	/*if (tcgetattr(STDIN_FILENO, &searched->tmodes) < 0)
+	if (tcgetattr(STDIN_FILENO, &searched->tmodes) < 0)
 		perror("Error 1");
 	if (tcsetattr(STDIN_FILENO, TCSADRAIN, &shell->prev_term) < 0)
-		perror("Error 2");*/
+		perror("Error 2");
 	job_delete(shell, searched->pid);
 	return (EXIT_SUCCESS);
 }
@@ -90,7 +114,7 @@ int		b_fg(t_cmd *cmd, t_shell *shell)
 	opts = opt_parse(cmd, "", "fg");
 	if (opts->ret != 0)
 		(opts->ret == -1 ? ft_putendl_fd("fg: usage: fg [job_spec]",
-		2) : 0);
+										 2) : 0);
 	else
 	{
 		if (!shell->jobs.lst && !(cmd->argc - opts->last))
