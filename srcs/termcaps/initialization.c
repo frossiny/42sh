@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 14:59:12 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/12/04 15:35:48 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/12/11 18:10:50 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,9 @@ int				termcaps_init(struct termios *prev_term)
 		else if ((ret = tgetent(NULL, "xterm-256color")) != 1)
 			return (0);
 	}
-	term.c_lflag &= ~(ICANON | ECHO | IEXTEN);
-	term.c_lflag &= ~(OPOST);
+	ft_printf("term.c_lflag = %d\n", term.c_lflag);
+	term.c_lflag &= ~(ICANON | ECHO | IEXTEN | OPOST);
+	ft_printf("term.c_lflag = %d\n", term.c_lflag);
 	term.c_cc[VMIN] = 1;
 	term.c_cc[VTIME] = 0;
 	if (tcsetattr(g_shell.pgrp, TCSADRAIN, &term))

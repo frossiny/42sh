@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 16:51:40 by lubenard          #+#    #+#             */
-/*   Updated: 2019/12/10 22:13:37 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/12/11 18:39:48 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,41 @@ int		wait_for_job(int pid)
 	return (0);
 }
 
+void	compare_structs_termios(struct termios searched, struct termios shell)
+{
+	if (searched.c_iflag == shell.c_iflag)
+		ft_printf("iflag is the same, value is %d\n", shell.c_iflag);
+	else
+		ft_printf("iflag is different, searched = %d, shell = %d\n", searched.c_iflag, shell.c_iflag);
+	if (searched.c_oflag == shell.c_oflag)
+		ft_printf("oflag is the same, value is %d\n", shell.c_oflag);
+	else
+		ft_printf("oflag is different, searched = %d, shell = %d\n", searched.c_oflag, shell.c_oflag);
+	if (searched.c_cflag == shell.c_cflag)
+		ft_printf("cflag is the same, value is %d\n", shell.c_cflag);
+	else
+		ft_printf("cflag is different, searched = %d, shell = %d\n", searched.c_cflag, shell.c_cflag);
+	if (searched.c_lflag == shell.c_lflag)
+		ft_printf("lflag is the same, value is %d\n", shell.c_lflag);
+	else
+		ft_printf("lflag is different, searched = %d, shell = %d\n", searched.c_lflag, shell.c_lflag);
+	if (searched.c_cc == shell.c_cc)
+		ft_printf("cc is the same, value is %d\n", shell.c_cc);
+	else
+		ft_printf("cc is different, searched = %d, shell = %d\n", searched.c_cc, shell.c_cc);
+}
+
+/*
+** shell prev_term seems to change between shell init and fg command
+*/
+
 int		put_foreground(t_shell *shell, int converted, int cont)
 {
 	t_jobs_lst	*searched;
 
 	searched = job_search(shell, converted);
-	if (tcsetpgrp(STDIN_FILENO, searched->pid) < 0)
+	compare_structs_termios(searched->tmodes, shell->prev_term); //DEBUG ONLY
+	if (tcsetpgrp(shell->pgrp, searched->pid) < 0)
 	{
 		perror("Fail to set put pid in foreground");
 		return (EXIT_FAILURE);
@@ -71,21 +100,25 @@ int		put_foreground(t_shell *shell, int converted, int cont)
 	ft_printf("%s\n", searched->command);
 	if (cont)
 	{
-		tcsetattr(STDIN_FILENO, TCSADRAIN, &searched->tmodes);
+		//something need to be done here
+		tcsetattr(shell->pgrp, TCSADRAIN, &searched->tmodes);
+		ft_printf("Applying c_lflag on child proc = %d\n", searched->tmodes.c_lflag);
 		if (kill(-searched->pid, SIGCONT) < 0)
 			return (EXIT_FAILURE);
 	}
 	wait_for_job(searched->pid);
-	if (tcsetpgrp(STDIN_FILENO, shell->pid) < 0)
+	if (tcsetpgrp(shell->pgrp, shell->pid) < 0)
 	{
 		perror("Failed to put the shell in foreground");
 		return (EXIT_FAILURE);
 	}
-	/* Restore the shell's terminal modes.  */
-	if (tcgetattr(STDIN_FILENO, &searched->tmodes) < 0)
+	/* Restore the shell's terminal modes. */
+	if (tcgetattr(shell->pgrp, &searched->tmodes) < 0)
 		perror("Error 1");
-	if (tcsetattr(STDIN_FILENO, TCSADRAIN, &shell->prev_term) < 0)
+	shell->prev_term.c_lflag &= ~(ICANON | ECHO | IEXTEN | OPOST); //restauring good c_lflags options
+	if (tcsetattr(shell->pgrp, TCSADRAIN, &shell->prev_term) < 0)
 		perror("Error 2");
+	ft_printf("Applying c_lflag = %d\n", shell->prev_term.c_lflag);
 	job_delete(shell, searched->pid);
 	return (EXIT_SUCCESS);
 }

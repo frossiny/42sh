@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 10:48:31 by lubenard          #+#    #+#             */
-/*   Updated: 2019/12/10 18:37:02 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/12/11 17:48:02 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ static t_jobs_lst	*new(void)
 	job->current = '+';
 	job->status = "Running";
 	job->state = JOB_RUNNING;
-	tcgetattr(STDIN_FILENO, &job->tmodes);
+	tcgetattr(g_shell.pgrp, &job->tmodes);
+	compare_structs_termios(job->tmodes, g_shell.prev_term);
 	job->prev = NULL;
 	job->next = NULL;
 	jobs_insert(job);
