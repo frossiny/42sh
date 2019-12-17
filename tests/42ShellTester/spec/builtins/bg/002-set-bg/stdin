@@ -1,0 +1,3 @@
+cat /dev/random > /dev/null & // A voir
+bg
+jobs
