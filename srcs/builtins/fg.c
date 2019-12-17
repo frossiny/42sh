@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 16:51:40 by lubenard          #+#    #+#             */
-/*   Updated: 2019/12/17 11:58:30 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/12/17 13:05:08 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,32 +68,21 @@ int		put_foreground(t_shell *shell, int converted, int cont)
 
 	searched = job_search(shell, converted);
 	if (tcsetpgrp(shell->pgrp, searched->pid) < 0)
-	{
-		perror("Fail to set put pid in foreground");
 		return (EXIT_FAILURE);
-	}
 	ft_printf("%s\n", searched->command);
 	if (cont)
 	{
-		//something need to be done here
 		tcsetattr(shell->pgrp, TCSADRAIN, &searched->tmodes);
-		ft_printf("Applying c_lflag on child proc = %d\n", searched->tmodes.c_lflag);
 		if (kill(-searched->pid, SIGCONT) < 0)
 			return (EXIT_FAILURE);
 	}
 	wait_for_job(searched->pid);
 	if (tcsetpgrp(shell->pgrp, shell->pid) < 0)
-	{
-		perror("Failed to put the shell in foreground");
 		return (EXIT_FAILURE);
-	}
 	/* Restore the shell's terminal modes. */
-	if (tcgetattr(shell->pgrp, &searched->tmodes) < 0)
-		perror("Error 1");
-	shell->prev_term.c_lflag &= ~(ICANON | ECHO | IEXTEN | OPOST); //restauring good c_lflags options
-	if (tcsetattr(shell->pgrp, TCSADRAIN, &shell->prev_term) < 0)
-		perror("Error 2");
-	ft_printf("Applying c_lflag = %d\n", shell->prev_term.c_lflag);
+	tcgetattr(shell->pgrp, &searched->tmodes);
+	shell->prev_term.c_lflag &= ~(ICANON | ECHO | IEXTEN | OPOST);
+	tcsetattr(shell->pgrp, TCSADRAIN, &shell->prev_term);
 	job_delete(shell, searched->pid);
 	return (EXIT_SUCCESS);
 }
@@ -121,14 +110,19 @@ int		b_fg(t_cmd *cmd, t_shell *shell)
 	ret_code = 0;
 	opts = opt_parse(cmd, "", "fg");
 	if (opts->ret != 0)
-		(opts->ret == -1 ? ft_putendl_fd("fg: usage: fg [job_spec]",
-										 2) : 0);
+		(opts->ret == -1 ? ft_putendl_fd("fg: usage: fg [job_spec]", 2) : 0);
 	else
 	{
 		if (!shell->jobs.lst && !(cmd->argc - opts->last))
+		{
 			ft_putendl_fd("42sh: fg: current: no such job", 2);
+			return (1);
+		}
 		else if (!shell->jobs.lst && (cmd->argc - opts->last))
+		{
 			ft_dprintf(2, "42sh: fg: %s: no such job\n", cmd->args[1]);
+			return (1);
+		}
 		else
 			ret_code = handle_options_fg(shell, cmd);
 	}

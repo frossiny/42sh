@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 13:32:46 by lubenard          #+#    #+#             */
-/*   Updated: 2019/12/10 14:28:42 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/12/17 13:06:14 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,18 @@
 #include "builtins.h"
 #include "opt.h"
 #include "signal.h"
-# include <stdio.h>
 
 int		set_bg(t_shell *shell, int converted, int cont)
 {
 	t_jobs_lst *searched;
 
 	searched = job_search(shell, converted);
+	if (searched->state == JOB_RUNNING)
+	{
+		ft_dprintf(2, "42sh: bg: job %d already in background\n",
+		searched->job_number);
+		return (0);
+	}
 	ft_printf("[%d]%c %s\n", searched->job_number, searched->current,
 	searched->command);
 	if (searched->state == JOB_SUSPENDED)
@@ -51,7 +56,9 @@ int		handle_options_bg(t_shell *shell, t_cmd *cmd)
 int		b_bg(t_cmd *cmd, t_shell *shell)
 {
 	t_options	*opts;
+	int			ret_code;
 
+	ret_code = 0;
 	opts = opt_parse(cmd, "", "bg");
 	if (opts->ret != 0)
 		(opts->ret == -1 ? ft_putendl_fd("bg: usage: bg [job_spec]",
@@ -59,12 +66,18 @@ int		b_bg(t_cmd *cmd, t_shell *shell)
 	else
 	{
 		if (!shell->jobs.lst && !(cmd->argc - opts->last))
+		{
 			ft_putendl_fd("42sh: bg: current: no such job", 2);
+			return (1);
+		}
 		else if (!shell->jobs.lst && (cmd->argc - opts->last))
+		{
 			ft_dprintf(2, "42sh: bg: %s: no such job\n", cmd->args[1]);
+			return (1);
+		}
 		else
-			handle_options_bg(shell, cmd);
+			ret_code = handle_options_bg(shell, cmd);
 	}
 	opt_free(opts);
-	return (0);
+	return (ret_code);
 }

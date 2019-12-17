@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 10:48:31 by lubenard          #+#    #+#             */
-/*   Updated: 2019/12/17 11:57:52 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/12/17 15:24:34 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,7 @@ static t_jobs_lst	*new(void)
 	job->status = "Running";
 	job->state = JOB_RUNNING;
 	tcgetattr(g_shell.pgrp, &job->tmodes);
-	ft_printf("term.c_lflag struct before = %d\n", job->tmodes.c_lflag);
 	job->tmodes.c_lflag = g_shell.prev_term.c_lflag;
-	ft_printf("term.c_lflag struct after = %d\n", job->tmodes.c_lflag);
-	job->prev = NULL;
 	job->next = NULL;
 	jobs_insert(job);
 	return (job);

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 12:10:28 by lubenard          #+#    #+#             */
-/*   Updated: 2019/12/03 14:33:18 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/12/17 14:59:54 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 int		job_check_valid_number(t_shell *shell, t_cmd *cmd, int j)
 {
 	if (!ft_atoi(cmd->args[j])
-	|| ft_atoi(cmd->args[j]) >= (int)shell->jobs.len)
+	|| ft_atoi(cmd->args[j]) > (int)shell->jobs.len)
 	{
 		ft_dprintf(2, "42sh: jobs: %s: no such job\n", cmd->args[j]);
 		return (0);
