@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 13:54:13 by lubenard          #+#    #+#             */
-/*   Updated: 2019/12/11 19:53:03 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/12/18 18:30:33 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "structs.h"
 #include <fcntl.h>
 #include "builtins.h"
+#include "history.h"
 
 /*
 ** Will parse cmd to add good variable to hist
@@ -44,8 +45,14 @@ void		replace_curr_hist(t_cmd *cmd, t_shell *shell)
 		ft_strcat(ret, " ");
 	}
 	ft_strcat(ret, cmd->args[k]);
-	ft_strdel(&shell->history.lst->str);
-	shell->history.lst->str = ret;
+	if (shell->history.lst && isatty(0))
+	{
+		ft_strdel(&shell->history.lst->str);
+		shell->history.lst->str = ret;
+		shell->history.lst->len = ft_strlen(ret);
+	}
+	else
+		add_to_history(ret, &shell->history);
 }
 
 /*
@@ -95,7 +102,7 @@ static void	delete_elem_hist(t_history *hist, t_histo_lst *elem)
 	}
 	else
 	{
-		elem->prev->next = elem->next;	
+		elem->prev->next = elem->next;
 		elem->next->prev = elem->prev;
 	}
 	ft_strdel(&elem->str);
@@ -113,12 +120,14 @@ int			delone_hist(t_history *hist, char *value)
 	index = (ft_strisdigit(value)) ? (size_t)ft_atoi(value) : 0;
 	if (index > hist->size || index < 1)
 	{
-		ft_dprintf(2, "42sh: history: %s: history position out of range\n", value);
+		ft_dprintf(2,
+			"42sh: history: %s: history position out of range\n", value);
 		return (1);
 	}
 	if ((history = hist->lst))
 	{
-		while (history->next && counter != hist->size && history->index != index)
+		while (history->next && counter != hist->size
+								&& history->index != index)
 		{
 			history->index--;
 			history = history->next;

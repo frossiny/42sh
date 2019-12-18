@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:03:36 by lubenard          #+#    #+#             */
-/*   Updated: 2019/12/11 19:39:03 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/12/18 19:48:54 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,14 @@
 ** Will print last hist var depending on $HISTSIZE
 */
 
-int		print_hist(t_shell *shell, size_t size)
+int		print_hist(t_shell *shell, int size)
 {
 	t_histo_lst		*history;
-	size_t			counter;
+	int				counter;
 
-	counter = 0;
+	if (!shell->history.lst || size < 1)
+		return (0);
+	counter = 1;
 	history = shell->history.lst;
 	while (history->next && counter != size)
 	{
@@ -36,7 +38,7 @@ int		print_hist(t_shell *shell, size_t size)
 	}
 	while (history)
 	{
-		ft_printf("  %2zu  %s\n", history->index, history->str);
+		ft_printf("   %2zu  %s\n", history->index, history->str);
 		history = history->prev;
 	}
 	return (0);
@@ -124,8 +126,6 @@ int		b_history(t_cmd *cmd, t_shell *shell)
 	ret = 0;
 	opts = opt_parse(cmd, "cd:arws", "history");
 	tmp_options = opts->opts;
-	if (!shell->history.lst)
-		return (0);
 	if (!verify_options_hist(opts->opts))
 		return (1);
 	if (opts->ret != 0)
@@ -138,12 +138,12 @@ or history -awrn", 2) : 0);
 		print_hist(shell, shell->history.histsize);
 	else if (cmd->args[1][0] == '-')
 		ret = loop_history(cmd, shell, opts);
-	else if (ft_strisdigit(cmd->args[1]))
-		print_hist(shell, ft_atoi(cmd->args[1]) - 1);
+	else if (ft_strisdigit(cmd->args[1]) && shell->history.lst)
+		print_hist(shell, ft_atoi(cmd->args[1]));
 	else
 	{
 		ft_dprintf(2, "42sh: history: %s: numeric argument required\n",
-														cmd->args[1]);
+															cmd->args[1]);
 		ret = 1;
 	}
 	opts->opts = tmp_options;
