@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:03:36 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/29 16:57:43 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/12/11 19:39:03 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,21 +54,16 @@ void	load_history_file(t_shell *shell)
 
 	fd = 0;
 	path = ft_strpathfile(getenv("HOME"), ".42sh_history");
-	if (!access(path, F_OK))
-		if (access(path, X_OK))
-		{
-			free(path);
-			return ;
-		}
+	if (!access(path, F_OK) && access(path, X_OK))
+		return (free(path));
 	if ((fd = open(path, O_RDONLY)) >= 0)
-	{
 		while (get_next_line(fd, &buf) == 1)
 		{
 			if (ft_strisascii(buf) && ft_strcmp(buf, ""))
 				add_to_history(buf, &shell->history);
 			ft_strdel(&buf);
 		}
-	}
+	close(fd);
 	free(path);
 }
 
@@ -99,7 +94,7 @@ int		verify_options_hist(t_opt *opts)
 ** Check options for history
 */
 
-void	loop_history(t_cmd *cmd, t_shell *shell, t_options *opts)
+int		loop_history(t_cmd *cmd, t_shell *shell, t_options *opts)
 {
 	while (opts->opts)
 	{
@@ -117,27 +112,41 @@ void	loop_history(t_cmd *cmd, t_shell *shell, t_options *opts)
 			replace_curr_hist(cmd, shell);
 		opts->opts = opts->opts->next;
 	}
+	return (0);
 }
 
 int		b_history(t_cmd *cmd, t_shell *shell)
 {
 	t_options	*opts;
 	t_opt		*tmp_options;
+	int			ret;
 
+	ret = 0;
 	opts = opt_parse(cmd, "cd:arws", "history");
 	tmp_options = opts->opts;
+	if (!shell->history.lst)
+		return (0);
 	if (!verify_options_hist(opts->opts))
 		return (1);
 	if (opts->ret != 0)
-		(opts->ret == -1 ? ft_putendl_fd("history: usage: [-c] [-d offset] \
+	{
+		(opts->ret == -1 ? ft_putendl_fd("42sh: history: usage: [-c] [-d offset] \
 or history -awrn", 2) : 0);
+		ret = 2;
+	}
 	else if (cmd->argc == 1)
 		print_hist(shell, shell->history.histsize);
+	else if (cmd->args[1][0] == '-')
+		ret = loop_history(cmd, shell, opts);
 	else if (ft_strisdigit(cmd->args[1]))
 		print_hist(shell, ft_atoi(cmd->args[1]) - 1);
 	else
-		loop_history(cmd, shell, opts);
+	{
+		ft_dprintf(2, "42sh: history: %s: numeric argument required\n",
+														cmd->args[1]);
+		ret = 1;
+	}
 	opts->opts = tmp_options;
 	opt_free(opts);
-	return (0);
+	return (ret);
 }

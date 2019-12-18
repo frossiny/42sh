@@ -6,7 +6,7 @@
 /*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 14:39:03 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/12/04 18:14:05 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/12/11 19:34:59 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,8 @@ int				lex_loop(t_shell *shell, char **input, int history)
 		return (0);
 	if ((ret = lex_build(shell, input)) != 1)
 		return (ret);
-	history ? add_to_history(*input, &(shell->history)) : 0;
+	if (isatty(0))
+		history ? add_to_history(*input, &(shell->history)) : 0;
 	if ((ret = alias_exec(shell, input)) != 1)
 		return (ret);
 	return (1);

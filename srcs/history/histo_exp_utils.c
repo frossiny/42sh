@@ -6,7 +6,7 @@
 /*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 17:44:43 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/12/04 15:00:48 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/12/10 16:42:08 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,10 @@ char		*exp_sub_pattern(char *str, int i, int type)
 	else
 	{
 		y = i;
-		while (str[y] && ((str[y] != ' ' && str[y] != '\'' && str[y] != '\"') || is_escaped(str, y, 0)))
-		y++;
-			res = ft_strsub(str, i, y - i);
+		while (str[y] && ((str[y] != ' ' && str[y] != '\'' && str[y] != '\"')
+													|| is_escaped(str, y, 0)))
+			y++;
+		res = ft_strsub(str, i, y - i);
 	}
 	return (res);
 }

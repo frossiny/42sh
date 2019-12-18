@@ -6,7 +6,7 @@
 /*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 12:18:13 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/12/04 15:17:47 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/12/10 16:13:49 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,15 @@ static int		histo_strstr(t_expansion *e, t_history history, char **needle)
 		if (histo_cmp(*needle, lst->str))
 		{
 			e->new = ft_strfjoin(e->new, lst->str, e->new);
-			break;
+			break ;
 		}
 		lst = lst->next;
 	}
 	return (lst ? 0 : 1);
 }
 
-static int		histo_index_exp(t_expansion *e, t_history history, char **needle, int rev)
+static int		histo_index_exp(t_expansion *e, t_history history,
+												char **needle, int rev)
 {
 	size_t		index;
 	t_histo_lst	*lst;
@@ -54,13 +55,13 @@ static int		histo_index_exp(t_expansion *e, t_history history, char **needle, in
 		return (1);
 	lst = history.lst;
 	if (rev)
-		while (--index && lst)	
+		while (--index && lst)
 			lst = lst->next;
 	else
 	{
 		while (lst->next)
 			lst = lst->next;
-		while (--index && lst)	
+		while (--index && lst)
 			lst = lst->prev;
 	}
 	e->new = ft_strfjoin(e->new, lst->str, e->new);
@@ -77,9 +78,10 @@ static int		histo_complete(t_expansion *e, t_history history, int *find)
 	tmp = NULL;
 	rev = 0;
 	res = 0;
-	if (e->i > 0)	
+	if (e->i > 0)
 		e->new = ft_strjoinf(e->new, ft_strsub(e->str, e->li, e->i - e->li));
-	if (e->str[++(e->i)] && e->str[e->i] == '-' && !is_escaped(e->str, e->i, 0) && e->i++)
+	if (e->str[++(e->i)] && e->str[e->i] == '-'
+			&& !is_escaped(e->str, e->i, 0) && e->i++)
 		rev = 1;
 	if (e->str[e->i] && e->str[e->i] == '!')
 		res = histo_previous(e, history, &tmp);
@@ -105,7 +107,8 @@ int				histo_expansion(t_shell *shell, char **input)
 	{
 		if (e.str[e.i] == '\'' && !is_escaped(e.str, e.i, 0))
 			e.isquote = (e.isquote ? 0 : 1);
-		if (e.str[e.i] == '!' && !is_escaped(e.str, e.i, 0) && e.str[e.i + 1] && e.str[e.i + 1] != ' ' && !e.isquote)
+		if (e.str[e.i] == '!' && !is_escaped(e.str, e.i, 0)
+			&& e.str[e.i + 1] && e.str[e.i + 1] != ' ' && !e.isquote)
 			if (histo_complete(&e, shell->history, &find))
 			{
 				free(e.new);

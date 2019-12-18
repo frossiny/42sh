@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 17:28:10 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/18 12:43:10 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/12/10 16:36:34 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ static size_t	write_arg(char buf[], t_printf_state *s)
 	if (s->arg->type == 'c' && s->arg->data.c == 0)
 	{
 		s->c += write_buf(buf, s);
-		s->c += write(s->fd, s->arg->str, s->arg->width == 0 ? 1 : s->arg->width);
+		s->c += write(s->fd, s->arg->str,
+			s->arg->width == 0 ? 1 : s->arg->width);
 		return (s->index);
 	}
 	if (str_len >= BUFF_SIZE)
@@ -69,7 +70,6 @@ size_t			write_all(int fd, char *format, t_arg *alst)
 	s.c = 0;
 	buf[0] = '\0';
 	while (format[i])
-	{
 		if (s.arg)
 		{
 			ft_strncat(buf, format + i, s.arg->index - i);
@@ -81,7 +81,6 @@ size_t			write_all(int fd, char *format, t_arg *alst)
 		}
 		else
 			return (write_end(buf, format + i, &s));
-	}
 	s.c += write_buf(buf, &s);
 	return (s.c);
 }
