@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/12/19 15:44:50 by lubenard         ###   ########.fr        #
+#    Updated: 2019/12/19 16:04:51 by lubenard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -303,7 +303,7 @@ valgrind: all
 tests: all
 	./tests/42ShellTester/42ShellTester.sh "$(PWD)/$(NAME)" ${TARGS}
 
-pytest:
+pytest: all
 	python3 ./tests/python_test/err.py $(FILTER) ./tests/python_test/$(FILE)
 
 -include $(OBJSD)
