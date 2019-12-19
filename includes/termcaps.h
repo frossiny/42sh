@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 18:49:29 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/27 15:14:12 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/12/04 17:58:45 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ typedef struct		s_cursor_pos
 	long				len_str;
 	long				x;
 	long				y;
+	long				lx;
+	long				ly;
 	long				x_rel;
 	long				x_min;
 	long				x_max;
@@ -61,7 +63,7 @@ void				free_termcaps(t_shell *shell);
 int					get_input(int fd, char **dest, t_shell *shell);
 int					get_pos(t_cursor_pos *pos);
 int					read_all(int fd, char **dest);
-int					memset_all(char **str, t_history *history,
+void				memset_all(char **str, t_history *history,
 												t_cursor_pos *pos);
 int					is_special(const char *s);
 int					execute_termcaps(char *buf, char **str,
@@ -70,11 +72,12 @@ void				end_reading(char **dest, char *buf, t_cursor_pos *pos,
 															t_shell *shell);
 void				resize(int sig);
 
-int					memset_pos(t_cursor_pos *pos);
+void				memset_pos(t_cursor_pos *pos);
 void				move_cursor(int x, int y);
 void				final_position(t_cursor_pos *pos);
 void				term_print(char *str);
-void				reprint(char *str, t_cursor_pos *pos, int cursor_pos);
+void				reprint(char *str, t_cursor_pos *pos, int cursor_pos,
+															int is_resize);
 void				visual_delete(char **str, t_cursor_pos *pos);
 void				visual_replace(char **str, char *buf, t_cursor_pos *pos);
 void				visual_print(char *str, t_cursor_pos *pos);
@@ -82,13 +85,6 @@ void				history_search_delete(char **str, t_cursor_pos *pos,
 														t_history *histo);
 void				history_search_replace(char **str, char *buf,
 								t_cursor_pos *pos, t_history *histo);
-
-void				free_history(t_history *history);
-void				memset_history(t_history *history);
-t_history			get_history(void);
-void				overwrite_history(t_histo_lst *histo);
-t_histo_lst			*new_link(char *str);
-void				add_to_history(char *str, t_history *history);
 
 void				termcaps_completion(char **str, t_cursor_pos *pos,
 														t_shell *shell);

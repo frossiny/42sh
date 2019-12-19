@@ -6,13 +6,14 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 14:59:12 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/12/17 15:38:09 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/12/19 15:47:29 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <term.h>
 #include "shell.h"
+#include "history.h"
 #include "ft_printf.h"
 
 int				termcaps_init(struct termios *prev_term)
@@ -63,12 +64,18 @@ void			free_termcaps(t_shell *shell)
 	}
 }
 
-int				memset_all(char **str, t_history *history, t_cursor_pos *pos)
+void			memset_all(char **str, t_history *history, t_cursor_pos *pos)
 {
 	g_clear_buffer = 0;
 	*str = NULL;
 	memset_history(history);
-	if (!memset_pos(pos))
-		return (0);
-	return (1);
+	pos->len_str = 0;
+	pos->x_rel = 0;
+	pos->compl = 0;
+	pos->o_input = NULL;
+	pos->visual_mode = 0;
+	pos->v_beg = 0;
+	pos->search_mode = 0;
+	pos->s_str = NULL;
+	memset_pos(pos);
 }

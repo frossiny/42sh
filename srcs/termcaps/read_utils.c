@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 16:48:58 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/27 14:28:55 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/11/28 15:33:00 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,11 @@ int		read_all(int fd, char **dest)
 	int		ret;
 
 	str = NULL;
-	while ((ret = read(fd, buf, BUFF_SIZE - 1)))
-	{
-		if (ret == -1)
-			break ;
-		buf[ret] = '\0';
-		if (!str)
-			str = ft_strdup(buf);
-		else
-			str = ft_strfjoin(str, buf, str);
-		if (ret < BUFF_SIZE - 1)
-			break ;
-	}
-	*dest = str;
+	ret = read(fd, buf, BUFF_SIZE - 1);
+	if (ret == -1)
+		return (ret);
+	buf[ret] = '\0';
+	*dest = ft_strdup(buf);
 	return (ret);
 }
 

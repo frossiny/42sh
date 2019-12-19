@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:40:21 by frossiny          #+#    #+#             */
-/*   Updated: 2019/12/03 14:13:07 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/12/19 15:51:44 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,12 @@ char		*cd_buildpath(char *path);
 /*
 ** history internal functions
 */
-void		replace_curr_hist(t_cmd *cmd, t_shell *shell);
-void		empty_hist(t_shell *shell);
-void		delone_hist(t_history *hist, char *value);
-void		append_hist(t_histo_lst *hist);
-void		delete_last_elem_hist(t_history *hist);
-void		delete_first_elem_hist(t_history *hist);
 void		delete_elem_hist(t_history *hist, t_histo_lst *elem);
+int			print_hist(t_shell *shell, int size);
+void		replace_curr_hist(t_cmd *cmd, t_shell *shell);
+int			empty_hist(t_shell *shell);
+int			delone_hist(t_history *hist, char *value);
+void		append_hist(t_histo_lst *hist);
 
 /*
 ** Jobs internal functions

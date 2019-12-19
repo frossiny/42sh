@@ -4,6 +4,11 @@ import sys
 
 def execute_test(command, fi):
 	global show
+	global show_input
+	global nb_test
+	global nb_fail
+
+	nb_test = nb_test + 1
 	print("----- ", fi, ": ", end='')
 
 	before_test = ("").encode("UTF-8")
@@ -38,9 +43,10 @@ def execute_test(command, fi):
 
 	if shell_stdout[0] != proc_stdout[0] or shell_value != proc_value or proc_stderr != shell_stderr:
 		print("\033[31m[ERROR]\033[0m")
+		nb_fail = nb_fail + 1
 	else:
 		print("\033[32m[OK]\033[0m")
-	if shell_stdout[0] != proc_stdout[0] or shell_value != proc_value or proc_stderr != shell_stderr or show:
+	if show_input and (shell_stdout[0] != proc_stdout[0] or shell_value != proc_value or proc_stderr != shell_stderr or show):
 		print("\033[35mcommand :\033[0m\n", command.decode())
 	if shell_stdout[0] != proc_stdout[0] or show:
 		print("\033[33m42sh stdout -> \033[0m")
@@ -58,9 +64,14 @@ def execute_test(command, fi):
 
 argc = 0
 show = 0
+show_input = 0
+nb_test = 0
+nb_fail = 0
 for arg in sys.argv:
 	if arg == "SHOW":
 		show = 1
+	if arg == "INPUT":
+		show_input = 1
 	argc = argc + 1
 if argc < 2:
 	for r, d, f in os.walk("./tests/python_test"):
@@ -83,3 +94,4 @@ else:
 						with open(os.path.join(r, file), "r") as content_file:
 							command = content_file.read().encode("UTF-8")
 							execute_test(command, os.path.join(r, file))
+print("\n##### ", nb_test - nb_fail, "/", nb_test, ",", nb_fail, "error #####\n")

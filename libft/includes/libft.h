@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 18:24:16 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/27 03:40:32 by alagroy-         ###   ########.fr       */
+/*   Updated: 2019/12/10 16:29:59 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef	struct		s_list
 
 int					ft_2dstrlen(char **t);
 void				ft_2dstrndel(char ***t, int size);
+int					ft_retfree(char **s, int ret);
 
 void				*ft_memset(void *b, int c, size_t len);
 void				*ft_memalloc(size_t size);

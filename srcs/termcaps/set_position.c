@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 14:59:44 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/20 15:57:47 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/12/04 17:56:20 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,17 @@ void			term_print(char *str)
 	free(tmp);
 }
 
-void			reprint(char *str, t_cursor_pos *pos, int cursor_pos)
+void			reprint(char *str, t_cursor_pos *pos, int cursor_pos,
+														int is_resize)
 {
+	t_cursor_pos	tmp;
+
+	if (!is_resize && get_pos(&tmp) && (tmp.x != pos->lx || tmp.y != pos->ly))
+	{
+		if (tmp.x)
+			ft_putchar('\n');
+		memset_pos(pos);
+	}
 	move_cursor(0, (pos->y_min >= 0 ? pos->y_min : 0));
 	tputs(tgetstr("cd", NULL), 1, ft_putchar);
 	last_line(str, pos);
@@ -95,6 +104,8 @@ void			reprint(char *str, t_cursor_pos *pos, int cursor_pos)
 	if (pos->search_mode)
 		ft_printf("\nhistory_search: %s_", pos->s_str);
 	move_pos(str, pos, cursor_pos);
+	pos->lx = pos->x;
+	pos->ly = pos->y;
 }
 
 void			final_position(t_cursor_pos *pos)

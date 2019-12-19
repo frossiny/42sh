@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/16 11:23:33 by frossiny          #+#    #+#              #
-#    Updated: 2019/11/19 10:34:05 by lubenard         ###   ########.fr        #
+#    Updated: 2019/12/10 16:29:37 by vsaltel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ INCDIR	=	includes
 OBJDIR	=	objs
 FILES 	=	ft_2dstrlen.c						\
 			ft_2dstrndel.c						\
+			ft_retfree.c						\
 			ft_memset.c							\
 			ft_memalloc.c						\
 			ft_memdel.c							\

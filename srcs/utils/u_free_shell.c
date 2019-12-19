@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 10:55:38 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/29 11:36:16 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/11/29 16:54:53 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "alias.h"
 #include "hashtable.h"
 #include "termcaps.h"
+#include "history.h"
 
 void	u_free_shell(void)
 {

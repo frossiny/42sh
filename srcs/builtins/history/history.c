@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:03:36 by lubenard          #+#    #+#             */
-/*   Updated: 2019/12/10 18:04:56 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/12/19 15:50:56 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,37 +15,14 @@
 #include "shell.h"
 #include "opt.h"
 #include "builtins.h"
+#include "history.h"
 #include <fcntl.h>
-
-/*
-** Will print last hist var depending on $HISTSIZE
-*/
-
-int		print_hist(t_shell *shell, size_t size)
-{
-	t_histo_lst		*history;
-	size_t			counter;
-
-	counter = 0;
-	history = shell->history.lst;
-	while (history->next && counter != size)
-	{
-		history = history->next;
-		counter++;
-	}
-	while (history)
-	{
-		ft_printf("  %2zu  %s\n", history->index, history->str);
-		history = history->prev;
-	}
-	return (0);
-}
 
 /*
 ** Will read history file and append to history list
 */
 
-void	load_history_file(t_shell *shell)
+void		load_history_file(t_shell *shell)
 {
 	int		fd;
 	char	*path;
@@ -53,22 +30,20 @@ void	load_history_file(t_shell *shell)
 
 	fd = 0;
 	path = ft_strpathfile(getenv("HOME"), ".42sh_history");
-	if (!access(path, F_OK))
-		if (access(path, X_OK))
-			return ;
+	if (!access(path, F_OK) && access(path, X_OK))
+		return (free(path));
 	if ((fd = open(path, O_RDONLY)) >= 0)
-	{
 		while (get_next_line(fd, &buf) == 1)
 		{
 			if (ft_strisascii(buf) && ft_strcmp(buf, ""))
 				add_to_history(buf, &shell->history);
 			ft_strdel(&buf);
 		}
-	}
+	close(fd);
 	free(path);
 }
 
-int		verify_options_hist(t_opt *opts)
+int			verify_options_hist(t_opt *opts)
 {
 	size_t is_set;
 
@@ -95,14 +70,14 @@ int		verify_options_hist(t_opt *opts)
 ** Check options for history
 */
 
-void	loop_history(t_cmd *cmd, t_shell *shell, t_options *opts)
+int			loop_history(t_cmd *cmd, t_shell *shell, t_options *opts)
 {
 	while (opts->opts)
 	{
 		if (!ft_strcmp(opts->opts->opt, "d"))
 			return (delone_hist(&shell->history, opts->opts->value));
 		if (!ft_strcmp(opts->opts->opt, "c"))
-			return(empty_hist(shell));
+			return (empty_hist(shell));
 		else if (!ft_strcmp(opts->opts->opt, "w"))
 			overwrite_history(shell->history.lst);
 		else if (!ft_strcmp(opts->opts->opt, "a"))
@@ -113,27 +88,48 @@ void	loop_history(t_cmd *cmd, t_shell *shell, t_options *opts)
 			replace_curr_hist(cmd, shell);
 		opts->opts = opts->opts->next;
 	}
+	return (0);
 }
 
-int		b_history(t_cmd *cmd, t_shell *shell)
+static int	execute_hist(t_cmd *cmd, t_shell *shell, t_options *opts)
+{
+	int			ret;
+
+	ret = 0;
+	if (opts->ret != 0)
+	{
+		(opts->ret == -1 ? ft_putendl_fd("42sh: history: usage: \
+						[-c] [-d offset] or history -awrn", 2) : 0);
+		ret = 2;
+	}
+	else if (cmd->argc == 1)
+		print_hist(shell, shell->history.histsize);
+	else if (cmd->args[1][0] == '-')
+		ret = loop_history(cmd, shell, opts);
+	else if (ft_strisdigit(cmd->args[1]))
+		print_hist(shell, ft_atoi(cmd->args[1]));
+	else
+	{
+		ft_dprintf(2, "42sh: history: %s: numeric argument required\n",
+															cmd->args[1]);
+		ret = 1;
+	}
+	return (ret);
+}
+
+int			b_history(t_cmd *cmd, t_shell *shell)
 {
 	t_options	*opts;
 	t_opt		*tmp_options;
+	int			ret;
 
+	ret = 0;
 	opts = opt_parse(cmd, "cd:arws", "history");
 	tmp_options = opts->opts;
 	if (!verify_options_hist(opts->opts))
 		return (1);
-	if (opts->ret != 0)
-		(opts->ret == -1 ? ft_putendl_fd("history: usage: [-c] [-d offset] \
-or history -awrn", 2) : 0);
-	else if (cmd->argc == 1)
-		print_hist(shell, shell->history.histsize);
-	else if (ft_strisdigit(cmd->args[1]))
-		print_hist(shell, ft_atoi(cmd->args[1]) - 1);
-	else
-		loop_history(cmd, shell, opts);
+	ret = execute_hist(cmd, shell, opts);
 	opts->opts = tmp_options;
 	opt_free(opts);
-	return (0);
+	return (ret);
 }

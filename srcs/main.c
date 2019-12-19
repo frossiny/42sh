@@ -6,13 +6,14 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 11:43:47 by frossiny          #+#    #+#             */
-/*   Updated: 2019/12/04 15:06:52 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/12/19 15:48:25 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <dirent.h>
 #include "shell.h"
 #include "libft.h"
+#include "history.h"
 #include "ft_printf.h"
 
 t_shell			g_shell;

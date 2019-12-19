@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 15:47:37 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/23 14:32:54 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/12/10 16:39:43 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ typedef struct				s_print_state
 	int						index;
 	size_t					c;
 }							t_printf_state;
-
 
 int							ft_printf(char *format, ...);
 int							ft_dprintf(int fd, char *format, ...);

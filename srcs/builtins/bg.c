@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 13:32:46 by lubenard          #+#    #+#             */
-/*   Updated: 2019/12/17 13:06:14 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/12/19 12:01:35 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 #include "builtins.h"
 #include "opt.h"
 #include "signal.h"
+
+/*
+** Send SIGCONT signal, and continue background stopped processes
+*/
 
 int		set_bg(t_shell *shell, int converted, int cont)
 {
@@ -52,6 +56,10 @@ int		handle_options_bg(t_shell *shell, t_cmd *cmd)
 		return (1);
 	return (set_bg(shell, converted, 1));
 }
+
+/*
+** builtin bg, handle options
+*/
 
 int		b_bg(t_cmd *cmd, t_shell *shell)
 {

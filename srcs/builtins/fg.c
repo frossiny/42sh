@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 16:51:40 by lubenard          #+#    #+#             */
-/*   Updated: 2019/12/17 13:05:08 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/12/19 11:59:34 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,10 @@
 #include "signal.h"
 #include "jobcontrol.h"
 #include "shell.h"
+
+/*
+** Set new status to processes when waiting for them
+*/
 
 int		mark_process_status(pid_t pid, int status)
 {
@@ -41,6 +45,10 @@ int		mark_process_status(pid_t pid, int status)
 	return (1);
 }
 
+/*
+** Wait for job to complete
+*/
+
 int		wait_for_job(int pid)
 {
 	pid_t	wait;
@@ -60,6 +68,7 @@ int		wait_for_job(int pid)
 
 /*
 ** shell prev_term seems to change between shell init and fg command
+** set bg process into foreground then restore shell into foreground
 */
 
 int		put_foreground(t_shell *shell, int converted, int cont)

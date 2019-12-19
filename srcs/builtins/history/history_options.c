@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 13:54:13 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/15 16:11:33 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/12/19 15:52:41 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,25 @@
 #include "structs.h"
 #include <fcntl.h>
 #include "builtins.h"
+#include "history.h"
+
+static void	replace_elem(t_shell *shell, char *ret)
+{
+	if (shell->history.lst && isatty(0))
+	{
+		ft_strdel(&shell->history.lst->str);
+		shell->history.lst->str = ret;
+		shell->history.lst->len = ft_strlen(ret);
+	}
+	else
+		add_to_history(ret, &shell->history);
+}
 
 /*
 ** Will parse cmd to add good variable to hist
 */
 
-void	replace_curr_hist(t_cmd *cmd, t_shell *shell)
+void		replace_curr_hist(t_cmd *cmd, t_shell *shell)
 {
 	int		i;
 	int		e;
@@ -44,19 +57,20 @@ void	replace_curr_hist(t_cmd *cmd, t_shell *shell)
 		ft_strcat(ret, " ");
 	}
 	ft_strcat(ret, cmd->args[k]);
-	ft_strdel(&shell->history.lst->str);
-	shell->history.lst->str = ret;
+	replace_elem(shell, ret);
 }
 
 /*
 ** Will clear hist and free linked list
 */
 
-void	empty_hist(t_shell *shell)
+int			empty_hist(t_shell *shell)
 {
 	t_histo_lst		*history;
 	t_histo_lst		*hist_tmp;
 
+	if (!shell->history.lst)
+		return (0);
 	if (shell->history.first_element->index - 1 <= 0)
 		shell->history.index = 1;
 	else
@@ -72,42 +86,43 @@ void	empty_hist(t_shell *shell)
 	shell->history.size = 0;
 	shell->history.first_element = NULL;
 	shell->history.lst = NULL;
+	return (0);
 }
 
-void	delone_hist(t_history *hist, char *value)
+int			delone_hist(t_history *hist, char *value)
 {
 	size_t		counter;
 	t_histo_lst	*history;
 	size_t		index;
 
 	counter = 0;
-	history = hist->lst;
 	index = (ft_strisdigit(value)) ? (size_t)ft_atoi(value) : 0;
 	if (index > hist->size || index < 1)
 	{
-		ft_printf("42sh: history: %s: history position out of range", value);
-		return ;
+		ft_dprintf(2,
+			"42sh: history: %s: history position out of range\n", value);
+		return (1);
 	}
-	while (history->next && counter != hist->size && history->index != index)
+	if ((history = hist->lst))
 	{
-		history->index--;
-		history = history->next;
-		counter++;
-	}
-	if (index == hist->size)
-		delete_last_elem_hist(hist);
-	else if (index == 1)
-		delete_first_elem_hist(hist);
-	else
+		while (history->next && counter != hist->size
+								&& history->index != index)
+		{
+			history->index--;
+			history = history->next;
+			counter++;
+		}
 		delete_elem_hist(hist, history);
-	hist->index--;
+		hist->index--;
+	}
+	return (0);
 }
 
 /*
 ** Append to the history file
 */
 
-void	append_hist(t_histo_lst *histo)
+void		append_hist(t_histo_lst *histo)
 {
 	t_histo_lst	*curr;
 	char		*path;
@@ -118,10 +133,7 @@ void	append_hist(t_histo_lst *histo)
 	fd = 0;
 	path = ft_strpathfile(getenv("HOME"), ".42sh_history");
 	if (!access(path, F_OK) || access(path, X_OK))
-	{
-		free(path);
-		return ;
-	}
+		return (free(path));
 	if ((fd = open(path, O_WRONLY | O_APPEND)) != -1)
 	{
 		curr = histo;

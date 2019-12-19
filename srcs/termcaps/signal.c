@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 13:17:57 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/05/15 14:20:48 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/12/04 17:24:02 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,5 @@ void		resize(int sig)
 	}
 	g_pos.x_max = w.ws_col - 1;
 	g_pos.y_max = w.ws_row;
-	reprint(g_pos.str, &g_pos, g_pos.x_rel);
+	reprint(g_pos.str, &g_pos, g_pos.x_rel, 1);
 }

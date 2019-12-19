@@ -6,12 +6,12 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 12:19:22 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/18 11:53:50 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/11/29 16:49:40 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "shell.h"
+#include "history.h"
 
 void				free_history(t_history *history)
 {

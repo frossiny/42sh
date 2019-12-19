@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/12/06 18:11:55 by lubenard         ###   ########.fr        #
+#    Updated: 2019/12/19 15:44:50 by lubenard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,8 +66,8 @@ FILES	=	shell.c											\
 			builtins/cd/build_path.c						\
 			builtins/cd/cd.c								\
 			builtins/history/history.c						\
-			builtins/history/history_utils.c				\
 			builtins/history/history_options.c				\
+			builtins/history/history_utils.c				\
 			builtins/hash.c									\
 			builtins/options/opt_parse.c					\
 			builtins/options/opt_add.c						\
@@ -135,6 +135,10 @@ FILES	=	shell.c											\
 			hashtable/ht_put.c								\
 			hashtable/ht_get.c								\
 			hashtable/ht_exists.c							\
+			history/history.c								\
+			history/history_utils.c							\
+			history/histo_expansion.c						\
+			history/histo_exp_utils.c						\
 			jobcontrol/job_new.c							\
 			jobcontrol/job_free.c							\
 			jobcontrol/job_delete.c							\
@@ -146,6 +150,7 @@ FILES	=	shell.c											\
 			jobcontrol/job_catch_sigchld.c					\
 			jobcontrol/job_utils.c							\
 			lexer/lexer.c									\
+			lexer/lex_build.c								\
 			lexer/lex_free.c								\
 			lexer/lex_search.c								\
 			lexer/lex_update_state.c						\
@@ -161,6 +166,7 @@ FILES	=	shell.c											\
 			lexer/tokens/tok_is_varexp.c					\
 			lexer/tokens/tok_is_cmd_comp.c					\
 			lexer/tokens/tok_free.c							\
+			lexer/tokens/tok_to_input.c						\
 			lexer/states/general.c							\
 			lexer/states/quotes.c							\
 			lexer/states/comment.c							\
@@ -199,8 +205,6 @@ FILES	=	shell.c											\
 			termcaps/t_visual_cut.c							\
 			termcaps/t_visual_paste.c						\
 			termcaps/t_visual_copy.c						\
-			termcaps/history.c								\
-			termcaps/history_utils.c						\
 			termcaps/signal.c								\
 			termcaps/completion/t_completion.c				\
 			termcaps/completion/lite_parser.c				\
@@ -300,6 +304,6 @@ tests: all
 	./tests/42ShellTester/42ShellTester.sh "$(PWD)/$(NAME)" ${TARGS}
 
 pytest:
-	python3 ./tests/python_test/err.py ./tests/python_test/$(FILTER)
+	python3 ./tests/python_test/err.py $(FILTER) ./tests/python_test/$(FILE)
 
 -include $(OBJSD)
