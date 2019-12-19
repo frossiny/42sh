@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 13:54:13 by lubenard          #+#    #+#             */
-/*   Updated: 2019/12/18 18:30:33 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/12/19 14:38:23 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,18 @@
 #include <fcntl.h>
 #include "builtins.h"
 #include "history.h"
+
+static void	replace_elem(t_shell *shell, char *ret)
+{
+	if (shell->history.lst && isatty(0))
+	{
+		ft_strdel(&shell->history.lst->str);
+		shell->history.lst->str = ret;
+		shell->history.lst->len = ft_strlen(ret);
+	}
+	else
+		add_to_history(ret, &shell->history);
+}
 
 /*
 ** Will parse cmd to add good variable to hist
@@ -45,14 +57,7 @@ void		replace_curr_hist(t_cmd *cmd, t_shell *shell)
 		ft_strcat(ret, " ");
 	}
 	ft_strcat(ret, cmd->args[k]);
-	if (shell->history.lst && isatty(0))
-	{
-		ft_strdel(&shell->history.lst->str);
-		shell->history.lst->str = ret;
-		shell->history.lst->len = ft_strlen(ret);
-	}
-	else
-		add_to_history(ret, &shell->history);
+	replace_elem(shell, ret);
 }
 
 /*
@@ -81,33 +86,6 @@ void		empty_hist(t_shell *shell)
 	shell->history.size = 0;
 	shell->history.first_element = NULL;
 	shell->history.lst = NULL;
-}
-
-static void	delete_elem_hist(t_history *hist, t_histo_lst *elem)
-{
-	if (!elem->prev && elem->next)
-	{
-		elem->next->prev = NULL;
-		hist->lst = elem->next;
-	}
-	else if (!elem->next && elem->prev)
-	{
-		hist->first_element = elem->prev;
-		elem->prev->next = NULL;
-	}
-	else if (!elem->next && !elem->prev)
-	{
-		hist->lst = NULL;
-		hist->first_element = NULL;
-	}
-	else
-	{
-		elem->prev->next = elem->next;
-		elem->next->prev = elem->prev;
-	}
-	ft_strdel(&elem->str);
-	free(elem);
-	hist->size--;
 }
 
 int			delone_hist(t_history *hist, char *value)

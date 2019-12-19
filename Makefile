@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/19 17:28:40 by vsaltel           #+#    #+#              #
-#    Updated: 2019/12/11 19:41:51 by vsaltel          ###   ########.fr        #
+#    Updated: 2019/12/19 14:39:06 by vsaltel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,6 +66,7 @@ FILES	=	shell.c											\
 			builtins/cd/cd.c								\
 			builtins/history/history.c						\
 			builtins/history/history_options.c				\
+			builtins/history/history_utils.c				\
 			builtins/hash.c									\
 			builtins/options/opt_parse.c					\
 			builtins/options/opt_add.c						\

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:40:21 by frossiny          #+#    #+#             */
-/*   Updated: 2019/12/11 17:32:41 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/12/19 14:17:37 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ char		*cd_buildpath(char *path);
 /*
 ** history internal functions
 */
+void		delete_elem_hist(t_history *hist, t_histo_lst *elem);
+int			print_hist(t_shell *shell, int size);
 void		replace_curr_hist(t_cmd *cmd, t_shell *shell);
 void		empty_hist(t_shell *shell);
 int			delone_hist(t_history *hist, char *value);

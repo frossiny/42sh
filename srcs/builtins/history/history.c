@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:03:36 by lubenard          #+#    #+#             */
-/*   Updated: 2019/12/18 19:48:54 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/12/19 14:15:31 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,36 +19,10 @@
 #include <fcntl.h>
 
 /*
-** Will print last hist var depending on $HISTSIZE
-*/
-
-int		print_hist(t_shell *shell, int size)
-{
-	t_histo_lst		*history;
-	int				counter;
-
-	if (!shell->history.lst || size < 1)
-		return (0);
-	counter = 1;
-	history = shell->history.lst;
-	while (history->next && counter != size)
-	{
-		history = history->next;
-		counter++;
-	}
-	while (history)
-	{
-		ft_printf("   %2zu  %s\n", history->index, history->str);
-		history = history->prev;
-	}
-	return (0);
-}
-
-/*
 ** Will read history file and append to history list
 */
 
-void	load_history_file(t_shell *shell)
+void		load_history_file(t_shell *shell)
 {
 	int		fd;
 	char	*path;
@@ -69,7 +43,7 @@ void	load_history_file(t_shell *shell)
 	free(path);
 }
 
-int		verify_options_hist(t_opt *opts)
+int			verify_options_hist(t_opt *opts)
 {
 	size_t is_set;
 
@@ -96,7 +70,7 @@ int		verify_options_hist(t_opt *opts)
 ** Check options for history
 */
 
-int		loop_history(t_cmd *cmd, t_shell *shell, t_options *opts)
+int			loop_history(t_cmd *cmd, t_shell *shell, t_options *opts)
 {
 	while (opts->opts)
 	{
@@ -117,7 +91,33 @@ int		loop_history(t_cmd *cmd, t_shell *shell, t_options *opts)
 	return (0);
 }
 
-int		b_history(t_cmd *cmd, t_shell *shell)
+static int	execute_hist(t_cmd *cmd, t_shell *shell, t_options *opts)
+{
+	int			ret;
+
+	ret = 0;
+	if (opts->ret != 0)
+	{
+		(opts->ret == -1 ? ft_putendl_fd("42sh: history: usage: \
+						[-c] [-d offset] or history -awrn", 2) : 0);
+		ret = 2;
+	}
+	else if (cmd->argc == 1)
+		print_hist(shell, shell->history.histsize);
+	else if (cmd->args[1][0] == '-')
+		ret = loop_history(cmd, shell, opts);
+	else if (ft_strisdigit(cmd->args[1]))
+		print_hist(shell, ft_atoi(cmd->args[1]));
+	else
+	{
+		ft_dprintf(2, "42sh: history: %s: numeric argument required\n",
+															cmd->args[1]);
+		ret = 1;
+	}
+	return (ret);
+}
+
+int			b_history(t_cmd *cmd, t_shell *shell)
 {
 	t_options	*opts;
 	t_opt		*tmp_options;
@@ -128,24 +128,7 @@ int		b_history(t_cmd *cmd, t_shell *shell)
 	tmp_options = opts->opts;
 	if (!verify_options_hist(opts->opts))
 		return (1);
-	if (opts->ret != 0)
-	{
-		(opts->ret == -1 ? ft_putendl_fd("42sh: history: usage: [-c] [-d offset] \
-or history -awrn", 2) : 0);
-		ret = 2;
-	}
-	else if (cmd->argc == 1)
-		print_hist(shell, shell->history.histsize);
-	else if (cmd->args[1][0] == '-')
-		ret = loop_history(cmd, shell, opts);
-	else if (ft_strisdigit(cmd->args[1]) && shell->history.lst)
-		print_hist(shell, ft_atoi(cmd->args[1]));
-	else
-	{
-		ft_dprintf(2, "42sh: history: %s: numeric argument required\n",
-															cmd->args[1]);
-		ret = 1;
-	}
+	ret = execute_hist(cmd, shell, opts);
 	opts->opts = tmp_options;
 	opt_free(opts);
 	return (ret);
