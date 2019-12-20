@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 10:35:21 by frossiny          #+#    #+#             */
-/*   Updated: 2019/12/04 14:22:16 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/12/20 15:07:57 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,11 @@ int		exec_fork_builtin(t_cmd *cmd)
 		return (-1);
 	if (!get_here_doc(cmd->redir, &g_shell))
 		return (EXIT_FAILURE);
-	if ((g_child = fork()) > 0)
+	if ((g_child = fork()) > 0 && cmd->is_bg)
+	{
+		ft_printf("cmd->is_bg %d\n", cmd->is_bg);
 		job_new(cmd, g_child);
+	}
 	if (!g_child)
 	{
 		unregister_signals();

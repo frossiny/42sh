@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 17:37:47 by frossiny          #+#    #+#             */
-/*   Updated: 2019/12/03 15:30:42 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/12/20 14:45:52 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void		job_check_status(void)
 	t_jobs_lst	*jobs;
 	t_jobs_lst	*next;
 	int			status;
-	
+
 	if (!(jobs = g_shell.jobs.lst))
 		return (remove_ghosts());
 	status = 0;

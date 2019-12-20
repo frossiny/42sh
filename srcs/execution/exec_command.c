@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:26:37 by frossiny          #+#    #+#             */
-/*   Updated: 2019/12/04 17:11:17 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/12/20 17:33:13 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,10 @@ static int	start_process(char *file, t_cmd *cmd, char **env)
 	if (!get_here_doc(cmd->redir, &g_shell))
 		return (EXIT_FAILURE);
 	if ((g_child = fork()) > 0 && cmd->is_bg)
+	{
+		ft_printf("cmd->is_bg %d\n", cmd->is_bg);
 		job_new(cmd, g_child);
+	}
 	if (!g_child)
 	{
 		unregister_signals();
