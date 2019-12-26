@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 10:40:59 by frossiny          #+#    #+#             */
-/*   Updated: 2019/12/20 15:59:22 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/12/26 17:42:14 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void		unregister_signals(void)
 	while (g_signals[i].sig)
 	{
 		//make exception for job control
-		ft_printf("J'appelle signal[%d]\n", i);
 		if (g_signals[i].func)
 			signal(g_signals[i].sig, SIG_DFL);
 		i++;

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 10:48:31 by lubenard          #+#    #+#             */
-/*   Updated: 2019/12/20 14:46:47 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/12/26 17:23:31 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ t_jobs_lst			*job_new(t_cmd *cmd, int pid)
 {
 	t_jobs_lst *job;
 
-	ft_printf("J'enregistre comme un job\n");
 	if (!(job = new()))
 		return (NULL);
 	job->command = job_get_command(cmd);
