@@ -1,0 +1,7 @@
+history -c
+touch /tmp/test
+rm /tmp/test
+touch /tmp/test2
+rm /tmp/test2
+history -d 3
+history
