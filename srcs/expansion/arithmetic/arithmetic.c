@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 13:40:41 by alagroy-          #+#    #+#             */
-/*   Updated: 2019/12/02 19:20:44 by alagroy-         ###   ########.fr       */
+/*   Updated: 2020/01/07 16:08:29 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static int	check_fpe(t_list *token_list)
 			ft_dprintf(2, "42sh: division by 0\n");
 			return (0);
 		}
-		tmp= tmp->next;
+		tmp = tmp->next;
 	}
 	return (1);
 }

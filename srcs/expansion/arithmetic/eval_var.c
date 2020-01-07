@@ -6,7 +6,7 @@
 /*   By: alagroy- <alagroy-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 14:56:11 by alagroy-          #+#    #+#             */
-/*   Updated: 2019/12/02 18:18:49 by alagroy-         ###   ########.fr       */
+/*   Updated: 2020/01/07 16:02:36 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void		eval_var(char *str)
 				j--;
 			sub = ft_strsub(str, !j ? j : j + 1, i - j - (!j ? 0 : 1));
 			ft_bzero(&token, sizeof(t_token));
-			if (var_get_value(g_shell.vars, sub))
+			if (var_get(g_shell.vars, sub))
 				token.content = var_get_value(g_shell.vars, sub);
 			else
 				token.content = ft_strnew(0);

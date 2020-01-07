@@ -6,7 +6,7 @@
 /*   By: alagroy- <alagroy-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 18:45:05 by alagroy-          #+#    #+#             */
-/*   Updated: 2019/12/02 18:19:11 by alagroy-         ###   ########.fr       */
+/*   Updated: 2020/01/07 15:59:38 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static char	*replace_ae_var(char *str)
 		while (str[i + ++j - 1])
 		{
 			sub = ft_strsub(str, i, j);
-			if (sub && g_shell.vars && var_get_value(g_shell.vars, sub))
+			if (sub && g_shell.vars && var_get(g_shell.vars, sub))
 			{
 				str = ft_strdelpart(str, (i > 0 && str[i - 1] == '$')
 						? i - 1 : i, j);

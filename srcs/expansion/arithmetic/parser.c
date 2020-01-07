@@ -6,7 +6,7 @@
 /*   By: alagroy- <alagroy-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 18:45:57 by alagroy-          #+#    #+#             */
-/*   Updated: 2019/12/02 19:20:09 by alagroy-         ###   ########.fr       */
+/*   Updated: 2020/01/07 16:16:51 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,7 @@ int		parse_aetoken(t_list *token_list)
 	tmp = token_list;
 	while (state >= 0)
 	{
-		j = -1;
-		while (++j < NBR_TYPE)
-			if ((int)((t_ae_token *)tmp->content)->type == j)
-				break ;
+		j = (int)((t_ae_token *)tmp->content)->type;
 		if (j < NBR_TYPE)
 			state = g_ae_parse_tab[state][j];
 		else
@@ -47,6 +44,6 @@ int		parse_aetoken(t_list *token_list)
 			break ;
 	}
 	if (state == AEPFAILURE)
-		ft_dprintf(2, "42sh: syntax error in expression\n");	
+		ft_dprintf(2, "42sh: syntax error in expression\n");
 	return (state);
 }
