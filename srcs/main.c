@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 11:43:47 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/29 16:50:18 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/01/07 17:34:51 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,22 +25,22 @@ int				g_lpid;
 int				g_clear_buffer;
 char			*g_pwd;
 
-static void	init_default_vars(void)
+static void	init_default_vars(char *tmp)
 {
-	char	buff[8192];
+	char	buff[MAX_PWD_LEN];
 	t_var	*pwd;
 	t_var	*shlvl;
-	char	*tmp;
 	DIR		*dir;
 
-	if ((pwd = var_get(g_shell.vars, "PWD")) && (dir = opendir(pwd->value)))
+	if ((pwd = var_get(g_shell.vars, "PWD"))
+		&& (dir = opendir(pwd->value)))
 	{
 		closedir(dir);
 		g_pwd = ft_strdup(pwd->value);
 	}
 	else
 	{
-		getcwd(buff, 8192);
+		getcwd(buff, MAX_PWD_LEN);
 		g_pwd = ft_strdup(buff);
 	}
 	var_set(&g_shell.vars, "PWD", g_pwd, 1);
@@ -95,7 +95,6 @@ int			main(int argc, char *argv[], char *envp[])
 	register_signals();
 	if (!shell_init(envp))
 		return (0);
-	init_default_vars();
-	//load_42shrc();
+	init_default_vars(NULL);
 	return (shell());
 }

@@ -1,27 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_2dstrdel.c                                      :+:      :+:    :+:   */
+/*   ft_isnumeric.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/02 17:56:02 by pcharrie          #+#    #+#             */
-/*   Updated: 2020/01/07 17:35:34 by pcharrie         ###   ########.fr       */
+/*   Created: 2019/11/12 01:32:42 by pcharrie          #+#    #+#             */
+/*   Updated: 2019/11/12 02:12:14 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_2dstrdel(char ***tab)
+int		ft_isnumeric(char *str)
 {
 	int i;
 
-	if (!tab
-		|| !*tab)
-		return ;
+	if (!str)
+		return (0);
 	i = 0;
-	while ((*tab)[i])
-		ft_strdel(&(*tab)[i++]);
-	free(*tab);
-	*tab = NULL;
+	while (str[i])
+	{
+		if (!(str[i] >= '0' && str[i] <= '9'))
+			if (!(i == 0 && (str[i] == '+' || str[i] == '-')
+				&& ft_strlen(str) > 1))
+				return (0);
+		i++;
+	}
+	return (1);
 }

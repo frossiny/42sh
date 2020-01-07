@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alagroy- <alagroy-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 19:32:25 by alagroy-          #+#    #+#             */
-/*   Updated: 2020/01/07 19:00:28 by alagroy-         ###   ########.fr       */
+/*   Updated: 2020/01/07 19:15:39 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,6 @@ t_list		*compl_cmd(char *compl, t_shell *shell, int *len)
 		new = find_file(path[i], compl);
 		ft_lstend(&begin, new);
 	}
-	ft_2dstrdel(path);
+	ft_2dstrdel(&path);
 	return (begin);
 }

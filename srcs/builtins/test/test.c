@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_2dstrdel.c                                      :+:      :+:    :+:   */
+/*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/02 17:56:02 by pcharrie          #+#    #+#             */
-/*   Updated: 2020/01/07 17:35:34 by pcharrie         ###   ########.fr       */
+/*   Created: 2019/11/02 14:48:16 by pcharrie          #+#    #+#             */
+/*   Updated: 2019/11/02 16:56:14 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <sys/stat.h>
+#include "utils.h"
+#include "shell.h"
 #include "libft.h"
+#include "variables.h"
+#include "builtins.h"
+#include "opt.h"
 
-void	ft_2dstrdel(char ***tab)
+int		b_test(t_cmd *cmd, t_shell *shell)
 {
-	int i;
-
-	if (!tab
-		|| !*tab)
-		return ;
-	i = 0;
-	while ((*tab)[i])
-		ft_strdel(&(*tab)[i++]);
-	free(*tab);
-	*tab = NULL;
+	if (cmd->argc == 1)
+		return (1);
+	if (cmd->argc == 2)
+		return (!(ft_strlen(cmd->args[1]) > 0));
+	if (cmd->argc == 3)
+		return (!test_unary(cmd));
+	if (cmd->argc == 4)
+		return (!test_binary(cmd));
+	ft_putendl_fd("42sh: test: too many arguments", 2);
+	return (1);
 }
