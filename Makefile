@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/19 17:28:40 by vsaltel           #+#    #+#              #
-#    Updated: 2019/12/19 14:39:06 by vsaltel          ###   ########.fr        #
+#    Updated: 2020/01/07 17:33:16 by alagroy-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -111,6 +111,7 @@ FILES	=	shell.c											\
 			expansion/arithmetic/comp.c						\
 			expansion/arithmetic/convert_base.c				\
 			expansion/arithmetic/eval.c						\
+			expansion/arithmetic/eval_var.c					\
 			expansion/arithmetic/eval_expr.c				\
 			expansion/arithmetic/eval_test.c				\
 			expansion/arithmetic/ft_ato.c					\
