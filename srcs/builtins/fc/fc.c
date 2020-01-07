@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 17:13:15 by pcharrie          #+#    #+#             */
-/*   Updated: 2019/11/19 04:27:24 by pcharrie         ###   ########.fr       */
+/*   Updated: 2019/11/27 18:38:13 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,10 @@
 
 void	fc_vars_init(t_fc_vars *fc)
 {
-	fc->from = -1;
-	fc->to = -1;
+	fc->from = fc_histo_lst_size() - 15;
+	fc->to = fc_histo_lst_size();
+	fc->from_a = 0;
+	fc->to_a = 0;
 	fc->list = 0;
 	fc->exec = 0;
 	fc->rm = 0;
@@ -73,12 +75,9 @@ int		fc_histo_lst_size(void)
 
 void	fc_vars_del(t_fc_vars *fc)
 {
-	if (fc->tab)
-		ft_2dstrdel(&fc->tab);
-	if (fc->ed_args)
-		ft_2dstrdel(&fc->ed_args);
-	if (fc->editor)
-		ft_strdel(&fc->editor);
+	ft_2dstrdel(&fc->tab);
+	ft_2dstrdel(&fc->ed_args);
+	ft_strdel(&fc->editor);
 	ft_strdel(&fc->s_cmd);
 }
 

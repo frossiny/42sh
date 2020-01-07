@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 01:34:27 by pcharrie          #+#    #+#             */
-/*   Updated: 2019/11/19 04:35:03 by pcharrie         ###   ########.fr       */
+/*   Updated: 2019/11/27 18:37:48 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,27 +89,15 @@ static void	fc_fix_range(t_fc_vars *fc)
 	if (fc->exec)
 	{
 		if (fc->from == -1)
-			fc->from = fc_histo_lst_size();
+			fc->from = hist_size;
 		fc->to = fc->from;
 	}
 	else
 	{
-		if (fc->from < 1)
+		if (fc->from < 0)
 		{
-			if (fc_get_mode(fc) == 2)
-			{
-				fc->from = (hist_size - 15 < 1 ? 1 : hist_size - 15);
-				fc->to = hist_size;
-			}
-			else
-				fc->from = hist_size;
-		}
-		if (fc->to > -1 && fc->to < fc->from)
-		{
-			hist_size = fc->to;
-			fc->to = fc->from;
-			fc->from = hist_size;
-			fc->rv = 1;
+			fc->to = hist_size;
+			fc->from = fc->to + fc->from;
 		}
 	}
 }
@@ -123,7 +111,7 @@ int			fc_parse_range(t_cmd *cmd, t_fc_vars *fc)
 			ft_putendl_fd("42sh: fc: history specification out of range", 2);
 			return (0);
 		}
-		fc->from = ft_atoi(cmd->args[fc->i++]);
+		fc->from_a = ft_atoi(cmd->args[fc->i++]);
 	}
 	if (cmd->args[fc->i])
 	{
@@ -132,7 +120,7 @@ int			fc_parse_range(t_cmd *cmd, t_fc_vars *fc)
 			ft_putendl_fd("42sh: fc: history specification out of range", 2);
 			return (0);
 		}
-		fc->to = ft_atoi(cmd->args[fc->i++]);
+		fc->to_a = ft_atoi(cmd->args[fc->i++]);
 	}
 	fc_fix_range(fc);
 	return (1);

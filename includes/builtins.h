@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:40:21 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/19 04:31:49 by pcharrie         ###   ########.fr       */
+/*   Updated: 2020/01/07 15:28:18 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static const t_builtin g_builtins[] =
 };
 
 char			*cd_buildpath(char *path);
-int				cd_getpath(t_cmd *cmd, t_options *opts);
+int				cd_getpath(t_cmd *cmd, t_options *opts, t_opt *first_opt);
 char			*cd_cdpath(t_var *cdpath, char *path);
 int				cd_pathcheck(char *path, char *arg);
 
@@ -65,6 +65,8 @@ typedef struct	t_fc_vars
 {
 	int				from;
 	int				to;
+	int				from_a;
+	int				to_a;
 	int				list;
 	int				exec;
 	int				rm;

@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 06:32:15 by pcharrie          #+#    #+#             */
-/*   Updated: 2019/11/19 04:38:47 by pcharrie         ###   ########.fr       */
+/*   Updated: 2019/11/27 18:10:28 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,18 @@ int			fc_build_tab(t_fc_vars *fc)
 	return (1);
 }
 
+int			fc_cmd_match(char *str, char *cmd)
+{
+	int i;
+
+	i = 0;
+	while (cmd[i] && str[i] == cmd[i])
+		i++;
+	if (cmd[i] == '\0')
+		return (1);
+	return (0);
+}
+
 void		fc_set_exec_cmd(t_fc_vars *fc)
 {
 	t_histo_lst	*lst;
@@ -81,7 +93,7 @@ void		fc_set_exec_cmd(t_fc_vars *fc)
 	i = fc_histo_lst_size();
 	while (lst)
 	{
-		if (ft_strstr(lst->str, fc->s_cmd))
+		if (fc_cmd_match(lst->str, fc->s_cmd))
 		{
 			fc->from = i;
 			fc->to = i;

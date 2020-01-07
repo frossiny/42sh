@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 16:04:58 by pcharrie          #+#    #+#             */
-/*   Updated: 2019/11/02 18:20:23 by pcharrie         ###   ########.fr       */
+/*   Updated: 2020/01/07 15:32:32 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,18 @@ char		*cd_cdpath(t_var *cdpath, char *path)
 int			b_cd(t_cmd *cmd, t_shell *shell)
 {
 	t_options	*opts;
+	t_opt		*first_opt;
+	int			ret;
 
 	if (!(opts = opt_parse(cmd, "LP", "cd")))
 		return (1);
+	first_opt = opts->opts;
 	while (opts->opts && opts->opts->next)
 		opts->opts = opts->opts->next;
 	if (opts->ret != 0)
 	{
 		if (opts->ret == -1)
-			ft_putendl_fd("42sh: cd: usage: cd [-L|-P] [dir]", 2);
+			ft_putendl_fd("cd: usage: cd [-L|-P] [dir]", 2);
 		return (1);
 	}
 	if (cmd->argc - opts->last > 1)
@@ -64,5 +67,8 @@ int			b_cd(t_cmd *cmd, t_shell *shell)
 		ft_putendl_fd("42sh: cd: too many arguments", 2);
 		return (1);
 	}
-	return (cd_getpath(cmd, opts));
+	ret = cd_getpath(cmd, opts, first_opt);
+	opts->opts = first_opt;
+	opt_free(opts);
+	return (ret);
 }

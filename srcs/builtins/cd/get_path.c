@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 02:12:48 by pcharrie          #+#    #+#             */
-/*   Updated: 2019/11/06 17:48:35 by pcharrie         ###   ########.fr       */
+/*   Updated: 2020/01/07 15:32:39 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int			cd_chdir(char *path, int follow)
 	return (1);
 }
 
-int			cd_getpath(t_cmd *cmd, t_options *opts)
+int			cd_getpath(t_cmd *cmd, t_options *opts, t_opt *first_opt)
 {
 	char	*path;
 	t_var	*cdp;
@@ -115,10 +115,6 @@ int			cd_getpath(t_cmd *cmd, t_options *opts)
 	if (path && cd_pathcheck(path, cmd->args[opts->last]) &&
 		cd_chdir(path, opts->opts && !opts->opts->next
 		&& ft_strequ(opts->opts->opt, "P")))
-	{
-		opt_free(opts);
 		return (0);
-	}
-	opt_free(opts);
 	return (1);
 }
