@@ -1,1 +1,1 @@
-expected_to match_eq "1  history"
+expected_to be_empty

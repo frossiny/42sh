@@ -1,4 +1,4 @@
 expected_to match_regex "\[1\]"
-expected_to match_regex "\[2\]\-"
+expected_to match_eq "[2]- Running cat"
 expected_to match_regex "\[3\]+"
 expected_to match_regex "cat" 3 times

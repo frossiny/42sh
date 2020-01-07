@@ -1,4 +1,5 @@
 history -c
-touch ~/test
-rm ~/test
+history -s touch ~/test
+history -s rm ~/test
+history -s history
 history
