@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:26:37 by frossiny          #+#    #+#             */
-/*   Updated: 2019/12/26 17:40:58 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/07 12:55:18 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 static int	start_process(char *file, t_cmd *cmd, char **env)
 {
 	int		status;
-	int		wpid;
 
 	status = 0;
 	if (!get_here_doc(cmd->redir, &g_shell))
@@ -44,12 +43,9 @@ static int	start_process(char *file, t_cmd *cmd, char **env)
 	g_shell.current_cmd = cmd;
 	if (g_child == -1)
 		return (g_child = 0);
-	wpid = 0;
-	while (!cmd->is_bg && g_child && wpid <= 0)
-	{
-		pause();
-		wpid = g_child ? waitpid(g_child, &status, WNOHANG) : 0;
-	}
+	pause();
+	status = g_last_status;
+	g_last_status = 0;
 	!cmd->is_bg ? tcsetpgrp(g_shell.pgrp, getpgrp()) : 0;
 	!cmd->is_bg && g_shell.able_termcaps ? termcaps_init(NULL) : 0;
 	g_child = 0;
