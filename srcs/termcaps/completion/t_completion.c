@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 12:43:39 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/20 16:33:23 by alagroy-         ###   ########.fr       */
+/*   Updated: 2019/12/02 18:51:11 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,12 @@ static char	*find_compl_word(t_cursor_pos *pos)
 	return (ft_strsub(pos->str, beg, pos->x_rel - beg));
 }
 
+static void	del_compl_lst(void *content, size_t content_size)
+{
+	content_size = 0;
+	ft_strdel((char **)&content);
+}
+
 void		termcaps_completion(char **str, t_cursor_pos *pos, t_shell *shell)
 {
 	int		mode;
@@ -61,5 +67,6 @@ void		termcaps_completion(char **str, t_cursor_pos *pos, t_shell *shell)
 	if (!compl_lst)
 		return ;
 	disp_compl(pos, str, compl_lst, len);
+	ft_lstdel(&compl_lst, del_compl_lst);
 	ft_strdel(&compl);
 }

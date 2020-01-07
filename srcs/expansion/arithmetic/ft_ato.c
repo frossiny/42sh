@@ -6,7 +6,7 @@
 /*   By: alagroy- <alagroy-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 16:42:22 by alagroy-          #+#    #+#             */
-/*   Updated: 2019/11/27 12:06:19 by alagroy-         ###   ########.fr       */
+/*   Updated: 2019/11/27 14:46:00 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char		*ft_ltoa(long nb)
 
 	neg = nb < 0 ? 1 : 0;
 	nb_digit = 1 + neg;
-	tmp = neg ? nb * -1 : neg;
+	tmp = neg ? nb * -1 : nb;
 	while (tmp >= 10)
 	{
 		tmp /= 10;
@@ -36,7 +36,7 @@ char		*ft_ltoa(long nb)
 		rtrn[nb_digit] = nb % 10 + '0';
 		nb /= 10;
 	}
-	neg ? rtrn[0] = '-' : 0;
+	rtrn[0] = neg ? '-' : rtrn[0];
 	return (rtrn);
 }
 

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 14:23:53 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/29 13:10:01 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/07 17:33:35 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 /*
 ** Arithmetic Expansions structs
 */
-typedef enum		s_ae_type
+typedef enum		e_ae_type
 {
 	ERROR,
 	WORD,
@@ -33,7 +33,7 @@ typedef enum		s_ae_type
 	EOI,
 }					t_ae_type;
 
-typedef enum		s_ae_value
+typedef enum		e_ae_value
 {
 	PLUS,
 	PPLUS,
