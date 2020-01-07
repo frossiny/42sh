@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/28 10:50:50 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/30 15:39:19 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/01/07 15:55:57 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,6 @@ int				b_echo(t_cmd *cmd, t_shell *shell)
 		return (empty_args());
 	disp(cmd->argc - 1 - opt, cmd->args + 1 + opt);
 	opt ? 0 : ft_putchar('\n');
+	opt_free(options);
 	return (0);
 }
