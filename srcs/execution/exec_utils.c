@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 17:27:04 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/27 15:47:31 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/07 17:34:34 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static char	*handle_relative(char *name, int verbose)
 	return (NULL);
 }
 
-static char	*get_exe_path(t_shell *shell, char *name)
+char	*get_exe_path(t_shell *shell, char *name)
 {
 	t_var			*path;
 	char			**dirs;

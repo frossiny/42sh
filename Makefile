@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
+#    By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/19 17:28:40 by vsaltel           #+#    #+#              #
-#    Updated: 2019/12/19 14:39:06 by vsaltel          ###   ########.fr        #
+#    Updated: 2020/01/07 18:26:31 by pcharrie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ LIBFT	=	libft
 SRCDIR	=	srcs
 INCDIR	=	includes
 OBJDIR	=	objs
+
 FILES	=	shell.c											\
 			main.c											\
 			prompt.c										\
@@ -71,7 +72,7 @@ FILES	=	shell.c											\
 			builtins/options/opt_parse.c					\
 			builtins/options/opt_add.c						\
 			builtins/options/opt_get.c						\
-			builtins/options/opt_free.c			 			\
+			builtins/options/opt_free.c						\
 			execution/exec_all.c							\
 			execution/exec_redirections.c					\
 			execution/exec_command.c						\
@@ -230,7 +231,18 @@ FILES	=	shell.c											\
 			variables/var_disp_env.c						\
 			variables/var_is_key_valid.c					\
 			variables/var_merge.c							\
-			variables/var_export.c
+			variables/var_export.c							\
+			builtins/cd/get_path.c							\
+			builtins/fc/edit.c								\
+			builtins/fc/exec.c								\
+			builtins/fc/fc.c								\
+			builtins/fc/fork.c								\
+			builtins/fc/list.c								\
+			builtins/fc/parse.c								\
+			builtins/fc/tab.c								\
+			builtins/test/test.c							\
+			builtins/test/unary.c							\
+			builtins/test/binary.c
 
 SRCS	=	$(addprefix $(SRCDIR)/, $(FILES))
 OBJS	=	$(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)

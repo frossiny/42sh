@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
+#    By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/16 11:23:33 by frossiny          #+#    #+#              #
-#    Updated: 2019/12/10 16:29:37 by vsaltel          ###   ########.fr        #
+#    Updated: 2020/01/07 18:26:43 by pcharrie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,9 @@ NAME 	=	libft.a
 SRCDIR	=	srcs
 INCDIR	=	includes
 OBJDIR	=	objs
-FILES 	=	ft_2dstrlen.c						\
+FILES 	=	ft_2dstrnew.c						\
+			ft_2dstrlen.c						\
+			ft_2dstrdel.c						\
 			ft_2dstrndel.c						\
 			ft_retfree.c						\
 			ft_memset.c							\
@@ -81,6 +83,7 @@ FILES 	=	ft_2dstrlen.c						\
 			ft_isascii.c						\
 			ft_isprint.c						\
 			ft_isspace.c						\
+			ft_isnumeric.c						\
 			ft_tolower.c						\
 			ft_toupper.c						\
 			ft_putchar.c						\

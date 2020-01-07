@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_2dstrdel.c                                      :+:      :+:    :+:   */
+/*   ft_2dstrnew.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/02 17:56:02 by pcharrie          #+#    #+#             */
-/*   Updated: 2020/01/07 17:35:34 by pcharrie         ###   ########.fr       */
+/*   Created: 2019/11/06 17:58:00 by pcharrie          #+#    #+#             */
+/*   Updated: 2019/11/15 17:37:24 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_2dstrdel(char ***tab)
+char	**ft_2dstrnew(int size)
 {
-	int i;
+	char	**tab;
+	int		i;
 
-	if (!tab
-		|| !*tab)
-		return ;
+	if (!(tab = malloc(sizeof(char*) * (size + 1))))
+		return (NULL);
 	i = 0;
-	while ((*tab)[i])
-		ft_strdel(&(*tab)[i++]);
-	free(*tab);
-	*tab = NULL;
+	while (i < size + 1)
+		tab[i++] = NULL;
+	return (tab);
 }
