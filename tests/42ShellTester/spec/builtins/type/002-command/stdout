@@ -1,0 +1,1 @@
+expected_to match_eq "ls is /bin/ls"
