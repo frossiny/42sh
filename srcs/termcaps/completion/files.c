@@ -6,7 +6,7 @@
 /*   By: alagroy- <alagroy-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 18:33:26 by alagroy-          #+#    #+#             */
-/*   Updated: 2019/11/18 19:19:23 by alagroy-         ###   ########.fr       */
+/*   Updated: 2020/01/07 17:54:41 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,13 +91,15 @@ t_list		*compl_file(char *compl, t_shell *shell, int *len)
 		beg = (int)(slash_ptr - compl) + 1;
 	if (!(file = ft_strsub(compl, beg, ft_strlen(compl) - beg)))
 		return (NULL);
-	if (!(path = ft_strsub(compl, 0, beg)))
+	if (beg && !(path = ft_strsub(compl, 0, beg)))
 		return (NULL);
-	if (!ft_strncmp(path, "~/", 2))
+	if (beg && !ft_strncmp(path, "~/", 2))
 		path = expand_tilde(path, shell);
 	if (beg == 0)
 		path = ft_strdup(".");
 	*len = ft_strlen(file);
 	compl_list = find_file(path, file);
+	ft_strdel(&path);
+	ft_strdel(&file);
 	return (compl_list);
 }

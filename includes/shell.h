@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 11:59:10 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/08 11:34:02 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/08 11:57:11 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # define MAX_HISTORY	30
 # define HT_SIZE		150
 # define EXP_SPECIAL	"?$!0"
+# define MAX_PWD_LEN	8192
 
 extern t_shell		g_shell;
 extern t_cursor_pos	g_pos;
@@ -37,6 +38,8 @@ extern int			g_return;
 extern int			g_lpid;
 extern char			*g_pwd;
 
+int					handle_input(t_shell *shell, char **input, int history);
+int					eval_exec(char **input, int history);
 int					shell(void);
 void				prompt(void);
 int					prompt_len(void);

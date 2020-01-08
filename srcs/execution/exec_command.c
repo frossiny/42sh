@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:26:37 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/08 11:35:04 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/08 11:57:37 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,6 @@ int			exec_command(t_cmd *cmd)
 	env = !is_builtin(cmd->exe->content) ? var_build_env(cmd->tenv) : NULL;
 	ret = start(cmd, env);
 	var_destroy(&(cmd->tenv));
-	ft_2dstrdel(env);
+	ft_2dstrdel(&env);
 	return (ret);
 }

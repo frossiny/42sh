@@ -6,16 +6,16 @@
 /*   By: alagroy- <alagroy-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 18:45:05 by alagroy-          #+#    #+#             */
-/*   Updated: 2019/11/27 03:51:37 by alagroy-         ###   ########.fr       */
+/*   Updated: 2020/01/07 15:59:38 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "arithmetic.h"
 #include "variables.h"
 
-extern t_shell	*g_shell;
+extern t_shell	g_shell;
 
-/*static char	*replace_ae_var(char *str)
+static char	*replace_ae_var(char *str)
 {
 	int		i;
 	int		j;
@@ -28,12 +28,13 @@ extern t_shell	*g_shell;
 		while (str[i + ++j - 1])
 		{
 			sub = ft_strsub(str, i, j);
-			if (sub && g_shell->vars && var_get_value(g_shell->vars, "PATH"))
+			if (sub && g_shell.vars && var_get(g_shell.vars, sub))
 			{
-				str = ft_strdelpart(str, i, j);
-				str = ft_insert_str(str, var_get_value(g_shell->vars, sub), i);
+				str = ft_strdelpart(str, (i > 0 && str[i - 1] == '$')
+						? i - 1 : i, j);
+				str = ft_insert_str(str, var_get_value(g_shell.vars, sub), i);
 				ft_strdel(&sub);
-				i += j;
+				i = -1;
 				break ;
 			}
 			ft_strdel(&sub);
@@ -41,7 +42,7 @@ extern t_shell	*g_shell;
 	}
 	return (str);
 }
-*/
+
 static int	parse_base(char *str)
 {
 	int		i;
@@ -84,7 +85,7 @@ static int	convert_base_str(char **str, int i)
 	*str = ft_strdelpart(*str, i, len);
 	len = ft_strlen(new_num);
 	*str = ft_insert_str(*str, new_num, i);
-	return (i += len - 1);
+	return (i + len - 1);
 }
 
 char		*ae_base10(char *str)
@@ -92,7 +93,7 @@ char		*ae_base10(char *str)
 	int		i;
 
 	i = -1;
-	//str = replace_ae_var(str);
+	str = replace_ae_var(str);
 	while (str[++i])
 	{
 		if (str[i] == '0' && (i == 0 || !ft_isdigit(str[i - 1])))

@@ -1,30 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstend.c                                        :+:      :+:    :+:   */
+/*   ft_2dstrnew.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alagroy- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/13 18:37:03 by alagroy-          #+#    #+#             */
-/*   Updated: 2020/01/07 18:57:53 by alagroy-         ###   ########.fr       */
+/*   Created: 2019/11/06 17:58:00 by pcharrie          #+#    #+#             */
+/*   Updated: 2019/11/15 17:37:24 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstend(t_list **alst, t_list *new)
+char	**ft_2dstrnew(int size)
 {
-	t_list	*tmp;
+	char	**tab;
+	int		i;
 
-	if (!alst || !new)
-		return ;
-	if (!(*alst))
-	{
-		*alst = new;
-		return ;
-	}
-	tmp = *alst;
-	while (tmp->next)
-		tmp = tmp->next;
-	tmp->next = new;
+	if (!(tab = malloc(sizeof(char*) * (size + 1))))
+		return (NULL);
+	i = 0;
+	while (i < size + 1)
+		tab[i++] = NULL;
+	return (tab);
 }
