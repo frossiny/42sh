@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2019/12/19 16:04:51 by lubenard         ###   ########.fr        #
+#    Updated: 2020/01/08 11:19:20 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -79,6 +79,7 @@ FILES	=	shell.c											\
 			execution/exec_specials.c						\
 			execution/exec_here_doc.c						\
 			execution/exec_fork_builtin.c					\
+			execution/exec_child_fork.c						\
 			execution/exec_utils.c							\
 			execution/pipes/exec_pipes.c					\
 			execution/pipes/exec_pipe_builtin.c				\

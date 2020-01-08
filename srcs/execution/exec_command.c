@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:26:37 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/07 14:28:21 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/08 11:35:04 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,7 @@ static int	start_process(char *file, t_cmd *cmd, char **env)
 	if ((g_child = fork()) > 0 && cmd->is_bg)
 		job_new(cmd, g_child);
 	if (!g_child)
-	{
-		unregister_signals();
-		if (!cmd->is_bg && g_shell.able_termcaps)
-			restore_shell(g_shell.prev_term);
-		setpgid(getpid(), getpid());
-		!cmd->is_bg ? tcsetpgrp(g_shell.pgrp, getpid()) : 0;
-		handle_redirections(cmd->redir, 0);
-		if (execve(file, cmd->args, env) == -1)
-			exit(EXIT_FAILURE);
-	}
+		exec_child_fork(file, cmd, env);
 	setpgid(g_child, g_child);
 	!cmd->is_bg ? tcsetpgrp(g_shell.pgrp, g_child) : 0;
 	close_here_docs(cmd->redir);
@@ -62,7 +53,7 @@ static int	start(t_cmd *cmd, char **env)
 
 	if (!cmd->allow_builtins || (ret = handle_builtin(cmd, &g_shell)) == -1)
 	{
-		if (!(file = get_exe(&g_shell, cmd->exe->content, 1)))
+		if (!(file = get_exe(&g_shell, cmd->exe->content, 1, 0)))
 			return (127);
 		if ((ret = can_execute(cmd->exe->content, &g_shell)))
 		{

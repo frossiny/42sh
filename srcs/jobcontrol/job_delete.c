@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 10:48:51 by lubenard          #+#    #+#             */
-/*   Updated: 2019/12/03 11:08:51 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/08 11:16:48 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "jobcontrol.h"
 #include "execution.h"
 
-static void		update_current_job(t_shell *shell)
+static void	update_current_job(t_shell *shell)
 {
 	if (shell->jobs.len >= 2)
 	{

@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_var_size.c                                     :+:      :+:    :+:   */
+/*   exec_child_fork.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/11 14:53:45 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/08 11:06:32 by frossiny         ###   ########.fr       */
+/*   Created: 2020/01/08 11:08:12 by frossiny          #+#    #+#             */
+/*   Updated: 2020/01/08 11:20:13 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "shell.h"
+#include "execution.h"
 
-size_t	get_var_size(char *key)
+int		exec_child_fork(char *file, t_cmd *cmd, char **env)
 {
-	size_t	ret;
-
-	if (!key)
-		return (0);
-	ret = -1;
-	if (ft_strchr(EXP_SPECIAL, key[0]))
-		return (1);
-	while (key[++ret])
-	{
-		if (!ft_isalnum(key[ret]) && key[ret] != '_')
-			break ;
-	}
-	return (ret);
+	unregister_signals();
+	if (!cmd->is_bg && g_shell.able_termcaps)
+		restore_shell(g_shell.prev_term);
+	setpgid(getpid(), getpid());
+	!cmd->is_bg ? tcsetpgrp(g_shell.pgrp, getpid()) : 0;
+	handle_redirections(cmd->redir, 0);
+	if (execve(file, cmd->args, env) == -1)
+		exit(EXIT_FAILURE);
+	exit(0);
 }

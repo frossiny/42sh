@@ -6,14 +6,24 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 17:50:15 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/27 14:02:06 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/08 11:16:25 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "variables.h"
 #include "hashtable.h"
 
-int		var_set(t_var **vars, char *key, char *value, int export)
+static void		push_var(t_var **vars, t_var *var)
+{
+	t_var	*curr;
+
+	curr = *vars;
+	while (curr && curr->next)
+		curr = curr->next;
+	curr->next = var;
+}
+
+int				var_set(t_var **vars, char *key, char *value, int export)
 {
 	t_var	*curr;
 	t_var	*new;
@@ -29,12 +39,7 @@ int		var_set(t_var **vars, char *key, char *value, int export)
 		if (!*vars)
 			*vars = new;
 		else
-		{
-			curr = *vars;
-			while (curr && curr->next)
-				curr = curr->next;
-			curr->next = new;
-		}
+			push_var(vars, new);
 	}
 	else
 	{

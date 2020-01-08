@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 11:59:10 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/07 12:48:45 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/08 11:34:02 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,6 @@ int					eval_exec(char **input, int history);
 char				**dup_argv(int argc, char **args, char ***argv);
 int					replace_vars(t_token *curr, t_var *vars);
 size_t				get_var_size(char *key);
-
-char				*get_exe(t_shell *shell, char *name, int verbose);
-int					is_exe(t_shell *shell, char *name, int verbose);
 
 void				register_signals(void);
 void				unregister_signals(void);

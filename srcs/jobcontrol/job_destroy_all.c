@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 10:49:02 by lubenard          #+#    #+#             */
-/*   Updated: 2019/12/10 16:12:44 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/08 11:05:40 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void		jobs_destroy_all(t_shell *shell)
 	t_jobs_lst *curr;
 	t_jobs_lst *next;
 
-	kill && isatty(0) ? kill_jobs(shell) : 0;
+	isatty(0) ? kill_jobs(shell) : 0;
 	curr = shell->jobs.lst;
 	while (curr)
 	{

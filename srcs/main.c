@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 11:43:47 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/07 12:51:37 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/08 11:28:09 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,6 @@ static void	init_default_vars(void)
 
 static int	shell_config(char *envp[])
 {
-	g_child = 0;
-	g_ignore_signals = 0;
-	g_return = 0;
-	g_lpid = -1;
-	g_last_status = 0;
 	g_shell.stopped_jobs = 0;
 	g_shell.pid = getpid();
 	g_shell.pgrp = STDIN_FILENO;
@@ -89,15 +84,19 @@ static int	shell_config(char *envp[])
 
 static int	shell_init(void)
 {
+	g_child = 0;
+	g_ignore_signals = 0;
+	g_return = 0;
+	g_lpid = -1;
+	g_last_status = 0;
 	if (isatty(STDIN_FILENO))
 	{
-		if (setpgid (g_shell.pid, g_shell.pid) < 0)
+		if (setpgid(g_shell.pid, g_shell.pid) < 0 \
+			|| tcsetpgrp(g_shell.pgrp, g_shell.pid))
 		{
 			ft_dprintf(2, "42sh: Couldn't put the shell in its own process group");
 			exit (1);
 		}
-		if (tcsetpgrp (g_shell.pgrp, g_shell.pid))
-			perror("tcset:");
 	}
 	if (!termcaps_init(&(g_shell.prev_term)))
 	{
