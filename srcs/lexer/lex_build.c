@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 14:39:03 by vsaltel           #+#    #+#             */
-/*   Updated: 2020/01/07 16:15:31 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/08 11:50:24 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int		not_closed_error(t_shell *shell, char **input, int ret)
 		{
 			ft_dprintf(2, "42sh: unexpected EOF\n");
 			g_ignore_signals = 0;
-			return (1);
+			return (2);
 		}
 		return (258);
 	}
