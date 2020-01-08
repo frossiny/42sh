@@ -1,0 +1,4 @@
+history -c
+ls;ls;ls
+history -a
+cat ~/.42sh_history
