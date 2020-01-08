@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 14:08:11 by lubenard          #+#    #+#             */
-/*   Updated: 2019/12/11 14:58:09 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/08 17:04:31 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "structs.h"
 
-enum	job_state
+enum	e_job_state
 {
 	JOB_COMPLETED,
 	JOB_SUSPENDED,
@@ -45,10 +45,5 @@ void		job_catch_sigchld(int signal);
 
 int			job_is_stopped(t_jobs_lst *jobs);
 int			job_is_completed(t_jobs_lst *jobs);
-
-/*
-** DEBUG function, need to be removed when it will be working
-*/
-void	compare_structs_termios(struct termios searched, struct termios shell);
 
 #endif
