@@ -85,7 +85,7 @@ static void	fc_fix_range(t_fc_vars *fc)
 {
 	int hist_size;
 
-	hist_size = fc_histo_lst_size();
+	hist_size = g_shell.history.size - 1;
 	if (fc->exec)
 	{
 		if (fc->from == -1)

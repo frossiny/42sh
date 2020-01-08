@@ -22,8 +22,8 @@
 
 void	fc_vars_init(t_fc_vars *fc)
 {
-	fc->from = fc_histo_lst_size() - 15;
-	fc->to = fc_histo_lst_size();
+	fc->from = g_shell.history.size - 1 - 15;
+	fc->to = g_shell.history.size - 1;
 	fc->from_a = 0;
 	fc->to_a = 0;
 	fc->list = 0;
@@ -54,23 +54,6 @@ void	fc_proceed(t_fc_vars *fc)
 			return ;
 		fc_edit(fc);
 	}
-}
-
-int		fc_histo_lst_size(void)
-{
-	t_histo_lst	*lst;
-	int			i;
-
-	lst = g_shell.history.lst;
-	if (lst->next)
-		lst = lst->next;
-	i = 0;
-	while (lst)
-	{
-		i++;
-		lst = lst->next;
-	}
-	return (i);
 }
 
 void	fc_vars_del(t_fc_vars *fc)

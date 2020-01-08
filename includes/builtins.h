@@ -122,7 +122,6 @@ void			fc_list(t_fc_vars *fc);
 int				fc_parse_options(t_cmd *cmd, t_fc_vars *fc);
 int				fc_parse_range(t_cmd *cmd, t_fc_vars *fc);
 int				fc_build_tab(t_fc_vars *fc);
-int				fc_histo_lst_size(void);
 void			fc_edit(t_fc_vars *fc);
 void			fc_exec_tab(t_fc_vars *fc);
 void			fc_exec_file(void);
