@@ -1,1 +1,1 @@
-expected_to match_regex "[0-9]{3,5}"
+expected_to match_regex `pwd`

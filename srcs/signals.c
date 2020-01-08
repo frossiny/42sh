@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 10:40:59 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/29 12:06:17 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/12/26 17:42:14 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,7 @@ void		catch_sigint(int signal)
 		g_return = 1;
 		ioctl(0, TIOCSTI, "\n");
 	}
-}
-
-void		catch_sigstp(int signal)
-{
-	ft_printf("CATCH\n");
-	(void)signal;
-	if (g_child)
-	{
-		kill(g_child, 17);
-		
-	}
+	//Kill process
 }
 
 void		register_signals(void)
@@ -76,6 +66,7 @@ void		unregister_signals(void)
 	i = 0;
 	while (g_signals[i].sig)
 	{
+		//make exception for job control
 		if (g_signals[i].func)
 			signal(g_signals[i].sig, SIG_DFL);
 		i++;

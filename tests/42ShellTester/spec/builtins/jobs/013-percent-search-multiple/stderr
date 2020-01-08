@@ -1,0 +1,1 @@
+expected_to match_eq "42sh: jobs: ca: ambiguous job spec"

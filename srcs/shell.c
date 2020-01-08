@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:05:59 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/07 17:44:05 by pcharrie         ###   ########.fr       */
+/*   Updated: 2020/01/08 11:57:28 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,9 @@ int		shell(void)
 	}
 	if (input)
 		ft_strdel(&input);
-	if (!job_can_exit())
+	if (!g_shell.stopped_jobs && !job_can_exit())
 	{
+		g_shell.stopped_jobs = 1;
 		ft_printf("There are stopped jobs.\n");
 		return (shell());
 	}
@@ -93,5 +94,6 @@ int		shell(void)
 	ht_delete(g_shell);
 	free_termcaps(&g_shell);
 	free(g_pwd);
+	jobs_destroy_all(&g_shell);
 	return (g_return);
 }

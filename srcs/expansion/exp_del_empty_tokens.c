@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 10:27:05 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/26 14:01:46 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/08 11:11:58 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static t_token	*get_exe_token(t_token *exe)
 	return (exe && exe->type == TOKEN_NAME ? exe : NULL);
 }
 
-t_token		*exp_del_empty_tokens(t_token *token, t_cmd *cmd)
+t_token			*exp_del_empty_tokens(t_token *token, t_cmd *cmd)
 {
 	t_token	*prev;
 	t_token	*curr;
@@ -60,6 +60,5 @@ t_token		*exp_del_empty_tokens(t_token *token, t_cmd *cmd)
 	tok_free(token);
 	if (!next)
 		return (next);
-	else
-		return (next->next);
+	return (next->next);
 }

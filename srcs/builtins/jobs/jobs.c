@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:05:36 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/28 16:20:15 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/12/10 16:24:16 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,10 @@ int		print_job(t_shell *shell, int options, int job_number)
 				ft_printf("%d\n", jobs->pid);
 			else if (options == 2)
 				ft_printf("[%d]%c %d %s %s\n", jobs->job_number, jobs->current,
-				jobs->pid, jobs->state, jobs->command);
+				jobs->pid, jobs->status, jobs->command);
 			else
 				ft_printf("[%d]%c %s %s\n", jobs->job_number, jobs->current,
-				jobs->state, jobs->command);
+				jobs->status, jobs->command);
 		}
 		jobs = jobs->next;
 	}

@@ -1,0 +1,1 @@
+ls | cat -e | echo oui | cat -e | cat -e &

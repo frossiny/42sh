@@ -6,22 +6,42 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 10:49:02 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/29 13:17:35 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/08 11:05:40 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "shell.h"
 #include "execution.h"
+#include "jobcontrol.h"
 
-void	jobs_destroy_all(t_shell *shell)
+static void	kill_jobs(t_shell *shell)
+{
+	t_jobs_lst	*jobs;
+
+	jobs = shell->jobs.lst;
+	while (jobs)
+	{
+		if (jobs->state == JOB_SUSPENDED)//ft_strequ(jobs->state, "Stopped"))
+			kill(jobs->pid, SIGCONT);
+		kill(jobs->pid, SIGHUP);
+		jobs = jobs->next;
+	}
+}
+
+void		jobs_destroy_all(t_shell *shell)
 {
 	t_jobs_lst *curr;
+	t_jobs_lst *next;
 
-	while (shell->jobs.lst)
+	isatty(0) ? kill_jobs(shell) : 0;
+	curr = shell->jobs.lst;
+	while (curr)
 	{
-		curr = shell->jobs.lst;
-		shell->jobs.lst = shell->jobs.lst->next;
+		next = curr->next;
 		exec_child_del(curr->childs);
+		free(curr->command);
 		free(curr);
+		curr = next;
 	}
 	shell->jobs.lst = NULL;
 	shell->jobs.minus = NULL;

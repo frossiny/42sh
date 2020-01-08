@@ -6,30 +6,41 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 17:37:47 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/28 15:21:52 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/12/20 14:45:52 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 #include "jobcontrol.h"
 
-static void	check_pids(t_jobs_lst *job, int *status)
+static int	check_pids(t_jobs_lst *job, int *status)
 {
 	t_childs	*tmp;
+	int			ret;
 
 	if (!job)
-		return ;
+		return (0);
 	if (job->childs)
 	{
+		ret = 0;
 		tmp = job->childs;
 		while (tmp)
 		{
-			waitpid(tmp->pid, status, WNOHANG);
+			if (waitpid(tmp->pid, status, WNOHANG) == 0)
+				ret = 1;
 			tmp = tmp->next;
 		}
+		return (ret);
 	}
-	else
-		waitpid(job->pid, status, WNOHANG);
+	return (waitpid(job->pid, status, WNOHANG) > 0);
+}
+
+static void	remove_ghosts(void)
+{
+	pid_t		cpid;
+
+	while ((cpid = waitpid(-1, NULL, WNOHANG)) > 0)
+		;
 }
 
 void		job_check_status(void)
@@ -39,18 +50,18 @@ void		job_check_status(void)
 	int			status;
 
 	if (!(jobs = g_shell.jobs.lst))
-		return ;
+		return (remove_ghosts());
+	status = 0;
 	while (jobs)
 	{
 		next = jobs->next;
-		check_pids(jobs, &status);
-		if (WIFEXITED(status))
+		if (check_pids(jobs, &status) && WIFEXITED(status))
 		{
-			ft_printf("[%d]%c Done %s\n",
-				jobs->job_number, jobs->current, jobs->command);
-			waitpid(jobs->pid, &status, 0);
+			isatty(0) ? ft_printf("[%d]%c Done %s\n",
+				jobs->job_number, jobs->current, jobs->command) : 0;
 			job_delete(&g_shell, jobs->pid);
 		}
 		jobs = next;
 	}
+	remove_ghosts();
 }

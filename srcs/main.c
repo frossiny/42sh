@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 11:43:47 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/07 17:34:51 by pcharrie         ###   ########.fr       */
+/*   Updated: 2020/01/08 11:57:24 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 t_shell			g_shell;
 t_cursor_pos	g_pos;
 int				g_child;
+int				g_last_status;
 int				g_ignore_signals;
 int				g_return;
 int				g_lpid;
@@ -54,21 +55,14 @@ static void	init_default_vars(char *tmp)
 		var_set(&g_shell.vars, "SHLVL", "1", 1);
 }
 
-static int	shell_init(char *envp[])
+static int	shell_config(char *envp[])
 {
-	if (!termcaps_init(&(g_shell.prev_term)))
-	{
-		ft_printf("42sh: can not load termcaps\n");
-		ft_printf("Verify TERM variable \"TERM=xterm-256color\"\n");
-		return (0);
-	}
-	g_child = 0;
-	g_ignore_signals = 0;
-	g_return = 0;
-	g_lpid = -1;
 	g_shell.stopped_jobs = 0;
+	g_shell.pid = getpid();
+	g_shell.pgrp = STDIN_FILENO;
 	g_shell.vars = var_init(envp);
 	g_shell.alias = NULL;
+	g_shell.current_cmd = NULL;
 	if (var_get(g_shell.vars, "HOME"))
 		g_shell.history = get_history();
 	else
@@ -88,12 +82,37 @@ static int	shell_init(char *envp[])
 	return (1);
 }
 
+static int	shell_init(void)
+{
+	g_child = 0;
+	g_ignore_signals = 0;
+	g_return = 0;
+	g_lpid = -1;
+	g_last_status = 0;
+	if (isatty(STDIN_FILENO))
+	{
+		if (setpgid(g_shell.pid, g_shell.pid) < 0 \
+			|| tcsetpgrp(g_shell.pgrp, g_shell.pid))
+		{
+			ft_dprintf(2, "42sh: Couldn't put the shell in its own process group");
+			exit (1);
+		}
+	}
+	if (!termcaps_init(&(g_shell.prev_term)))
+	{
+		ft_printf("42sh: can not load termcaps\n");
+		ft_printf("Verify TERM variable \"TERM=xterm-256color\"\n");
+		return (0);
+	}
+	return (1);
+}
+
 int			main(int argc, char *argv[], char *envp[])
 {
 	(void)argc;
 	(void)argv;
 	register_signals();
-	if (!shell_init(envp))
+	if (!shell_config(envp) || !shell_init())
 		return (0);
 	init_default_vars(NULL);
 	return (shell());

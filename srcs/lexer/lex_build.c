@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lex_build.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 14:39:03 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/12/18 19:50:46 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/01/08 11:50:24 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int		not_closed_error(t_shell *shell, char **input, int ret)
 		{
 			ft_dprintf(2, "42sh: unexpected EOF\n");
 			g_ignore_signals = 0;
-			return (1);
+			return (2);
 		}
 		return (258);
 	}
@@ -96,7 +96,7 @@ int				lex_loop(t_shell *shell, char **input, int history)
 		return (ret);
 	if (isatty(0))
 		history ? add_to_history(*input, &(shell->history)) : 0;
-	if ((ret = alias_exec(shell, input)) != 1)
+	if ((ret = alias_exec(shell, input)))
 		return (ret);
 	return (1);
 }

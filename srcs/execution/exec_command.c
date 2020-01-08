@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:26:37 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/07 17:46:02 by pcharrie         ###   ########.fr       */
+/*   Updated: 2020/01/08 11:57:37 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,26 +21,26 @@ static int	start_process(char *file, t_cmd *cmd, char **env)
 {
 	int		status;
 
+	status = 0;
 	if (!get_here_doc(cmd->redir, &g_shell))
 		return (EXIT_FAILURE);
 	if ((g_child = fork()) > 0 && cmd->is_bg)
 		job_new(cmd, g_child);
 	if (!g_child)
-	{
-		unregister_signals();
-		if (!cmd->is_bg && g_shell.able_termcaps)
-			restore_shell(g_shell.prev_term);
-		cmd->is_bg ? setpgid(0, 0) : 0;
-		handle_redirections(cmd->redir, 0);
-		if (execve(file, cmd->args, env) == -1)
-			exit(EXIT_FAILURE);
-	}
+		exec_child_fork(file, cmd, env);
+	setpgid(g_child, g_child);
+	!cmd->is_bg ? tcsetpgrp(g_shell.pgrp, g_child) : 0;
 	close_here_docs(cmd->redir);
+	g_shell.current_cmd = cmd;
 	if (g_child == -1)
 		return (g_child = 0);
-	waitpid(g_child, &status, cmd->is_bg ? WNOHANG : 0);
+	!cmd->is_bg ? pause() : 0;
+	!cmd->is_bg ? status = g_last_status : 0;
+	!cmd->is_bg ? tcsetpgrp(g_shell.pgrp, getpgrp()) : 0;
 	!cmd->is_bg && g_shell.able_termcaps ? termcaps_init(NULL) : 0;
+	g_last_status = 0;
 	g_child = 0;
+	g_shell.current_cmd = NULL;
 	if (WIFSIGNALED(status))
 		return (display_signal(status));
 	return (WEXITSTATUS(status));
@@ -53,7 +53,7 @@ static int	start(t_cmd *cmd, char **env)
 
 	if (!cmd->allow_builtins || (ret = handle_builtin(cmd, &g_shell)) == -1)
 	{
-		if (!(file = get_exe(&g_shell, cmd->exe->content, 1)))
+		if (!(file = get_exe(&g_shell, cmd->exe->content, 1, 0)))
 			return (127);
 		if ((ret = can_execute(cmd->exe->content, &g_shell)))
 		{

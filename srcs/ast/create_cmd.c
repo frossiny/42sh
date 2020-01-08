@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 13:23:37 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/28 15:14:38 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/08 11:15:27 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ static void		parse_assignements(t_cmd *cmd, t_token **exe)
 /*
 **	Skip redirections tokens
 */
+
 static t_token	*get_exe_token(t_token *exe)
 {
 	t_token		*prev;

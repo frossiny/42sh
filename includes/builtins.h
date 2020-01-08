@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:40:21 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/07 17:47:47 by pcharrie         ###   ########.fr       */
+/*   Updated: 2020/01/08 12:09:42 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int			b_hash(t_cmd *cmd, t_shell *shell);
 int			b_jobs(t_cmd *cmd, t_shell *shell);
 int			b_fg(t_cmd *cmd, t_shell *shell);
 int			b_fc(t_cmd *cmd, t_shell *shell);
+int			b_bg(t_cmd *cmd, t_shell *shell);
 
 /*
 ** Cd internal functions
@@ -48,7 +49,7 @@ char		*cd_buildpath(char *path);
 void		delete_elem_hist(t_history *hist, t_histo_lst *elem);
 int			print_hist(t_shell *shell, int size);
 void		replace_curr_hist(t_cmd *cmd, t_shell *shell);
-void		empty_hist(t_shell *shell);
+int			empty_hist(t_shell *shell);
 int			delone_hist(t_history *hist, char *value);
 void		append_hist(t_histo_lst *hist);
 
@@ -58,7 +59,7 @@ void		append_hist(t_histo_lst *hist);
 int			job_check_valid_number(t_shell *shell, t_cmd *cmd, int j);
 int			job_percent(char *percent, char *builtins);
 /*
-**	Utils functions
+** Utils functions
 */
 void		restore_fd(int fd[]);
 
@@ -77,6 +78,7 @@ static const t_builtin g_builtins[] =
 	{ "hash", &b_hash},
 	{ "jobs", &b_jobs},
 	{ "fg", &b_fg},
+	{ "bg", &b_bg},
 	{ "fc", &b_fc },
 	{ NULL, NULL }
 };

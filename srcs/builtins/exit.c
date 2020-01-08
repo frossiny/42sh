@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 11:53:12 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/07 17:34:23 by pcharrie         ###   ########.fr       */
+/*   Updated: 2020/01/08 11:57:32 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "alias.h"
 #include "termcaps.h"
 #include "hashtable.h"
+#include "jobcontrol.h"
 
 static int	check_arg(t_cmd *cmd)
 {
@@ -50,6 +51,7 @@ int			b_exit(t_cmd *cmd, t_shell *shell)
 	ast_destroy(shell);
 	ht_delete(shell);
 	free(g_pwd);
+	jobs_destroy_all(&g_shell);
 	exit(ret);
 	return (ret);
 }

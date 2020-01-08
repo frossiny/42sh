@@ -1,0 +1,3 @@
+pwd & ; ls
+pwd & || echo test
+pwd & | cat -e

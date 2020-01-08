@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 15:17:59 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/28 11:35:42 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/12/03 13:10:06 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,20 +49,23 @@ static int	parse_condition(int *ret, t_anode *cond)
 
 int			exec_all(t_shell *shell, t_anode *ast)
 {
+	int		ret;
+
+	ret = 0;
 	while (ast->left)
 		ast = ast->left;
 	while (ast)
 	{
 		if (!ast->ope && !is_pipe_node(ast->parent))
-			g_return = exec_command(ast->cmd);
+			ret = exec_command(ast->cmd);
 		else if (is_pipe_node(ast->parent))
-			g_return = exec_pipes(ast, shell, &ast);
+			ret = exec_pipes(ast, shell, &ast);
 		else if (is_cond_node(ast))
 		{
-			if (!parse_condition(&g_return, ast))
-				return (g_return);
+			if (!parse_condition(&ret, ast))
+				return (ret);
 		}
 		ast ? ast = ast->parent : 0;
 	}
-	return (g_return);
+	return (ret);
 }

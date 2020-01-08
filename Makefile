@@ -3,15 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+         #
+#    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/19 17:28:40 by vsaltel           #+#    #+#              #
-#    Updated: 2020/01/07 18:31:24 by pcharrie         ###   ########.fr        #
+#    Updated: 2020/01/08 11:56:10 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC		=	gcc -g3 -fsanitize=address
-CFLAGS	+=	-Wall -Wextra #-Werror
+CC		=	gcc -g3 #-fsanitize=address
+CFLAGS	+=	-Wall -Wextra  #-Werror
 
 SHELL	=	bash
 
@@ -61,6 +61,7 @@ FILES	=	shell.c											\
 			builtins/echo.c									\
 			builtins/export.c								\
 			builtins/fg.c									\
+			builtins/bg.c									\
 			builtins/jobs/jobs.c							\
 			builtins/jobs/build_options.c					\
 			builtins/cd/build_path.c						\
@@ -79,6 +80,7 @@ FILES	=	shell.c											\
 			execution/exec_specials.c						\
 			execution/exec_here_doc.c						\
 			execution/exec_fork_builtin.c					\
+			execution/exec_child_fork.c						\
 			execution/exec_utils.c							\
 			execution/pipes/exec_pipes.c					\
 			execution/pipes/exec_pipe_builtin.c				\
@@ -148,6 +150,8 @@ FILES	=	shell.c											\
 			jobcontrol/job_get_command.c					\
 			jobcontrol/job_search.c							\
 			jobcontrol/job_can_exit.c						\
+			jobcontrol/job_catch_sigchld.c					\
+			jobcontrol/job_utils.c							\
 			lexer/lexer.c									\
 			lexer/lex_build.c								\
 			lexer/lex_free.c								\
@@ -313,7 +317,7 @@ valgrind: all
 tests: all
 	./tests/42ShellTester/42ShellTester.sh "$(PWD)/$(NAME)" ${TARGS}
 
-pytest:
+pytest: all
 	python3 ./tests/python_test/err.py $(FILTER) ./tests/python_test/$(FILE)
 
 -include $(OBJSD)
