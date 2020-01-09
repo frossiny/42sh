@@ -1,0 +1,1 @@
+expected_to match_regex "cat /dev/random > /dev/null"

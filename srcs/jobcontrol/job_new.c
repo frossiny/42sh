@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 10:48:31 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/29 13:20:27 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/12/26 17:23:31 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static void			jobs_insert(t_jobs_lst *job)
 {
 	t_jobs_lst	*curr;
 
+	g_shell.jobs.len++;
 	curr = g_shell.jobs.lst;
 	if (!curr)
 		g_shell.jobs.lst = job;
@@ -39,7 +40,6 @@ static void			jobs_insert(t_jobs_lst *job)
 		g_shell.jobs.minus = job;
 	g_shell.jobs.last_job = job;
 	g_shell.jobs.plus = job;
-	g_shell.jobs.len++;
 }
 
 static t_jobs_lst	*new(void)
@@ -53,7 +53,10 @@ static t_jobs_lst	*new(void)
 	job->pid = 0;
 	job->childs = NULL;
 	job->current = '+';
-	job->state = "Running";
+	job->status = "Running";
+	job->state = JOB_RUNNING;
+	tcgetattr(g_shell.pgrp, &job->tmodes);
+	job->tmodes.c_lflag = g_shell.prev_term.c_lflag;
 	job->prev = NULL;
 	job->next = NULL;
 	jobs_insert(job);
@@ -68,7 +71,7 @@ t_jobs_lst			*job_new(t_cmd *cmd, int pid)
 		return (NULL);
 	job->command = job_get_command(cmd);
 	job->pid = pid;
-	ft_printf("[%d] %d\n", job->job_number, pid);
+	isatty(0) ? ft_printf("[%d] %d\n", job->job_number, pid) : 0;
 	return (job);
 }
 
@@ -84,6 +87,6 @@ t_jobs_lst			*job_new_pipe(t_pipel *pline, t_childs *childs)
 		return (job);
 	while (childs->next)
 		childs = childs->next;
-	ft_printf("[%d] %d\n", job->job_number, childs->pid);
+	isatty(0) ? ft_printf("[%d] %d\n", job->job_number, childs->pid) : 0;
 	return (job);
 }

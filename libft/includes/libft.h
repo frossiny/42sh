@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 18:24:16 by frossiny          #+#    #+#             */
-/*   Updated: 2019/12/10 16:29:59 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/01/07 17:40:57 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ typedef	struct		s_list
 	struct s_list	*next;
 }					t_list;
 
+char				**ft_2dstrnew(int size);
 int					ft_2dstrlen(char **t);
+void				ft_2dstrdel(char ***t);
 void				ft_2dstrndel(char ***t, int size);
 int					ft_retfree(char **s, int ret);
 
@@ -98,6 +100,7 @@ int					ft_isprint(int c);
 int					ft_isascii(int c);
 int					ft_tolower(int c);
 int					ft_toupper(int c);
+int					ft_isnumeric(char *str);
 
 int					ft_putchar(int c);
 void				ft_putstr(char const *s);
@@ -131,7 +134,5 @@ char				*ft_strpathfile(const char *s1, const char *s2);
 void				ft_multifree(char **s1, char **s2, char **s3);
 char				*ft_strcut(char *str, size_t beg, size_t end);
 char				*ft_strfcut(char *str, size_t beg, size_t end);
-
-void				ft_2dstrdel(char **array);
 
 #endif

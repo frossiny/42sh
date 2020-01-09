@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 14:23:53 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/29 13:10:01 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/08 11:57:18 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 /*
 ** Arithmetic Expansions structs
 */
-typedef enum		s_ae_type
+typedef enum		e_ae_type
 {
 	ERROR,
 	WORD,
@@ -33,7 +33,7 @@ typedef enum		s_ae_type
 	EOI,
 }					t_ae_type;
 
-typedef enum		s_ae_value
+typedef enum		e_ae_value
 {
 	PLUS,
 	PPLUS,
@@ -272,9 +272,11 @@ typedef struct		s_jobs_lst
 	int					job_number;
 	int					pid;
 	char				current;
-	char				*state;
+	char				*status;
+	int					state;
 	char				*command;
 	t_childs			*childs;
+	struct termios		tmodes;
 	struct s_jobs_lst	*prev;
 	struct s_jobs_lst	*next;
 }					t_jobs_lst;
@@ -340,6 +342,9 @@ typedef struct		s_shell
 	t_hashtable		bin_ht;
 	t_jobs			jobs;
 	t_history		history;
+	t_cmd			*current_cmd;
+	pid_t			pid;
+	int				pgrp;
 	int				able_termcaps;
 	int				stopped_jobs;
 	struct termios	prev_term;

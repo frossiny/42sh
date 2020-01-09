@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 13:54:13 by lubenard          #+#    #+#             */
-/*   Updated: 2019/12/19 14:38:23 by vsaltel          ###   ########.fr       */
+/*   Updated: 2019/12/19 15:52:41 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,13 @@ void		replace_curr_hist(t_cmd *cmd, t_shell *shell)
 ** Will clear hist and free linked list
 */
 
-void		empty_hist(t_shell *shell)
+int			empty_hist(t_shell *shell)
 {
 	t_histo_lst		*history;
 	t_histo_lst		*hist_tmp;
 
 	if (!shell->history.lst)
-		return ;
+		return (0);
 	if (shell->history.first_element->index - 1 <= 0)
 		shell->history.index = 1;
 	else
@@ -86,6 +86,7 @@ void		empty_hist(t_shell *shell)
 	shell->history.size = 0;
 	shell->history.first_element = NULL;
 	shell->history.lst = NULL;
+	return (0);
 }
 
 int			delone_hist(t_history *hist, char *value)

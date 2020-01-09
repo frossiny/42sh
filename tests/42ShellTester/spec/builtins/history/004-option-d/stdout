@@ -1,0 +1,3 @@
+expected_to match_regex "1  touch /tmp/test"
+expected_to match_regex "2  rm /tmp/test"
+expected_to match_regex "3  rm /tmp/test2"

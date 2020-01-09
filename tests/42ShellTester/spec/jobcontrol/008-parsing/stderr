@@ -1,0 +1,3 @@
+expected_to match_regex "^42sh: syntax error near unexpected token: ;$" once
+expected_to match_eq "42sh: syntax error near unexpected token: ||"
+expected_to match_eq "42sh: syntax error near unexpected token: |"

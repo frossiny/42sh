@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 10:35:21 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/29 11:18:30 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/12/26 17:41:08 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ int		exec_fork_builtin(t_cmd *cmd)
 		return (-1);
 	if (!get_here_doc(cmd->redir, &g_shell))
 		return (EXIT_FAILURE);
-	if ((g_child = fork()) > 0)
+	if ((g_child = fork()) > 0 && cmd->is_bg)
 		job_new(cmd, g_child);
 	if (!g_child)
 	{
 		unregister_signals();
-		cmd->is_bg ? setpgid(0, 0) : 0;
+		setpgid(0, 0);
 		handle_redirections(cmd->redir, 0);
 		status = builtin.func(cmd, &g_shell);
 		var_destroy(&(cmd->tenv));

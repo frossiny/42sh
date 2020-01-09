@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 14:08:11 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/29 11:43:02 by frossiny         ###   ########.fr       */
+/*   Updated: 2019/12/11 14:58:09 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,14 @@
 # define JOBCONTROL_H
 
 # include "structs.h"
+
+enum	job_state
+{
+	JOB_COMPLETED,
+	JOB_SUSPENDED,
+	JOB_RUNNING,
+	JOB_CONTINUED
+};
 
 /*
 ** If needed, you can remove shell var from proto and use global instead
@@ -29,5 +37,18 @@ t_jobs_lst	*job_search(t_shell *shell, int job_number);
 char		*job_get_command(t_cmd *cmd);
 char		*job_get_pipe_command(t_pipel *pline);
 int			job_can_exit(void);
+void		job_catch_sigchld(int signal);
+
+/*
+** Useful jobcontrol functions
+*/
+
+int			job_is_stopped(t_jobs_lst *jobs);
+int			job_is_completed(t_jobs_lst *jobs);
+
+/*
+** DEBUG function, need to be removed when it will be working
+*/
+void	compare_structs_termios(struct termios searched, struct termios shell);
 
 #endif

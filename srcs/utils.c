@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:46:01 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/23 14:55:39 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/08 11:36:43 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <sys/stat.h>
 #include "libft.h"
 #include "shell.h"
+#include "execution.h"
 #include "utils.h"
 
 char	*format_path_exe(char *dir, char *file)
@@ -68,7 +69,7 @@ int		can_execute(char *cmd, t_shell *shell)
 	char		*file;
 	struct stat	stats;
 
-	if (!(file = get_exe(shell, cmd, 1)))
+	if (!(file = get_exe(shell, cmd, 1, 1)))
 		return (127);
 	if (ft_strequ(file, "") || access(file, X_OK))
 	{

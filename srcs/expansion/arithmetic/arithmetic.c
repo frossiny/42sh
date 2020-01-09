@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 13:40:41 by alagroy-          #+#    #+#             */
-/*   Updated: 2019/11/27 14:09:37 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/07 16:08:29 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,12 @@ static void	find_ae_limits(char *str, int *beg, int *end)
 	i = -1;
 	while (str[++i])
 	{
-		if (!ft_strncmp(str + i, "((", 2))
+		if (!ft_strncmp(str + i, "$((", 3))
 		{
 			bool++;
 			if (!bool)
 				*beg = i;
+			i += 2;
 		}
 		if (!ft_strncmp(str + i, "))", 2))
 		{
@@ -41,19 +42,61 @@ static void	find_ae_limits(char *str, int *beg, int *end)
 	}
 }
 
-static int	ae_process(t_token *token)
+static int	check_incr(char *str)
+{
+	int		i;
+	int		j;
+
+	i = -1;
+	while (str[++i])
+		if (!ft_strncmp(str + i, "++", 2) || !ft_strncmp(str + i, "--", 2))
+		{
+			j = i - 1;
+			while (j > 0 && ft_isalnum(str[j]))
+				j--;
+			if (j == 0 && ft_isdigit(str[j]))
+				return (ft_dprintf(2,
+							"42sh: syntax error: operand expected\n") * 0);
+			else if (ft_isdigit(str[j + 1]))
+				return (ft_dprintf(2,
+							"42sh: syntax error: operand expected\n") * 0);
+		}
+	return (1);
+}
+
+static int	check_fpe(t_list *token_list)
+{
+	t_list	*tmp;
+
+	tmp = token_list;
+	while (tmp)
+	{
+		if ((((t_ae_token *)tmp->content)->value == DIV
+					|| ((t_ae_token *)tmp->content)->value == MOD)
+				&& (((t_ae_token *)tmp->next->content)->type == WORD
+					|| (((t_ae_token *)tmp->next->content)->type == NUM))
+				&& (((t_ae_token *)tmp->next->content)->num_value == 0))
+		{
+			ft_dprintf(2, "42sh: division by 0\n");
+			return (0);
+		}
+		tmp = tmp->next;
+	}
+	return (1);
+}
+
+int			ae_process(t_token *token)
 {
 	t_list	*token_list;
 	char	*str;
 	int		status;
 	long	result;
 
-	if (!(str = ae_base10(ft_strdup(token->content))))
+	if (!check_incr(token->content) ||
+			!(str = ae_base10(ft_strdup(token->content))))
 		return (0);
-	if (!(token_list = lex_ae_str(str)))
-		return (0);
-	status = parse_aetoken(token_list);
-	if (status != AEPSUCCESS)
+	if (!(token_list = lex_ae_str(str)) || !check_fpe(token_list)
+			|| (status = parse_aetoken(token_list) != AEPSUCCESS))
 	{
 		ft_strdel(&token->content);
 		ft_strdel(&str);
@@ -62,6 +105,7 @@ static int	ae_process(t_token *token)
 		return (0);
 	}
 	result = eval_ae(token_list);
+	eval_var(token->content);
 	ft_strdel(&token->content);
 	ft_strdel(&str);
 	ft_lstdel(&token_list, del_ae_token);
@@ -81,7 +125,8 @@ int			replace_ae_token(t_token *token)
 	find_ae_limits(token->content, &beg, &end);
 	if (beg == -1 || end == -1)
 		return (1);
-	tmp.content = ft_strsub(token->content, beg + 2, end - beg - 2);
+	tmp.type = TOKEN_NAME;
+	tmp.content = ft_strsub(token->content, beg + 3, end - beg - 3);
 	tmp.len = ft_strlen(tmp.content);
 	if (!(expand(&tmp, 0, NULL)))
 		return (0);

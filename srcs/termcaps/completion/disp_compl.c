@@ -6,7 +6,7 @@
 /*   By: alagroy- <alagroy-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 15:58:23 by alagroy-          #+#    #+#             */
-/*   Updated: 2019/11/18 18:50:18 by alagroy-         ###   ########.fr       */
+/*   Updated: 2020/01/07 19:07:51 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,15 +63,13 @@ static int	compl_shared_part(t_cursor_pos *pos, char **str, t_list *compl_list,
 		tmp = compl_list;
 		while (tmp && tmp->next)
 		{
-			if (ft_strncmp((char *)tmp->content, (char *)tmp->next->content,
-						i))
+			if (ft_strncmp((char *)tmp->content, (char *)tmp->next->content, i))
 				cont = 0;
 			tmp = tmp->next;
 		}
 	}
-	if (i == 1 || i == len + 1)
-		return (0);
-	if (!(compl = ft_strsub((char *)compl_list->content, 0, i - 1)))
+	if (i == 1 || i == len + 1 || !(compl =
+				ft_strsub((char *)compl_list->content, 0, i - 1)))
 		return (0);
 	*str = ft_insert_str(*str, ft_strdup(compl + len), pos->x_rel);
 	pos->x_rel += ft_strlen(compl) - len;

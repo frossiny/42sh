@@ -1,0 +1,3 @@
+expected_to match_regex "cat" 2 times
+expected_to match_regex "\[1\]"
+expected_to match_regex "\[3\]+"

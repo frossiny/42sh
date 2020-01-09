@@ -1,0 +1,5 @@
+history -c
+history -s touch ~/test
+history -s rm ~/test
+history -s history
+history

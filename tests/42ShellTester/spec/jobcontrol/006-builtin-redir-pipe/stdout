@@ -1,0 +1,3 @@
+expected_to match_eq 'oui$$'
+expected_to_not match_regex "[.*]"
+expected_to create_file ${GLOBAL_TOKEN}_file matching_regex "unexistant_file"

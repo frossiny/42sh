@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 12:10:28 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/29 13:12:31 by lubenard         ###   ########.fr       */
+/*   Updated: 2019/12/19 11:42:29 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 int		job_check_valid_number(t_shell *shell, t_cmd *cmd, int j)
 {
 	if (!ft_atoi(cmd->args[j])
-	|| ft_atoi(cmd->args[j]) >= (int)shell->jobs.len)
+	|| ft_atoi(cmd->args[j]) > (int)shell->jobs.len)
 	{
 		ft_dprintf(2, "42sh: jobs: %s: no such job\n", cmd->args[j]);
 		return (0);
@@ -41,7 +41,8 @@ int		handle_job_percent_alpha(char *args, char *builtin)
 	{
 		if (occurence > 0 || (args[1] == '?' && !args[2]))
 		{
-			ft_dprintf(2, "42sh: %s: %s: ambiguous job spec\n", builtin ,extract_char);
+			ft_dprintf(2, "42sh: %s: %s: ambiguous job spec\n", builtin,
+			extract_char);
 			number = -1;
 			break ;
 		}
@@ -77,9 +78,9 @@ int		job_percent(char *args, char *builtin)
 	}
 	if (converted_number == -1)
 		return (0);
-	if (converted_number >= (int)g_shell.jobs.len || !converted_number)
+	if (converted_number > (int)g_shell.jobs.len || !converted_number)
 	{
-		ft_dprintf(2, "42sh: %s: %s: no such job\n", builtin ,args);
+		ft_dprintf(2, "42sh: %s: %s: no such job\n", builtin, args);
 		return (0);
 	}
 	return (converted_number);

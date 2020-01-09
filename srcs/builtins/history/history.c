@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:03:36 by lubenard          #+#    #+#             */
-/*   Updated: 2019/12/19 14:15:31 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/01/06 18:22:56 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int			loop_history(t_cmd *cmd, t_shell *shell, t_options *opts)
 		if (!ft_strcmp(opts->opts->opt, "d"))
 			return (delone_hist(&shell->history, opts->opts->value));
 		if (!ft_strcmp(opts->opts->opt, "c"))
-			empty_hist(shell);
+			return (empty_hist(shell));
 		else if (!ft_strcmp(opts->opts->opt, "w"))
 			overwrite_history(shell->history.lst);
 		else if (!ft_strcmp(opts->opts->opt, "a"))
@@ -98,7 +98,7 @@ static int	execute_hist(t_cmd *cmd, t_shell *shell, t_options *opts)
 	ret = 0;
 	if (opts->ret != 0)
 	{
-		(opts->ret == -1 ? ft_putendl_fd("42sh: history: usage: \
+		(opts->ret == -1 ? ft_putendl_fd("\n42sh: history: usage: \
 						[-c] [-d offset] or history -awrn", 2) : 0);
 		ret = 2;
 	}
