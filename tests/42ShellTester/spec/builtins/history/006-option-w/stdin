@@ -1,0 +1,6 @@
+ls 1;ls 2 ;ls 3
+history -w
+history -c
+ls;ls;ls
+history -w
+cat ~/.42sh_history

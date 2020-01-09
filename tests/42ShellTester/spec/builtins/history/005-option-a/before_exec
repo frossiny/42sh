@@ -1,1 +1,1 @@
-rm -rf ~/.42sh_history
+mv ~/.42sh_history ~/.42sh_history.old

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 17:47:28 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/12/10 16:31:56 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/01/09 18:29:20 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,9 +103,9 @@ void			overwrite_history(t_histo_lst *histo)
 	if (!histo)
 		return ;
 	path = ft_strpathfile(getenv("HOME"), ".42sh_history");
-	if (!access(path, F_OK) && access(path, X_OK))
+	if (!access(path, W_OK))
 		return (free(path));
-	if ((fd = open(path, O_CREAT | O_WRONLY | O_TRUNC)) != -1)
+	if ((fd = open(path, O_TRUNC | O_WRONLY | O_CREAT, 0777)) != -1)
 	{
 		curr = histo;
 		while (curr->next)
