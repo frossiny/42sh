@@ -1,4 +1,7 @@
 history -c
-ls;ls;ls
+history -s touch /tmp/test 
+history -s rm /tmp/test
+history -s touch /tmp/test2
+history -s rm /tmp/test2
 history -a
 cat ~/.42sh_history

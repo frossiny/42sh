@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:03:36 by lubenard          #+#    #+#             */
-/*   Updated: 2020/01/06 18:22:56 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/09 20:51:32 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void		load_history_file(t_shell *shell)
 
 	fd = 0;
 	path = ft_strpathfile(getenv("HOME"), ".42sh_history");
-	if (!access(path, F_OK) && access(path, X_OK))
+	if (!access(path, F_OK) && access(path, R_OK))
 		return (free(path));
 	if ((fd = open(path, O_RDONLY)) >= 0)
 		while (get_next_line(fd, &buf) == 1)
@@ -99,7 +99,7 @@ static int	execute_hist(t_cmd *cmd, t_shell *shell, t_options *opts)
 	if (opts->ret != 0)
 	{
 		(opts->ret == -1 ? ft_putendl_fd("\n42sh: history: usage: \
-						[-c] [-d offset] or history -awrn", 2) : 0);
+						[-c] [-d offset] or history -awr", 2) : 0);
 		ret = 2;
 	}
 	else if (cmd->argc == 1)

@@ -1,0 +1,4 @@
+history -c
+history -s touch /tmp/truc
+history -r
+history

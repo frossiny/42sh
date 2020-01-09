@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 13:54:13 by lubenard          #+#    #+#             */
-/*   Updated: 2020/01/09 17:24:37 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/09 19:10:41 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ void		append_hist(t_histo_lst *histo)
 		return ;
 	fd = 0;
 	path = ft_strpathfile(getenv("HOME"), ".42sh_history");
-	if ((fd = open(path, O_WRONLY | O_APPEND | O_CREAT, S_IRUSR)) != -1)
+	if ((fd = open(path, O_WRONLY | O_APPEND | O_CREAT, 0666)) != -1)
 	{
 		curr = histo;
 		while (curr)
