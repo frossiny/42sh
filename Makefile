@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/19 17:28:40 by vsaltel           #+#    #+#              #
-#    Updated: 2019/12/19 14:39:06 by vsaltel          ###   ########.fr        #
+#    Updated: 2020/01/09 14:29:59 by vsaltel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,9 @@ FILES	=	shell.c											\
 			ast/ast_is_bg.c									\
 			builtins/alias.c								\
 			builtins/unalias.c								\
-			builtins/type.c									\
+			builtins/type/type.c							\
+			builtins/type/type_utils.c						\
+			builtins/type/type_search.c						\
 			builtins/builtins.c								\
 			builtins/builtins_errors.c						\
 			builtins/set.c									\

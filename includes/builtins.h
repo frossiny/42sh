@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:40:21 by frossiny          #+#    #+#             */
-/*   Updated: 2019/12/19 14:17:37 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/01/09 14:52:17 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,17 @@ int			b_fg(t_cmd *cmd, t_shell *shell);
 ** Cd internal functions
 */
 char		*cd_buildpath(char *path);
+
+/*
+** Type internal functions
+*/
+int			type_path(char *arg, size_t *find);
+int			type_env_path(char *arg, size_t *find, t_var *vars);
+int			type_hashtable(char *arg, size_t *find);
+int			type_builtin(char *arg, size_t *find);
+int			type_alias(char *arg, size_t *find, t_alias *alias);
+int			is_executable(char *arg);
+char		*check_path(char *path, char *arg);
 
 /*
 ** history internal functions
