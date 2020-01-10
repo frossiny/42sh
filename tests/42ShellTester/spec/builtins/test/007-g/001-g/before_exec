@@ -1,0 +1,2 @@
+touch test_file
+chmod g+s test_file

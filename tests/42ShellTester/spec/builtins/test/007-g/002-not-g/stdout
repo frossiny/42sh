@@ -1,0 +1,2 @@
+expected_to be_empty
+expected_to exit_with_status 1

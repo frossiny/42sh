@@ -1,0 +1,2 @@
+touch test_read
+chmod u-r test_read

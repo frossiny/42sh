@@ -1,0 +1,2 @@
+touch test_exec2
+chmod u-w test_exec2
