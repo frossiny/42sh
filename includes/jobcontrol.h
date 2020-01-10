@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 14:08:11 by lubenard          #+#    #+#             */
-/*   Updated: 2019/12/11 14:58:09 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/08 14:15:54 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void		job_delete(t_shell *shell, int pid);
 void		jobs_destroy_all(t_shell *shell);
 void		job_check_status(void);
 t_jobs_lst	*job_search(t_shell *shell, int job_number);
+t_jobs_lst	*job_search_pid(t_shell *shell, int pid);
 char		*job_get_command(t_cmd *cmd);
 char		*job_get_pipe_command(t_pipel *pline);
 int			job_can_exit(void);

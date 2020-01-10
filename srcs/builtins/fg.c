@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fg.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 16:51:40 by lubenard          #+#    #+#             */
-/*   Updated: 2019/12/26 17:55:31 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/08 16:11:16 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ int		wait_for_job(int pid)
 		if ((wait = waitpid(-pid, &status, WUNTRACED)) == -1)
 			return (1);
 		if (pid <= 1 || mark_process_status(wait, status)
-		|| job_is_stopped(g_shell.jobs.lst)
-		|| job_is_completed(g_shell.jobs.lst))
+			|| job_is_stopped(g_shell.jobs.lst)
+			|| job_is_completed(g_shell.jobs.lst))
 			break ;
 	}
 	return (0);
@@ -84,7 +84,10 @@ int		put_foreground(t_shell *shell, int converted, int cont)
 		tcsetattr(shell->pgrp, TCSADRAIN, &searched->tmodes);
 		if (kill(-searched->pid, SIGCONT) < 0)
 			return (EXIT_FAILURE);
-	}
+	} 
+	g_child = searched->pid;
+	searched->state = JOB_RUNNING;
+	searched->status = "Running";
 	wait_for_job(searched->pid);
 	if (tcsetpgrp(shell->pgrp, shell->pid) < 0)
 		return (EXIT_FAILURE);
@@ -92,7 +95,8 @@ int		put_foreground(t_shell *shell, int converted, int cont)
 	tcgetattr(shell->pgrp, &searched->tmodes);
 	shell->prev_term.c_lflag &= ~(ICANON | ECHO | IEXTEN | OPOST);
 	tcsetattr(shell->pgrp, TCSADRAIN, &shell->prev_term);
-	job_delete(shell, searched->pid);
+	!job_is_completed(searched) && isatty(0) ? ft_printf("[%d] %d\n", searched->job_number, searched->pid) : 0;
+	job_is_completed(searched) ? job_delete(shell, searched->pid) : 0;
 	return (EXIT_SUCCESS);
 }
 
@@ -125,12 +129,12 @@ int		b_fg(t_cmd *cmd, t_shell *shell)
 		if (!shell->jobs.lst && !(cmd->argc - opts->last))
 		{
 			ft_putendl_fd("42sh: fg: current: no such job", 2);
-			return (1);
+			ret_code = 1;
 		}
 		else if (!shell->jobs.lst && (cmd->argc - opts->last))
 		{
 			ft_dprintf(2, "42sh: fg: %s: no such job\n", cmd->args[1]);
-			return (1);
+			ret_code = 1;
 		}
 		else
 			ret_code = handle_options_fg(shell, cmd);

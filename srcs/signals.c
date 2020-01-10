@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 10:40:59 by frossiny          #+#    #+#             */
-/*   Updated: 2019/12/26 17:42:14 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/10 14:19:41 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,11 @@ void		sig_ignored(int signal)
 void		catch_sigquit(int signal)
 {
 	(void)signal;
-	if (g_child > 0)
+	if (g_pipe > 0)
+	{
+		kill(g_child, SIGQUIT);
 		ft_printf("\n\033[1;31m[SIGNAL]\033[0m %d quit\n", g_child);
+	}
 }
 
 void		catch_sigint(int signal)
@@ -41,7 +44,11 @@ void		catch_sigint(int signal)
 		g_return = 1;
 		ioctl(0, TIOCSTI, "\n");
 	}
-	//Kill process
+	else if (g_pipe > 0)
+	{
+		kill(g_child, SIGINT);
+		// ft_printf("\n\033[1;31m[SIGNAL]\033[0m %d quit\n", g_child);
+	}
 }
 
 void		register_signals(void)
@@ -55,8 +62,6 @@ void		register_signals(void)
 			signal(g_signals[i].sig, g_signals[i].func);
 		i++;
 	}
-	//signal(SIGINT, catch_sigint);
-	//signal(SIGQUIT, catch_sigquit);
 }
 
 void		unregister_signals(void)
@@ -71,6 +76,4 @@ void		unregister_signals(void)
 			signal(g_signals[i].sig, SIG_DFL);
 		i++;
 	}
-	//signal(SIGINT, SIG_DFL);
-	//signal(SIGQUIT, SIG_DFL);
 }

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 20:32:11 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/29 10:31:56 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/10 14:20:18 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	read_pipeline(t_shell *shell, t_pipel *pipeline,
 	{
 		pipeline->next ? pipe(fd->np) : 0;
 		g_return = exec_pipe_builtin(pipeline, fd, shell);
-		exec_child_add(childs, g_child);
+		exec_child_add(childs, g_pipe);
 		pipeline->next ? copy_tab(fd->op, fd->np) : 0;
 		if (!pipeline->next)
 			break ;

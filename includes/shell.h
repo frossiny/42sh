@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 11:59:10 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/08 11:34:02 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/10 14:18:23 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 extern t_shell		g_shell;
 extern t_cursor_pos	g_pos;
 extern int			g_child;
+extern int			g_pipe;
 extern int			g_last_status;
 extern int			g_clear_buffer;
 extern int			g_ignore_signals;

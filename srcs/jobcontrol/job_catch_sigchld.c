@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 14:36:45 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/07 12:55:34 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/10 12:48:52 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,19 @@ void	job_catch_sigchld(int signal)
 	int			status;
 
 	(void)signal;
-	if (g_child && g_shell.current_cmd)
+	if (g_child)
 	{
 		pid = waitpid(g_child, &status, WNOHANG);
 		if (pid == 0)
 		{
 			kill(-g_child, SIGTSTP);
-			job = job_new(g_shell.current_cmd, g_child);
+			if (g_shell.current_cmd)
+				job = job_new(g_shell.current_cmd, g_child);
+			else
+			{
+				if (!(job = job_search_pid(&g_shell, g_child)))
+					return ;
+			}
 			job->status = "Stopped";
 			job->state = JOB_SUSPENDED;
 			g_shell.current_cmd = NULL;
@@ -38,4 +44,14 @@ void	job_catch_sigchld(int signal)
 			g_child = 0;
 		}
 	}
+	else
+	{
+		pid = waitpid(0, &status, WNOHANG);
+		//ft_printf("PID: %d\n", pid);
+		if (pid)
+		{
+			job_delete(&g_shell, pid);
+		}
+	}
+	
 }

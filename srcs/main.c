@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 11:43:47 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/08 11:28:09 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/10 14:21:42 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 t_shell			g_shell;
 t_cursor_pos	g_pos;
 int				g_child;
+int				g_pipe;
 int				g_last_status;
 int				g_ignore_signals;
 int				g_return;
@@ -85,6 +86,7 @@ static int	shell_config(char *envp[])
 static int	shell_init(void)
 {
 	g_child = 0;
+	g_pipe = 0;
 	g_ignore_signals = 0;
 	g_return = 0;
 	g_lpid = -1;

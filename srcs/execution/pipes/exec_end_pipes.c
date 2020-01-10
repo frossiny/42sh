@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:42:11 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/29 10:29:20 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/10 14:20:23 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	exec_end_pipes(t_pipel *pline, t_childs *childs, t_fd *fd)
 		childs = childs->next;
 	}
 	!bg && g_shell.able_termcaps ? termcaps_init(NULL) : 0;
-	g_child = 0;
+	g_pipe = 0;
 	close(fd->np[0]);
 	close(fd->np[1]);
 	close(fd->op[0]);
