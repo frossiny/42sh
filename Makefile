@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/01/03 14:37:18 by vsaltel           #+#    #+#              #
-#    Updated: 2020/01/08 14:51:14 by frossiny         ###   ########.fr        #
+#    Created: 2019/11/19 17:28:40 by vsaltel           #+#    #+#              #
+#    Updated: 2020/01/10 14:30:55 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ LIBFT	=	libft
 SRCDIR	=	srcs
 INCDIR	=	includes
 OBJDIR	=	objs
+
 FILES	=	shell.c											\
 			main.c											\
 			prompt.c										\
@@ -72,7 +73,7 @@ FILES	=	shell.c											\
 			builtins/options/opt_parse.c					\
 			builtins/options/opt_add.c						\
 			builtins/options/opt_get.c						\
-			builtins/options/opt_free.c			 			\
+			builtins/options/opt_free.c						\
 			execution/exec_all.c							\
 			execution/exec_redirections.c					\
 			execution/exec_command.c						\
@@ -113,6 +114,7 @@ FILES	=	shell.c											\
 			expansion/arithmetic/comp.c						\
 			expansion/arithmetic/convert_base.c				\
 			expansion/arithmetic/eval.c						\
+			expansion/arithmetic/eval_var.c					\
 			expansion/arithmetic/eval_expr.c				\
 			expansion/arithmetic/eval_test.c				\
 			expansion/arithmetic/ft_ato.c					\
@@ -234,7 +236,18 @@ FILES	=	shell.c											\
 			variables/var_disp_env.c						\
 			variables/var_is_key_valid.c					\
 			variables/var_merge.c							\
-			variables/var_export.c
+			variables/var_export.c							\
+			builtins/cd/get_path.c							\
+			builtins/fc/edit.c								\
+			builtins/fc/exec.c								\
+			builtins/fc/fc.c								\
+			builtins/fc/fork.c								\
+			builtins/fc/list.c								\
+			builtins/fc/parse.c								\
+			builtins/fc/tab.c								\
+			builtins/test/test.c							\
+			builtins/test/unary.c							\
+			builtins/test/binary.c
 
 SRCS	=	$(addprefix $(SRCDIR)/, $(FILES))
 OBJS	=	$(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)

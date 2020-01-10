@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_2da.c                                      :+:      :+:    :+:   */
+/*   ft_2dstrdel.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alagroy- <alagroy-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/12 12:19:27 by alagroy-          #+#    #+#             */
-/*   Updated: 2019/11/14 19:48:11 by alagroy-         ###   ########.fr       */
+/*   Created: 2019/11/02 17:56:02 by pcharrie          #+#    #+#             */
+/*   Updated: 2020/01/07 17:35:34 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_2dstrdel(char **array)
+void	ft_2dstrdel(char ***tab)
 {
-	int	i;
+	int i;
 
-	if (!array)
+	if (!tab
+		|| !*tab)
 		return ;
-	i = -1;
-	while (array[++i])
-		free(array[i]);
-	free(array);
+	i = 0;
+	while ((*tab)[i])
+		ft_strdel(&(*tab)[i++]);
+	free(*tab);
+	*tab = NULL;
 }

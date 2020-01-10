@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 20:33:56 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/08 11:34:13 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/08 11:58:50 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ t_childs	*exec_child_add(t_childs **childs, int pid);
 void		exec_child_del(t_childs *childs);
 
 char		*get_exe(t_shell *shell, char *name, int verbose, int is_exe);
+char		*get_exe_path(t_shell *shell, char *name, int is_exe);
 int			is_exe(t_shell *shell, char *name, int verbose);
 
 #endif

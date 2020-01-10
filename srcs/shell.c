@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:05:59 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/08 16:23:03 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/10 14:31:30 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 #include "hashtable.h"
 #include "execution.h"
 #include "jobcontrol.h"
+
+extern char	**g_fc_tab;
 
 int		handle_input(t_shell *shell, char **input, int history)
 {
@@ -63,6 +65,7 @@ int		eval_exec(char **input, int history)
 int		shell(void)
 {
 	char	*input;
+	int		i;
 
 	while ((get_input(0, &input, &g_shell)) > 0)
 	{
@@ -70,6 +73,13 @@ int		shell(void)
 			g_return = 1;
 		else
 			g_return = eval_exec(&input, 1);
+		i = 0;
+		while (g_fc_tab && g_fc_tab[i])
+		{
+			ft_putendl(g_fc_tab[i]);
+			g_return = eval_exec(&g_fc_tab[i++], 1);
+		}
+		ft_2dstrdel(&g_fc_tab);
 	}
 	if (input)
 		ft_strdel(&input);

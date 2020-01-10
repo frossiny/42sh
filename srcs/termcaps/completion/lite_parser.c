@@ -6,7 +6,7 @@
 /*   By: alagroy- <alagroy-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 15:53:44 by alagroy-          #+#    #+#             */
-/*   Updated: 2019/11/14 18:13:45 by alagroy-         ###   ########.fr       */
+/*   Updated: 2020/01/07 19:02:08 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,8 @@ static int	check_index(char *str, int i)
 	return (4);
 }
 
-int			lite_parser(t_cursor_pos *pos)
+int			lite_parser(t_cursor_pos *pos, int i)
 {
-	int		i;
-
 	i = pos->x_rel == pos->len_str ? pos->x_rel - 1 : pos->x_rel;
 	if (check_index(pos->str, i) != 4)
 		return (check_index(pos->str, i));

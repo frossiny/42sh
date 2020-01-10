@@ -108,7 +108,7 @@ int			b_type(t_cmd *cmd, t_shell *shell)
 		if (!find_builtin(cmd->args[i], &find))
 			if (!find_hashtable(cmd->args[i], &find))
 				if (!find_path(cmd->args[i], &find, shell->vars))
-					ft_printf("42sh: type: %s: not found\n", cmd->args[i]);
+					ft_dprintf(2, "42sh: type: %s: not found\n", cmd->args[i]);
 		i++;
 	}
 	if (find)

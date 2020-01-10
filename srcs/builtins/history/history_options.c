@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 13:54:13 by lubenard          #+#    #+#             */
-/*   Updated: 2019/12/19 15:52:41 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/09 19:10:41 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void		replace_curr_hist(t_cmd *cmd, t_shell *shell)
 }
 
 /*
-** Will clear hist and free linked list
+** Will clear hist and free linked list -c option
 */
 
 int			empty_hist(t_shell *shell)
@@ -88,6 +88,10 @@ int			empty_hist(t_shell *shell)
 	shell->history.lst = NULL;
 	return (0);
 }
+
+/*
+** Delete one element of history -d option
+*/
 
 int			delone_hist(t_history *hist, char *value)
 {
@@ -119,7 +123,7 @@ int			delone_hist(t_history *hist, char *value)
 }
 
 /*
-** Append to the history file
+** Append to the history file -a option
 */
 
 void		append_hist(t_histo_lst *histo)
@@ -132,9 +136,7 @@ void		append_hist(t_histo_lst *histo)
 		return ;
 	fd = 0;
 	path = ft_strpathfile(getenv("HOME"), ".42sh_history");
-	if (!access(path, F_OK) || access(path, X_OK))
-		return (free(path));
-	if ((fd = open(path, O_WRONLY | O_APPEND)) != -1)
+	if ((fd = open(path, O_WRONLY | O_APPEND | O_CREAT, 0666)) != -1)
 	{
 		curr = histo;
 		while (curr)

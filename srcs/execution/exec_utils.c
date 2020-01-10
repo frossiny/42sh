@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 17:27:04 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/08 11:35:36 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/08 11:57:55 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static char	*handle_relative(char *name, int verbose)
 	return (NULL);
 }
 
-static char	*get_exe_path(t_shell *shell, char *name, int is_exe)
+char		*get_exe_path(t_shell *shell, char *name, int is_exe)
 {
 	t_var			*path;
 	char			**dirs;
