@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 16:51:40 by lubenard          #+#    #+#             */
-/*   Updated: 2020/01/08 16:11:16 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/10 17:15:46 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int		put_foreground(t_shell *shell, int converted, int cont)
 		tcsetattr(shell->pgrp, TCSADRAIN, &searched->tmodes);
 		if (kill(-searched->pid, SIGCONT) < 0)
 			return (EXIT_FAILURE);
-	} 
+	}
 	g_child = searched->pid;
 	searched->state = JOB_RUNNING;
 	searched->status = "Running";
@@ -95,7 +95,7 @@ int		put_foreground(t_shell *shell, int converted, int cont)
 	tcgetattr(shell->pgrp, &searched->tmodes);
 	shell->prev_term.c_lflag &= ~(ICANON | ECHO | IEXTEN | OPOST);
 	tcsetattr(shell->pgrp, TCSADRAIN, &shell->prev_term);
-	!job_is_completed(searched) && isatty(0) ? ft_printf("[%d] %d\n", searched->job_number, searched->pid) : 0;
+	//!job_is_completed(searched) && isatty(0) ? ft_printf("[%d] %d\n", searched->job_number, searched->pid) : 0;
 	job_is_completed(searched) ? job_delete(shell, searched->pid) : 0;
 	return (EXIT_SUCCESS);
 }

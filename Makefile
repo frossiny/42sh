@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/19 17:28:40 by vsaltel           #+#    #+#              #
-#    Updated: 2020/01/10 14:30:55 by frossiny         ###   ########.fr        #
+#    Updated: 2020/01/10 15:59:13 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -91,6 +91,7 @@ FILES	=	shell.c											\
 			execution/pipes/exec_end_pipes.c				\
 			execution/pipes/exec_get_pipes_docs.c			\
 			execution/pipes/exec_is_pipe_bg.c				\
+			execution/pipes/exec_signal_pipe.c				\
 			execution/exec_child_add.c						\
 			execution/exec_assign_vars.c					\
 			expansion/tilde.c								\

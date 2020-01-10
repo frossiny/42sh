@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 10:40:59 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/10 14:19:41 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/10 16:06:31 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <sys/ioctl.h>
 #include "ft_printf.h"
 #include "shell.h"
+#include "execution.h"
 
 void		sig_ignored(int signal)
 {
@@ -23,11 +24,8 @@ void		sig_ignored(int signal)
 void		catch_sigquit(int signal)
 {
 	(void)signal;
-	if (g_pipe > 0)
-	{
-		kill(g_child, SIGQUIT);
-		ft_printf("\n\033[1;31m[SIGNAL]\033[0m %d quit\n", g_child);
-	}
+	if (g_pipe_childs)
+		exec_signal_pipe(g_pipe_childs, SIGQUIT);
 }
 
 void		catch_sigint(int signal)
@@ -39,15 +37,12 @@ void		catch_sigint(int signal)
 		g_ignore_signals = 0;
 		ioctl(0, TIOCSTI, "\4\0");
 	}
+	else if (g_pipe_childs)
+		exec_signal_pipe(g_pipe_childs, SIGINT);
 	else if (!g_child)
 	{
 		g_return = 1;
 		ioctl(0, TIOCSTI, "\n");
-	}
-	else if (g_pipe > 0)
-	{
-		kill(g_child, SIGINT);
-		// ft_printf("\n\033[1;31m[SIGNAL]\033[0m %d quit\n", g_child);
 	}
 }
 

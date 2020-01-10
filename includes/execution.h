@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 20:33:56 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/08 11:58:50 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/10 15:58:55 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ t_pipel		*exec_pipeline_alloc(t_pipel *prev, t_cmd *cmd, t_shell *shell);
 void		exec_end_pipes(t_pipel *pline, t_childs *childs, t_fd *fd);
 void		exec_del_pipeline(t_pipel *pline);
 int			exec_is_pipe_bg(t_pipel *pipeline);
+void		exec_signal_pipe(t_childs *childs, int signal);
 
 t_childs	*exec_child_add(t_childs **childs, int pid);
 void		exec_child_del(t_childs *childs);
