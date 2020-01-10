@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:49:21 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/10 14:20:05 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/10 15:39:39 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ int			exec_pipe_cmd(t_pipel *pline, t_fd *fd, t_shell *shell)
 		return (!ret);
 	if ((ret = can_execute(cmd->exe->content, shell)))
 		return (ret);
-	g_pipe = fork();
-	if (g_pipe == 0)
+	g_pipe_pid = fork();
+	if (g_pipe_pid == 0)
 		fork_child(pline, cmd, fd);
 	else if (pline->previous)
 	{

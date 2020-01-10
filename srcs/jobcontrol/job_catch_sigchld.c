@@ -6,12 +6,13 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 14:36:45 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/10 12:48:52 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/10 17:34:16 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 #include "jobcontrol.h"
+#include "execution.h"
 
 void	job_catch_sigchld(int signal)
 {
@@ -37,6 +38,7 @@ void	job_catch_sigchld(int signal)
 			job->state = JOB_SUSPENDED;
 			g_shell.current_cmd = NULL;
 			g_child = 0;
+			tcsetpgrp(g_shell.pgrp, getpgrp());
 		}
 		else
 		{
@@ -47,11 +49,7 @@ void	job_catch_sigchld(int signal)
 	else
 	{
 		pid = waitpid(0, &status, WNOHANG);
-		//ft_printf("PID: %d\n", pid);
 		if (pid)
-		{
 			job_delete(&g_shell, pid);
-		}
 	}
-	
 }

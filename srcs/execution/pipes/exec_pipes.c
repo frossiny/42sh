@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 20:32:11 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/10 14:20:18 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/10 15:57:10 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	read_pipeline(t_shell *shell, t_pipel *pipeline,
 	{
 		pipeline->next ? pipe(fd->np) : 0;
 		g_return = exec_pipe_builtin(pipeline, fd, shell);
-		exec_child_add(childs, g_pipe);
+		exec_child_add(childs, g_pipe_pid);
 		pipeline->next ? copy_tab(fd->op, fd->np) : 0;
 		if (!pipeline->next)
 			break ;
@@ -43,10 +43,12 @@ int			exec_pipes(t_anode *node, t_shell *shell, t_anode **cn)
 	childs = NULL;
 	exec_get_pipes_docs(shell, pipeline);
 	read_pipeline(shell, pipeline, &fd, &childs);
+	g_pipe_childs = childs;
 	exec_is_pipe_bg(pipeline) ? job_new_pipe(pipeline, childs) : 0;
 	dup2(fd.sfd, 1);
 	close(fd.sfd);
 	exec_end_pipes(pipeline, childs, &fd);
+	g_pipe_childs = NULL;
 	!exec_is_pipe_bg(pipeline) ? exec_child_del(childs) : 0;
 	exec_del_pipeline(pipeline);
 	return (g_return);
