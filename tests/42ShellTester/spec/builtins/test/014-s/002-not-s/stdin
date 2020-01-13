@@ -1,1 +1,1 @@
-test -s test_folder
+test -s test_empty_file

@@ -1,0 +1,2 @@
+unlink test_socket.sock
+rm -rf test_socket.sock

@@ -1,1 +1,1 @@
-test -n $TRUC
+test -z $TRUC

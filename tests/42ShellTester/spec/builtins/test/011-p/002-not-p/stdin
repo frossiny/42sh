@@ -1,1 +1,1 @@
-test -p test_file
+test -p /bin/ls

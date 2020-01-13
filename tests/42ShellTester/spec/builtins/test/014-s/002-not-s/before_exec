@@ -1,1 +1,1 @@
-mkdir test_folder
+touch test_empty_file
