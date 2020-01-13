@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
+#    By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/11/19 17:28:40 by vsaltel           #+#    #+#              #
-#    Updated: 2020/01/13 17:04:17 by lubenard         ###   ########.fr        #
+#    Created: 2020/01/09 15:29:04 by vsaltel           #+#    #+#              #
+#    Updated: 2020/01/13 17:56:53 by lubenard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,9 @@ FILES	=	shell.c											\
 			ast/ast_is_bg.c									\
 			builtins/alias.c								\
 			builtins/unalias.c								\
-			builtins/type.c									\
+			builtins/type/type.c							\
+			builtins/type/type_utils.c						\
+			builtins/type/type_search.c						\
 			builtins/builtins.c								\
 			builtins/builtins_errors.c						\
 			builtins/set.c									\

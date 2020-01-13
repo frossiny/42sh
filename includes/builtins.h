@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/21 12:40:21 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/08 17:03:33 by lubenard         ###   ########.fr       */
+/*   Created: 2020/01/09 15:28:37 by vsaltel           #+#    #+#             */
+/*   Updated: 2020/01/13 17:56:30 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,17 @@ int						b_bg(t_cmd *cmd, t_shell *shell);
 ** Cd internal functions
 */
 char					*cd_buildpath(char *path);
+
+/*
+** Type internal functions
+*/
+int			type_path(char *arg, size_t *find);
+int			type_env_path(char *arg, size_t *find, t_var *vars);
+int			type_hashtable(char *arg, size_t *find);
+int			type_builtin(char *arg, size_t *find);
+int			type_alias(char *arg, size_t *find, t_alias *alias);
+int			is_executable(char *arg);
+char		*check_path(char *path, char *arg);
 
 /*
 ** history internal functions
