@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 14:48:16 by pcharrie          #+#    #+#             */
-/*   Updated: 2019/11/02 16:56:14 by pcharrie         ###   ########.fr       */
+/*   Updated: 2020/01/13 17:06:23 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 
 int		b_test(t_cmd *cmd, t_shell *shell)
 {
+	(void)shell;
 	if (cmd->argc == 1)
 		return (1);
 	if (cmd->argc == 2)

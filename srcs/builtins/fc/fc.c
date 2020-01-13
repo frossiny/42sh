@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 17:13:15 by pcharrie          #+#    #+#             */
-/*   Updated: 2019/11/27 18:38:13 by pcharrie         ###   ########.fr       */
+/*   Updated: 2020/01/13 17:05:40 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int		b_fc(t_cmd *cmd, t_shell *shell)
 	t_fc_vars	fc;
 	int			ret;
 
+	(void)shell;
 	fc_vars_init(&fc);
 	if ((ret = fc_parse_options(cmd, &fc)) < 1 || !fc_parse_range(cmd, &fc)
 		|| !fc_build_tab(&fc))

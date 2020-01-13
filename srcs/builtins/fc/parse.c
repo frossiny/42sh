@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 01:34:27 by pcharrie          #+#    #+#             */
-/*   Updated: 2019/11/27 18:37:48 by pcharrie         ###   ########.fr       */
+/*   Updated: 2020/01/13 17:06:07 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int			fc_parse_options(t_cmd *cmd, t_fc_vars *fc)
 			{
 				if (cmd->args[i][j] == 'e')
 				{
-					if (j < ft_strlen(cmd->args[i]) - 1)
+					if (j < (int)ft_strlen(cmd->args[i]) - 1)
 					{
 						if (!(fc->editor = ft_strnew(ft_strlen(cmd->args[i]) - j + 1)))
 							return (0);
