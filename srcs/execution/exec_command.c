@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:26:37 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/08 11:57:37 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/14 17:49:41 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ static int	start_process(char *file, t_cmd *cmd, char **env)
 	!cmd->is_bg ? tcsetpgrp(g_shell.pgrp, getpgrp()) : 0;
 	!cmd->is_bg && g_shell.able_termcaps ? termcaps_init(NULL) : 0;
 	g_last_status = 0;
-	g_child = 0;
 	g_shell.current_cmd = NULL;
 	if (WIFSIGNALED(status))
 		return (display_signal(status));
@@ -85,5 +84,6 @@ int			exec_command(t_cmd *cmd)
 	ret = start(cmd, env);
 	var_destroy(&(cmd->tenv));
 	ft_2dstrdel(&env);
+	g_child = 0;
 	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 15:15:50 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/28 15:18:24 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/14 14:43:59 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void	job_free(t_jobs_lst *job)
 {
 	if (!job)
 		return ;
-	if (job->childs)
-		exec_child_del(job->childs);
+	if (job->pipeline)
+		exec_del_pipeline(job->pipeline);
 	free(job->command);
 	free(job);
 }

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 14:08:11 by lubenard          #+#    #+#             */
-/*   Updated: 2020/01/10 14:30:59 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/14 14:42:38 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ enum	e_job_state
 */
 
 t_jobs_lst	*job_new(t_cmd *cmd, int pid);
-t_jobs_lst	*job_new_pipe(t_pipel *pline, t_childs *childs);
+t_jobs_lst	*job_new_pipe(t_pipel *pline);
 void		job_free(t_jobs_lst *job);
 void		job_delete(t_shell *shell, int pid);
 void		jobs_destroy_all(t_shell *shell);

@@ -3,14 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+         #
+#    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/09 15:29:04 by vsaltel           #+#    #+#              #
-#    Updated: 2020/01/13 17:56:53 by lubenard         ###   ########.fr        #
+#    Updated: 2020/01/14 17:46:03 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC		=	clang -g3 #-fsanitize=address
+CC		=	gcc -g3 #-fsanitize=address
 CFLAGS	+=	-Wall -Wextra  #-Werror
 
 SHELL	=	bash
@@ -94,7 +94,7 @@ FILES	=	shell.c											\
 			execution/pipes/exec_get_pipes_docs.c			\
 			execution/pipes/exec_is_pipe_bg.c				\
 			execution/pipes/exec_signal_pipe.c				\
-			execution/exec_child_add.c						\
+			execution/pipes/exec_dup_pipeline.c				\
 			execution/exec_assign_vars.c					\
 			expansion/tilde.c								\
 			expansion/expansion.c							\

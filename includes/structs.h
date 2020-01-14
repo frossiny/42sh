@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 14:23:53 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/14 13:08:15 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/14 17:45:46 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,6 +221,7 @@ typedef struct		s_anode
 typedef struct		s_pipel
 {
 	t_cmd			*cmd;
+	int				pid;
 	struct s_pipel	*previous;
 	struct s_pipel	*next;
 }					t_pipel;
@@ -231,13 +232,6 @@ typedef struct		s_fd
 	int				np[2];
 	int				sfd;
 }					t_fd;
-
-typedef struct		s_childs
-{
-	int				pid;
-	t_cmd			*cmd;
-	struct s_childs	*next;
-}					t_childs;
 
 /*
 ** Builtin
@@ -276,7 +270,7 @@ typedef struct		s_jobs_lst
 	int					state;
 	char				*command;
 	int					foreground;
-	t_childs			*childs;
+	t_pipel				*pipeline;
 	struct termios		tmodes;
 	struct s_jobs_lst	*prev;
 	struct s_jobs_lst	*next;
@@ -344,6 +338,7 @@ typedef struct		s_shell
 	t_jobs			jobs;
 	t_history		history;
 	t_cmd			*current_cmd;
+	t_pipel			*current_pipel;
 	pid_t			pid;
 	int				pgrp;
 	int				able_termcaps;

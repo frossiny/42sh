@@ -1,46 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_child_add.c                                   :+:      :+:    :+:   */
+/*   exec_dup_pipeline.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/05/28 16:58:30 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/28 14:18:30 by frossiny         ###   ########.fr       */
+/*   Created: 2020/01/14 17:04:52 by frossiny          #+#    #+#             */
+/*   Updated: 2020/01/14 17:39:09 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "execution.h"
 #include "shell.h"
 
-t_childs	*exec_child_add(t_childs **childs, int pid)
+t_pipel		*dup_one(t_pipel *pipel, t_pipel *prev)
 {
-	t_childs	*curr;
-	t_childs	*new;
+	t_pipel		*new;
 
-	if (!childs || !(new = (t_childs *)malloc(sizeof(t_childs))))
+	if (!(new = (t_pipel *)malloc(sizeof(t_pipel))))
 		return (NULL);
-	new->pid = pid;
+	new->previous = prev;
+	new->pid = pipel->pid;
+	new->cmd = NULL;
 	new->next = NULL;
-	if (*childs)
-	{
-		curr = *childs;
-		while (curr && curr->next)
-			curr = curr->next;
-		curr->next = new;
-	}
-	else
-		*childs = new;
 	return (new);
 }
 
-void		exec_child_del(t_childs *childs)
+t_pipel		*exec_dup_pipeline(t_pipel *src)
 {
-	t_childs *next;
+	t_pipel		*new;
+	t_pipel		*curr;
+	t_pipel		*tmp;
 
-	while (childs)
+	if (!(curr = dup_one(src, NULL)))
+		return (NULL);
+	new = curr;
+	src = src->next;
+	while (src)
 	{
-		next = childs->next;
-		free(childs);
-		childs = next;
+		tmp = dup_one(src, curr);
+		curr->next = tmp;
+		curr = tmp;
+		src = src->next;
 	}
+	return (new);
 }

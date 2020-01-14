@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 15:35:53 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/28 15:37:54 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/14 14:36:23 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ t_pipel		*exec_pipeline_alloc(t_pipel *prev, t_cmd *cmd, t_shell *shell)
 	cmd->redir = parse_redirections(cmd->tokens);
 	new->cmd = cmd;
 	new->previous = prev;
+	new->pid = -1;
 	new->next = NULL;
 	return (new);
 }

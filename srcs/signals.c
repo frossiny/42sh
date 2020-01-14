@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 10:40:59 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/10 16:06:31 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/14 14:40:06 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void		sig_ignored(int signal)
 void		catch_sigquit(int signal)
 {
 	(void)signal;
-	if (g_pipe_childs)
-		exec_signal_pipe(g_pipe_childs, SIGQUIT);
+	if (g_shell.current_pipel)
+		exec_signal_pipe(g_shell.current_pipel, SIGQUIT);
 }
 
 void		catch_sigint(int signal)
@@ -37,8 +37,8 @@ void		catch_sigint(int signal)
 		g_ignore_signals = 0;
 		ioctl(0, TIOCSTI, "\4\0");
 	}
-	else if (g_pipe_childs)
-		exec_signal_pipe(g_pipe_childs, SIGINT);
+	else if (g_shell.current_pipel)
+		exec_signal_pipe(g_shell.current_pipel, SIGINT);
 	else if (!g_child)
 	{
 		g_return = 1;

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 17:37:47 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/14 13:11:44 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/14 14:45:19 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,15 @@
 
 static int	check_pids(t_jobs_lst *job, int *status)
 {
-	t_childs	*tmp;
+	t_pipel		*tmp;
 	int			ret;
 
 	if (!job)
 		return (0);
-	if (job->childs)
+	if (job->pipeline)
 	{
 		ret = 0;
-		tmp = job->childs;
+		tmp = job->pipeline;
 		while (tmp)
 		{
 			if (waitpid(tmp->pid, status, WNOHANG) == 0)
