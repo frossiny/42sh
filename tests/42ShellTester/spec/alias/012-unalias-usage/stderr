@@ -1,0 +1,2 @@
+expected_to match_regex "unalias: usage: unalias [-a] name [name ...]"
+expected_to exit_with_status 2

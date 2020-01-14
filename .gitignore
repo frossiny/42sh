@@ -9,3 +9,4 @@ vgcore.*
 *.dSYM
 *.swp
 tags
+tests/42ShellTester/tmp

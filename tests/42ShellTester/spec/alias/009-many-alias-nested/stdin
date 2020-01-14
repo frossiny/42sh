@@ -1,0 +1,9 @@
+alias abc='cat testing_alias3'
+alias def='abc'
+alias hij='def'
+alias klm='hij'
+alias nop='klm'
+alias qrs='nop'
+alias tuv='qrs'
+alias xyz='tuv'
+xyz

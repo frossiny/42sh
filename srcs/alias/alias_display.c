@@ -24,7 +24,7 @@ void	alias_display_one(t_alias *alias, char *key)
 		}
 		alias = alias->next;
 	}
-	ft_printf("42sh: alias: %s: not found\n", key);
+	ft_dprintf(2, "42sh: alias: %s: not found\n", key);
 }
 
 void	alias_display_all(t_alias *alias)
