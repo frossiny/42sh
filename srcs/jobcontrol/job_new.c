@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 10:48:31 by lubenard          #+#    #+#             */
-/*   Updated: 2019/12/26 17:23:31 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/14 13:08:45 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ static t_jobs_lst	*new(void)
 	job->tmodes.c_lflag = g_shell.prev_term.c_lflag;
 	job->prev = NULL;
 	job->next = NULL;
+	job->foreground = 0;
 	jobs_insert(job);
 	return (job);
 }
