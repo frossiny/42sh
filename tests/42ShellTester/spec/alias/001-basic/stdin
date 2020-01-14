@@ -1,0 +1,2 @@
+alias cat='cat testing_alias'
+cat

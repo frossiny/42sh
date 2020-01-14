@@ -1,0 +1,2 @@
+expected_to match_eq "42sh: alias: truc: not found"
+expected_to exit_with_status 1
