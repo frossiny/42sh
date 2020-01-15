@@ -6,7 +6,7 @@
 /*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 14:16:26 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/27 17:24:13 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/01/14 17:28:44 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ int				check_key_chain(char *key)
 	while (key[i])
 	{
 		if (key[i] == '`' || key[i] == '/' || key[i] == '\\'
-							|| key[i] == '$' || key[i] == ' ')
+			|| key[i] == '&' || key[i] == '$' || key[i] == ' '
+			|| key[i] == '(' || key[i] == ')' || key[i] == ';'
+			|| key[i] == ';' || key[i] == '<' || key[i] == '>'
+			|| key[i] == '|')
 			return (0);
 		i++;
 	}
@@ -60,7 +63,8 @@ int				b_alias(t_cmd *cmd, t_shell *shell)
 		i = 0;
 		while (cmd->args[++i])
 		{
-			if (ft_strchr(cmd->args[i], '='))
+			if (cmd->args[i][0] && cmd->args[i][1]
+					&& ft_strchr(&(cmd->args[i][1]), '='))
 				add_alias(&(shell->alias), cmd->args[i]);
 			else
 				alias_display_one(shell->alias, cmd->args[i]);

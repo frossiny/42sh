@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 15:55:33 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/29 15:32:19 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/01/15 14:29:14 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,11 @@ int				alias_exec(t_shell *shell, char **input)
 	{
 		tok_to_input(input, shell->lexer.tokens);
 		lexer_free(&(shell->lexer));
-		if ((ret = lex_build(shell, input)))
+		if ((ret = lex_build(shell, input)) != 1)
+		{
+			free_alias_history(&alias_hist);
 			return (ret);
+		}
 		alias_ret = alias_resolve(shell->lexer.tokens, shell->alias,
 															&alias_hist);
 	}
