@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 14:16:18 by vsaltel           #+#    #+#             */
-/*   Updated: 2020/01/10 14:31:19 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/15 17:14:53 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static const t_signals	g_signals[] =
 	{ 15, SIG_IGN },
 	{ 16, SIG_IGN },
 	{ 17, SIG_IGN },
-	{ 18, SIG_IGN },
+	{ 18, &job_catch_sigtstp },
 	{ 19, SIG_IGN },
 	{ 20, &job_catch_sigchld },
 	{ 21, SIG_IGN },

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 14:08:11 by lubenard          #+#    #+#             */
-/*   Updated: 2020/01/14 14:42:38 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/15 17:14:47 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ char		*job_get_command(t_cmd *cmd);
 char		*job_get_pipe_command(t_pipel *pline);
 int			job_can_exit(void);
 void		job_catch_sigchld(int signal);
+void		job_catch_sigtstp(int signal);
 
 /*
 ** Useful jobcontrol functions

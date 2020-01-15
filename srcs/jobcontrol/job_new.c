@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 10:48:31 by lubenard          #+#    #+#             */
-/*   Updated: 2020/01/14 17:36:17 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/15 17:26:42 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ t_jobs_lst			*job_new_pipe(t_pipel *pline)
 		return (NULL);
 	job->command = job_get_pipe_command(pline);
 	job->pipeline = exec_dup_pipeline(pline);
-	ft_printf("PIPELINE: %p\n", job->pipeline);
 	if (!pline)
 		return (job);
 	while (pline->next)

@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   bg.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 13:32:46 by lubenard          #+#    #+#             */
-/*   Updated: 2019/12/19 12:01:35 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/15 17:28:09 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "structs.h"
 #include "jobcontrol.h"
+#include "execution.h"
 #include "builtins.h"
 #include "opt.h"
 #include "signal.h"
@@ -37,8 +38,15 @@ int		set_bg(t_shell *shell, int converted, int cont)
 		searched->state = JOB_CONTINUED;
 	searched->status = "Running";
 	if (cont)
-		if (kill(-searched->pid, SIGCONT) < 0)
-			return (EXIT_FAILURE);
+	{
+		if (!searched->pipeline)
+		{
+			if (kill(-searched->pid, SIGCONT) < 0)
+				return (EXIT_FAILURE);
+		}
+		else
+			exec_signal_pipe(searched->pipeline, SIGCONT);
+	}
 	return (0);
 }
 

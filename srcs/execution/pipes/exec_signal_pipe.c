@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/10 15:00:17 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/14 14:39:19 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/15 17:30:41 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	exec_signal_pipe(t_pipel *pipeline, int signal)
 		return ;
 	while (pipeline)
 	{
-		kill(pipeline->pid, signal);
+		kill(-pipeline->pid, signal);
 		pipeline = pipeline->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 20:32:11 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/14 17:45:05 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/15 16:06:55 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int				exec_pipes(t_anode *node, t_shell *shell, t_anode **cn)
 	exec_is_pipe_bg(pipeline) ? job_new_pipe(pipeline) : 0;
 	dup2(fd.sfd, 1);
 	close(fd.sfd);
-	exec_end_pipes(pipeline, &fd);
+	g_return = exec_end_pipes(pipeline, &fd);
 	exec_del_pipeline(pipeline);
 	return (g_return);
 }
