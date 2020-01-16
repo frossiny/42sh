@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 16:51:40 by lubenard          #+#    #+#             */
-/*   Updated: 2020/01/14 13:09:40 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/16 16:47:09 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "signal.h"
 #include "jobcontrol.h"
 #include "shell.h"
+#include "execution.h"
 
 /*
 ** Set new status to processes when waiting for them
@@ -81,9 +82,10 @@ int		put_foreground(t_shell *shell, int converted, int cont)
 	ft_printf("%s\n", searched->command);
 	if (cont)
 	{
-		tcsetattr(shell->pgrp, TCSADRAIN, &searched->tmodes);
-		if (kill(-searched->pid, SIGCONT) < 0)
+		restore_shell(g_shell.prev_term);
+		if (!searched->pipeline && kill(-searched->pid, SIGCONT) < 0)
 			return (EXIT_FAILURE);
+		searched->pipeline ? exec_signal_pipe(searched->pipeline, SIGCONT) : 0;
 	}
 	g_child = searched->pid;
 	searched->state = JOB_RUNNING;
@@ -92,10 +94,8 @@ int		put_foreground(t_shell *shell, int converted, int cont)
 	wait_for_job(searched->pid);
 	if (tcsetpgrp(shell->pgrp, shell->pid) < 0)
 		return (EXIT_FAILURE);
+	termcaps_init(NULL);
 	/* Restore the shell's terminal modes. */
-	tcgetattr(shell->pgrp, &searched->tmodes);
-	shell->prev_term.c_lflag &= ~(ICANON | ECHO | IEXTEN | OPOST);
-	tcsetattr(shell->pgrp, TCSADRAIN, &shell->prev_term);
 	job_is_completed(searched) ? job_delete(shell, searched->pid) : 0;
 	return (EXIT_SUCCESS);
 }
