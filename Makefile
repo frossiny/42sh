@@ -6,7 +6,7 @@
 #    By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/09 15:29:04 by vsaltel           #+#    #+#              #
-#    Updated: 2020/01/14 17:37:18 by vsaltel          ###   ########.fr        #
+#    Updated: 2020/01/16 16:06:50 by vsaltel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -210,6 +210,7 @@ FILES	=	shell.c											\
 			termcaps/t_visual_cut.c							\
 			termcaps/t_visual_paste.c						\
 			termcaps/t_visual_copy.c						\
+			termcaps/t_clear.c								\
 			termcaps/signal.c								\
 			termcaps/completion/t_completion.c				\
 			termcaps/completion/lite_parser.c				\
@@ -314,7 +315,7 @@ check_error:
 	@grep -rn "stdio.h" srcs
 
 valgrind: all
-	valgrind --leak-check=full --show-leak-kinds=all --suppressions="${PWD}/valgrind.supp" "${PWD}/${NAME}"
+	\valgrind --leak-check=full --show-leak-kinds=all --suppressions="${PWD}/valgrind.supp" "${PWD}/${NAME}"
 
 tests: all
 	./tests/42ShellTester/42ShellTester.sh "$(PWD)/$(NAME)" ${TARGS}

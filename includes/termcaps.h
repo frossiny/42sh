@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 18:49:29 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/12/04 17:58:45 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/01/16 14:28:28 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,9 @@ void				history_search_delete(char **str, t_cursor_pos *pos,
 														t_history *histo);
 void				history_search_replace(char **str, char *buf,
 								t_cursor_pos *pos, t_history *histo);
-
 void				termcaps_completion(char **str, t_cursor_pos *pos,
+														t_shell *shell);
+void				termcaps_clear(char **str, t_cursor_pos *pos,
 														t_shell *shell);
 void				termcaps_escape(char **str, t_cursor_pos *pos,
 														t_shell *shell);
