@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 20:32:11 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/16 12:11:13 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/16 14:10:16 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int				exec_pipes(t_anode *node, t_shell *shell, t_anode **cn)
 	close(fd.sfd);
 	exec_signal_pipe(pipeline, SIGCONT);
 	g_return = exec_end_pipes(pipeline, &fd);
+	g_shell.current_pipel = NULL;
 	exec_del_pipeline(pipeline);
 	return (g_return);
 }

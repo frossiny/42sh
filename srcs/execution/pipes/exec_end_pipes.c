@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:42:11 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/16 12:45:53 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/16 14:10:12 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,21 +39,20 @@ int			exec_end_pipes(t_pipel *pline, t_fd *fd)
 			break ;
 		pline = pline->next;
 	}
-	while (pline->next)
+	while (pline && pline->next)
 		pline = pline->next;
 	if (!bg)
 	{
 		if (WIFSIGNALED(g_last_status))
-			g_last_status = display_signal(g_last_status);
+			g_last_status = g_last_status != 18 ? display_signal(g_last_status) : 0;
 		else
 			g_last_status = WEXITSTATUS(g_last_status);
 	}
 	!bg && g_shell.able_termcaps ? termcaps_init(NULL) : 0;
 	g_pipe_pid = 0;
-	g_shell.current_pipel = NULL;
 	close(fd->np[0]);
 	close(fd->np[1]);
 	close(fd->op[0]);
 	close(fd->op[1]);
-	return (bg ? 0 : g_last_status);
+	return (!g_shell.current_pipel ? 0 : g_last_status);
 }
