@@ -6,7 +6,7 @@
 /*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 15:28:37 by vsaltel           #+#    #+#             */
-/*   Updated: 2020/01/13 17:56:30 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/15 15:29:50 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,13 @@ char					*cd_buildpath(char *path);
 /*
 ** Type internal functions
 */
-int			type_path(char *arg, size_t *find);
-int			type_env_path(char *arg, size_t *find, t_var *vars);
-int			type_hashtable(char *arg, size_t *find);
-int			type_builtin(char *arg, size_t *find);
-int			type_alias(char *arg, size_t *find, t_alias *alias);
-int			is_executable(char *arg);
-char		*check_path(char *path, char *arg);
+int						type_path(char *arg, size_t *find);
+int						type_env_path(char *arg, size_t *find, t_var *vars);
+int						type_hashtable(char *arg, size_t *find);
+int						type_builtin(char *arg, size_t *find);
+int						type_alias(char *arg, size_t *find, t_alias *alias);
+int						is_executable(char *arg);
+char					*check_path(char *path, char *arg);
 
 /*
 ** history internal functions
