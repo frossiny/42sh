@@ -6,29 +6,47 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:42:11 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/15 17:31:33 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/16 12:45:53 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 #include "execution.h"
 
-int		exec_end_pipes(t_pipel *pline, t_fd *fd)
+static int	is_pipe_ended(t_pipel *pline)
 {
+	while (pline)
+	{
+		if (waitpid(pline->pid, &g_last_status, WNOHANG) == 0)
+			return (0);
+		pline = pline->next;
+	}
+	return (1);
+}
+
+int			exec_end_pipes(t_pipel *pline, t_fd *fd)
+{
+	t_pipel	*start;
 	int		bg;
 
+	start = pline;
 	bg = exec_is_pipe_bg(pline);
 	while (pline && g_shell.current_pipel)
 	{
-		!bg ? pause() : 0;
-		if (!bg && !pline->next)
-		{
-			if (WIFSIGNALED(g_last_status))
-				g_return = display_signal(g_last_status);
-			else
-				g_return = WEXITSTATUS(g_last_status);
-		}
+		if (pline->pid)
+			!bg ? pause() : 0;
+		if (is_pipe_ended(start))
+			break ;
 		pline = pline->next;
+	}
+	while (pline->next)
+		pline = pline->next;
+	if (!bg)
+	{
+		if (WIFSIGNALED(g_last_status))
+			g_last_status = display_signal(g_last_status);
+		else
+			g_last_status = WEXITSTATUS(g_last_status);
 	}
 	!bg && g_shell.able_termcaps ? termcaps_init(NULL) : 0;
 	g_pipe_pid = 0;

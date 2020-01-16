@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:49:21 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/10 15:39:39 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/16 12:29:34 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,6 @@ int			exec_pipe_cmd(t_pipel *pline, t_fd *fd, t_shell *shell)
 		close(fd->op[0]);
 		close(fd->op[1]);
 	}
+	kill(-g_pipe_pid, SIGSTOP);
 	return (ret);
 }

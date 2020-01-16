@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 14:36:45 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/15 17:18:33 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/16 12:42:57 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void		job_catch_sigchld(int signal)
 			g_child = 0;
 		}
 	}
-	else
+	else if (!g_shell.current_pipel)
 	{
 		pid = waitpid(0, &status, WNOHANG);
 		if (pid > 0)

@@ -1,3 +1,0 @@
-cat /dev/random > /dev/null &
-fg
-exit
