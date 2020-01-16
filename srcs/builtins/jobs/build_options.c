@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 12:10:28 by lubenard          #+#    #+#             */
-/*   Updated: 2019/12/19 11:42:29 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/16 18:03:42 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,15 @@ int		job_check_valid_number(t_shell *shell, t_cmd *cmd, int j)
 	return (1);
 }
 
+int		handle_job_percent_error(char *builtin, char *extract_char,
+int *number)
+{
+	ft_dprintf(2, "42sh: %s: %s: ambiguous job spec\n", builtin,
+		extract_char);
+	*number = -1;
+	return (0);
+}
+
 int		handle_job_percent_alpha(char *args, char *builtin)
 {
 	int			number;
@@ -40,12 +49,7 @@ int		handle_job_percent_alpha(char *args, char *builtin)
 	while (jobs)
 	{
 		if (occurence > 0 || (args[1] == '?' && !args[2]))
-		{
-			ft_dprintf(2, "42sh: %s: %s: ambiguous job spec\n", builtin,
-			extract_char);
-			number = -1;
-			break ;
-		}
+			return (handle_job_percent_error(builtin, extract_char, &number));
 		if ((args[1] != '?'
 		&& !ft_strncmp(jobs->command, extract_char, ft_strlen(extract_char)))
 		|| (args[1] == '?' && ft_strstr(jobs->command, extract_char)))

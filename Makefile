@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/09 15:29:04 by vsaltel           #+#    #+#              #
-#    Updated: 2020/01/15 17:15:42 by frossiny         ###   ########.fr        #
+#    Updated: 2020/01/16 17:28:55 by lubenard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -247,6 +247,7 @@ FILES	=	shell.c											\
 			builtins/fc/fc.c								\
 			builtins/fc/fork.c								\
 			builtins/fc/list.c								\
+			builtins/fc/options.c							\
 			builtins/fc/parse.c								\
 			builtins/fc/tab.c								\
 			builtins/test/test.c							\

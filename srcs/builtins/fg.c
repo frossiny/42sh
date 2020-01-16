@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 16:51:40 by lubenard          #+#    #+#             */
-/*   Updated: 2020/01/16 16:47:09 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/16 16:56:46 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ int		put_foreground(t_shell *shell, int converted, int cont)
 	if (tcsetpgrp(shell->pgrp, shell->pid) < 0)
 		return (EXIT_FAILURE);
 	termcaps_init(NULL);
-	/* Restore the shell's terminal modes. */
 	job_is_completed(searched) ? job_delete(shell, searched->pid) : 0;
 	return (EXIT_SUCCESS);
 }

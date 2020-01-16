@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 13:08:41 by lubenard          #+#    #+#             */
-/*   Updated: 2019/11/27 08:54:24 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/16 16:55:23 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ int		b_hash(t_cmd *cmd, t_shell *shell)
 	opts = opt_parse(cmd, "r", "hash");
 	if (opts->ret != 0)
 		ft_putendl_fd("hash: usage: hash [-r]", 2);
-	else if (shell->bin_ht.table && opts->last == 1 && !(cmd->argc - opts->last))
+	else if (shell->bin_ht.table && opts->last == 1
+	&& !(cmd->argc - opts->last))
 		display_hash_table(shell->bin_ht);
 	else if (opts->opts && !ft_strcmp(opts->opts->opt, "r"))
 	{

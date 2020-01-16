@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 14:31:38 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/07 17:33:52 by pcharrie         ###   ########.fr       */
+/*   Updated: 2020/01/16 17:51:21 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,8 @@ static t_options	*disp_errors(t_options *opts, int ret, char *bname, \
 	if (ret == -1)
 		ft_dprintf(2, "42sh: %s: -%c: invalid option\n", bname, arg[1]);
 	if (ret == -2)
-		ft_dprintf(2, "42sh: %s: option requires an argument -- %c\n", bname, arg[1]);
+		ft_dprintf(2, "42sh: %s: option requires an argument -- %c\n", bname,
+		arg[1]);
 	return (opts);
 }
 
