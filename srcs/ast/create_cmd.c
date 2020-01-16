@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 13:23:37 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/08 11:15:27 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/16 15:15:04 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,25 @@
 #include "ast.h"
 #include "expansion.h"
 #include "jobcontrol.h"
+
+static char		**split_var(char *var)
+{
+	char	**ret;
+	size_t	i;
+
+	if (!var)
+		return (NULL);
+	if (!(ret = ft_2dstrnew(2)))
+		return (NULL);
+	i = 0;
+	while (var[i] && var[i] != '=')
+		i++;
+	ret[0] = ft_strndup(var, i);
+	if (!var[i])
+		return (ret);
+	ret[1] = ft_strsub(var, i + 1, ft_strlen(var) - i);
+	return (ret);
+}
 
 static void		parse_assignements(t_cmd *cmd, t_token **exe)
 {
@@ -26,7 +45,7 @@ static void		parse_assignements(t_cmd *cmd, t_token **exe)
 	while (*exe && (*exe)->type == TOKEN_ASSIGNMENT)
 	{
 		tok = NULL;
-		if (!(tmp = ft_strsplit((*exe)->content, '=')))
+		if (!(tmp = split_var((*exe)->content)))
 			break ;
 		if (tmp[1])
 		{
