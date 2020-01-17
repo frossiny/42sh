@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/09 15:29:04 by vsaltel           #+#    #+#              #
-#    Updated: 2020/01/17 16:50:56 by frossiny         ###   ########.fr        #
+#    Updated: 2020/01/17 16:52:19 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -218,6 +218,7 @@ FILES	=	shell.c											\
 			termcaps/t_visual_cut.c							\
 			termcaps/t_visual_paste.c						\
 			termcaps/t_visual_copy.c						\
+			termcaps/t_clear.c								\
 			termcaps/signal.c								\
 			termcaps/completion/t_completion.c				\
 			termcaps/completion/lite_parser.c				\
@@ -323,7 +324,7 @@ check_error:
 	@grep -rn "stdio.h" srcs
 
 valgrind: all
-	valgrind $(VALGRIND_ARGS) "${PWD}/${NAME}"
+	\valgrind $(VALGRIND_ARGS) "${PWD}/${NAME}"
 
 tests: all
 	./tests/42ShellTester/42ShellTester.sh "$(PWD)/$(NAME)" ${TARGS}

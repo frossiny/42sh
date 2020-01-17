@@ -3,19 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   unalias.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 16:48:26 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/27 18:43:13 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/01/17 17:21:44 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "alias.h"
-#include "shell.h"
+#include "structs.h"
 #include "builtins.h"
+#include "opt.h"
 
-void			alias_del_aft(t_alias *alias, char *key)
+static void		unalias_del_aft(t_alias *alias, char *key)
 {
 	t_alias *tmp;
 	t_alias *bef;
@@ -35,7 +36,7 @@ void			alias_del_aft(t_alias *alias, char *key)
 	}
 }
 
-void			alias_del(t_alias **list, char *key)
+static void		unalias_del(t_alias **list, char *key)
 {
 	t_alias *tmp;
 
@@ -48,27 +49,56 @@ void			alias_del(t_alias **list, char *key)
 		*list = tmp;
 		return ;
 	}
-	alias_del_aft(*list, key);
+	unalias_del_aft(*list, key);
+}
+
+static int		unalias_opt(t_cmd *cmd, t_shell *shell)
+{
+	t_options	*options;
+	int			ret;
+
+	ret = 1;
+	options = opt_parse(cmd, "a", "unalias");
+	if (options->ret != 0)
+	{
+		if (options->ret == -1)
+			ft_dprintf(2, "unalias: usage: unalias [-a] name [name ...]\n");
+		ret = 2;
+	}
+	else if (opt_get(options, "a"))
+	{
+		alias_free_all(&(shell->alias));
+		ret = 0;
+	}
+	opt_free(options);
+	return (ret);
 }
 
 int				b_unalias(t_cmd *cmd, t_shell *shell)
 {
-	size_t	i;
-	size_t	unfind;
+	size_t		i;
+	size_t		unfind;
+	int			ret;
 
+	if (cmd->argc == 1)
+	{
+		ft_dprintf(2, "unalias: usage: unalias [-a] name [name ...]\n");
+		return (2);
+	}
 	unfind = 0;
 	i = 0;
+	ret = unalias_opt(cmd, shell);
+	if (ret == 0 || ret == 2)
+		return (ret);
 	while (cmd->args[++i])
 	{
 		if (alias_get(shell->alias, cmd->args[i]))
-			alias_del(&(shell->alias), cmd->args[i]);
+			unalias_del(&(shell->alias), cmd->args[i]);
 		else
 		{
 			ft_dprintf(2, "42sh: unalias: %s: not found\n", cmd->args[i]);
 			unfind++;
 		}
 	}
-	if (unfind)
-		return (1);
-	return (0);
+	return (unfind ? 1 : 0);
 }

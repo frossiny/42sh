@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 10:40:59 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/14 14:40:06 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/17 17:24:46 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,6 @@
 #include "ft_printf.h"
 #include "shell.h"
 #include "execution.h"
-
-void		sig_ignored(int signal)
-{
-	(void)signal;
-}
 
 void		catch_sigquit(int signal)
 {
@@ -66,7 +61,6 @@ void		unregister_signals(void)
 	i = 0;
 	while (g_signals[i].sig)
 	{
-		//make exception for job control
 		if (g_signals[i].func)
 			signal(g_signals[i].sig, SIG_DFL);
 		i++;

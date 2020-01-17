@@ -1,1 +1,1 @@
-expected_to match_eq "test is aliased to 'truc'"
+expected_to match_regex 'test is aliased to \`'

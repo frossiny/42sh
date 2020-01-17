@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:49:15 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/25 16:53:36 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/15 15:31:39 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,11 @@ int			handle_home(t_token *token, t_var *vars)
 		if (!(pwd = getpwnam(token->content + 1)))
 			return (1);
 		path = ft_strdup(pwd->pw_dir);
+		if (path)
+		{
+			free(token->content);
+			token->content = path;
+		}
 	}
-	ft_printf("%s\n", path);
-	path = path ? path : ft_strdup("n->content");
-	path ? token->content = path : 0;
 	return (1);
 }

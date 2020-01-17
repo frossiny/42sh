@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   alias.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 17:03:49 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/29 15:08:04 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/01/17 16:59:12 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ typedef struct		s_string
 }					t_string;
 
 void				alias_display_all(t_alias *alias);
-void				alias_display_one(t_alias *alias, char *key);
+int					alias_display_one(t_alias *alias, char *key);
 int					alias_new(t_alias **alias, char *key, char *value);
 t_alias				*alias_get(t_alias *alias, char *key);
 void				alias_free_all(t_alias **list);

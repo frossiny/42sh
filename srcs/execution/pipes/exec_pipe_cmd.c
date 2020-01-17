@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:49:21 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/17 16:29:11 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/17 16:52:55 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static void	fork_child(t_pipel *pline, t_cmd *cmd, t_fd *fd)
 	exit(EXIT_FAILURE);
 }
 
-int			exec_pipe_cmd(t_pipel *pline, t_fd *fd, t_shell *shell)
+int			exec_pipe_cmd(t_pipel *pline, t_fd *fd)
 {
 	t_cmd	*cmd;
 	int		ret;
