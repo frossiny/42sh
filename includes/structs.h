@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 14:23:53 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/08 11:57:18 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/17 16:10:28 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,9 +188,9 @@ typedef struct		s_redirect
 	int					done : 1;
 	int					append : 1;
 	int					filedes;
-	int					p[2];
 	t_token_type		type;
 	t_token				*value;
+	char				**heredoc;
 	struct s_redirect	*next;
 }					t_redirect;
 

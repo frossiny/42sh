@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 15:35:53 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/28 15:37:54 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/17 19:12:24 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ t_pipel		*exec_pipeline_alloc(t_pipel *prev, t_cmd *cmd, t_shell *shell)
 	if (ast_build_args(cmd, shell->vars) == -1)
 		return (NULL);
 	var_merge(&(cmd->tenv), g_shell.vars);
-	cmd->redir = parse_redirections(cmd->tokens);
 	new->cmd = cmd;
 	new->previous = prev;
 	new->next = NULL;

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 20:32:11 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/29 10:31:56 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/17 16:35:03 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int			exec_pipes(t_anode *node, t_shell *shell, t_anode **cn)
 		return (1);
 	fd.sfd = dup(1);
 	childs = NULL;
-	exec_get_pipes_docs(shell, pipeline);
 	read_pipeline(shell, pipeline, &fd, &childs);
 	exec_is_pipe_bg(pipeline) ? job_new_pipe(pipeline, childs) : 0;
 	dup2(fd.sfd, 1);

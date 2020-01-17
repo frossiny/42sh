@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 18:24:16 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/07 17:40:57 by pcharrie         ###   ########.fr       */
+/*   Updated: 2020/01/17 16:46:07 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ char				**ft_2dstrnew(int size);
 int					ft_2dstrlen(char **t);
 void				ft_2dstrdel(char ***t);
 void				ft_2dstrndel(char ***t, int size);
+char				**ft_expend_2dstr(char **dstr, char *str);
 int					ft_retfree(char **s, int ret);
 
 void				*ft_memset(void *b, int c, size_t len);

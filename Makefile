@@ -6,7 +6,7 @@
 #    By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/09 15:29:04 by vsaltel           #+#    #+#              #
-#    Updated: 2020/01/16 16:06:50 by vsaltel          ###   ########.fr        #
+#    Updated: 2020/01/17 19:12:41 by alagroy-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,7 @@ FILES	=	shell.c											\
 			ast/ast_destroy.c								\
 			ast/create_cmd.c								\
 			ast/ast_is_bg.c									\
+			ast/heredoc.c									\
 			builtins/alias.c								\
 			builtins/unalias.c								\
 			builtins/type/type.c							\
@@ -91,7 +92,6 @@ FILES	=	shell.c											\
 			execution/pipes/exec_pipeline_alloc.c			\
 			execution/pipes/exec_del_pipeline.c				\
 			execution/pipes/exec_end_pipes.c				\
-			execution/pipes/exec_get_pipes_docs.c			\
 			execution/pipes/exec_is_pipe_bg.c				\
 			execution/exec_child_add.c						\
 			execution/exec_assign_vars.c					\

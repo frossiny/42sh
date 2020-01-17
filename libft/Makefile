@@ -6,7 +6,7 @@
 #    By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/16 11:23:33 by frossiny          #+#    #+#              #
-#    Updated: 2020/01/07 18:26:43 by pcharrie         ###   ########.fr        #
+#    Updated: 2020/01/17 16:43:05 by alagroy-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ FILES 	=	ft_2dstrnew.c						\
 			ft_2dstrlen.c						\
 			ft_2dstrdel.c						\
 			ft_2dstrndel.c						\
+			ft_expend_2dstr.c					\
 			ft_retfree.c						\
 			ft_memset.c							\
 			ft_memalloc.c						\
@@ -115,7 +116,6 @@ FILES 	=	ft_2dstrnew.c						\
 			ft_lstend.c							\
 			ft_lstsize.c						\
 			ft_print_strlist.c					\
-			ft_2dstrdel.c						\
 			get_next_line.c						\
 			edit_string.c						\
 			printf/ft_printf.c					\

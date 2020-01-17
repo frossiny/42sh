@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 15:31:36 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/28 15:32:05 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/17 19:11:16 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,6 @@ int		exe_specials(t_cmd *cmd)
 	if (cmd->tenv)
 		ret = exec_assign_vars(cmd);
 	if (cmd->redir)
-	{
-		if (!get_here_doc(cmd->redir, &g_shell))
-			return (EXIT_FAILURE);
 		handle_redirections(cmd->redir, 1);
-		close_here_docs(cmd->redir);
-	}
 	return (ret);
 }

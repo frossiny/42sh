@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 10:35:21 by frossiny          #+#    #+#             */
-/*   Updated: 2019/12/26 17:41:08 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/17 19:10:58 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ int		exec_fork_builtin(t_cmd *cmd)
 
 	if (!(builtin = get_builtin(cmd->exe->content)).func)
 		return (-1);
-	if (!get_here_doc(cmd->redir, &g_shell))
-		return (EXIT_FAILURE);
 	if ((g_child = fork()) > 0 && cmd->is_bg)
 		job_new(cmd, g_child);
 	if (!g_child)
@@ -37,7 +35,6 @@ int		exec_fork_builtin(t_cmd *cmd)
 		u_free_shell();
 		exit(status);
 	}
-	close_here_docs(cmd->redir);
 	if (g_child == -1)
 		return (g_child = 0);
 	waitpid(g_child, &status, WNOHANG);

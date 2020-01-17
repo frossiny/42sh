@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 15:36:57 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/29 15:17:36 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/17 16:43:29 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ static void	free_cmd(t_cmd *cmd)
 	while (cmd->redir)
 	{
 		next = cmd->redir->next;
+		if (cmd->redir->heredoc)
+			ft_2dstrdel(&cmd->redir->heredoc);
 		free(cmd->redir);
 		cmd->redir = next;
 	}

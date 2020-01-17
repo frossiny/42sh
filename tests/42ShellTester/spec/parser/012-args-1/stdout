@@ -1,0 +1,3 @@
+expected_to match_regex `ls ..` once
+expected_to match_regex `ls -l ..` 1 times
+expected_to match_regex `ls -la ..` 2 times

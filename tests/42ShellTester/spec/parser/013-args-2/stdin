@@ -1,0 +1,2 @@
+echo "" > test
+ls < test -l

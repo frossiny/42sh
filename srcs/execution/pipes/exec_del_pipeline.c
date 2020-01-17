@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 15:34:05 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/28 15:38:32 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/17 16:33:56 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	exec_del_pipeline(t_pipel *pline)
 	while (pline)
 	{
 		next = pline->next;
-		close_here_docs(pline->cmd->redir);
 		var_destroy(&(pline->cmd->tenv));
 		free(pline);
 		pline = next;
