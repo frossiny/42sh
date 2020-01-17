@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/04 15:52:54 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/28 11:37:05 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/17 14:02:50 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@ static t_token	*get_cmd_end(t_token *tok)
 			tok = tok->next;
 		else if (tok->type == TOKEN_AGGR)
 			tok = tok->next;
+		else if (tok->type == TOKEN_JOBS)
+		{
+			tok = tok->next;
+			break ;
+		}
 		else
 			break ;
 	}
