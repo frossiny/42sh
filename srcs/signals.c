@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 10:40:59 by frossiny          #+#    #+#             */
-/*   Updated: 2019/12/26 17:42:14 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/17 17:24:46 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,13 @@
 #include <sys/ioctl.h>
 #include "ft_printf.h"
 #include "shell.h"
-
-void		sig_ignored(int signal)
-{
-	(void)signal;
-}
+#include "execution.h"
 
 void		catch_sigquit(int signal)
 {
 	(void)signal;
-	if (g_child > 0)
-		ft_printf("\n\033[1;31m[SIGNAL]\033[0m %d quit\n", g_child);
+	if (g_shell.current_pipel)
+		exec_signal_pipe(g_shell.current_pipel, SIGQUIT);
 }
 
 void		catch_sigint(int signal)
@@ -36,12 +32,13 @@ void		catch_sigint(int signal)
 		g_ignore_signals = 0;
 		ioctl(0, TIOCSTI, "\4\0");
 	}
+	else if (g_shell.current_pipel)
+		exec_signal_pipe(g_shell.current_pipel, SIGINT);
 	else if (!g_child)
 	{
 		g_return = 1;
 		ioctl(0, TIOCSTI, "\n");
 	}
-	//Kill process
 }
 
 void		register_signals(void)
@@ -55,8 +52,6 @@ void		register_signals(void)
 			signal(g_signals[i].sig, g_signals[i].func);
 		i++;
 	}
-	//signal(SIGINT, catch_sigint);
-	//signal(SIGQUIT, catch_sigquit);
 }
 
 void		unregister_signals(void)
@@ -66,11 +61,8 @@ void		unregister_signals(void)
 	i = 0;
 	while (g_signals[i].sig)
 	{
-		//make exception for job control
 		if (g_signals[i].func)
 			signal(g_signals[i].sig, SIG_DFL);
 		i++;
 	}
-	//signal(SIGINT, SIG_DFL);
-	//signal(SIGQUIT, SIG_DFL);
 }

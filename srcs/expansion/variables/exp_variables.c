@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 15:42:26 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/15 14:48:48 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/01/17 18:07:04 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,24 @@ static void	new_tok(t_expansion *exp)
 	exp->li = exp->i;
 }
 
+static int	can_quote(t_expansion *exp)
+{
+	if (exp->isquote == 0 && (exp->str[exp->i] == '\'' \
+		|| exp->str[exp->i] == '"'))
+		return (1);
+	if (exp->isquote == 1 && exp->str[exp->i] == '\'')
+		return (1);
+	if (exp->isquote == 2 && exp->str[exp->i] == '"')
+		return (1);
+	return (0);
+}
+
 static void	quote(t_expansion *exp)
 {
-	exp->isquote = !exp->isquote;
+	if (!exp->isquote)
+		exp->isquote = exp->str[exp->i] == '\'' ? 1 : 2;
+	else
+		exp->isquote = 0;
 	exp->i++;
 }
 
@@ -33,9 +48,9 @@ static int	exp_var_loop(t_expansion *exp)
 {
 	while (exp->str[exp->i])
 	{
-		if (exp->str[exp->i] == '\'')
+		if (can_quote(exp))
 			quote(exp);
-		else if (exp->str[exp->i] == '$' && !exp->isquote
+		else if (exp->str[exp->i] == '$' && exp->isquote != 1
 					&& !is_escaped(exp->str, exp->i, 0))
 		{
 			new_tok(exp);

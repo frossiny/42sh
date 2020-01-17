@@ -6,13 +6,27 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 15:36:57 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/17 16:43:29 by alagroy-         ###   ########.fr       */
+/*   Updated: 2020/01/17 19:17:26 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+#include "ast.h"
 
-static void	free_cmd(t_cmd *cmd)
+static void	free_node(t_anode *node)
+{
+	if (!node)
+		return ;
+	if (node->left)
+		free_node(node->left);
+	if (node->right)
+		free_node(node->right);
+	if (node->cmd)
+		ast_free_cmd(node->cmd);
+	free(node);
+}
+
+void		ast_free_cmd(t_cmd *cmd)
 {
 	t_redirect *next;
 
@@ -29,19 +43,6 @@ static void	free_cmd(t_cmd *cmd)
 		cmd->redir = next;
 	}
 	free(cmd);
-}
-
-static void	free_node(t_anode *node)
-{
-	if (!node)
-		return ;
-	if (node->left)
-		free_node(node->left);
-	if (node->right)
-		free_node(node->right);
-	if (node->cmd)
-		free_cmd(node->cmd);
-	free(node);
 }
 
 void		ast_destroy(t_shell *shell)

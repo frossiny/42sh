@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 17:39:34 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/08 16:49:41 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/17 13:26:45 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,6 @@ int		var_disp_env(t_var *vars);
 int		var_is_key_valid(char *str, size_t len);
 void	var_merge(t_var **dst, t_var *src);
 int		var_export(t_var *vars, char *key);
+t_var	*var_dup(t_var *src);
 
 #endif

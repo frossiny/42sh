@@ -1,0 +1,4 @@
+A=A=A
+QQ=TEST=OUI
+echo $A
+echo $QQ

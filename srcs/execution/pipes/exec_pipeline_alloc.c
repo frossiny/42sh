@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 15:35:53 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/17 19:12:24 by alagroy-         ###   ########.fr       */
+/*   Updated: 2020/01/17 19:18:49 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_pipel		*exec_pipeline_alloc(t_pipel *prev, t_cmd *cmd, t_shell *shell)
 	var_merge(&(cmd->tenv), g_shell.vars);
 	new->cmd = cmd;
 	new->previous = prev;
+	new->pid = -1;
 	new->next = NULL;
 	return (new);
 }

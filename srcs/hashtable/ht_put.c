@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/01 14:10:11 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/26 19:35:28 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/17 16:16:33 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	ht_put(t_shell *shell, char *key, char *value, int increment)
 {
 	int		hash;
 
+	if (!ht_can_put(value))
+		return ;
 	if (shell->bin_ht.table == NULL)
 		ht_create(shell, HT_SIZE);
 	if (!shell->bin_ht.table)

@@ -1,0 +1,2 @@
+expected_to match_regex "truc='ls'"
+expected_to match_regex "truc2='ls'"

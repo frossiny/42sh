@@ -1,0 +1,2 @@
+touch test_write2
+chmod u-w test_write2

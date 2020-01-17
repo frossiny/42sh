@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 17:13:15 by pcharrie          #+#    #+#             */
-/*   Updated: 2019/11/27 18:38:13 by pcharrie         ###   ########.fr       */
+/*   Updated: 2020/01/13 17:05:40 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
 
 void	fc_vars_init(t_fc_vars *fc)
 {
-	fc->from = fc_histo_lst_size() - 15;
-	fc->to = fc_histo_lst_size();
+	fc->from = g_shell.history.size - 1 - 15;
+	fc->to = g_shell.history.size - 1;
 	fc->from_a = 0;
 	fc->to_a = 0;
 	fc->list = 0;
@@ -56,23 +56,6 @@ void	fc_proceed(t_fc_vars *fc)
 	}
 }
 
-int		fc_histo_lst_size(void)
-{
-	t_histo_lst	*lst;
-	int			i;
-
-	lst = g_shell.history.lst;
-	if (lst->next)
-		lst = lst->next;
-	i = 0;
-	while (lst)
-	{
-		i++;
-		lst = lst->next;
-	}
-	return (i);
-}
-
 void	fc_vars_del(t_fc_vars *fc)
 {
 	ft_2dstrdel(&fc->tab);
@@ -86,6 +69,7 @@ int		b_fc(t_cmd *cmd, t_shell *shell)
 	t_fc_vars	fc;
 	int			ret;
 
+	(void)shell;
 	fc_vars_init(&fc);
 	if ((ret = fc_parse_options(cmd, &fc)) < 1 || !fc_parse_range(cmd, &fc)
 		|| !fc_build_tab(&fc))

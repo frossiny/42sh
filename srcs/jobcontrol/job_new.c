@@ -6,12 +6,13 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 10:48:31 by lubenard          #+#    #+#             */
-/*   Updated: 2019/12/26 17:23:31 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/15 17:26:42 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 #include "jobcontrol.h"
+#include "execution.h"
 
 static void			jobs_insert(t_jobs_lst *job)
 {
@@ -51,7 +52,7 @@ static t_jobs_lst	*new(void)
 	job->command = NULL;
 	job->job_number = g_shell.jobs.index++;
 	job->pid = 0;
-	job->childs = NULL;
+	job->pipeline = NULL;
 	job->current = '+';
 	job->status = "Running";
 	job->state = JOB_RUNNING;
@@ -59,6 +60,7 @@ static t_jobs_lst	*new(void)
 	job->tmodes.c_lflag = g_shell.prev_term.c_lflag;
 	job->prev = NULL;
 	job->next = NULL;
+	job->foreground = 0;
 	jobs_insert(job);
 	return (job);
 }
@@ -75,18 +77,18 @@ t_jobs_lst			*job_new(t_cmd *cmd, int pid)
 	return (job);
 }
 
-t_jobs_lst			*job_new_pipe(t_pipel *pline, t_childs *childs)
+t_jobs_lst			*job_new_pipe(t_pipel *pline)
 {
 	t_jobs_lst *job;
 
 	if (!(job = new()))
 		return (NULL);
 	job->command = job_get_pipe_command(pline);
-	job->childs = childs;
-	if (!childs)
+	job->pipeline = exec_dup_pipeline(pline);
+	if (!pline)
 		return (job);
-	while (childs->next)
-		childs = childs->next;
-	isatty(0) ? ft_printf("[%d] %d\n", job->job_number, childs->pid) : 0;
+	while (pline->next)
+		pline = pline->next;
+	isatty(0) ? ft_printf("[%d] %d\n", job->job_number, pline->pid) : 0;
 	return (job);
 }

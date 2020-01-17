@@ -1,2 +1,0 @@
-cat /dev/random > /dev/null &
-bg

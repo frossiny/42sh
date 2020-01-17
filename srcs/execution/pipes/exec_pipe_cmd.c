@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:49:21 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/08 11:36:09 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/17 16:52:55 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,28 @@ static void	init_fd(t_pipel *pline, int op[], int np[])
 static void	fork_child(t_pipel *pline, t_cmd *cmd, t_fd *fd)
 {
 	int		bg;
+	char	*file;
+	int		error;
 
 	bg = exec_is_pipe_bg(pline);
 	unregister_signals();
 	!bg && g_shell.able_termcaps ? restore_shell(g_shell.prev_term) : 0;
 	setpgid(0, 0);
 	init_fd(pline, fd->op, fd->np);
-	if (execve(get_exe(&g_shell, cmd->exe->content, 1, 0),
-					cmd->args, var_build_env(cmd->tenv)) == -1)
+	if (!(file = exec_get_file(cmd, &error)))
+	{
+		u_free_shell();
+		exit(error);
+	}
+	if (execve(file, cmd->args, var_build_env(cmd->tenv)) == -1)
+	{
+		u_free_shell();
 		exit(EXIT_FAILURE);
+	}
+	exit(EXIT_FAILURE);
 }
 
-int			exec_pipe_cmd(t_pipel *pline, t_fd *fd, t_shell *shell)
+int			exec_pipe_cmd(t_pipel *pline, t_fd *fd)
 {
 	t_cmd	*cmd;
 	int		ret;
@@ -54,15 +64,14 @@ int			exec_pipe_cmd(t_pipel *pline, t_fd *fd, t_shell *shell)
 	cmd = pline->cmd;
 	if (!(ret = validate_redirection(cmd->redir)))
 		return (!ret);
-	if ((ret = can_execute(cmd->exe->content, shell)))
-		return (ret);
-	g_child = fork();
-	if (g_child == 0)
+	g_pipe_pid = fork();
+	if (g_pipe_pid == 0)
 		fork_child(pline, cmd, fd);
 	else if (pline->previous)
 	{
 		close(fd->op[0]);
 		close(fd->op[1]);
 	}
+	kill(-g_pipe_pid, SIGSTOP);
 	return (ret);
 }

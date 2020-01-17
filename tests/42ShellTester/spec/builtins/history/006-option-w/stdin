@@ -1,0 +1,12 @@
+history -s touch /tmp/test_1
+history -s rm /tmp/test_1
+history -s touch /tmp/test_2
+history -s rm /tmp/test_2
+history -w
+history -c
+history -s touch /tmp/test_3
+history -s rm /tmp/test_3
+history -s touch /tmp/test_4
+history -s rm /tmp/test_4
+history -w
+cat ~/.42sh_history

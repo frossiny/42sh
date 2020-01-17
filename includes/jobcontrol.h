@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 14:08:11 by lubenard          #+#    #+#             */
-/*   Updated: 2019/12/11 14:58:09 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/15 17:14:47 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "structs.h"
 
-enum	job_state
+enum	e_job_state
 {
 	JOB_COMPLETED,
 	JOB_SUSPENDED,
@@ -28,16 +28,18 @@ enum	job_state
 */
 
 t_jobs_lst	*job_new(t_cmd *cmd, int pid);
-t_jobs_lst	*job_new_pipe(t_pipel *pline, t_childs *childs);
+t_jobs_lst	*job_new_pipe(t_pipel *pline);
 void		job_free(t_jobs_lst *job);
 void		job_delete(t_shell *shell, int pid);
 void		jobs_destroy_all(t_shell *shell);
 void		job_check_status(void);
 t_jobs_lst	*job_search(t_shell *shell, int job_number);
+t_jobs_lst	*job_search_pid(t_shell *shell, int pid);
 char		*job_get_command(t_cmd *cmd);
 char		*job_get_pipe_command(t_pipel *pline);
 int			job_can_exit(void);
 void		job_catch_sigchld(int signal);
+void		job_catch_sigtstp(int signal);
 
 /*
 ** Useful jobcontrol functions
@@ -45,10 +47,5 @@ void		job_catch_sigchld(int signal);
 
 int			job_is_stopped(t_jobs_lst *jobs);
 int			job_is_completed(t_jobs_lst *jobs);
-
-/*
-** DEBUG function, need to be removed when it will be working
-*/
-void	compare_structs_termios(struct termios searched, struct termios shell);
 
 #endif

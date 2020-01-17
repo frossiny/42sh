@@ -1,0 +1,2 @@
+touch test_suid
+chmod u+s test_suid

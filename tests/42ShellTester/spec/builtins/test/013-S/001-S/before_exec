@@ -1,0 +1,1 @@
+python -c "import socket as s; sock = s.socket(s.AF_UNIX); sock.bind('test_socket.sock')"

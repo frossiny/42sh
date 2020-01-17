@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 15:10:45 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/25 15:08:14 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/17 18:13:52 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int		exp_noflag(t_expansion *exp, t_var *var, char *name)
 		exp->i = exp->li;
 		return (1);
 	}
-	exp_join(exp, ft_strdup(var->value), 1);
+	exp_join(exp, exp_dup_escape(var->value, exp), 1);
 	exp->i++;
 	exp->li = exp->i;
 	return (1);
@@ -51,9 +51,8 @@ int				exp_parameter(t_expansion *exp)
 	if (exp->li > exp->i)
 		exp_join(exp, ft_strsub(exp->str, exp->li, exp->i - exp->li), 1);
 	exp->i += 2;
-	if (exp->str[exp->i] == '#')
+	if (exp->str[exp->i] == '#' && exp->i++)
 	{
-		exp->i++;
 		exp_join(exp, exp_par_len(exp), 1);
 		return (1);
 	}
@@ -66,5 +65,6 @@ int				exp_parameter(t_expansion *exp)
 	else
 		ret = exp_noflag(exp, var, name);
 	clean_var(var, name);
+	var_destroy(&var);
 	return (ret);
 }

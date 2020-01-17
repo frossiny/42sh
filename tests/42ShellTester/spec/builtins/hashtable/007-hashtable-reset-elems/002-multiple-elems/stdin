@@ -1,5 +1,5 @@
-ps
-date
-df
+ps >/dev/null
+date >/dev/null
+df >/dev/null
 hash df ps
 hash

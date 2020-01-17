@@ -1,0 +1,2 @@
+chmod +r test_read
+rm -rf test_read

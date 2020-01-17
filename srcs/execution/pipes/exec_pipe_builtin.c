@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:45:17 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/28 11:54:20 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/17 16:53:30 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int		exec_pipe_builtin(t_pipel *pline, t_fd *fd, t_shell *shell)
 
 	cmd = pline->cmd;
 	if (!is_builtin(cmd->exe->content))
-		return (exec_pipe_cmd(pline, fd, shell));
+		return (exec_pipe_cmd(pline, fd));
 	if (!(ret = validate_redirection(cmd->redir)))
 		return (!ret);
 	if (!(builtin = get_builtin(cmd->exe->content)).func)

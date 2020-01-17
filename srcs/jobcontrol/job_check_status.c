@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 17:37:47 by frossiny          #+#    #+#             */
-/*   Updated: 2019/12/20 14:45:52 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/15 17:20:39 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,24 @@
 
 static int	check_pids(t_jobs_lst *job, int *status)
 {
-	t_childs	*tmp;
+	t_pipel		*tmp;
 	int			ret;
 
 	if (!job)
 		return (0);
-	if (job->childs)
+	if (job->pipeline)
 	{
-		ret = 0;
-		tmp = job->childs;
+		ret = 1;
+		tmp = job->pipeline;
 		while (tmp)
 		{
 			if (waitpid(tmp->pid, status, WNOHANG) == 0)
-				ret = 1;
+				ret = 0;
 			tmp = tmp->next;
 		}
 		return (ret);
 	}
-	return (waitpid(job->pid, status, WNOHANG) > 0);
+	return (waitpid(job->pid, status, WNOHANG) != 0);
 }
 
 static void	remove_ghosts(void)
@@ -57,7 +57,7 @@ void		job_check_status(void)
 		next = jobs->next;
 		if (check_pids(jobs, &status) && WIFEXITED(status))
 		{
-			isatty(0) ? ft_printf("[%d]%c Done %s\n",
+			isatty(0) && !jobs->foreground ? ft_printf("[%d]%c Done %s\n",
 				jobs->job_number, jobs->current, jobs->command) : 0;
 			job_delete(&g_shell, jobs->pid);
 		}

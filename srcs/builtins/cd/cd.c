@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 16:04:58 by pcharrie          #+#    #+#             */
-/*   Updated: 2020/01/07 17:48:05 by pcharrie         ###   ########.fr       */
+/*   Updated: 2020/01/13 17:04:03 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int			b_cd(t_cmd *cmd, t_shell *shell)
 	t_opt		*first_opt;
 	int			ret;
 
+	(void)shell;
 	if (!(opts = opt_parse(cmd, "LP", "cd")))
 		return (1);
 	first_opt = opts->opts;

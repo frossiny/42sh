@@ -28,7 +28,7 @@ static int	fc_build_tab_len(t_fc_vars *fc)
 
 	if ((lst = g_shell.history.lst))
 		lst = lst->next;
-	i = fc_histo_lst_size();
+	i = g_shell.history.size - 1;
 	j = 0;
 	while (lst)
 	{
@@ -54,7 +54,7 @@ int			fc_build_tab(t_fc_vars *fc)
 		return (0);
 	if ((lst = g_shell.history.lst))
 		lst = lst->next;
-	i = fc_histo_lst_size();
+	i = g_shell.history.size - 1;
 	j = 0;
 	while (lst)
 	{
@@ -90,7 +90,7 @@ void		fc_set_exec_cmd(t_fc_vars *fc)
 	ft_2dstrdel(&fc->tab);
 	if ((lst = g_shell.history.lst))
 		lst = lst->next;
-	i = fc_histo_lst_size();
+	i = g_shell.history.size - 1;
 	while (lst)
 	{
 		if (fc_cmd_match(lst->str, fc->s_cmd))

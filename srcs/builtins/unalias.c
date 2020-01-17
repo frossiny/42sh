@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unalias.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 16:48:26 by vsaltel           #+#    #+#             */
-/*   Updated: 2020/01/15 13:42:54 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/01/17 17:21:44 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ static int		unalias_opt(t_cmd *cmd, t_shell *shell)
 	t_options	*options;
 	int			ret;
 
+	ret = 1;
 	options = opt_parse(cmd, "a", "unalias");
 	if (options->ret != 0)
 	{
@@ -69,8 +70,6 @@ static int		unalias_opt(t_cmd *cmd, t_shell *shell)
 		alias_free_all(&(shell->alias));
 		ret = 0;
 	}
-	else
-		ret = 1;
 	opt_free(options);
 	return (ret);
 }
@@ -81,6 +80,11 @@ int				b_unalias(t_cmd *cmd, t_shell *shell)
 	size_t		unfind;
 	int			ret;
 
+	if (cmd->argc == 1)
+	{
+		ft_dprintf(2, "unalias: usage: unalias [-a] name [name ...]\n");
+		return (2);
+	}
 	unfind = 0;
 	i = 0;
 	ret = unalias_opt(cmd, shell);
@@ -96,6 +100,5 @@ int				b_unalias(t_cmd *cmd, t_shell *shell)
 			unfind++;
 		}
 	}
-	ret = unfind ? 1 : 0;
-	return (ret);
+	return (unfind ? 1 : 0);
 }

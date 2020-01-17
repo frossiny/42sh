@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+         #
+#    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/09 15:29:04 by vsaltel           #+#    #+#              #
-#    Updated: 2020/01/17 19:12:41 by alagroy-         ###   ########.fr        #
+#    Updated: 2020/01/17 19:16:33 by alagroy-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,13 +15,17 @@ CFLAGS	+=	-Wall -Wextra  #-Werror
 
 SHELL	=	bash
 
-#Tests related variables
+#Tests and debug related variables
 TARGS	=
 ifdef FILTER
 	TARGS += --filter ${FILTER}
 endif
 ifdef SHOW
 	TARGS += --show-success
+endif
+VALGRIND_ARGS = --leak-check=full --show-leak-kinds=all --suppressions="${PWD}/valgrind.supp"
+ifdef CHILDREN
+	VALGRIND_ARGS += --trace-children=yes
 endif
 
 NAME 	=	42sh
@@ -85,6 +89,8 @@ FILES	=	shell.c											\
 			execution/exec_fork_builtin.c					\
 			execution/exec_child_fork.c						\
 			execution/exec_utils.c							\
+			execution/exec_assign_vars.c					\
+			execution/exec_get_file.c						\
 			execution/pipes/exec_pipes.c					\
 			execution/pipes/exec_pipe_builtin.c				\
 			execution/pipes/exec_pipe_cmd.c					\
@@ -93,8 +99,8 @@ FILES	=	shell.c											\
 			execution/pipes/exec_del_pipeline.c				\
 			execution/pipes/exec_end_pipes.c				\
 			execution/pipes/exec_is_pipe_bg.c				\
-			execution/exec_child_add.c						\
-			execution/exec_assign_vars.c					\
+			execution/pipes/exec_signal_pipe.c				\
+			execution/pipes/exec_dup_pipeline.c				\
 			expansion/tilde.c								\
 			expansion/expansion.c							\
 			expansion/exp_join.c							\
@@ -113,6 +119,7 @@ FILES	=	shell.c											\
 			expansion/variables/exp_get_word.c				\
 			expansion/variables/exp_del_pattern.c			\
 			expansion/variables/exp_tok_clean.c				\
+			expansion/variables/exp_dup_escape.c			\
 			expansion/arithmetic/comp.c						\
 			expansion/arithmetic/convert_base.c				\
 			expansion/arithmetic/eval.c						\
@@ -140,6 +147,7 @@ FILES	=	shell.c											\
 			hashtable/ht_put.c								\
 			hashtable/ht_get.c								\
 			hashtable/ht_exists.c							\
+			hashtable/ht_can_put.c							\
 			history/history.c								\
 			history/history_utils.c							\
 			history/histo_expansion.c						\
@@ -153,6 +161,7 @@ FILES	=	shell.c											\
 			jobcontrol/job_search.c							\
 			jobcontrol/job_can_exit.c						\
 			jobcontrol/job_catch_sigchld.c					\
+			jobcontrol/job_catch_sigtstp.c					\
 			jobcontrol/job_utils.c							\
 			lexer/lexer.c									\
 			lexer/lex_build.c								\
@@ -240,12 +249,14 @@ FILES	=	shell.c											\
 			variables/var_is_key_valid.c					\
 			variables/var_merge.c							\
 			variables/var_export.c							\
+			variables/var_dup.c								\
 			builtins/cd/get_path.c							\
 			builtins/fc/edit.c								\
 			builtins/fc/exec.c								\
 			builtins/fc/fc.c								\
 			builtins/fc/fork.c								\
 			builtins/fc/list.c								\
+			builtins/fc/options.c							\
 			builtins/fc/parse.c								\
 			builtins/fc/tab.c								\
 			builtins/test/test.c							\
@@ -287,7 +298,6 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c Makefile
 	@echo -n -e "\r\033[K${_PURPLE}${BOLD}[${NAME}] Compiling $<${_END}"
 	@$(CC) $(CFLAGS) -I $(INCDIR) -I $(LIBFT)/$(INCDIR) -MMD -o $@ -c $<
 
-
 clean:
 	@$(MAKE) -C $(LIBFT) clean
 	@echo -e "${_RED}${_BOLD}Cleaning obj files...${_END}"
@@ -315,7 +325,7 @@ check_error:
 	@grep -rn "stdio.h" srcs
 
 valgrind: all
-	\valgrind --leak-check=full --show-leak-kinds=all --suppressions="${PWD}/valgrind.supp" "${PWD}/${NAME}"
+	\valgrind $(VALGRIND_ARGS) "${PWD}/${NAME}"
 
 tests: all
 	./tests/42ShellTester/42ShellTester.sh "$(PWD)/$(NAME)" ${TARGS}

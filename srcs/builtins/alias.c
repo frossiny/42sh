@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   alias.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 14:16:26 by vsaltel           #+#    #+#             */
-/*   Updated: 2020/01/14 17:28:44 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/01/17 16:59:38 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,10 @@ int				b_alias(t_cmd *cmd, t_shell *shell)
 					&& ft_strchr(&(cmd->args[i][1]), '='))
 				add_alias(&(shell->alias), cmd->args[i]);
 			else
-				alias_display_one(shell->alias, cmd->args[i]);
+			{
+				if (!alias_display_one(shell->alias, cmd->args[i]))
+					return (EXIT_FAILURE);
+			}
 		}
 	}
 	return (0);

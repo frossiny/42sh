@@ -1,0 +1,6 @@
+i=\\t\a
+echo $i
+echo "$i"
+echo ${i}
+echo "${i:+$i}"
+echo "${#i}"
