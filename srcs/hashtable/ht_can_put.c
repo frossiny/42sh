@@ -1,29 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   job_can_exit.c                                     :+:      :+:    :+:   */
+/*   ht_can_put.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/29 11:23:26 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/17 16:44:05 by frossiny         ###   ########.fr       */
+/*   Created: 2020/01/17 16:11:18 by frossiny          #+#    #+#             */
+/*   Updated: 2020/01/17 16:20:22 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <sys/stat.h>
 #include "shell.h"
-#include "jobcontrol.h"
+#include "execution.h"
 
-int		job_can_exit(void)
+int		ht_can_put(char *cmd)
 {
-	t_jobs_lst	*jobs;
+	struct stat	stats;
+	char		*file;
 
-	if (!(jobs = g_shell.jobs.lst))
-		return (1);
-	while (jobs)
+	if (!(file = get_exe(&g_shell, cmd, 0)))
+		return (0);
+	if (access(file, X_OK))
 	{
-		if (jobs->state == JOB_SUSPENDED)
-			return (0);
-		jobs = jobs->next;
+		free(file);
+		return (0);
+	}
+	if ((stat(file, &stats) == -1) || !S_ISREG(stats.st_mode))
+	{
+		free(file);
+		return (0);
 	}
 	return (1);
 }

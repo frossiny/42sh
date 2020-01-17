@@ -1,4 +1,4 @@
-ls
-ls
-ls
+ls / 1>&-
+ls / 1>&-
+ls / 1>&-
 hash

@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/09 15:29:04 by vsaltel           #+#    #+#              #
-#    Updated: 2020/01/17 13:27:02 by frossiny         ###   ########.fr        #
+#    Updated: 2020/01/17 16:23:18 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,13 +15,17 @@ CFLAGS	+=	-Wall -Wextra  #-Werror
 
 SHELL	=	bash
 
-#Tests related variables
+#Tests and debug related variables
 TARGS	=
 ifdef FILTER
 	TARGS += --filter ${FILTER}
 endif
 ifdef SHOW
 	TARGS += --show-success
+endif
+VALGRIND_ARGS = --leak-check=full --show-leak-kinds=all --suppressions="${PWD}/valgrind.supp"
+ifdef CHILDREN
+	VALGRIND_ARGS += --trace-children=yes
 endif
 
 NAME 	=	42sh
@@ -84,6 +88,8 @@ FILES	=	shell.c											\
 			execution/exec_fork_builtin.c					\
 			execution/exec_child_fork.c						\
 			execution/exec_utils.c							\
+			execution/exec_assign_vars.c					\
+			execution/exec_get_file.c						\
 			execution/pipes/exec_pipes.c					\
 			execution/pipes/exec_pipe_builtin.c				\
 			execution/pipes/exec_pipe_cmd.c					\
@@ -95,7 +101,6 @@ FILES	=	shell.c											\
 			execution/pipes/exec_is_pipe_bg.c				\
 			execution/pipes/exec_signal_pipe.c				\
 			execution/pipes/exec_dup_pipeline.c				\
-			execution/exec_assign_vars.c					\
 			expansion/tilde.c								\
 			expansion/expansion.c							\
 			expansion/exp_join.c							\
@@ -141,6 +146,7 @@ FILES	=	shell.c											\
 			hashtable/ht_put.c								\
 			hashtable/ht_get.c								\
 			hashtable/ht_exists.c							\
+			hashtable/ht_can_put.c							\
 			history/history.c								\
 			history/history_utils.c							\
 			history/histo_expansion.c						\
@@ -289,7 +295,6 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c Makefile
 	@echo -n -e "\r\033[K${_PURPLE}${BOLD}[${NAME}] Compiling $<${_END}"
 	@$(CC) $(CFLAGS) -I $(INCDIR) -I $(LIBFT)/$(INCDIR) -MMD -o $@ -c $<
 
-
 clean:
 	@$(MAKE) -C $(LIBFT) clean
 	@echo -e "${_RED}${_BOLD}Cleaning obj files...${_END}"
@@ -317,7 +322,7 @@ check_error:
 	@grep -rn "stdio.h" srcs
 
 valgrind: all
-	valgrind --leak-check=full --show-leak-kinds=all --suppressions="${PWD}/valgrind.supp" "${PWD}/${NAME}"
+	valgrind $(VALGRIND_ARGS) "${PWD}/${NAME}"
 
 tests: all
 	./tests/42ShellTester/42ShellTester.sh "$(PWD)/$(NAME)" ${TARGS}

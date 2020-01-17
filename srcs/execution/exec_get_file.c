@@ -1,38 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_child_fork.c                                  :+:      :+:    :+:   */
+/*   exec_get_file.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/08 11:08:12 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/17 16:34:13 by frossiny         ###   ########.fr       */
+/*   Created: 2020/01/17 16:22:21 by frossiny          #+#    #+#             */
+/*   Updated: 2020/01/17 16:22:45 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 #include "execution.h"
 #include "utils.h"
-#include "ast.h"
 
-int		exec_child_fork(t_cmd *cmd, char **env)
+char	*exec_get_file(t_cmd *cmd, int *errno)
 {
-	int		error;
+	int		ret;
 	char	*file;
 
-	unregister_signals();
-	if (!cmd->is_bg && g_shell.able_termcaps)
-		restore_shell(g_shell.prev_term);
-	setpgid(getpid(), getpid());
-	!cmd->is_bg ? tcsetpgrp(g_shell.pgrp, getpid()) : 0;
-	handle_redirections(cmd->redir, 0);
-	error = EXIT_FAILURE;
-	if (!(file = exec_get_file(cmd, &error)) \
-		|| execve(file, cmd->args, env) == -1)
+	if (!(file = get_exe(&g_shell, cmd->exe->content, 1)))
 	{
-		ft_strddel(&env);
-		u_free_shell();
-		exit(error);
+		*errno = 127;
+		return (NULL);
 	}
-	exit(0);
+	if ((ret = can_execute(cmd->exe->content, &g_shell)))
+	{
+		*errno = 126;
+		free(file);
+		return (NULL);
+	}
+	return (file);
 }

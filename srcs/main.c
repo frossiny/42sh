@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 11:43:47 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/14 17:46:45 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/17 16:45:27 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_shell			g_shell;
 t_cursor_pos	g_pos;
 int				g_child;
 int				g_pipe_pid;
-int				g_last_status;
+int				g_lstatus;
 int				g_ignore_signals;
 int				g_return;
 int				g_lpid;
@@ -90,14 +90,15 @@ static int	shell_init(void)
 	g_ignore_signals = 0;
 	g_return = 0;
 	g_lpid = -1;
-	g_last_status = 0;
+	g_lstatus = 0;
 	if (isatty(STDIN_FILENO))
 	{
 		if (setpgid(g_shell.pid, g_shell.pid) < 0 \
 			|| tcsetpgrp(g_shell.pgrp, g_shell.pid))
 		{
-			ft_dprintf(2, "42sh: Couldn't put the shell in its own process group");
-			exit (1);
+			ft_dprintf(2, \
+				"42sh: Couldn't put the shell in its own process group");
+			exit(1);
 		}
 	}
 	if (!termcaps_init(&(g_shell.prev_term)))

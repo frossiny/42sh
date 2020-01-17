@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:46:01 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/08 11:36:43 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/17 16:18:51 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int		can_execute(char *cmd, t_shell *shell)
 	char		*file;
 	struct stat	stats;
 
-	if (!(file = get_exe(shell, cmd, 1, 1)))
+	if (!(file = get_exe(shell, cmd, 1)))
 		return (127);
 	if (ft_strequ(file, "") || access(file, X_OK))
 	{

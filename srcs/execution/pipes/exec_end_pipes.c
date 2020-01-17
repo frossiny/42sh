@@ -6,18 +6,26 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:42:11 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/16 14:10:12 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/17 16:39:17 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 #include "execution.h"
 
+static void	get_return_code(void)
+{
+	if (WIFSIGNALED(g_lstatus))
+		g_lstatus = g_lstatus != 18 ? display_signal(g_lstatus) : 0;
+	else
+		g_lstatus = WEXITSTATUS(g_lstatus);
+}
+
 static int	is_pipe_ended(t_pipel *pline)
 {
 	while (pline)
 	{
-		if (waitpid(pline->pid, &g_last_status, WNOHANG) == 0)
+		if (waitpid(pline->pid, &g_lstatus, WNOHANG) == 0)
 			return (0);
 		pline = pline->next;
 	}
@@ -42,17 +50,12 @@ int			exec_end_pipes(t_pipel *pline, t_fd *fd)
 	while (pline && pline->next)
 		pline = pline->next;
 	if (!bg)
-	{
-		if (WIFSIGNALED(g_last_status))
-			g_last_status = g_last_status != 18 ? display_signal(g_last_status) : 0;
-		else
-			g_last_status = WEXITSTATUS(g_last_status);
-	}
+		get_return_code();
 	!bg && g_shell.able_termcaps ? termcaps_init(NULL) : 0;
 	g_pipe_pid = 0;
 	close(fd->np[0]);
 	close(fd->np[1]);
 	close(fd->op[0]);
 	close(fd->op[1]);
-	return (!g_shell.current_pipel ? 0 : g_last_status);
+	return (!g_shell.current_pipel ? 0 : g_lstatus);
 }

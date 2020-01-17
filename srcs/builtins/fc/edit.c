@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 06:38:23 by pcharrie          #+#    #+#             */
-/*   Updated: 2020/01/08 12:10:24 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/17 16:19:52 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int			fc_set_editor_path(t_fc_vars *fc)
 {
 	char *tmp;
 
-	if ((tmp = get_exe_path(&g_shell, fc->ed_args[0], 1)))
+	if ((tmp = get_exe_path(&g_shell, fc->ed_args[0])))
 	{
 		ft_strdel(&fc->ed_args[0]);
 		fc->ed_args[0] = tmp;

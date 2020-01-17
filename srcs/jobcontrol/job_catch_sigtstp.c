@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 17:12:26 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/15 17:26:28 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/17 16:43:42 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	job_catch_sigtstp(int signal)
 	t_jobs_lst	*job;
 
 	(void)signal;
-
 	if (!g_shell.current_pipel)
 		return ;
 	exec_signal_pipe(g_shell.current_pipel, SIGTSTP);

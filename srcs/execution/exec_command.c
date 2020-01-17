@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:26:37 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/14 17:49:41 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/17 16:35:35 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@
 #include "utils.h"
 #include "builtins.h"
 #include "jobcontrol.h"
+#include "hashtable.h"
 
-static int	start_process(char *file, t_cmd *cmd, char **env)
+static int	start_process(t_cmd *cmd, char **env)
 {
 	int		status;
 
@@ -27,7 +28,7 @@ static int	start_process(char *file, t_cmd *cmd, char **env)
 	if ((g_child = fork()) > 0 && cmd->is_bg)
 		job_new(cmd, g_child);
 	if (!g_child)
-		exec_child_fork(file, cmd, env);
+		exec_child_fork(cmd, env);
 	setpgid(g_child, g_child);
 	!cmd->is_bg ? tcsetpgrp(g_shell.pgrp, g_child) : 0;
 	close_here_docs(cmd->redir);
@@ -35,10 +36,10 @@ static int	start_process(char *file, t_cmd *cmd, char **env)
 	if (g_child == -1)
 		return (g_child = 0);
 	!cmd->is_bg ? pause() : 0;
-	!cmd->is_bg ? status = g_last_status : 0;
+	!cmd->is_bg ? status = g_lstatus : 0;
 	!cmd->is_bg ? tcsetpgrp(g_shell.pgrp, getpgrp()) : 0;
 	!cmd->is_bg && g_shell.able_termcaps ? termcaps_init(NULL) : 0;
-	g_last_status = 0;
+	g_lstatus = 0;
 	g_shell.current_cmd = NULL;
 	if (WIFSIGNALED(status))
 		return (display_signal(status));
@@ -52,15 +53,9 @@ static int	start(t_cmd *cmd, char **env)
 
 	if (!cmd->allow_builtins || (ret = handle_builtin(cmd, &g_shell)) == -1)
 	{
-		if (!(file = get_exe(&g_shell, cmd->exe->content, 1, 0)))
-			return (127);
-		if ((ret = can_execute(cmd->exe->content, &g_shell)))
-		{
-			free(file);
-			return (ret);
-		}
-		ret = start_process(file, cmd, env);
-		free(file);
+		if ((file = get_exe(&g_shell, cmd->exe->content, 0)))
+			ht_put(&g_shell, cmd->exe->content, file, 1);
+		ret = start_process(cmd, env);
 	}
 	return (ret);
 }
