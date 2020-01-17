@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:05:59 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/10 14:31:30 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/17 17:25:09 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ extern char	**g_fc_tab;
 
 int		handle_input(t_shell *shell, char **input, int history)
 {
-	int			ret;
+	int		ret;
 
 	ret = 0;
 	if ((ret = lex_loop(shell, input, history)) != 1)
@@ -62,6 +62,24 @@ int		eval_exec(char **input, int history)
 	return (ret);
 }
 
+int		check_exit(void)
+{
+	if (!g_shell.stopped_jobs && !job_can_exit())
+	{
+		g_shell.stopped_jobs = 1;
+		ft_dprintf(2, "There are stopped jobs.\n");
+		return (shell());
+	}
+	isatty(0) ? ft_putchar('\n') : 0;
+	var_destroy(&(g_shell.vars));
+	alias_free_all(&(g_shell.alias));
+	ht_delete(g_shell);
+	free_termcaps(&g_shell);
+	free(g_pwd);
+	jobs_destroy_all(&g_shell);
+	return (0);
+}
+
 int		shell(void)
 {
 	char	*input;
@@ -83,18 +101,6 @@ int		shell(void)
 	}
 	if (input)
 		ft_strdel(&input);
-	if (!g_shell.stopped_jobs && !job_can_exit())
-	{
-		g_shell.stopped_jobs = 1;
-		ft_printf("There are stopped jobs.\n");
-		return (shell());
-	}
-	isatty(0) ? ft_putchar('\n') : 0;
-	var_destroy(&(g_shell.vars));
-	alias_free_all(&(g_shell.alias));
-	ht_delete(g_shell);
-	free_termcaps(&g_shell);
-	free(g_pwd);
-	jobs_destroy_all(&g_shell);
+	check_exit();
 	return (g_return);
 }

@@ -6,11 +6,27 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 17:22:29 by lubenard          #+#    #+#             */
-/*   Updated: 2020/01/16 17:41:52 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/17 18:06:42 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
+
+void	fc_parse_option_l(t_cmd *cmd, int *i, int j, t_fc_vars *fc)
+{
+	if (cmd->args[*i][j] == 'l')
+		fc->list = 1;
+	else
+		fc->exec = 1;
+}
+
+void	fc_parse_option_n(t_cmd *cmd, int *i, int j, t_fc_vars *fc)
+{
+	if (cmd->args[*i][j] == 'n')
+		fc->rm = 1;
+	else
+		fc->rv = 1;
+}
 
 int		fc_parse_option_e(t_cmd *cmd, int *i, int j, t_fc_vars *fc)
 {

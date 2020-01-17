@@ -6,7 +6,7 @@
 /*   By: alagroy- <alagroy-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 18:19:27 by alagroy-          #+#    #+#             */
-/*   Updated: 2019/12/02 17:09:32 by alagroy-         ###   ########.fr       */
+/*   Updated: 2020/01/17 17:43:49 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,14 @@ long				ae_mult(long a, long b);
 long				ae_div(long a, long b);
 long				ae_mod(long a, long b);
 long				eval_test(t_list *test_list);
-long				ae_equ(long, long);
-long				ae_nequ(long, long);
-long				ae_great(long, long);
-long				ae_greateq(long, long);
-long				ae_less(long, long);
-long				ae_lesseq(long, long);
-long				ae_and(long, long);
-long				ae_or(long, long);
+long				ae_equ(long a, long b);
+long				ae_nequ(long a, long b);
+long				ae_great(long a, long b);
+long				ae_greateq(long a, long b);
+long				ae_less(long a, long b);
+long				ae_lesseq(long a, long b);
+long				ae_and(long a, long b);
+long				ae_or(long a, long b);
 void				remove_or(t_list *mem_left);
 char				*ae_base10(char *str);
 char				*ft_ltoa(long nb);

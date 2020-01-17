@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 01:34:27 by pcharrie          #+#    #+#             */
-/*   Updated: 2020/01/16 17:44:28 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/17 18:07:37 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ t_fc_vars *fc)
 			}
 		}
 		else if (cmd->args[*i][j] == 'l' || cmd->args[*i][j] == 's')
-			cmd->args[*i][j] == 'l' ? (fc->list = 1) : (fc->exec = 1);
+			fc_parse_option_l(cmd, i, j, fc);
 		else if (cmd->args[*i][j] == 'n' || cmd->args[*i][j] == 'r')
-			cmd->args[*i][j] == 'n' ? (fc->rm = 1) : (fc->rv = 1);
+			fc_parse_option_n(cmd, i, j, fc);
 		else
 		{
 			ft_dprintf(2, "42sh: fc: -%c: invalid option\n", cmd->args[*i][j]);
