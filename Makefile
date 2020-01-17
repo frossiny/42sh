@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/09 15:29:04 by vsaltel           #+#    #+#              #
-#    Updated: 2020/01/17 16:52:19 by frossiny         ###   ########.fr        #
+#    Updated: 2020/01/17 18:11:39 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -119,6 +119,7 @@ FILES	=	shell.c											\
 			expansion/variables/exp_get_word.c				\
 			expansion/variables/exp_del_pattern.c			\
 			expansion/variables/exp_tok_clean.c				\
+			expansion/variables/exp_dup_escape.c			\
 			expansion/arithmetic/comp.c						\
 			expansion/arithmetic/convert_base.c				\
 			expansion/arithmetic/eval.c						\

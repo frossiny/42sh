@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 15:10:45 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/17 18:06:24 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/17 18:13:52 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int		exp_noflag(t_expansion *exp, t_var *var, char *name)
 		exp->i = exp->li;
 		return (1);
 	}
-	exp_join(exp, ft_strdup(var->value), 1);
+	exp_join(exp, exp_dup_escape(var->value, exp), 1);
 	exp->i++;
 	exp->li = exp->i;
 	return (1);
