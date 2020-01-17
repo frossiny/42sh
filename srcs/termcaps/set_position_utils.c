@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 12:24:22 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/12/04 17:55:34 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/01/16 14:59:39 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static void		memset_cursor(t_cursor_pos *pos)
 		if (pos->x > 0)
 		{
 			ft_putchar('\n');
-			if (pos->y != pos->y_max)
+			if (pos->y + 1 != pos->y_max)
 				pos->y++;
 		}
 		prompt();

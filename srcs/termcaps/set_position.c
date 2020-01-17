@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 14:59:44 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/12/04 17:56:20 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/01/16 15:52:05 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,14 +87,18 @@ void			reprint(char *str, t_cursor_pos *pos, int cursor_pos,
 {
 	t_cursor_pos	tmp;
 
-	if (!is_resize && get_pos(&tmp) && (tmp.x != pos->lx || tmp.y != pos->ly))
+	if (g_shell.jobs.lst && !is_resize && get_pos(&tmp)
+			&& (tmp.x != pos->lx || tmp.y != pos->ly))
 	{
 		if (tmp.x)
 			ft_putchar('\n');
 		memset_pos(pos);
 	}
 	move_cursor(0, (pos->y_min >= 0 ? pos->y_min : 0));
-	tputs(tgetstr("cd", NULL), 1, ft_putchar);
+	if (pos->y_min > 0)
+		tputs(tgetstr("cd", NULL), 1, ft_putchar);
+	else
+		tputs(tgetstr("ce", NULL), 1, ft_putchar);
 	last_line(str, pos);
 	prompt();
 	if (pos->visual_mode)

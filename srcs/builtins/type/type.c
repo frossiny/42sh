@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   type.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:40:24 by vsaltel           #+#    #+#             */
-/*   Updated: 2020/01/13 17:59:00 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/17 16:57:40 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int			b_type(t_cmd *cmd, t_shell *shell)
 				if (!type_hashtable(cmd->args[i], &find))
 					if (!type_env_path(cmd->args[i], &find, shell->vars))
 						if (!type_path(cmd->args[i], &find))
-							ft_printf("42sh: type: %s: not found\n",
+							ft_dprintf(2, "42sh: type: %s: not found\n",
 															cmd->args[i]);
 		i++;
 	}

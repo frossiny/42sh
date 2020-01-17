@@ -6,5 +6,5 @@ alias echo="echo a" a="echo"
 echo
 a
 
-alias a="echo" echo="echo"
-a echo
+alias b="echo" echo="echo"
+b echo

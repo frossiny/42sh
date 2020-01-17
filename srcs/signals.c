@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 10:40:59 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/17 17:16:59 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/17 18:13:06 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,6 @@
 #include "ft_printf.h"
 #include "shell.h"
 #include "execution.h"
-
-void		sig_ignored(int signal)
-{
-	(void)signal;
-}
 
 void		catch_sigquit(int signal)
 {

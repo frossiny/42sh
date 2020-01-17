@@ -1,13 +1,13 @@
 alias a=b
 a
-alias a=b b=a
-a
-b
-alias a=b b=c c=a
-a
-b
+alias c=d d=c
 c
-alias a=b b=c c=b
-a
-b
-c
+d
+alias e=f f=g g=e
+e
+f
+g
+alias h=i i=j j=i
+h
+i
+j

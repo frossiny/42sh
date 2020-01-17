@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 20:33:56 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/17 16:22:55 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/17 16:53:10 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int			exec_get_pipes_docs(t_shell *shell, t_pipel *pipes);
 
 int			exec_pipes(t_anode *node, t_shell *shell, t_anode **cn);
 int			exec_pipe_builtin(t_pipel *pline, t_fd *fd, t_shell *shell);
-int			exec_pipe_cmd(t_pipel *pline, t_fd *fd, t_shell *shell);
+int			exec_pipe_cmd(t_pipel *pline, t_fd *fd);
 t_pipel		*exec_build_pipeline(t_anode *node, t_shell *shell,
 														t_anode **cn);
 t_pipel		*exec_pipeline_alloc(t_pipel *prev, t_cmd *cmd, t_shell *shell);
