@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/04 16:14:27 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/28 13:50:25 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/17 13:38:26 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ static int	build_args_arr(char ***args, t_token *tokens)
 	{
 		if (tok_is_word(tokens) && !tok_is_redirection(prev))
 			(*args)[i++] = tokens->content;
+		prev = tokens;
 		tokens = tokens->next;
 	}
 	(*args)[i] = NULL;
