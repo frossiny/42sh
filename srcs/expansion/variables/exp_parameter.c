@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 15:10:45 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/25 15:08:14 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/17 13:29:20 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,6 @@ int				exp_parameter(t_expansion *exp)
 	else
 		ret = exp_noflag(exp, var, name);
 	clean_var(var, name);
+	var_destroy(&var);
 	return (ret);
 }

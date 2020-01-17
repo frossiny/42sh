@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/09 15:29:04 by vsaltel           #+#    #+#              #
-#    Updated: 2020/01/15 17:15:42 by frossiny         ###   ########.fr        #
+#    Updated: 2020/01/17 13:27:02 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -241,6 +241,7 @@ FILES	=	shell.c											\
 			variables/var_is_key_valid.c					\
 			variables/var_merge.c							\
 			variables/var_export.c							\
+			variables/var_dup.c								\
 			builtins/cd/get_path.c							\
 			builtins/fc/edit.c								\
 			builtins/fc/exec.c								\

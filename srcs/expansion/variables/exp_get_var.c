@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 15:22:13 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/26 11:05:37 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/17 13:28:48 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,16 +67,8 @@ t_var			*exp_get_var(t_expansion *exp)
 	key = exp_get_varname(exp);
 	exp->i += ft_strlen(key);
 	val = NULL;
-	if ((val = get_special_var(key)))
-	{
-		free(key);
-		return (val);
-	}
-	if (!(val = var_get(g_shell.vars, key)))
-	{
-		free(key);
-		return (NULL);
-	}
+	if (!(val = get_special_var(key)))
+		val = var_dup(var_get(g_shell.vars, key));
 	free(key);
 	return (val);
 }
