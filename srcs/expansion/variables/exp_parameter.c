@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 15:10:45 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/17 13:29:20 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/17 18:06:24 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,8 @@ int				exp_parameter(t_expansion *exp)
 	if (exp->li > exp->i)
 		exp_join(exp, ft_strsub(exp->str, exp->li, exp->i - exp->li), 1);
 	exp->i += 2;
-	if (exp->str[exp->i] == '#')
+	if (exp->str[exp->i] == '#' && exp->i++)
 	{
-		exp->i++;
 		exp_join(exp, exp_par_len(exp), 1);
 		return (1);
 	}
