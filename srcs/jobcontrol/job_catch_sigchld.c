@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 14:36:45 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/20 11:13:47 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/20 18:38:17 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ static void	catch_gchild(void)
 		g_shell.current_cmd = NULL;
 		g_child = 0;
 		tcsetpgrp(g_shell.pgrp, g_shell.pid);
+		ft_printf("\n[%d]%c  %s                 %s\n", job->job_number,
+		job->current, job->status, job->command);
 	}
 	else
 		g_child = 0;
