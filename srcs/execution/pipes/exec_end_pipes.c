@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:42:11 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/17 16:39:17 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/20 11:14:18 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static int	is_pipe_ended(t_pipel *pline)
 	{
 		if (waitpid(pline->pid, &g_lstatus, WNOHANG) == 0)
 			return (0);
+		pline->pid = -1;
 		pline = pline->next;
 	}
 	return (1);
@@ -52,6 +53,7 @@ int			exec_end_pipes(t_pipel *pline, t_fd *fd)
 	if (!bg)
 		get_return_code();
 	!bg && g_shell.able_termcaps ? termcaps_init(NULL) : 0;
+	!bg ? tcsetpgrp(g_shell.pgrp, g_shell.pid) : 0;
 	g_pipe_pid = 0;
 	close(fd->np[0]);
 	close(fd->np[1]);

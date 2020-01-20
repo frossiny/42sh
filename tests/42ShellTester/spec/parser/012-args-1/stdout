@@ -1,0 +1,4 @@
+expected_to match_regex "..@" 4 times
+expected_to match_eq "-l@..@"
+expected_to match_regex "-l@-a@..@" once
+expected_to match_regex "-la@..@" once

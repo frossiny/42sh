@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 14:24:33 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/17 13:29:31 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/17 18:11:49 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "variables.h"
 #include "expansion.h"
 
-int			exp_simple_var(t_expansion *exp)
+int		exp_simple_var(t_expansion *exp)
 {
 	t_var	*var;
 
@@ -29,7 +29,7 @@ int			exp_simple_var(t_expansion *exp)
 	exp->i++;
 	if ((var = exp_get_var(exp)))
 	{
-		exp_join(exp, ft_strdup(var->value), 1);
+		exp_join(exp, exp_dup_escape(var->value, exp), 1);
 		var_destroy(&var);
 	}
 	else

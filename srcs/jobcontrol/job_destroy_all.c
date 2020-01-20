@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 10:49:02 by lubenard          #+#    #+#             */
-/*   Updated: 2020/01/17 16:43:55 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/20 10:56:08 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,18 @@ static void	kill_jobs(t_shell *shell)
 	jobs = shell->jobs.lst;
 	while (jobs)
 	{
-		if (jobs->state == JOB_SUSPENDED)
-			kill(-jobs->pid, SIGCONT);
-		kill(-jobs->pid, SIGHUP);
+		if (!jobs->pipeline)
+		{
+			if (jobs->state == JOB_SUSPENDED)
+				kill(-jobs->pid, SIGCONT);
+			kill(-jobs->pid, SIGHUP);
+		}
+		else
+		{
+			if (jobs->state == JOB_SUSPENDED)
+				exec_signal_pipe(jobs->pipeline, SIGCONT);
+			exec_signal_pipe(jobs->pipeline, SIGHUP);
+		}
 		jobs = jobs->next;
 	}
 }

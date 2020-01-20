@@ -1,26 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_get_pipes_docs.c                              :+:      :+:    :+:   */
+/*   exp_dup_escape.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/29 18:45:40 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/28 11:41:21 by frossiny         ###   ########.fr       */
+/*   Created: 2020/01/17 18:10:45 by frossiny          #+#    #+#             */
+/*   Updated: 2020/01/17 18:32:06 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
+#include "expansion.h"
 
-int		exec_get_pipes_docs(t_shell *shell, t_pipel *pipes)
+char	*exp_dup_escape(char *src, t_expansion *exp)
 {
-	while (pipes && pipes->cmd)
+	char	*dst;
+	size_t	i;
+
+	if (!(dst = (char *)malloc(ft_strlen(src) * 2 + 1)))
+		return (NULL);
+	i = 0;
+	while (*src)
 	{
-		if (!get_here_doc(pipes->cmd->redir, shell))
-			return (0);
-		if (!pipes->next)
-			break ;
-		pipes = pipes->next;
+		if (!exp->isquote || *src == '\\')
+			dst[i++] = '\\';
+		dst[i++] = *src;
+		src++;
 	}
-	return (1);
+	dst[i] = '\0';
+	return (dst);
 }

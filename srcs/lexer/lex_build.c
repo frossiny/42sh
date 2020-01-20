@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lex_build.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 15:28:04 by vsaltel           #+#    #+#             */
-/*   Updated: 2020/01/10 15:38:11 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/01/20 15:17:58 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,42 @@
 #include "lexer.h"
 #include "history.h"
 
+static void		init_bslash_error(char **input, char **ninput)
+{
+	char	*tmp;
+
+	if ((*input)[ft_strlen(*input) - 1] == '\\')
+	{
+		tmp = ft_strndup(*input, ft_strlen(*input) - 1);
+		free(*input);
+		*input = tmp;
+	}
+	g_ignore_signals = 1;
+	*ninput = NULL;
+}
+
 static int		bslash_error(t_shell *shell, char **input, int ret)
 {
 	char	*ninput;
 	char	*tmp;
 
-	g_ignore_signals = 1;
-	if (!(ret = get_input(0, &ninput, shell)))
+	init_bslash_error(input, &ninput);
+	while (!ninput || ft_strequ(ninput, "\\"))
 	{
-		if (g_ignore_signals)
+		free(ninput);
+		if (!(ret = get_input(0, &ninput, shell)))
 		{
-			g_ignore_signals = 0;
-			return (2);
+			if (g_ignore_signals)
+			{
+				g_ignore_signals = 0;
+				return (2);
+			}
+			return (258);
 		}
-		return (258);
 	}
 	if (ninput)
 	{
-		tmp = ft_strjoin(*input, (*ninput == '\\') ? ninput + 1 : ninput);
-		free(*input);
-		free(ninput);
+		tmp = ft_strjoinf(*input, ninput);
 		*input = tmp;
 	}
 	g_ignore_signals = 0;

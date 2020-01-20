@@ -1,0 +1,5 @@
+i=\\
+echo "$i"
+echo "${i}"
+echo "${i:+$i}"
+echo "${#i}"

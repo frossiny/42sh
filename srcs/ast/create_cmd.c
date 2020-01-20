@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 13:23:37 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/16 15:15:04 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/17 19:17:44 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "ast.h"
 #include "expansion.h"
 #include "jobcontrol.h"
+#include "execution.h"
 
 static char		**split_var(char *var)
 {
@@ -102,5 +103,6 @@ t_cmd			*create_cmd(t_token *exe)
 	cmd->redir = NULL;
 	cmd->allow_builtins = 1;
 	cmd->is_bg = ast_is_bg(exe);
+	cmd->redir = parse_redirections(exe);
 	return (cmd);
 }

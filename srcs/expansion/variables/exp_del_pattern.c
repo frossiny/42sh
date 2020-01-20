@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 14:50:35 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/18 16:37:22 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/17 19:11:09 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,21 +65,25 @@ int		exp_del_pattern(t_expansion *exp, t_var *var)
 	t_compare	cmp;
 	char		*res;
 
-	if (!create_compare(exp, &cmp, var, exp->str))
-		return (1);
-	if (exp->str[exp->i] == '%')
+	if (create_compare(exp, &cmp, var, exp->str))
 	{
-		ft_strrev(cmp.file);
-		strrev_pattern(cmp.cmp);
-		next_char(&cmp, 0, 0);
-		res = ft_strrev(ft_strdup(cmp.file + cmp.len_find));
+		if (exp->str[exp->i] == '%')
+		{
+			ft_strrev(cmp.file);
+			strrev_pattern(cmp.cmp);
+			next_char(&cmp, 0, 0);
+			res = ft_strrev(ft_strdup(cmp.file + cmp.len_find));
+		}
+		else
+		{
+			next_char(&cmp, 0, 0);
+			res = ft_strdup(cmp.file + cmp.len_find);
+		}
+		exp_join(exp, res, 1);
+		ft_multifree(&cmp.cmp, &cmp.file, NULL);
 	}
-	else
-	{
-		next_char(&cmp, 0, 0);
-		res = ft_strdup(cmp.file + cmp.len_find);
-	}
-	exp_join(exp, res, 1);
-	ft_multifree(&cmp.cmp, &cmp.file, NULL);
+	while (exp->str[exp->i] != '}' || is_escaped(exp->str, exp->i, 0))
+		exp->i++;
+	exp->li = ++exp->i;
 	return (1);
 }

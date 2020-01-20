@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/28 10:50:50 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/07 17:34:10 by pcharrie         ###   ########.fr       */
+/*   Updated: 2020/01/20 12:06:08 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,10 @@ int				b_echo(t_cmd *cmd, t_shell *shell)
 	}
 	opt = opt_get(options, "n") ? 1 : 0;
 	if (cmd->argc < 2)
+	{
+		opt_free(options);
 		return (empty_args());
+	}
 	disp(cmd->argc - options->last, cmd->args + options->last);
 	opt ? 0 : ft_putchar('\n');
 	opt_free(options);
