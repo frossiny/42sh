@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 10:40:59 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/17 17:24:46 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/20 08:57:49 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void		catch_sigint(int signal)
 		exec_signal_pipe(g_shell.current_pipel, SIGINT);
 	else if (!g_child)
 	{
-		g_return = 1;
+		g_return = 130;
 		ioctl(0, TIOCSTI, "\n");
 	}
 }

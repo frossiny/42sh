@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 19:12:36 by vsaltel           #+#    #+#             */
-/*   Updated: 2020/01/16 14:59:49 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/01/20 09:05:42 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ static int	check_input(char *buf, char **str, t_cursor_pos *pos
 		ft_strdel(str);
 		ft_strdel(&(pos->s_str));
 		ft_strdel(&(shell->history.first_command));
-		g_return = 1;
 		final_position(pos);
 		return (1);
 	}

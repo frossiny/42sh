@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:05:59 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/17 19:20:32 by alagroy-         ###   ########.fr       */
+/*   Updated: 2020/01/20 09:12:22 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ extern char	**g_fc_tab;
 
 int		handle_input(t_shell *shell, char **input, int history)
 {
-	int			ret;
+	int		ret;
 
 	ret = 0;
 	if ((ret = lex_loop(shell, input, history)) != 1)
@@ -41,9 +41,9 @@ int		eval_exec(char **input, int history)
 {
 	int		ret;
 
-	if (ft_strcmp(*input, "") == 0)
+	if (!*input || ft_strcmp(*input, "") == 0)
 	{
-		ft_strdel(input);
+		*input ? ft_strdel(input) : 0;
 		return (g_return);
 	}
 	if ((ret = handle_input(&g_shell, input, history)) == 0)
@@ -63,6 +63,24 @@ int		eval_exec(char **input, int history)
 	return (ret);
 }
 
+int		check_exit(void)
+{
+	if (!g_shell.stopped_jobs && !job_can_exit())
+	{
+		g_shell.stopped_jobs = 1;
+		ft_dprintf(2, "There are stopped jobs.\n");
+		return (shell());
+	}
+	isatty(0) ? ft_putchar('\n') : 0;
+	var_destroy(&(g_shell.vars));
+	alias_free_all(&(g_shell.alias));
+	ht_delete(g_shell);
+	free_termcaps(&g_shell);
+	free(g_pwd);
+	jobs_destroy_all(&g_shell);
+	return (0);
+}
+
 int		shell(void)
 {
 	char	*input;
@@ -70,7 +88,7 @@ int		shell(void)
 
 	while ((get_input(0, &input, &g_shell)) > 0)
 	{
-		if (!input)
+		if (!input && g_return != 130)
 			g_return = 1;
 		else
 			g_return = eval_exec(&input, 1);
@@ -84,18 +102,6 @@ int		shell(void)
 	}
 	if (input)
 		ft_strdel(&input);
-	if (!g_shell.stopped_jobs && !job_can_exit())
-	{
-		g_shell.stopped_jobs = 1;
-		ft_printf("There are stopped jobs.\n");
-		return (shell());
-	}
-	isatty(0) ? ft_putchar('\n') : 0;
-	var_destroy(&(g_shell.vars));
-	alias_free_all(&(g_shell.alias));
-	ht_delete(g_shell);
-	free_termcaps(&g_shell);
-	free(g_pwd);
-	jobs_destroy_all(&g_shell);
+	check_exit();
 	return (g_return);
 }

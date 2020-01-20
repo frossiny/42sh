@@ -6,7 +6,7 @@
 /*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 15:28:37 by vsaltel           #+#    #+#             */
-/*   Updated: 2020/01/16 17:30:02 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/17 18:11:49 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,5 +143,7 @@ void					fc_edit_remove_file(void);
 void					fc_set_exec_cmd(t_fc_vars *fc);
 int						fc_parse_option_e(t_cmd *cmd, int *i, int j,
 t_fc_vars *fc);
+void					fc_parse_option_n(t_cmd *cmd, int *i, int j, t_fc_vars *fc);
+void					fc_parse_option_l(t_cmd *cmd, int *i, int j, t_fc_vars *fc);
 
 #endif

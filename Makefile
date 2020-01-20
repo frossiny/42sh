@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/09 15:29:04 by vsaltel           #+#    #+#              #
-#    Updated: 2020/01/17 19:16:33 by alagroy-         ###   ########.fr        #
+#    Updated: 2020/01/20 09:12:18 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -233,7 +233,6 @@ FILES	=	shell.c											\
 			utils/get_var_size.c							\
 			utils/str_escape.c								\
 			utils/copy_tab.c								\
-			utils/42shrc.c									\
 			utils/u_free_shell.c							\
 			variables/var_build_env.c						\
 			variables/var_delete.c							\

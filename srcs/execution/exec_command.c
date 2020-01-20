@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:26:37 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/17 19:18:00 by alagroy-         ###   ########.fr       */
+/*   Updated: 2020/01/20 09:12:31 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ static int	start(t_cmd *cmd, char **env)
 	{
 		if ((file = get_exe(&g_shell, cmd->exe->content, 0)))
 			ht_put(&g_shell, cmd->exe->content, file, 1);
+		free(file);
 		ret = start_process(cmd, env);
 	}
 	return (ret);

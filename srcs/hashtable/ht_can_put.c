@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 16:11:18 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/17 16:20:22 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/20 08:48:17 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,6 @@ int		ht_can_put(char *cmd)
 		free(file);
 		return (0);
 	}
+	free(file);
 	return (1);
 }
