@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 15:27:23 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/17 16:32:48 by alagroy-         ###   ########.fr       */
+/*   Updated: 2020/01/20 09:34:50 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 #include "execution.h"
 
-static void		redirect_output(t_redirect *redir, int create_only)
+static void		redirect_output(t_redirect *redir, int c_only)
 {
 	int		fd;
 	int		otype;
@@ -23,7 +23,7 @@ static void		redirect_output(t_redirect *redir, int create_only)
 	otype |= (redir->append) ? O_APPEND : O_TRUNC;
 	if ((fd = open(redir->value->content, otype, 420)) == -1)
 		return ;
-	if (!create_only)
+	if (!c_only)
 	{
 		dup2(fd, redir->filedes);
 		close(fd);
@@ -42,8 +42,8 @@ static void		redirect_input(t_redirect *redir)
 
 static int		handle_aggregate(t_redirect *redir)
 {
-	while (redir && redir->value)
-	{
+	// while (redir && redir->value)
+	// {
 		if (redir->type == TOKEN_AGGR)
 		{
 			if (ft_strequ(redir->value->content, "-"))
@@ -58,12 +58,12 @@ static int		handle_aggregate(t_redirect *redir)
 				}
 			}
 		}
-		redir = redir->next;
-	}
+	// 	redir = redir->next;
+	// }
 	return (1);
 }
 
-int				handle_redirections(t_redirect *redir, int create_only)
+int				handle_redirections(t_redirect *redir, int c_only)
 {
 	t_redirect	*save;
 
@@ -71,17 +71,19 @@ int				handle_redirections(t_redirect *redir, int create_only)
 	while (redir && redir->value)
 	{
 		if (redir->type == TOKEN_REDIRO)
-			redirect_output(redir, create_only);
-		else if (!create_only && redir->type == TOKEN_REDIRI)
+			redirect_output(redir, c_only);
+		else if (!c_only && redir->type == TOKEN_REDIRI)
 		{
 			if (redir->append)
 				apply_here_doc(redir);
 			else
 				redirect_input(redir);
 		}
+		else if (redir->type == TOKEN_AGGR)
+			handle_aggregate(redir);
 		redir = redir->next;
 	}
-	if (!create_only && !handle_aggregate(save))
-		return (0);
+	// if (!c_only && !handle_aggregate(save))
+	// 	return (0);
 	return (1);
 }

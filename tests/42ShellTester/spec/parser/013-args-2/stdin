@@ -1,2 +1,2 @@
 echo "" > test
-ls < test -l
+./write_all_arguments_on_stdout -t < test -l

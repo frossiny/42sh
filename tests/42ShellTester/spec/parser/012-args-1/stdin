@@ -1,4 +1,4 @@
-ls ..
-ls -l ..
-ls -l -a ..
-ls -la ..
+./write_all_arguments_on_stdout ..
+./write_all_arguments_on_stdout -l ..
+./write_all_arguments_on_stdout -l -a ..
+./write_all_arguments_on_stdout -la ..
