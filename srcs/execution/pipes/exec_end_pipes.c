@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:42:11 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/17 16:39:17 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/20 09:56:03 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int			exec_end_pipes(t_pipel *pline, t_fd *fd)
 	if (!bg)
 		get_return_code();
 	!bg && g_shell.able_termcaps ? termcaps_init(NULL) : 0;
+	!bg ? tcsetpgrp(g_shell.pgrp, getpgrp()) : 0;
 	g_pipe_pid = 0;
 	close(fd->np[0]);
 	close(fd->np[1]);
