@@ -1,0 +1,5 @@
+echo ${PW@@}
+echo ${\}TEST}
+echo ${$PWD:=$USER}
+echo ${*&%$%}
+echo ${}
