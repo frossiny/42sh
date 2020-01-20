@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:05:59 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/17 18:13:42 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/20 09:05:48 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ int		eval_exec(char **input, int history)
 {
 	int		ret;
 
-	if (ft_strcmp(*input, "") == 0)
+	if (!*input || ft_strcmp(*input, "") == 0)
 	{
-		ft_strdel(input);
+		*input ? ft_strdel(input) : 0;
 		return (g_return);
 	}
 	if ((ret = handle_input(&g_shell, input, history)) == 0)
@@ -87,7 +87,7 @@ int		shell(void)
 
 	while ((get_input(0, &input, &g_shell)) > 0)
 	{
-		if (!input)
+		if (!input && g_return != 130)
 			g_return = 1;
 		else
 			g_return = eval_exec(&input, 1);
