@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 14:36:45 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/17 16:43:26 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/20 11:13:47 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	catch_gchild(void)
 		job->state = JOB_SUSPENDED;
 		g_shell.current_cmd = NULL;
 		g_child = 0;
-		tcsetpgrp(g_shell.pgrp, getpgrp());
+		tcsetpgrp(g_shell.pgrp, g_shell.pid);
 	}
 	else
 		g_child = 0;

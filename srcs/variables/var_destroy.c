@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 18:10:31 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/16 13:46:41 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/20 10:58:15 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	var_destroy(t_var **vars)
 	t_var	*curr;
 	t_var	*next;
 
+	if (!vars)
+		return ;
 	curr = *vars;
 	while (curr)
 	{

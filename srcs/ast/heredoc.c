@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alagroy- <alagroy-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 17:33:11 by alagroy-          #+#    #+#             */
-/*   Updated: 2020/01/17 19:01:07 by alagroy-         ###   ########.fr       */
+/*   Updated: 2020/01/20 11:17:40 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static int		build_heredoc_rec(t_anode *node)
 	return (1);
 }
 
- void			build_heredoc(t_shell *shell)
+void			build_heredoc(t_shell *shell)
 {
 	if (!(build_heredoc_rec(shell->ast)))
 		ast_destroy(shell);

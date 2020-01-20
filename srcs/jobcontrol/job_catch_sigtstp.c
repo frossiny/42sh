@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 17:12:26 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/17 16:43:42 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/20 11:13:58 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,5 @@ void	job_catch_sigtstp(int signal)
 	job->status = "Stopped";
 	job->state = JOB_SUSPENDED;
 	g_shell.current_pipel = NULL;
-	tcsetpgrp(g_shell.pgrp, getpgrp());
+	tcsetpgrp(g_shell.pgrp, g_shell.pid);
 }

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 15:26:08 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/08 14:48:13 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/20 10:15:36 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ int					lex_state_expansions(t_lexer *lexer)
 	else
 	{
 		closing = get_closing(lexer->exps->op);
-		if (ft_strnequ(lexer->in, closing, ft_strlen(closing)))
+		if (ft_strnequ(lexer->in, closing, ft_strlen(closing)) \
+			&& !is_escaped(lexer->pin, lexer->in - lexer->pin, 0))
 		{
 			lex_exp_del(lexer);
 			lexer->in += ft_strlen(closing);
