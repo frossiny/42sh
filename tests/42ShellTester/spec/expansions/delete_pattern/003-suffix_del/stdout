@@ -1,0 +1,4 @@
+expected_to match_regex "zzzazzz"
+expected_to match_regex "ccc"
+expected_to_not match_regex "b"
+expected_to_not match_regex "y"

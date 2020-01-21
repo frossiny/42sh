@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 17:30:28 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/12/04 17:23:40 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/01/21 15:07:00 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void		visual_print(char *str, t_cursor_pos *pos)
 	}
 	if (l)
 		term_print(l);
+	write(1, "\e[7m", 4);
 	if (m)
 		term_print(m);
 	write(1, "\e[0m", 4);

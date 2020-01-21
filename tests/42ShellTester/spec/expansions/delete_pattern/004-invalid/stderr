@@ -1,0 +1,1 @@
+expected_to match_regex "42sh: bad substitution" 2 times

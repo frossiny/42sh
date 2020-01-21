@@ -6,7 +6,7 @@
 /*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 14:23:23 by vsaltel           #+#    #+#             */
-/*   Updated: 2020/01/16 17:50:09 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/20 15:19:35 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,20 @@ int			type_env_path(char *arg, size_t *find, t_var *vars)
 	if (!(path = var_get_value(vars, "PATH")))
 		return (0);
 	tab = ft_strsplit(path, ':');
+	free(path);
 	i = -1;
 	while (tab[++i])
-	{
-		if ((res = check_path(tab[i], arg)) && is_executable(res))
+		if ((res = check_path(tab[i], arg)))
 		{
-			ft_printf("%s is %s\n", arg, res);
+			if (is_executable(res))
+			{
+				ft_printf("%s is %s\n", arg, res);
+				free(res);
+				ft_strddel(&tab);
+				return (++(*find));
+			}
 			free(res);
-			ft_strddel(&tab);
-			return (++(*find));
 		}
-	}
 	ft_strddel(&tab);
 	return (0);
 }
