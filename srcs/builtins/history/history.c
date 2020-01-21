@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:03:36 by lubenard          #+#    #+#             */
-/*   Updated: 2020/01/09 20:51:32 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/20 15:53:03 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void		load_history_file(t_shell *shell)
 
 	fd = 0;
 	path = ft_strpathfile(getenv("HOME"), ".42sh_history");
-	if (!access(path, F_OK) && access(path, R_OK))
+	if (access(path, F_OK) || access(path, R_OK))
 		return (free(path));
 	if ((fd = open(path, O_RDONLY)) >= 0)
 		while (get_next_line(fd, &buf) == 1)

@@ -1,0 +1,4 @@
+TEST=azzzazzz
+echo ${TEST#*a}
+TEST=bcccbyyy
+echo ${TEST##*b}

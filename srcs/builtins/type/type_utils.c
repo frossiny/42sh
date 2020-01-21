@@ -6,7 +6,7 @@
 /*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 14:20:57 by vsaltel           #+#    #+#             */
-/*   Updated: 2020/01/16 17:49:49 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/20 15:17:53 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int			is_executable(char *arg)
 	struct stat	pstat;
 	int			res;
 
-	if (!arg && !access(arg, F_OK) && access(arg, X_OK))
+	if (!arg || access(arg, F_OK) || access(arg, X_OK))
 		return (0);
 	res = stat(arg, &pstat);
 	if (!res && S_ISREG(pstat.st_mode))

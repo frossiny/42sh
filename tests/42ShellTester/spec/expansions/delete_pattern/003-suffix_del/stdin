@@ -1,0 +1,4 @@
+TEST=zzzazzza
+echo ${TEST%a*}
+TEST=cccbyyyb
+echo ${TEST%%b*}

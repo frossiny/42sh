@@ -1,0 +1,3 @@
+echo ${$TEST#lala}
+TEST=''
+echo ${TEST\#lala}
