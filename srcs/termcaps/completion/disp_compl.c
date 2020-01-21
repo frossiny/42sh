@@ -6,7 +6,7 @@
 /*   By: alagroy- <alagroy-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 15:58:23 by alagroy-          #+#    #+#             */
-/*   Updated: 2020/01/21 17:38:53 by alagroy-         ###   ########.fr       */
+/*   Updated: 2020/01/21 18:19:48 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,8 @@ static int	compl_shared_part(t_cursor_pos *pos, char **str, t_list *compl_list,
 void		disp_compl(t_cursor_pos *pos, char **str, t_list *compl_list,
 		int len)
 {
-	int		size;
+	int				size;
+	t_cursor_pos	tmp;
 
 	size = ft_lstsize(compl_list);
 	if (size == 1)
@@ -97,5 +98,9 @@ void		disp_compl(t_cursor_pos *pos, char **str, t_list *compl_list,
 		pos->x_rel += ft_strlen((char *)compl_list->content) - len;
 	}
 	else if (!compl_shared_part(pos, str, compl_list, len))
+	{
 		print_compl_list(compl_list, pos->x_max);
+		if (get_pos(&tmp))
+			pos->y_min = tmp.y;
+	}
 }
