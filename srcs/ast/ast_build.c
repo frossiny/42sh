@@ -6,12 +6,13 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 15:17:59 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/28 11:35:12 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/22 15:54:57 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "ast.h"
+#include "shell.h"
 
 static int	parse_tree(t_token *tokens, t_anode **ast)
 {
@@ -36,5 +37,7 @@ static int	parse_tree(t_token *tokens, t_anode **ast)
 
 int			ast_build(t_shell *shell)
 {
+	g_child = 0;
+	ast_free_cmd(g_shell.current_cmd);
 	return (parse_tree(shell->lexer.tokens, &(shell->ast)));
 }

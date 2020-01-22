@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 10:55:38 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/29 16:54:53 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/01/22 17:22:50 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	u_free_shell(void)
 {
 	jobs_destroy_all(&g_shell);
 	ast_destroy(&g_shell);
+	ast_free_cmd(g_shell.current_cmd);
 	var_destroy(&(g_shell.vars));
 	alias_free_all(&(g_shell.alias));
 	ht_delete(g_shell);

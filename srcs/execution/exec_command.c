@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:26:37 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/20 11:14:06 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/22 16:59:19 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	start_process(t_cmd *cmd, char **env)
 		exec_child_fork(cmd, env);
 	setpgid(g_child, g_child);
 	!cmd->is_bg ? tcsetpgrp(g_shell.pgrp, g_child) : 0;
-	g_shell.current_cmd = cmd;
+	g_shell.current_cmd = ast_dup_cmd(cmd);
 	if (g_child == -1)
 		return (g_child = 0);
 	!cmd->is_bg ? pause() : 0;
@@ -37,7 +37,6 @@ static int	start_process(t_cmd *cmd, char **env)
 	!cmd->is_bg ? tcsetpgrp(g_shell.pgrp, g_shell.pid) : 0;
 	!cmd->is_bg && g_shell.able_termcaps ? termcaps_init(NULL) : 0;
 	g_lstatus = 0;
-	g_shell.current_cmd = NULL;
 	if (WIFSIGNALED(status))
 		return (display_signal(status));
 	return (WEXITSTATUS(status));
@@ -76,6 +75,5 @@ int			exec_command(t_cmd *cmd)
 	ret = start(cmd, env);
 	var_destroy(&(cmd->tenv));
 	ft_2dstrdel(&env);
-	g_child = 0;
 	return (ret);
 }

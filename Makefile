@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/09 15:29:04 by vsaltel           #+#    #+#              #
-#    Updated: 2020/01/22 15:12:30 by frossiny         ###   ########.fr        #
+#    Updated: 2020/01/22 17:17:51 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,6 +55,7 @@ FILES	=	shell.c											\
 			ast/create_cmd.c								\
 			ast/ast_is_bg.c									\
 			ast/heredoc.c									\
+			ast/ast_dup_cmd.c								\
 			builtins/alias.c								\
 			builtins/unalias.c								\
 			builtins/type/type.c							\

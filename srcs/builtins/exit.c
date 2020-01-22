@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 11:53:12 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/08 11:57:32 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/22 17:25:14 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,8 @@ int			b_exit(t_cmd *cmd, t_shell *shell)
 		ret = 1;
 	else if (cmd->argc == 2)
 		ret = ft_atoi(cmd->args[1]);
-	ft_strdel(&g_pwd);
-	var_destroy(&(shell->vars));
-	alias_free_all(&(shell->alias));
-	free_termcaps(shell);
-	lexer_free(&(shell->lexer));
-	ast_destroy(shell);
-	ht_delete(shell);
-	free(g_pwd);
-	jobs_destroy_all(&g_shell);
+	(void)shell;
+	u_free_shell();
 	exit(ret);
 	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 20:33:56 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/17 16:53:10 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/22 17:06:16 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,6 @@ t_pipel		*exec_dup_pipeline(t_pipel *src);
 char		*get_exe(t_shell *shell, char *name, int verbose);
 char		*get_exe_path(t_shell *shell, char *name);
 int			is_exe(t_shell *shell, char *name, int verbose);
-char		*exec_get_file(t_cmd *cmd, int *errno);
+char		*exec_get_file(t_cmd *cmd, int *errno, int verbose);
 
 #endif
