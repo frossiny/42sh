@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:49:21 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/22 17:06:42 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/22 18:00:18 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "execution.h"
 #include "jobcontrol.h"
 #include "ast.h"
+#include "builtins.h"
 
 static void	init_fd(t_pipel *pline, int op[], int np[])
 {
@@ -32,6 +33,22 @@ static void	init_fd(t_pipel *pline, int op[], int np[])
 	handle_redirections(pline->cmd->redir, 0);
 }
 
+static int	fork_builtin(t_pipel *pline, t_cmd *cmd)
+{
+	t_builtin	builtin;
+	int			ret;
+
+	if (!(builtin = get_builtin(cmd->exe->content)).func)
+	{
+		u_free_shell();
+		return (-1);
+	}
+	ret = builtin.func(cmd, &g_shell);
+	exec_del_pipeline(pline);
+	u_free_shell();
+	return (ret);
+}
+
 static void	fork_child(t_pipel *pline, t_cmd *cmd, t_fd *fd)
 {
 	int		bg;
@@ -42,16 +59,15 @@ static void	fork_child(t_pipel *pline, t_cmd *cmd, t_fd *fd)
 	unregister_signals();
 	!bg && g_shell.able_termcaps ? restore_shell(g_shell.prev_term) : 0;
 	init_fd(pline, fd->op, fd->np);
+	if (is_builtin(cmd->exe->content))
+		exit(fork_builtin(pline, cmd));
 	if (!(file = exec_get_file(cmd, &error, 1)))
 	{
 		u_free_shell();
 		exit(error);
 	}
-	if (execve(file, cmd->args, var_build_env(cmd->tenv)) == -1)
-	{
-		u_free_shell();
-		exit(EXIT_FAILURE);
-	}
+	execve(file, cmd->args, var_build_env(cmd->tenv));
+	u_free_shell();
 	exit(EXIT_FAILURE);
 }
 

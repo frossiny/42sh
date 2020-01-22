@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 20:32:11 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/17 19:21:17 by alagroy-         ###   ########.fr       */
+/*   Updated: 2020/01/22 17:39:27 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@
 #include "jobcontrol.h"
 #include "builtins.h"
 
-static t_pipel	*read_pipeline(t_shell *shell, t_pipel *pipeline,
-			t_fd *fd)
+static t_pipel	*read_pipeline(t_pipel *pipeline, t_fd *fd)
 {
 	t_pipel		*pipe_start;
 
@@ -25,7 +24,7 @@ static t_pipel	*read_pipeline(t_shell *shell, t_pipel *pipeline,
 	while (pipeline && pipeline->cmd)
 	{
 		pipeline->next ? pipe(fd->np) : 0;
-		g_return = exec_pipe_builtin(pipeline, fd, shell);
+		g_return = exec_pipe_cmd(pipeline, fd);
 		pipeline->pid = g_pipe_pid;
 		pipeline->next ? copy_tab(fd->op, fd->np) : 0;
 		if (!pipeline->next)
@@ -43,7 +42,7 @@ int				exec_pipes(t_anode *node, t_shell *shell, t_anode **cn)
 	if (!(pipeline = exec_build_pipeline(node, shell, cn)))
 		return (1);
 	fd.sfd = dup(1);
-	g_shell.current_pipel = read_pipeline(shell, pipeline, &fd);
+	g_shell.current_pipel = read_pipeline(pipeline, &fd);
 	exec_is_pipe_bg(pipeline) ? job_new_pipe(pipeline) : 0;
 	dup2(fd.sfd, 1);
 	close(fd.sfd);

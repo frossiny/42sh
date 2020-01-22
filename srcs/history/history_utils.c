@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 12:19:22 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/29 16:49:40 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/01/22 18:04:52 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void				free_history(t_history *history)
 	t_histo_lst	*curr;
 	t_histo_lst	*tmp;
 
-	if (!isatty(0) || !history || !history->lst)
+	if (!history || !history->lst)
 		return ;
 	curr = history->lst;
 	while (curr)

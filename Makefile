@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/09 15:29:04 by vsaltel           #+#    #+#              #
-#    Updated: 2020/01/22 17:17:51 by frossiny         ###   ########.fr        #
+#    Updated: 2020/01/22 18:11:06 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -93,7 +93,6 @@ FILES	=	shell.c											\
 			execution/exec_assign_vars.c					\
 			execution/exec_get_file.c						\
 			execution/pipes/exec_pipes.c					\
-			execution/pipes/exec_pipe_builtin.c				\
 			execution/pipes/exec_pipe_cmd.c					\
 			execution/pipes/exec_pipeline.c					\
 			execution/pipes/exec_pipeline_alloc.c			\

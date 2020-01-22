@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 20:33:56 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/22 17:06:16 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/22 18:13:43 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int			exec_all(t_shell *shell, t_anode *ast);
 int			exec_command(t_cmd *cmd);
 int			exe_specials(t_cmd *cmd);
 int			exec_assign_vars(t_cmd *cmd);
-int			exec_fork_builtin(t_cmd *cmd);
 int			exec_child_fork(t_cmd *cmd, char **env);
 
 t_redirect	*parse_redirections(t_token *tok);
