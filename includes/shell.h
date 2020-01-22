@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 11:59:10 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/17 16:35:35 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/22 15:39:39 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,5 @@ void				register_signals(void);
 void				unregister_signals(void);
 int					display_signal(int sigid);
 
-void				load_42shrc(void);
-
+void				prompt_expansions(void);
 #endif

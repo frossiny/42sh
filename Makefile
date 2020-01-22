@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/09 15:29:04 by vsaltel           #+#    #+#              #
-#    Updated: 2020/01/20 16:22:01 by lubenard         ###   ########.fr        #
+#    Updated: 2020/01/22 15:44:10 by lubenard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -101,6 +101,7 @@ FILES	=	shell.c											\
 			execution/pipes/exec_is_pipe_bg.c				\
 			execution/pipes/exec_signal_pipe.c				\
 			execution/pipes/exec_dup_pipeline.c				\
+			expansion/prompt.c								\
 			expansion/tilde.c								\
 			expansion/expansion.c							\
 			expansion/exp_join.c							\

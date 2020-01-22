@@ -3,32 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/05/01 14:41:10 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/22 17:50:49 by lubenard         ###   ########.fr       */
+/*   Created: 2020/01/22 15:41:43 by lubenard          #+#    #+#             */
+/*   Updated: 2020/01/22 18:00:08 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
-#include "shell.h"
-#include "jobcontrol.h"
+#include <shell.h>
 
-void	prompt(void)
+void	handle_options_prompt(char *prompt)
 {
-	if (!isatty(0))
-		return ;
-	if (g_ignore_signals == 0)
-		ft_printf(g_shell.ps1, g_return ? 31 : 32);
-	else if (g_ignore_signals == 1)
-		ft_printf("> ");
+
+	(void)prompt;
+	//if (ft_strchr(prompt, "\\u"))
+		
 }
 
-int		prompt_len(void)
+void	prompt_expansions(void)
 {
-	if (g_ignore_signals == 0)
-		return (ft_strlen("lubenard - path $> "));
-	else if (g_ignore_signals == 1)
-		return (ft_strlen("> "));
-	return (0);
+	if (var_get(g_shell.vars, "PS1"))
+		g_shell.ps1 = "lubenard - path \033[1;%dm$> \033[0m";
+	else
+		g_shell.ps1 = "\033[1;%dm$> \033[0m";
 }

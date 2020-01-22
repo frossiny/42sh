@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:05:59 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/20 09:12:22 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/22 15:39:04 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ int		shell(void)
 	char	*input;
 	int		i;
 
+	prompt_expansions();
 	while ((get_input(0, &input, &g_shell)) > 0)
 	{
 		if (!input && g_return != 130)

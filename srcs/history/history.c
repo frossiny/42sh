@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 17:47:28 by vsaltel           #+#    #+#             */
-/*   Updated: 2020/01/09 19:45:15 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/22 15:22:20 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,32 +66,23 @@ static void		read_history(int fd, t_history *hist)
 	return ;
 }
 
-t_history		get_history(void)
+void			get_history(void)
 {
-	t_history	histo;
 	int			fd;
 	char		*path;
 
-	histo.lst = NULL;
-	histo.size = 0;
-	histo.index = 1;
-	histo.histsize = 500;
 	if (!isatty(0))
-		return (histo);
+		return ;
 	path = NULL;
 	path = ft_strpathfile(getenv("HOME"), ".42sh_history");
 	if (access(path, F_OK) || access(path, R_OK))
-	{
 		free(path);
-		return (histo);
-	}
 	if ((fd = open(path, O_RDONLY)))
 	{
-		read_history(fd, &histo);
+		read_history(fd, &g_shell.history);
 		close(fd);
 	}
 	free(path);
-	return (histo);
 }
 
 void			overwrite_history(t_histo_lst *histo)
