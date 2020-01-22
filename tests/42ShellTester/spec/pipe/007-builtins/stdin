@@ -1,0 +1,2 @@
+cd / | pwd
+cd /tmp | pwd | cat -e
