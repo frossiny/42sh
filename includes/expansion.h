@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 17:24:02 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/17 18:11:18 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/22 15:12:09 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ char				*exp_get_word(t_expansion *exp);
 int					exp_del_pattern(t_expansion *exp, t_var *var);
 void				exp_tok_clean(t_token *token);
 char				*exp_dup_escape(char *src, t_expansion *exp);
+size_t				exp_get_ae_end(char *src);
 
 char				*exp_par_len(t_expansion *exp);
 int					exp_par_colon(t_expansion *exp, t_var *var, char *name);
