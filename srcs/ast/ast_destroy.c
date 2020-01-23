@@ -6,12 +6,13 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 15:36:57 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/17 19:17:26 by alagroy-         ###   ########.fr       */
+/*   Updated: 2020/01/22 16:25:43 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 #include "ast.h"
+#include "lexer.h"
 
 static void	free_node(t_anode *node)
 {
@@ -22,7 +23,7 @@ static void	free_node(t_anode *node)
 	if (node->right)
 		free_node(node->right);
 	if (node->cmd)
-		ast_free_cmd(node->cmd);
+		g_shell.current_cmd != node->cmd ? ast_free_cmd(node->cmd) : 0;
 	free(node);
 }
 
@@ -30,6 +31,10 @@ void		ast_free_cmd(t_cmd *cmd)
 {
 	t_redirect *next;
 
+	if (!cmd)
+		return ;
+	if (g_shell.current_cmd == cmd)
+		tok_destroy(cmd->tokens);
 	free(cmd->args);
 	var_destroy(&(cmd->tenv));
 	if (cmd == g_shell.current_cmd)

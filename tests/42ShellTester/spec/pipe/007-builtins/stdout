@@ -1,0 +1,4 @@
+expected_to match_regex `pwd` 2 times
+expected_to match_regex `pwd | cat -e` once
+expected_to_not match_eq '/'
+expected_to_not match_eq '/tmp'

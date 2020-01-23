@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/09 15:29:04 by vsaltel           #+#    #+#              #
-#    Updated: 2020/01/20 09:12:18 by frossiny         ###   ########.fr        #
+#    Updated: 2020/01/22 18:11:06 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,6 +55,7 @@ FILES	=	shell.c											\
 			ast/create_cmd.c								\
 			ast/ast_is_bg.c									\
 			ast/heredoc.c									\
+			ast/ast_dup_cmd.c								\
 			builtins/alias.c								\
 			builtins/unalias.c								\
 			builtins/type/type.c							\
@@ -92,7 +93,6 @@ FILES	=	shell.c											\
 			execution/exec_assign_vars.c					\
 			execution/exec_get_file.c						\
 			execution/pipes/exec_pipes.c					\
-			execution/pipes/exec_pipe_builtin.c				\
 			execution/pipes/exec_pipe_cmd.c					\
 			execution/pipes/exec_pipeline.c					\
 			execution/pipes/exec_pipeline_alloc.c			\
@@ -120,6 +120,7 @@ FILES	=	shell.c											\
 			expansion/variables/exp_del_pattern.c			\
 			expansion/variables/exp_tok_clean.c				\
 			expansion/variables/exp_dup_escape.c			\
+			expansion/variables/exp_get_ae_end.c			\
 			expansion/arithmetic/comp.c						\
 			expansion/arithmetic/convert_base.c				\
 			expansion/arithmetic/eval.c						\

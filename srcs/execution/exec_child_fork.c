@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 11:08:12 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/17 16:34:13 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/22 17:06:36 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		exec_child_fork(t_cmd *cmd, char **env)
 	!cmd->is_bg ? tcsetpgrp(g_shell.pgrp, getpid()) : 0;
 	handle_redirections(cmd->redir, 0);
 	error = EXIT_FAILURE;
-	if (!(file = exec_get_file(cmd, &error)) \
+	if (!(file = exec_get_file(cmd, &error, 1)) \
 		|| execve(file, cmd->args, env) == -1)
 	{
 		ft_strddel(&env);

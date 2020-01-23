@@ -1,36 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_get_file.c                                    :+:      :+:    :+:   */
+/*   exp_get_ae_end.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/17 16:22:21 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/22 17:12:46 by frossiny         ###   ########.fr       */
+/*   Created: 2020/01/22 15:08:53 by frossiny          #+#    #+#             */
+/*   Updated: 2020/01/22 15:17:04 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
-#include "execution.h"
-#include "utils.h"
+#include "expansion.h"
 
-char	*exec_get_file(t_cmd *cmd, int *errno, int verbose)
+size_t	exp_get_ae_end(char *src)
 {
-	int		ret;
-	char	*file;
+	size_t	i;
+	size_t	count;
 
-	if (!cmd)
-		return (NULL);
-	if (!(file = get_exe(&g_shell, cmd->exe->content, verbose)))
+	if (!src)
+		return (1);
+	if (!ft_strnequ(src, "$((", 3))
+		return (1);
+	i = 0;
+	count = 1;
+	while (src[++i] && count)
 	{
-		errno ? *errno = 127 : 0;
-		return (NULL);
+		if (ft_strnequ(src, "$((", 3))
+			count++;
+		if (ft_strnequ(src, "))", 2))
+			count--;
 	}
-	if ((ret = can_execute(cmd->exe->content, &g_shell)))
-	{
-		errno ? *errno = 126 : 0;
-		free(file);
-		return (NULL);
-	}
-	return (file);
+	return (i);
 }

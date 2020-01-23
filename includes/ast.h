@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/04 15:50:15 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/17 19:16:55 by alagroy-         ###   ########.fr       */
+/*   Updated: 2020/01/22 16:14:33 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	ast_destroy(t_shell *shell);
 int		validate_redirection(t_redirect *redir);
 void	build_heredoc(t_shell *g_shell);
 void	ast_free_cmd(t_cmd *cmd);
+t_cmd	*ast_dup_cmd(t_cmd *src);
 
 t_anode	*create_node(t_token *ope, t_cmd *cmd);
 t_token	*create_ope_node(t_anode **tree, t_token *tokens);

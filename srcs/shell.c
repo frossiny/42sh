@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:05:59 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/20 09:12:22 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/22 17:25:24 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,7 @@ int		check_exit(void)
 		return (shell());
 	}
 	isatty(0) ? ft_putchar('\n') : 0;
-	var_destroy(&(g_shell.vars));
-	alias_free_all(&(g_shell.alias));
-	ht_delete(g_shell);
-	free_termcaps(&g_shell);
-	free(g_pwd);
-	jobs_destroy_all(&g_shell);
+	u_free_shell();
 	return (0);
 }
 

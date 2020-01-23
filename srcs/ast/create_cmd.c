@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 13:23:37 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/17 19:17:44 by alagroy-         ###   ########.fr       */
+/*   Updated: 2020/01/22 17:09:10 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ static t_token	*get_exe_token(t_token *exe)
 t_cmd			*create_cmd(t_token *exe)
 {
 	t_cmd	*cmd;
+	char	*file;
 
 	if (!(cmd = (t_cmd *)malloc(sizeof(t_cmd))))
 		return (NULL);
@@ -103,6 +104,12 @@ t_cmd			*create_cmd(t_token *exe)
 	cmd->redir = NULL;
 	cmd->allow_builtins = 1;
 	cmd->is_bg = ast_is_bg(exe);
+	if (cmd->exe)
+	{
+		file = exec_get_file(cmd, NULL, 0);
+		cmd->exe_found = file != NULL;
+		free(file);
+	}
 	cmd->redir = parse_redirections(exe);
 	return (cmd);
 }
