@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 15:41:43 by lubenard          #+#    #+#             */
-/*   Updated: 2020/01/24 09:39:23 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/24 19:00:37 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,30 @@
 char	*stradd(char *s1, char s2)
 {
 	char	*dst;
+	int		i;
 
+	i = 0;
 	if (!s1 || !s2 || !(dst = ft_strnew(ft_strlen(s1) + 1)))
 		return (NULL);
 	ft_strcpy(dst, s1);
-	dst[ft_strlen(s1) + 1] = s2;
+	dst[ft_strlen(s1)] = s2;
 	return (dst);
+}
 
+char	*reduce_pwd_size(char *pwd)
+{
+	t_var	*home;
+	char	*extracted;
+
+	if (!(home = var_get(g_shell.vars, "HOME")))
+		return (pwd);
+	if (ft_strstr(pwd, home->value))
+	{
+		extracted = ft_strsub(pwd, ft_strlen(home->value), ft_strlen(pwd) -
+		ft_strlen(home->value));
+		return (ft_strjoin("~", extracted));
+	}
+	return (pwd);
 }
 
 void	handle_options_prompt(char *prompt)
@@ -38,27 +55,22 @@ void	handle_options_prompt(char *prompt)
 		{
 			expanded_prompt = ft_strjoin(expanded_prompt, var_get(g_shell.vars,
 			"USER")->value);
-			//ft_printf("expanded prompt is |%s|\n", expanded_prompt);
 			i += 2;
 		}
 		else if (prompt[i] == '\\' && prompt[i + 1] == 'j')
 		{
 			expanded_prompt = ft_strjoin(expanded_prompt,
 			ft_itoa((int)g_shell.jobs.len));
-			//ft_printf("expanded prompt is |%s|\n", expanded_prompt);
 			i += 2;
 		}
 		else if (prompt[i] == '\\' && prompt[i + 1] == 'v')
 		{
-			//ft_printf("expanded_prompt in v = %s\n", expanded_prompt);
 			expanded_prompt = ft_strjoin(expanded_prompt, "1.0");
-			//ft_printf("expanded prompt is |%s|\n", expanded_prompt);
 			i += 2;
 		}
 		else if (prompt[i] == '\\' && prompt[i + 1] == 's')
 		{
 			expanded_prompt = ft_strjoin(expanded_prompt, "42sh");
-			//ft_printf("expanded prompt is |%s|\n", expanded_prompt);
 			i += 2;
 		}
 		else if (prompt[i] == '\\' && prompt[i + 1] == 'H')
@@ -66,7 +78,13 @@ void	handle_options_prompt(char *prompt)
 			gethostname(hostname, 4096);
 			expanded_prompt = ft_strjoin(expanded_prompt,
 			hostname);
-			//ft_printf("expanded prompt is |%s|\n", expanded_prompt);
+			i += 2;
+		}
+		else if (prompt[i] == '\\' && prompt[i + 1] == 'w')
+		{
+			gethostname(hostname, 4096);
+			expanded_prompt = ft_strjoin(expanded_prompt, reduce_pwd_size(
+			var_get(g_shell.vars,"PWD")->value));
 			i += 2;
 		}
 		else
@@ -84,5 +102,5 @@ void	prompt_expansions(void)
 	if (ps1)
 		handle_options_prompt(ps1->value);
 	else
-		g_shell.ps1 = "\033[1;%dm$> \033[0m";
+		g_shell.ps1 = "\033[1;31m$> \033[0m";
 }
