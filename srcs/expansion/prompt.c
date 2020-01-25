@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 15:41:43 by lubenard          #+#    #+#             */
-/*   Updated: 2020/01/24 19:00:37 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/25 17:13:26 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,38 @@ char	*reduce_pwd_size(char *pwd)
 	return (pwd);
 }
 
+void	exec_option_prompt(char **expanded_prompt, char *to_add, int *i)
+{
+	*expanded_prompt = ft_strjoin(*expanded_prompt, to_add);
+	*i += 2;
+}
+
+
+char	*extract_first(char *command, char stop)
+{
+	int		i;
+
+	i = 0;
+	while (command[i] != stop && command[i])
+		++i;
+	return (ft_strsub(command, 0, i));
+}
+
+void	handle_options_H_prompt(char **expanded_prompt, int *i, int mode)
+{
+	char	*first_point;
+
+	gethostname(hostname, 4096);
+	if (mode == 1)
+		exec_option_prompt(&expanded_prompt, hostname, &i);
+	else
+	{
+		first_point = extract_first(hostname, ".");
+		exec_option_prompt(&expanded_prompt, first_point, &i);
+		ft_strdel(&first_point);
+	}
+}
+
 void	handle_options_prompt(char *prompt)
 {
 	int		i;
@@ -52,45 +84,29 @@ void	handle_options_prompt(char *prompt)
 	while (prompt[i])
 	{
 		if (prompt[i] == '\\' && prompt[i + 1] == 'u')
-		{
-			expanded_prompt = ft_strjoin(expanded_prompt, var_get(g_shell.vars,
-			"USER")->value);
-			i += 2;
-		}
+			exec_option_prompt(&expanded_prompt,
+			var_get(g_shell.vars, "USER")->value, &i);
 		else if (prompt[i] == '\\' && prompt[i + 1] == 'j')
-		{
-			expanded_prompt = ft_strjoin(expanded_prompt,
-			ft_itoa((int)g_shell.jobs.len));
-			i += 2;
-		}
+			exec_option_prompt(&expanded_prompt,
+			ft_itoa((int)g_shell.jobs.len), &i);
+		else if (prompt[i] == '\\' && prompt[i + 1] == 'l')
+			exec_option_prompt(&expanded_prompt, ft_itoa(g_return), &i);
 		else if (prompt[i] == '\\' && prompt[i + 1] == 'v')
-		{
-			expanded_prompt = ft_strjoin(expanded_prompt, "1.0");
-			i += 2;
-		}
+			exec_option_prompt(&expanded_prompt, "1.0", &i);
 		else if (prompt[i] == '\\' && prompt[i + 1] == 's')
-		{
-			expanded_prompt = ft_strjoin(expanded_prompt, "42sh");
-			i += 2;
-		}
+			exec_option_prompt(&expanded_prompt, "42sh", &i);
 		else if (prompt[i] == '\\' && prompt[i + 1] == 'H')
-		{
-			gethostname(hostname, 4096);
-			expanded_prompt = ft_strjoin(expanded_prompt,
-			hostname);
-			i += 2;
-		}
+			handle_options_H_prompt(&expanded_prompt, &i, 1);
+		else if (prompt[i] == '\\' && prompt[i + 1] == 'h')
+			handle_options_H_prompt(&expanded_prompt, &i, 0);
 		else if (prompt[i] == '\\' && prompt[i + 1] == 'w')
 		{
-			gethostname(hostname, 4096);
-			expanded_prompt = ft_strjoin(expanded_prompt, reduce_pwd_size(
-			var_get(g_shell.vars,"PWD")->value));
-			i += 2;
+			exec_option_prompt(&expanded_prompt, reduce_pwd_size(
+			var_get(g_shell.vars,"PWD")->value), &i);
 		}
 		else
 			expanded_prompt = stradd(expanded_prompt, prompt[i++]);
 	}
-	//ft_printf("expanded prompt is |%s|\n", expanded_prompt);
 	g_shell.ps1 = expanded_prompt;
 }
 
