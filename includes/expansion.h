@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 17:24:02 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/26 16:50:25 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/26 17:53:06 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,16 @@
 
 # include <stdlib.h>
 # include "structs.h"
+
+# define WHITE "\e[0m"
+# define RED "\e[31m"
+# define BLACK "\e[30m"
+# define GREEN "\e[32m"
+# define BROWN "\e[33m"
+# define BLUE "\e[34m"
+# define PURPLE "\e[35m"
+# define CYAN "\e[36m"
+# define LGRAY "\e[37m"
 
 typedef struct		s_expansion
 {
@@ -110,11 +120,13 @@ char				*pull_multi_occ(char *str, char occ);
 */
 
 void				add_other_char_prompt(char **expanded_prompt,
-char *prompt, int *i);
+											char *prompt, int *i);
 void				reduce_pwd_size(char **expanded_prompt, char *pwd, int *i);
-void				handle_options_H_prompt(char **expanded_prompt,
-int *i, int mode);
+void				handle_options_h_prompt(char **expanded_prompt,
+											int *i, int mode);
 void				exec_option_prompt(char **expanded_prompt,
-char *to_add, int *i);
+										char *to_add, int *i);
+void				handle_options_num_prompt(char **expanded_prompt,
+												int num, int *i);
 
 #endif

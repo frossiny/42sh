@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 14:30:04 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/26 15:51:15 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/26 17:05:16 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,5 @@ int					is_directory_err(char *name);
 void				u_free_shell(void);
 
 char				*extract_first(char *command, char stop);
-
 
 #endif

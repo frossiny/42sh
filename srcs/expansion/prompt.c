@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 15:41:43 by lubenard          #+#    #+#             */
-/*   Updated: 2020/01/26 16:50:38 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/26 18:06:34 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,25 +38,21 @@ void	handle_options_prompt(char *prompt)
 			exec_option_prompt(&expanded_prompt,
 			var_get(g_shell.vars, "USER")->value, &i);
 		else if (prompt[i] == '\\' && prompt[i + 1] == 'j')
-		{
-			exec_option_prompt(&expanded_prompt,
-			ft_itoa((int)g_shell.jobs.len), &i);
-		}
+			handle_options_num_prompt(&expanded_prompt,
+			(int)g_shell.jobs.len, &i);
 		else if (prompt[i] == '\\' && prompt[i + 1] == 'l')
-		{
-			exec_option_prompt(&expanded_prompt, ft_itoa(g_return), &i);
-		}
+			handle_options_num_prompt(&expanded_prompt, g_return, &i);
 		else if (prompt[i] == '\\' && prompt[i + 1] == 'v')
 			exec_option_prompt(&expanded_prompt, "1.0", &i);
 		else if (prompt[i] == '\\' && prompt[i + 1] == 's')
 			exec_option_prompt(&expanded_prompt, "42sh", &i);
 		else if (prompt[i] == '\\' && prompt[i + 1] == 'H')
-			handle_options_H_prompt(&expanded_prompt, &i, 1);
+			handle_options_h_prompt(&expanded_prompt, &i, 1);
 		else if (prompt[i] == '\\' && prompt[i + 1] == 'h')
-			handle_options_H_prompt(&expanded_prompt, &i, 0);
+			handle_options_h_prompt(&expanded_prompt, &i, 0);
 		else if (prompt[i] == '\\' && prompt[i + 1] == 'w')
 			reduce_pwd_size(&expanded_prompt,
-			var_get(g_shell.vars,"PWD")->value, &i);
+			var_get(g_shell.vars, "PWD")->value, &i);
 		else
 			add_other_char_prompt(&expanded_prompt, prompt, &i);
 	}
