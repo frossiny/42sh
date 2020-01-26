@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 17:24:02 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/17 18:11:18 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/26 16:50:25 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,5 +104,17 @@ int					is_glob_char(char c);
 int					is_glob_str(char *str);
 int					is_close_bracket(char *str, int i);
 char				*pull_multi_occ(char *str, char occ);
+
+/*
+** prompt expansions
+*/
+
+void				add_other_char_prompt(char **expanded_prompt,
+char *prompt, int *i);
+void				reduce_pwd_size(char **expanded_prompt, char *pwd, int *i);
+void				handle_options_H_prompt(char **expanded_prompt,
+int *i, int mode);
+void				exec_option_prompt(char **expanded_prompt,
+char *to_add, int *i);
 
 #endif

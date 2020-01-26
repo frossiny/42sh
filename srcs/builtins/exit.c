@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 11:53:12 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/08 11:57:32 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/26 15:17:26 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int			b_exit(t_cmd *cmd, t_shell *shell)
 	ht_delete(shell);
 	free(g_pwd);
 	jobs_destroy_all(&g_shell);
+	ft_strdel(&g_shell.ps1);
 	exit(ret);
 	return (ret);
 }

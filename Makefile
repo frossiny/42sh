@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/09 15:29:04 by vsaltel           #+#    #+#              #
-#    Updated: 2020/01/22 15:44:10 by lubenard         ###   ########.fr        #
+#    Updated: 2020/01/26 16:37:07 by lubenard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -102,6 +102,7 @@ FILES	=	shell.c											\
 			execution/pipes/exec_signal_pipe.c				\
 			execution/pipes/exec_dup_pipeline.c				\
 			expansion/prompt.c								\
+			expansion/prompt_utils.c						\
 			expansion/tilde.c								\
 			expansion/expansion.c							\
 			expansion/exp_join.c							\
@@ -235,6 +236,7 @@ FILES	=	shell.c											\
 			utils/str_escape.c								\
 			utils/copy_tab.c								\
 			utils/u_free_shell.c							\
+			utils/extract_first.c							\
 			variables/var_build_env.c						\
 			variables/var_delete.c							\
 			variables/var_destroy.c							\
