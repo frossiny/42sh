@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 15:58:32 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/05/15 14:47:10 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/22 17:43:51 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void		termcaps_history_next(char **str, t_cursor_pos *pos
 	curr = shell->history.lst;
 	i = 0;
 	while (++i < shell->history.pos && curr->next)
+		curr = curr->next;
+	while (!ft_strcmp(curr->str, *str) && curr->next && ++shell->history.pos)
 		curr = curr->next;
 	if (shell->history.pos == 1 && *str)
 	{
