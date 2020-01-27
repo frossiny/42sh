@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/28 10:50:50 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/20 12:06:08 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/27 14:45:36 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,32 +25,34 @@ static void		disp(int argc, char **argv)
 	}
 }
 
-static int		empty_args(void)
+static int		is_alphastr(char *str)
 {
-	ft_putchar('\n');
-	return (0);
+	int		i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (!ft_isalpha(str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
 int				b_echo(t_cmd *cmd, t_shell *shell)
 {
-	t_options	*options;
 	int			opt;
+	int			y;
 
 	(void)shell;
-	options = opt_parse(cmd, "n", "echo");
-	if (options->ret != 0)
-	{
-		opt_free(options);
-		return (1);
-	}
-	opt = opt_get(options, "n") ? 1 : 0;
-	if (cmd->argc < 2)
-	{
-		opt_free(options);
-		return (empty_args());
-	}
-	disp(cmd->argc - options->last, cmd->args + options->last);
-	opt ? 0 : ft_putchar('\n');
-	opt_free(options);
+	opt = 0;
+	y = 0;
+	while (cmd->args[++y] && cmd->args[y][0] == '-' && cmd->args[y][1]
+										&& is_alphastr(cmd->args[y] + 1))
+		if (ft_strchr(cmd->args[y], 'n'))
+			opt = 1;
+	disp(cmd->argc - y, cmd->args + y);
+	if (!opt)
+		ft_putchar('\n');
 	return (0);
 }
