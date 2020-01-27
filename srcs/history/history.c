@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 17:47:28 by vsaltel           #+#    #+#             */
-/*   Updated: 2020/01/23 17:44:13 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/01/27 14:49:09 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ t_history		get_history(void)
 	histo.lst = NULL;
 	histo.size = 0;
 	histo.index = 1;
-	histo.histsize = 500;
+	histo.histsize = MAX_HISTORY;
 	if (!isatty(0) || !var_get(g_shell.vars, "HOME"))
 		return (histo);
 	path = NULL;
