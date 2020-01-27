@@ -87,3 +87,11 @@
    ...
    fun:_nc_doalloc
 }
+{
+   fork
+   Memcheck:Leak
+   ...
+   fun:fork
+   ...
+}
+

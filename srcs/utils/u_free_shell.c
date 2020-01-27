@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 10:55:38 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/22 17:22:50 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/23 15:45:17 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@
 #include "termcaps.h"
 #include "history.h"
 
-void	u_free_shell(void)
+void	u_free_shell(int kill_jobs)
 {
-	jobs_destroy_all(&g_shell);
+	jobs_destroy_all(&g_shell, kill_jobs);
 	ast_destroy(&g_shell);
 	ast_free_cmd(g_shell.current_cmd);
 	var_destroy(&(g_shell.vars));

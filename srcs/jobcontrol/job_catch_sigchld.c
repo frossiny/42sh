@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 14:36:45 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/22 17:15:34 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/23 15:50:54 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ static void	catch_gchild(void)
 			if (!(job = job_search_pid(&g_shell, g_child)))
 				return ;
 		}
-		job->status = "Stopped";
 		job->state = JOB_SUSPENDED;
 		ast_free_cmd(g_shell.current_cmd);
 		g_child = 0;

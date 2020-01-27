@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 10:48:31 by lubenard          #+#    #+#             */
-/*   Updated: 2020/01/15 17:26:42 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/27 12:32:28 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ static t_jobs_lst	*new(void)
 	job->pid = 0;
 	job->pipeline = NULL;
 	job->current = '+';
-	job->status = "Running";
 	job->state = JOB_RUNNING;
 	tcgetattr(g_shell.pgrp, &job->tmodes);
 	job->tmodes.c_lflag = g_shell.prev_term.c_lflag;
@@ -89,6 +88,7 @@ t_jobs_lst			*job_new_pipe(t_pipel *pline)
 		return (job);
 	while (pline->next)
 		pline = pline->next;
+	job->pid = pline->pid;
 	isatty(0) ? ft_printf("[%d] %d\n", job->job_number, pline->pid) : 0;
 	return (job);
 }

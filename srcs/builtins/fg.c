@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 16:51:40 by lubenard          #+#    #+#             */
-/*   Updated: 2020/01/16 16:56:46 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/27 13:02:28 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int		wait_for_job(int pid)
 	pid_t	wait;
 	int		status;
 
+	g_child = pid;
 	while (1)
 	{
 		if ((wait = waitpid(-pid, &status, WUNTRACED)) == -1)
@@ -72,12 +73,9 @@ int		wait_for_job(int pid)
 ** set bg process into foreground then restore shell into foreground
 */
 
-int		put_foreground(t_shell *shell, int converted, int cont)
+int		put_foreground(t_jobs_lst *searched, int cont)
 {
-	t_jobs_lst	*searched;
-
-	searched = job_search(shell, converted);
-	if (tcsetpgrp(shell->pgrp, searched->pid) < 0)
+	if (tcsetpgrp(g_shell.pgrp, searched->pid) < 0)
 		return (EXIT_FAILURE);
 	ft_printf("%s\n", searched->command);
 	if (cont)
@@ -87,31 +85,36 @@ int		put_foreground(t_shell *shell, int converted, int cont)
 			return (EXIT_FAILURE);
 		searched->pipeline ? exec_signal_pipe(searched->pipeline, SIGCONT) : 0;
 	}
-	g_child = searched->pid;
 	searched->state = JOB_RUNNING;
-	searched->status = "Running";
 	searched->foreground = 1;
 	wait_for_job(searched->pid);
-	if (tcsetpgrp(shell->pgrp, shell->pid) < 0)
+	if (tcsetpgrp(g_shell.pgrp, g_shell.pid) < 0)
 		return (EXIT_FAILURE);
 	termcaps_init(NULL);
-	job_is_completed(searched) ? job_delete(shell, searched->pid) : 0;
+	if (job_is_completed(searched))
+		job_delete(&g_shell, searched->pid);
+	else
+	{
+		searched->state = JOB_SUSPENDED;
+		ft_printf("[%d]%c %s %s\n", searched->job_number, searched->current,
+					g_jobs_status[searched->state], searched->command);
+	}
 	return (EXIT_SUCCESS);
 }
 
-int		handle_options_fg(t_shell *shell, t_cmd *cmd)
+int		handle_options_fg(t_cmd *cmd)
 {
-	int converted;
+	int			converted;
 
 	if (cmd->args[1] && cmd->args[1][0] == '%')
 		converted = job_percent(cmd->args[1], "fg");
 	else if (cmd->args[1])
 		converted = ft_atoi(cmd->args[1]);
 	else
-		converted = shell->jobs.plus->job_number;
+		converted = g_shell.jobs.plus->job_number;
 	if (!converted)
 		return (1);
-	return (put_foreground(shell, converted, 1));
+	return (put_foreground(job_search(&g_shell, converted), 1));
 }
 
 int		b_fg(t_cmd *cmd, t_shell *shell)
@@ -136,7 +139,7 @@ int		b_fg(t_cmd *cmd, t_shell *shell)
 			ret_code = 1;
 		}
 		else
-			ret_code = handle_options_fg(shell, cmd);
+			ret_code = handle_options_fg(cmd);
 	}
 	opt_free(opts);
 	return (ret_code);

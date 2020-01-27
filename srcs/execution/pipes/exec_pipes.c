@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 20:32:11 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/22 17:39:27 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/27 12:25:00 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static t_pipel	*read_pipeline(t_pipel *pipeline, t_fd *fd)
 			break ;
 		pipeline = pipeline->next;
 	}
+	g_lpid = g_pipe_pid;
 	return (pipe_start);
 }
 

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:05:36 by lubenard          #+#    #+#             */
-/*   Updated: 2019/12/10 16:24:16 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/23 14:06:47 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "libft.h"
 #include "opt.h"
 #include "builtins.h"
+#include "jobcontrol.h"
 
 int		handle_options(t_options *opts)
 {
@@ -48,10 +49,10 @@ int		print_job(t_shell *shell, int options, int job_number)
 				ft_printf("%d\n", jobs->pid);
 			else if (options == 2)
 				ft_printf("[%d]%c %d %s %s\n", jobs->job_number, jobs->current,
-				jobs->pid, jobs->status, jobs->command);
+					jobs->pid, g_jobs_status[jobs->state], jobs->command);
 			else
 				ft_printf("[%d]%c %s %s\n", jobs->job_number, jobs->current,
-				jobs->status, jobs->command);
+					g_jobs_status[jobs->state], jobs->command);
 		}
 		jobs = jobs->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 10:35:21 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/17 19:10:58 by alagroy-         ###   ########.fr       */
+/*   Updated: 2020/01/23 15:50:03 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int		exec_fork_builtin(t_cmd *cmd)
 		handle_redirections(cmd->redir, 0);
 		status = builtin.func(cmd, &g_shell);
 		var_destroy(&(cmd->tenv));
-		u_free_shell();
+		u_free_shell(0);
 		exit(status);
 	}
 	if (g_child == -1)
