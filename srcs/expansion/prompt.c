@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 15:41:43 by lubenard          #+#    #+#             */
-/*   Updated: 2020/01/27 16:49:34 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/27 19:27:20 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,34 @@ void	exec_option_prompt(char **expanded_prompt, char *to_add, int *i)
 	*i += 2;
 }
 
+void	prompt_main_loop(char *prompt, int *i, char **expanded_prompt)
+{
+	while (prompt[*i])
+	{
+		if (prompt[*i] == '\\' && prompt[*i + 1] == 'u')
+			exec_option_prompt(expanded_prompt,
+			var_get(g_shell.vars, "USER")->value, i);
+		else if (prompt[*i] == '\\' && prompt[*i + 1] == 'j')
+			handle_options_num_prompt(expanded_prompt,
+			(int)g_shell.jobs.len, i);
+		else if (prompt[*i] == '\\' && prompt[*i + 1] == 'l')
+			handle_options_num_prompt(expanded_prompt, g_return, i);
+		else if (prompt[*i] == '\\' && prompt[*i + 1] == 'v')
+			exec_option_prompt(expanded_prompt, "1.0", i);
+		else if (prompt[*i] == '\\' && prompt[*i + 1] == 's')
+			exec_option_prompt(expanded_prompt, "42sh", i);
+		else if (prompt[*i] == '\\' && prompt[*i + 1] == 'H')
+			handle_options_h_prompt(expanded_prompt, i, 1);
+		else if (prompt[*i] == '\\' && prompt[*i + 1] == 'h')
+			handle_options_h_prompt(expanded_prompt, i, 0);
+		else if (prompt[*i] == '\\' && prompt[*i + 1] == 'w')
+			reduce_pwd_size(expanded_prompt,
+			var_get(g_shell.vars, "PWD")->value, i);
+		else
+			add_other_char_prompt(expanded_prompt, prompt, i);
+	}
+}
+
 void	handle_options_prompt(char *prompt)
 {
 	int		i;
@@ -32,30 +60,7 @@ void	handle_options_prompt(char *prompt)
 
 	i = 0;
 	expanded_prompt = "";
-	while (prompt[i])
-	{
-		if (prompt[i] == '\\' && prompt[i + 1] == 'u')
-			exec_option_prompt(&expanded_prompt,
-			var_get(g_shell.vars, "USER")->value, &i);
-		else if (prompt[i] == '\\' && prompt[i + 1] == 'j')
-			handle_options_num_prompt(&expanded_prompt,
-			(int)g_shell.jobs.len, &i);
-		else if (prompt[i] == '\\' && prompt[i + 1] == 'l')
-			handle_options_num_prompt(&expanded_prompt, g_return, &i);
-		else if (prompt[i] == '\\' && prompt[i + 1] == 'v')
-			exec_option_prompt(&expanded_prompt, "1.0", &i);
-		else if (prompt[i] == '\\' && prompt[i + 1] == 's')
-			exec_option_prompt(&expanded_prompt, "42sh", &i);
-		else if (prompt[i] == '\\' && prompt[i + 1] == 'H')
-			handle_options_h_prompt(&expanded_prompt, &i, 1);
-		else if (prompt[i] == '\\' && prompt[i + 1] == 'h')
-			handle_options_h_prompt(&expanded_prompt, &i, 0);
-		else if (prompt[i] == '\\' && prompt[i + 1] == 'w')
-			reduce_pwd_size(&expanded_prompt,
-			var_get(g_shell.vars, "PWD")->value, &i);
-		else
-			add_other_char_prompt(&expanded_prompt, prompt, &i);
-	}
+	prompt_main_loop(prompt, &i, &expanded_prompt);
 	exec_option_prompt(&expanded_prompt, WHITE, &i);
 	if (g_shell.ps1 && ft_strcmp(g_shell.ps1, ""))
 		ft_strdel(&g_shell.ps1);

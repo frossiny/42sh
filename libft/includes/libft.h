@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 18:24:16 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/27 13:00:26 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/27 19:03:35 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ char				*ft_insert_str(char *str, char *insert, int index);
 char				*ft_strdelpart(char *str, int i, int len);
 char				*ft_stradd(char *s1, char s2);
 int					ft_strnncmp(char *dest, char *src, int start, int end);
-
 
 int					ft_atoi(const char *str);
 char				*ft_itoa(int n);

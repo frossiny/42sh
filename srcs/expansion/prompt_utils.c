@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/26 16:36:31 by lubenard          #+#    #+#             */
-/*   Updated: 2020/01/27 17:16:13 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/27 19:27:42 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,26 +57,33 @@ void	handle_options_num_prompt(char **expanded_prompt, int num, int *i)
 	ft_strdel(&number);
 }
 
+int		color_utils(char **expanded_prompt, char *to_add, int *i, int size)
+{
+	exec_option_prompt(expanded_prompt, to_add, i);
+	*i += size;
+	return (1);
+}
+
 int		color_prompt(char **expanded_prompt, char *prompt, int *i)
 {
 	if (!ft_strnncmp(prompt, "{red}", *i, *i + 3))
-	{	exec_option_prompt(expanded_prompt, RED, i); *i += 3; return (1);}
+		return (color_utils(expanded_prompt, RED, i, 3));
 	if (!ft_strnncmp(prompt, "{white}", *i, *i + 5))
-	{	exec_option_prompt(expanded_prompt, WHITE, i);*i += 5; return (1);}
+		return (color_utils(expanded_prompt, WHITE, i, 5));
 	if (!ft_strnncmp(prompt, "{cyan}", *i, *i + 4))
-	{	exec_option_prompt(expanded_prompt, CYAN, i);*i += 4; return (1);}
+		return (color_utils(expanded_prompt, CYAN, i, 4));
 	if (!ft_strnncmp(prompt, "{blue}", *i, *i + 4))
-	{	exec_option_prompt(expanded_prompt, BLUE, i);*i += 4; return (1);}
+		return (color_utils(expanded_prompt, BLUE, i, 4));
 	if (!ft_strnncmp(prompt, "{black}", *i, *i + 5))
-	{	exec_option_prompt(expanded_prompt, BLACK, i);*i += 5; return (1);}
+		return (color_utils(expanded_prompt, BLACK, i, 5));
 	if (!ft_strnncmp(prompt, "{green}", *i, *i + 5))
-	{	exec_option_prompt(expanded_prompt, GREEN, i);*i += 5; return (1);}
+		return (color_utils(expanded_prompt, GREEN, i, 5));
 	if (!ft_strnncmp(prompt, "{brown}", *i, *i + 5))
-	{	exec_option_prompt(expanded_prompt, BROWN, i);*i += 5; return (1);}
+		return (color_utils(expanded_prompt, BROWN, i, 5));
 	if (!ft_strnncmp(prompt, "{purple}", *i, *i + 6))
-	{	exec_option_prompt(expanded_prompt, PURPLE, i);*i += 6; return (1);}
+		return (color_utils(expanded_prompt, PURPLE, i, 6));
 	if (!ft_strnncmp(prompt, "{lgray}", *i, *i + 5))
-	{	exec_option_prompt(expanded_prompt, LGRAY, i);*i += 5; return (1);}
+		return (color_utils(expanded_prompt, LGRAY, i, 5));
 	return (0);
 }
 
