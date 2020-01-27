@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 11:59:10 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/17 16:35:35 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/27 14:49:20 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include "variables.h"
 # include "utils.h"
 
-# define MAX_HISTORY	30
+# define MAX_HISTORY	500
 # define HT_SIZE		150
 # define EXP_SPECIAL	"?$!0"
 # define MAX_PWD_LEN	8192

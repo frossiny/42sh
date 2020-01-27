@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   histo_expansion.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 12:18:13 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/12/10 16:13:49 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/01/27 14:54:22 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,10 @@ static int		histo_index_exp(t_expansion *e, t_history history,
 		while (--index && lst)
 			lst = lst->prev;
 	}
-	e->new = ft_strfjoin(e->new, lst->str, e->new);
+	if (lst)
+		e->new = ft_strfjoin(e->new, lst->str, e->new);
+	else
+		return (1);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 17:47:28 by vsaltel           #+#    #+#             */
-/*   Updated: 2020/01/27 16:09:34 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/01/27 18:19:20 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ t_history		get_history(void)
 	histo.lst = NULL;
 	histo.size = 0;
 	histo.index = 1;
-	histo.histsize = 500;
+	histo.histsize = MAX_HISTORY;
 	path = NULL;
 	if (!isatty(0)
 		|| !(path = ft_strpathfile(getenv("HOME"), ".42sh_history")))

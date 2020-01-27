@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 17:33:11 by alagroy-          #+#    #+#             */
-/*   Updated: 2020/01/27 18:15:33 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/01/27 18:17:32 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,12 @@ static int		build_heredoc_rec(t_anode *node)
 	return (1);
 }
 
-void			build_heredoc(t_shell *shell)
+int				build_heredoc(t_shell *shell)
 {
 	if (!(build_heredoc_rec(shell->ast)))
+	{
 		ast_destroy(shell);
+		return (0);
+	}
+	return (1);
 }
