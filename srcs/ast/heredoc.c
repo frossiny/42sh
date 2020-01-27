@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 17:33:11 by alagroy-          #+#    #+#             */
-/*   Updated: 2020/01/20 11:17:40 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/27 18:09:07 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static int		read_heredoc(t_redirect *redir)
 		}
 		if (line)
 			redir->heredoc = ft_expend_2dstr(redir->heredoc, line);
+		ft_strdel(&line);
 	}
 	ret = g_clear_buffer;
 	g_ignore_signals = 0;
