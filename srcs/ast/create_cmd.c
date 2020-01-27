@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 13:23:37 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/22 17:09:10 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/27 17:44:58 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,18 @@ static t_token	*get_exe_token(t_token *exe)
 	return (exe && exe->type == TOKEN_NAME ? exe : NULL);
 }
 
+static void		check_fg(t_token **exe)
+{
+	t_token		*new;
+
+	if (!exe || !*exe || (*exe)->content[0] != '%')
+		return ;
+	if (!(new = tok_new(TOKEN_NAME, "fg")))
+		return ;
+	new->next = *exe;
+	*exe = new;
+}
+
 t_cmd			*create_cmd(t_token *exe)
 {
 	t_cmd	*cmd;
@@ -97,6 +109,7 @@ t_cmd			*create_cmd(t_token *exe)
 	if (!(cmd = (t_cmd *)malloc(sizeof(t_cmd))))
 		return (NULL);
 	parse_assignements(cmd, &exe);
+	check_fg(&exe);
 	cmd->tokens = exe;
 	cmd->exe = get_exe_token(exe);
 	cmd->argc = -1;
