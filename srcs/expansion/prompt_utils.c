@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/26 16:36:31 by lubenard          #+#    #+#             */
-/*   Updated: 2020/01/26 18:47:56 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/27 17:16:13 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,19 +57,26 @@ void	handle_options_num_prompt(char **expanded_prompt, int num, int *i)
 	ft_strdel(&number);
 }
 
-int		color_prompt(char *prompt, int *i)
+int		color_prompt(char **expanded_prompt, char *prompt, int *i)
 {
-	if (prompt[*i] == '{' && prompt[*i + 4] == '}'
-	&& prompt[*i + 1] == 'r' && prompt[*i + 2] == 'e' && prompt[*i + 3] == 'd')
-	{	ft_putstr(RED); *i += 5; return (1);}
-	if (prompt[*i] == '{' && prompt[*i + 6] == '}'
-	&& prompt[*i + 1] == 'w' && prompt[*i + 2] == 'h' && prompt[*i + 3] == 'i'
-	&& prompt[*i + 4] == 't' && prompt[*i + 5] == 'e')
-	{	ft_putstr(WHITE); *i += 7; return (1);}
-	if (prompt[*i] == '{' && prompt[*i + 5] == '}'
-	&& prompt[*i + 1] == 'c' && prompt[*i + 2] == 'y' && prompt[*i + 3] == 'a'
-	&& prompt[*i + 4] == 'n')
-	{	ft_putstr(CYAN); *i += 6; return (1);}
+	if (!ft_strnncmp(prompt, "{red}", *i, *i + 3))
+	{	exec_option_prompt(expanded_prompt, RED, i); *i += 3; return (1);}
+	if (!ft_strnncmp(prompt, "{white}", *i, *i + 5))
+	{	exec_option_prompt(expanded_prompt, WHITE, i);*i += 5; return (1);}
+	if (!ft_strnncmp(prompt, "{cyan}", *i, *i + 4))
+	{	exec_option_prompt(expanded_prompt, CYAN, i);*i += 4; return (1);}
+	if (!ft_strnncmp(prompt, "{blue}", *i, *i + 4))
+	{	exec_option_prompt(expanded_prompt, BLUE, i);*i += 4; return (1);}
+	if (!ft_strnncmp(prompt, "{black}", *i, *i + 5))
+	{	exec_option_prompt(expanded_prompt, BLACK, i);*i += 5; return (1);}
+	if (!ft_strnncmp(prompt, "{green}", *i, *i + 5))
+	{	exec_option_prompt(expanded_prompt, GREEN, i);*i += 5; return (1);}
+	if (!ft_strnncmp(prompt, "{brown}", *i, *i + 5))
+	{	exec_option_prompt(expanded_prompt, BROWN, i);*i += 5; return (1);}
+	if (!ft_strnncmp(prompt, "{purple}", *i, *i + 6))
+	{	exec_option_prompt(expanded_prompt, PURPLE, i);*i += 6; return (1);}
+	if (!ft_strnncmp(prompt, "{lgray}", *i, *i + 5))
+	{	exec_option_prompt(expanded_prompt, LGRAY, i);*i += 5; return (1);}
 	return (0);
 }
 
@@ -77,7 +84,7 @@ void	add_other_char_prompt(char **expanded_prompt, char *prompt, int *i)
 {
 	char	*copy;
 
-	if (color_prompt(prompt, i) == 0)
+	if (color_prompt(expanded_prompt, prompt, i) == 0)
 	{
 		copy = ft_stradd(*expanded_prompt, prompt[(*i)++]);
 		if (ft_strcmp(*expanded_prompt, ""))

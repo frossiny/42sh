@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/01 14:41:10 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/26 18:35:34 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/27 18:52:15 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,38 @@ void	prompt(void)
 	{
 		prompt_expansions();
 		ft_putstr(g_shell.ps1);
-	//ft_printf(g_shell.ps1);//,g_return ? 31 : 32);
 	}
 	else if (g_ignore_signals == 1)
 		ft_printf("> ");
 }
 
+int		count_len_prompt(char *ps1)
+{
+	int		len;
+	int		i;
+
+	len = 0;
+	i = 0;
+	while (ps1[i])
+	{
+		if (ps1[i] == 27 && !ft_strnncmp(ps1, "[3", i + 1, i + 2)
+		&& ps1[i + 4] == 'm')
+			i += 5;
+		else if (ps1[i] == 27 && !ft_strnncmp(ps1, "[0m", i + 1, i + 2))
+			i += 4;
+		else
+		{
+			len++;
+			i++;
+		}
+	}
+	return (len);
+}
+
 int		prompt_len(void)
 {
 	if (g_ignore_signals == 0)
-		return (ft_strlen(g_shell.ps1));
+		return (count_len_prompt(g_shell.ps1));
 	else if (g_ignore_signals == 1)
 		return (ft_strlen("> "));
 	return (0);

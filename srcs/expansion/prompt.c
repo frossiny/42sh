@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 15:41:43 by lubenard          #+#    #+#             */
-/*   Updated: 2020/01/26 18:06:34 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/27 16:49:34 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	handle_options_prompt(char *prompt)
 		else
 			add_other_char_prompt(&expanded_prompt, prompt, &i);
 	}
+	exec_option_prompt(&expanded_prompt, WHITE, &i);
 	if (g_shell.ps1 && ft_strcmp(g_shell.ps1, ""))
 		ft_strdel(&g_shell.ps1);
 	g_shell.ps1 = expanded_prompt;
