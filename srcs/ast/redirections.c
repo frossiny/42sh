@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 15:11:08 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/17 18:05:24 by alagroy-         ###   ########.fr       */
+/*   Updated: 2020/01/27 14:04:09 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,24 @@ static t_redirect	*create_redirection(t_token *token)
 	return (red);
 }
 
+static t_redirect	*add_red(t_redirect **redir, t_token *tok)
+{
+	t_redirect	*curr;
+
+	if (!redir)
+		return (NULL);
+	if (!*redir)
+		*redir = create_redirection(tok);
+	else
+	{
+		curr = *redir;
+		while (curr->next)
+			curr = curr->next;
+		curr->next = create_redirection(tok);
+	}
+	return (*redir);
+}
+
 t_redirect			*parse_redirections(t_token *tok)
 {
 	t_redirect	*red;
@@ -64,10 +82,7 @@ t_redirect			*parse_redirections(t_token *tok)
 	{
 		if (tok_is_redirection(tok))
 		{
-			if (!red)
-				red = create_redirection(tok);
-			else
-				red->next = create_redirection(tok);
+			add_red(&red, tok);
 			tok = tok->next->next;
 		}
 		else
