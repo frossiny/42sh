@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 17:33:11 by alagroy-          #+#    #+#             */
-/*   Updated: 2020/01/20 11:17:40 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/27 14:33:58 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 static int		read_heredoc(t_redirect *redir)
 {
 	char	*line;
-	int		ret;
 
 	g_ignore_signals = 1;
 	if (!redir->value->content)
@@ -33,9 +32,8 @@ static int		read_heredoc(t_redirect *redir)
 		if (line)
 			redir->heredoc = ft_expend_2dstr(redir->heredoc, line);
 	}
-	ret = g_clear_buffer;
 	g_ignore_signals = 0;
-	return (ret);
+	return (g_clear_buffer);
 }
 
 static int		build_heredoc_rec(t_anode *node)
