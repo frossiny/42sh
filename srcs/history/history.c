@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 17:47:28 by vsaltel           #+#    #+#             */
-/*   Updated: 2020/01/23 17:44:13 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/01/27 16:09:34 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,10 @@ t_history		get_history(void)
 	histo.size = 0;
 	histo.index = 1;
 	histo.histsize = 500;
-	if (!isatty(0) || !var_get(g_shell.vars, "HOME"))
-		return (histo);
 	path = NULL;
-	path = ft_strpathfile(getenv("HOME"), ".42sh_history");
+	if (!isatty(0)
+		|| !(path = ft_strpathfile(getenv("HOME"), ".42sh_history")))
+		return (histo);
 	if (access(path, F_OK) || access(path, R_OK))
 	{
 		free(path);
