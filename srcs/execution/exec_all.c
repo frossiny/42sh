@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 15:17:59 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/10 15:41:21 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/01/28 13:44:55 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,23 @@ static int	is_cond_node(t_anode *node)
 	return (node->ope->type == TOKEN_AND || node->ope->type == TOKEN_OR);
 }
 
-static int	parse_condition(int *ret, t_anode *cond)
+static int	parse_condition(int *ret, t_anode **ast, t_shell *shell)
 {
-	if (cond->ope->type == TOKEN_AND)
+	if ((*ast)->ope->type == TOKEN_AND)
 	{
 		if (*ret != 0)
 			return (1);
-		*ret = exec_command(cond->right->cmd);
+		if (is_pipe_node((*ast)->right))
+			*ret = exec_pipes((*ast)->right, shell, ast);
+		else
+			*ret = exec_command((*ast)->right->cmd);
 		return (1);
 	}
-	else if (cond->ope->type == TOKEN_OR)
+	else if ((*ast)->ope->type == TOKEN_OR)
 	{
 		if (*ret == 0)
 			return (1);
-		*ret = exec_command(cond->right->cmd);
+		*ret = exec_command((*ast)->right->cmd);
 		return (1);
 	}
 	else
@@ -56,15 +59,16 @@ int			exec_all(t_shell *shell, t_anode *ast)
 		ast = ast->left;
 	while (ast)
 	{
+		ft_printf("AST EXE: %p | %p\n", ast->ope, ast->cmd);
 		if (!ast->ope && !is_pipe_node(ast->parent))
 			ret = exec_command(ast->cmd);
-		else if (is_pipe_node(ast->parent))
-			ret = exec_pipes(ast, shell, &ast);
 		else if (is_cond_node(ast))
 		{
-			if (!parse_condition(&ret, ast))
+			if (!parse_condition(&ret, &ast, shell))
 				return (ret);
 		}
+		else if (is_pipe_node(ast->parent))
+			ret = exec_pipes(ast, shell, &ast);
 		ast ? ast = ast->parent : 0;
 	}
 	return (ret);
