@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:05:59 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/22 17:25:24 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/27 14:38:31 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,10 @@ int		eval_exec(char **input, int history)
 		job_check_status();
 		ft_strdel(input);
 		ast_build(&g_shell);
-		build_heredoc(&g_shell);
-		g_shell.ast ? ret = exec_all(&g_shell, g_shell.ast) : 0;
+		if (!(build_heredoc(&g_shell)))
+			ret = 1;
+		else
+			ret = g_shell.ast ? exec_all(&g_shell, g_shell.ast) : 0;
 		lexer_free(&(g_shell.lexer));
 		ast_destroy(&g_shell);
 	}
@@ -72,7 +74,7 @@ int		check_exit(void)
 		return (shell());
 	}
 	isatty(0) ? ft_putchar('\n') : 0;
-	u_free_shell();
+	u_free_shell(1);
 	return (0);
 }
 

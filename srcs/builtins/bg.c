@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 13:32:46 by lubenard          #+#    #+#             */
-/*   Updated: 2020/01/15 17:28:09 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/27 12:32:54 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "builtins.h"
 #include "opt.h"
 #include "signal.h"
+#include "shell.h"
 
 /*
 ** Send SIGCONT signal, and continue background stopped processes
@@ -33,20 +34,19 @@ int		set_bg(t_shell *shell, int converted, int cont)
 		return (0);
 	}
 	ft_printf("[%d]%c %s\n", searched->job_number, searched->current,
-	searched->command);
+		searched->command);
+	g_lpid = searched->pid;
 	if (searched->state == JOB_SUSPENDED)
 		searched->state = JOB_CONTINUED;
-	searched->status = "Running";
-	if (cont)
+	if (!cont)
+		return (0);
+	if (!searched->pipeline)
 	{
-		if (!searched->pipeline)
-		{
-			if (kill(-searched->pid, SIGCONT) < 0)
-				return (EXIT_FAILURE);
-		}
-		else
-			exec_signal_pipe(searched->pipeline, SIGCONT);
+		if (kill(-searched->pid, SIGCONT) < 0)
+			return (EXIT_FAILURE);
 	}
+	else
+		exec_signal_pipe(searched->pipeline, SIGCONT);
 	return (0);
 }
 

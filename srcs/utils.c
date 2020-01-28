@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:46:01 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/17 16:18:51 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/23 16:30:31 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,23 +64,23 @@ int		cd_is_dir(char *file, char *name)
 	return (1);
 }
 
-int		can_execute(char *cmd, t_shell *shell)
+int		can_execute(char *cmd, t_shell *shell, int verbose)
 {
 	char		*file;
 	struct stat	stats;
 
-	if (!(file = get_exe(shell, cmd, 1)))
+	if (!(file = get_exe(shell, cmd, verbose)))
 		return (127);
 	if (ft_strequ(file, "") || access(file, X_OK))
 	{
-		permission_denied(file);
+		verbose ? permission_denied(cmd) : 0;
 		free(file);
 		return (126);
 	}
 	else if ((stat(file, &stats) == -1) || !S_ISREG(stats.st_mode))
 	{
 		free(file);
-		return (is_directory_err(cmd));
+		return (is_directory_err(cmd, verbose));
 	}
 	free(file);
 	return (0);

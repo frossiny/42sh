@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 15:27:23 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/20 09:34:50 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/27 14:04:34 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,24 +42,20 @@ static void		redirect_input(t_redirect *redir)
 
 static int		handle_aggregate(t_redirect *redir)
 {
-	// while (redir && redir->value)
-	// {
-		if (redir->type == TOKEN_AGGR)
+	if (redir->type == TOKEN_AGGR)
+	{
+		if (ft_strequ(redir->value->content, "-"))
+			close(redir->filedes);
+		else if (ft_isdigit(redir->value->content[0]))
 		{
-			if (ft_strequ(redir->value->content, "-"))
-				close(redir->filedes);
-			else if (ft_isdigit(redir->value->content[0]))
+			if (dup2(ft_atoi(redir->value->content), redir->filedes) == -1)
 			{
-				if (dup2(ft_atoi(redir->value->content), redir->filedes) == -1)
-				{
-					ft_dprintf(2, "42sh: %s: bad file descriptor\n", \
-													redir->value->content);
-					return (0);
-				}
+				ft_dprintf(2, "42sh: %s: bad file descriptor\n", \
+												redir->value->content);
+				return (0);
 			}
 		}
-	// 	redir = redir->next;
-	// }
+	}
 	return (1);
 }
 
@@ -83,7 +79,5 @@ int				handle_redirections(t_redirect *redir, int c_only)
 			handle_aggregate(redir);
 		redir = redir->next;
 	}
-	// if (!c_only && !handle_aggregate(save))
-	// 	return (0);
 	return (1);
 }

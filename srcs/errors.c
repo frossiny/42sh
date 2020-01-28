@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 16:54:50 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/26 15:40:47 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/01/23 15:59:10 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,9 @@ void	no_user(char *name)
 	ft_dprintf(2, "42sh: %s: no such user or named directory\n", name);
 }
 
-int		is_directory_err(char *name)
+int		is_directory_err(char *name, int verbose)
 {
-	ft_dprintf(2, "42sh: %s: is a directory\n", name);
+	if (verbose)
+		ft_dprintf(2, "42sh: %s: is a directory\n", name);
 	return (126);
 }

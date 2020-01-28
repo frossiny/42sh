@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 17:27:04 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/17 16:18:23 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/23 16:31:31 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,7 @@ static char	*handle_absolute(char *name, int verbose)
 	file = NULL;
 	file = ft_strdup(name);
 	if (file && access(file, F_OK) != -1)
-	{
-		if (access(file, X_OK) == -1)
-			verbose ? permission_denied(name) : 0;
 		return (file);
-	}
 	verbose ? inexistant(name) : 0;
 	if (file)
 		free(file);
@@ -47,11 +43,7 @@ static char	*handle_relative(char *name, int verbose)
 	}
 	free(tmp);
 	if (access(file, F_OK) != -1)
-	{
-		if (access(file, X_OK) == -1)
-			verbose ? permission_denied(name) : 0;
 		return (file);
-	}
 	free(file);
 	verbose ? inexistant(name) : 0;
 	return (NULL);

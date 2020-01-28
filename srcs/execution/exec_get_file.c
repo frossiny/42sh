@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 16:22:21 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/22 17:12:46 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/23 15:57:45 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*exec_get_file(t_cmd *cmd, int *errno, int verbose)
 		errno ? *errno = 127 : 0;
 		return (NULL);
 	}
-	if ((ret = can_execute(cmd->exe->content, &g_shell)))
+	if ((ret = can_execute(cmd->exe->content, &g_shell, verbose)))
 	{
 		errno ? *errno = 126 : 0;
 		free(file);

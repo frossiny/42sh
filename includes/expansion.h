@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 17:24:02 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/22 15:12:09 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/23 15:18:13 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char				*dquotes_join_escape(char *s1, char *s2);
 char				*dquotes_dup_escape(char *str);
 
 int					exp_variables(t_token *token);
-t_var				*exp_get_var(t_expansion *exp);
+t_var				*exp_get_var(t_expansion *exp, size_t *key_len);
 char				*exp_get_varname(t_expansion *exp);
 int					exp_simple_var(t_expansion *exp);
 int					exp_parameter(t_expansion *exp);

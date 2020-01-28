@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:26:37 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/22 16:59:19 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/27 12:23:12 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,15 @@ static int	start_process(t_cmd *cmd, char **env)
 	g_shell.current_cmd = ast_dup_cmd(cmd);
 	if (g_child == -1)
 		return (g_child = 0);
-	!cmd->is_bg ? pause() : 0;
-	!cmd->is_bg ? status = g_lstatus : 0;
-	!cmd->is_bg ? tcsetpgrp(g_shell.pgrp, g_shell.pid) : 0;
-	!cmd->is_bg && g_shell.able_termcaps ? termcaps_init(NULL) : 0;
+	if (!cmd->is_bg)
+	{
+		pause();
+		status = g_lstatus;
+		tcsetpgrp(g_shell.pgrp, g_shell.pid);
+		g_shell.able_termcaps ? termcaps_init(NULL) : 0;
+	}
+	else
+		g_lpid = g_child;
 	g_lstatus = 0;
 	if (WIFSIGNALED(status))
 		return (display_signal(status));

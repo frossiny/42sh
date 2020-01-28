@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 14:50:35 by vsaltel           #+#    #+#             */
-/*   Updated: 2020/01/17 19:11:09 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/01/23 14:31:45 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,11 @@ char	*strrev_pattern(char *s)
 
 int		create_compare(t_expansion *exp, t_compare *l, t_var *var, char *str)
 {
-	char	*key;
 	int		len_cmp;
 
-	key = ft_strndup(exp->str + 2, exp->i - 2);
-	l->file = var_get_value(var, key);
-	free(key);
-	if (!(l->file))
+	if (!var)
+		return (0);
+	if (!(l->file = ft_strdup(var->value)))
 		return (0);
 	l->len_find = 0;
 	l->l_pattern = (exp->str[exp->i + 1] == exp->str[exp->i]);

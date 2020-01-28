@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 11:53:12 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/22 17:25:14 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/27 12:55:14 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,14 @@ int			b_exit(t_cmd *cmd, t_shell *shell)
 	else if (cmd->argc == 2)
 		ret = ft_atoi(cmd->args[1]);
 	(void)shell;
-	u_free_shell();
+	if (!g_shell.stopped_jobs && !job_can_exit())
+	{
+		g_shell.stopped_jobs = 1;
+		g_shell.pid == getpid() ? \
+			ft_dprintf(2, "There are stopped jobs.\n") : 0;
+		return (g_shell.pid == getpid());
+	}
+	u_free_shell(g_shell.pid == getpid());
 	exit(ret);
 	return (ret);
 }
