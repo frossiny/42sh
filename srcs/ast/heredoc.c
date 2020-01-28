@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 17:33:11 by alagroy-          #+#    #+#             */
-/*   Updated: 2020/01/27 18:17:32 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/01/28 12:50:25 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,30 @@
 #include "shell.h"
 #include "libft.h"
 #include "structs.h"
+#include "expansion.h"
+
+static int		expand_heredoc(t_redirect *redir)
+{
+	t_token		tok;
+	int			i;
+
+	i = -1;
+	while (redir->heredoc && redir->heredoc[++i])
+	{
+		tok.content = ft_strdup(redir->heredoc[i]);
+		tok.len = ft_strlen(redir->heredoc[i]);
+		tok.type = TOKEN_NAME;
+		tok.next = NULL;
+		if (!expand(&tok, 0, NULL))
+		{
+			ft_strdel(&tok.content);
+			return (0);
+		}
+		ft_strdel(&redir->heredoc[i]);
+		redir->heredoc[i] = tok.content;
+	}
+	return (1);
+}
 
 static int		read_heredoc(t_redirect *redir)
 {
@@ -34,6 +58,8 @@ static int		read_heredoc(t_redirect *redir)
 		ft_strdel(&line);
 	}
 	g_ignore_signals = 0;
+	if (!(expand_heredoc(redir)))
+		return (1);
 	return (g_clear_buffer);
 }
 
@@ -43,11 +69,11 @@ static int		build_heredoc_rec(t_anode *node)
 
 	if (!node)
 		return (1);
-	if (node->right)
-		if (!(build_heredoc_rec(node->right)))
-			return (0);
 	if (node->left)
 		if (!build_heredoc_rec(node->left))
+			return (0);
+	if (node->ope && node->right)
+		if (!(build_heredoc_rec(node->right)))
 			return (0);
 	if (node->cmd && node->cmd->redir)
 	{

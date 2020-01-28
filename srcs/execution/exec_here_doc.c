@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/15 11:24:47 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/17 19:03:56 by alagroy-         ###   ########.fr       */
+/*   Updated: 2020/01/28 11:35:09 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void		apply_here_doc(t_redirect *redir)
 	if ((fd = open("/tmp/heredoc42sh", O_CREAT | O_TRUNC | O_WRONLY, 0755))
 			== -1)
 		return ;
-	while (redir->heredoc[++i])
+	while (redir->heredoc && redir->heredoc[++i])
 		ft_putendl_fd(redir->heredoc[i], fd);
 	close(fd);
 	if ((fd = open("/tmp/heredoc42sh", O_RDONLY)) == -1)

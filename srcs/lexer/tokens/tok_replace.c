@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 17:30:43 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/23 17:34:46 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/28 12:00:58 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void	tok_replace(t_token *token, char *str)
 {
-	free(token->content);
+	ft_strdel(&token->content);
 	if (!str)
 		str = ft_strdup("");
 	token->content = str;
