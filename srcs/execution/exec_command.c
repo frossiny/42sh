@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:26:37 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/27 12:23:12 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/29 14:18:46 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static int	start_process(t_cmd *cmd, char **env)
 		exec_child_fork(cmd, env);
 	setpgid(g_child, g_child);
 	!cmd->is_bg ? tcsetpgrp(g_shell.pgrp, g_child) : 0;
+	g_shell.current_cmd ? ast_free_cmd(g_shell.current_cmd) : 0;
 	g_shell.current_cmd = ast_dup_cmd(cmd);
 	if (g_child == -1)
 		return (g_child = 0);

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/04 15:50:15 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/27 14:38:11 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/28 13:06:38 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int		build_heredoc(t_shell *g_shell);
 void	ast_free_cmd(t_cmd *cmd);
 t_cmd	*ast_dup_cmd(t_cmd *src);
 
-t_anode	*create_node(t_token *ope, t_cmd *cmd);
+t_anode	*ast_create_node(t_token *ope, t_cmd *cmd);
 t_token	*create_ope_node(t_anode **tree, t_token *tokens);
 t_token	*create_cmd_node(t_anode **tree, t_token *tokens);
 t_cmd	*create_cmd(t_token *exe);

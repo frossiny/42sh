@@ -6,12 +6,12 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/09 15:29:04 by vsaltel           #+#    #+#              #
-#    Updated: 2020/01/28 19:56:00 by lubenard         ###   ########.fr        #
+#    Updated: 2020/01/29 15:21:42 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC		=	gcc -g3
-CFLAGS	+=	-Wall -Wextra -Werror
+CC		=	gcc -g3 #-fsanitize=address
+CFLAGS	+=	-Wall -Wextra #-Werror
 
 ifdef DEBUG
 	CFLAGS += -fsanitize=address
@@ -53,6 +53,7 @@ FILES	=	shell.c											\
 			alias/alias_utils.c								\
 			ast/ast_build.c									\
 			ast/create_node.c								\
+			ast/ast_create_node.c								\
 			ast/ast_build_args.c							\
 			ast/redirections.c								\
 			ast/ast_destroy.c								\

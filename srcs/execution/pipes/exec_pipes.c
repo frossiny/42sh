@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 20:32:11 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/27 12:25:00 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/29 15:19:45 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,15 @@
 #include "execution.h"
 #include "jobcontrol.h"
 #include "builtins.h"
+
+void	test(t_pipel *pipe)
+{
+	while (pipe)
+	{
+		ft_printf("TT: %s\n", pipe->cmd->exe->content);
+		pipe = pipe->next;
+	}
+}
 
 static t_pipel	*read_pipeline(t_pipel *pipeline, t_fd *fd)
 {

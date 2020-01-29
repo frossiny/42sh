@@ -6,7 +6,8 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 10:55:38 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/29 16:55:22 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/29 17:02:48 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/29 14:51:17 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +31,11 @@ void	u_free_shell(int kill_jobs)
 	ht_delete(g_shell);
 	lexer_free(&(g_shell.lexer));
 	if (g_shell.history.lst)
+	{
+		if (kill_jobs)
+			overwrite_history(g_shell.history.lst);
 		free_history(&(g_shell.history));
+	}
 	ft_strdel(&g_shell.ps1);
 	g_pwd ? free(g_pwd) : 0;
 }
