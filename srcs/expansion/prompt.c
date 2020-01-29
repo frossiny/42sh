@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 15:41:43 by lubenard          #+#    #+#             */
-/*   Updated: 2020/01/29 11:35:11 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/29 16:54:12 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,5 +98,8 @@ void	prompt_expansions(void)
 	if (ps1)
 		handle_options_prompt(ps1->value);
 	else
-		g_shell.ps1 = "\033[1;31m$> \033[0m";
+	{
+		ft_strdel(&g_shell.ps1);
+		g_shell.ps1 = ft_strdup("\e[1;31m$> \e[0m");
+	}
 }
