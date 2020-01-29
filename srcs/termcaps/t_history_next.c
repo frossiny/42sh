@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 15:58:32 by vsaltel           #+#    #+#             */
-/*   Updated: 2020/01/22 17:43:51 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/01/29 14:35:02 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ void		termcaps_history_next(char **str, t_cursor_pos *pos
 			ft_strdel(&(shell->history.first_command));
 		shell->history.first_command = ft_strdup(*str);
 	}
-	if (str)
-		free(*str);
-	*str = ft_strdup(curr->str);
+	*str = ft_strfdup(curr->str, *str);
 	pos->x_rel = ft_strlen(*str);
 }

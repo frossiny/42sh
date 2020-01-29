@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 15:57:50 by vsaltel           #+#    #+#             */
-/*   Updated: 2020/01/22 17:41:27 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/01/29 14:38:26 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,10 @@ void		termcaps_history_prev(char **str, t_cursor_pos *pos
 	if (!shell->history.lst || shell->history.pos == 0 || pos->visual_mode)
 		return ;
 	curr = NULL;
-	if (str)
-		free(*str);
 	if (--(shell->history.pos) == 0)
 		*str = shell->history.first_command
-			? ft_strdup(shell->history.first_command) : ft_strdup("");
+			? ft_strfdup(shell->history.first_command, *str)
+													: ft_strfdup("", *str);
 	else
 	{
 		curr = shell->history.lst;
@@ -38,7 +37,7 @@ void		termcaps_history_prev(char **str, t_cursor_pos *pos
 			shell->history.pos--;
 			curr = curr->prev;
 		}
-		*str = ft_strdup(curr->str);
+		*str = ft_strfdup(curr->str, *str);
 	}
 	pos->x_rel = ft_strlen(*str);
 }
