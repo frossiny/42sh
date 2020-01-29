@@ -6,7 +6,7 @@
 /*   By: alagroy- <alagroy-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 15:58:23 by alagroy-          #+#    #+#             */
-/*   Updated: 2020/01/21 17:44:21 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/01/21 18:19:48 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,23 @@ static void	print_compl_list(t_list *compl_list, int win_w)
 	ft_putchar('\n');
 	max_len = find_max_len(compl_list);
 	nb_col = win_w / (max_len + 3);
-	while (compl_list)
-	{
-		i = -1;
-		while (compl_list && ++i < nb_col)
+	if (nb_col < 1)
+		while (compl_list)
 		{
-			ft_printf("%-*s", max_len + 3, compl_list->content);
+			ft_printf("%s\n", compl_list->content);
 			compl_list = compl_list->next;
 		}
-		ft_putchar('\n');
-	}
+	else
+		while (compl_list)
+		{
+			i = -1;
+			while (compl_list && ++i < nb_col)
+			{
+				ft_printf("%-*s", max_len + 3, compl_list->content);
+				compl_list = compl_list->next;
+			}
+			ft_putchar('\n');
+		}
 }
 
 static int	compl_shared_part(t_cursor_pos *pos, char **str, t_list *compl_list,

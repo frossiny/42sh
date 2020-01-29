@@ -6,7 +6,7 @@
 #    By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/16 11:23:33 by frossiny          #+#    #+#              #
-#    Updated: 2020/01/17 16:43:05 by alagroy-         ###   ########.fr        #
+#    Updated: 2020/01/27 12:55:48 by lubenard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,6 +74,8 @@ FILES 	=	ft_2dstrnew.c						\
 			ft_strisalnum.c						\
 			ft_strisdigit.c						\
 			ft_strisascii.c						\
+			ft_stradd.c							\
+			ft_strnncmp.c						\
 			ft_atoi.c							\
 			ft_itoa.c							\
 			ft_islower.c						\

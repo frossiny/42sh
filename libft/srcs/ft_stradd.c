@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tok_replace.c                                      :+:      :+:    :+:   */
+/*   ft_stradd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/29 17:30:43 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/28 12:00:58 by alagroy-         ###   ########.fr       */
+/*   Created: 2020/01/26 15:47:17 by lubenard          #+#    #+#             */
+/*   Updated: 2020/01/26 15:48:23 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "lexer.h"
 
-void	tok_replace(t_token *token, char *str)
+char	*ft_stradd(char *s1, char s2)
 {
-	ft_strdel(&token->content);
-	if (!str)
-		str = ft_strdup("");
-	token->content = str;
-	token->len = ft_strlen(str);
+	char	*dst;
+	int		i;
+
+	i = 0;
+	if (!s1 || !s2 || !(dst = ft_strnew(ft_strlen(s1) + 1)))
+		return (NULL);
+	ft_strcpy(dst, s1);
+	dst[ft_strlen(s1)] = s2;
+	return (dst);
 }

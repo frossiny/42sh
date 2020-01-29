@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 15:10:45 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/23 15:18:25 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/28 19:47:07 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,19 @@ static int		exp_noflag(t_expansion *exp, t_var *var, char *name)
 	exp->i++;
 	exp->li = exp->i;
 	return (1);
+}
+
+int				get_ret_parameter(t_expansion *exp, t_var *var, char *name)
+{
+	int ret;
+
+	if (exp->str[exp->i] == ':')
+		ret = exp_par_colon(exp, var, name);
+	else if (exp->str[exp->i] == '#' || exp->str[exp->i] == '%')
+		ret = exp_del_pattern(exp, var);
+	else
+		ret = exp_noflag(exp, var, name);
+	return (ret);
 }
 
 int				exp_parameter(t_expansion *exp)

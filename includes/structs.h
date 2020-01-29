@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 14:23:53 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/23 13:46:06 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/29 10:51:24 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,6 +268,7 @@ typedef struct		s_jobs_lst
 	int					pid;
 	char				current;
 	int					state;
+	char				*status;
 	char				*command;
 	int					foreground;
 	t_pipel				*pipeline;
@@ -344,6 +345,7 @@ typedef struct		s_shell
 	int				able_termcaps;
 	int				stopped_jobs;
 	struct termios	prev_term;
+	char			*ps1;
 }					t_shell;
 
 #endif

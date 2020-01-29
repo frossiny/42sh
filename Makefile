@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/09 15:29:04 by vsaltel           #+#    #+#              #
-#    Updated: 2020/01/29 13:01:44 by frossiny         ###   ########.fr        #
+#    Updated: 2020/01/29 15:21:42 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -106,6 +106,8 @@ FILES	=	shell.c											\
 			execution/pipes/exec_is_pipe_bg.c				\
 			execution/pipes/exec_signal_pipe.c				\
 			execution/pipes/exec_dup_pipeline.c				\
+			expansion/prompt.c								\
+			expansion/prompt_utils.c						\
 			expansion/tilde.c								\
 			expansion/expansion.c							\
 			expansion/exp_join.c							\
@@ -240,6 +242,7 @@ FILES	=	shell.c											\
 			utils/str_escape.c								\
 			utils/copy_tab.c								\
 			utils/u_free_shell.c							\
+			utils/extract_first.c							\
 			variables/var_build_env.c						\
 			variables/var_delete.c							\
 			variables/var_destroy.c							\
@@ -302,6 +305,10 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c Makefile
 	@mkdir -p $(@D)
 	@echo -n -e "\r\033[K${_PURPLE}${BOLD}[${NAME}] Compiling $<${_END}"
 	@$(CC) $(CFLAGS) -I $(INCDIR) -I $(LIBFT)/$(INCDIR) -MMD -o $@ -c $<
+
+libft:
+	@$(MAKE) -q -C $(LIBFT) || $(MAKE) -j4 -C $(LIBFT)
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -L./$(LIBFT) -lft -ltermcap
 
 clean:
 	@$(MAKE) -C $(LIBFT) clean

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/16 12:43:39 by vsaltel           #+#    #+#             */
-/*   Updated: 2020/01/07 19:02:22 by alagroy-         ###   ########.fr       */
+/*   Updated: 2020/01/21 18:07:05 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ void		termcaps_completion(char **str, t_cursor_pos *pos, t_shell *shell)
 		return ;
 	if (!(mode = lite_parser(pos, 0)))
 		return ;
+	if (mode == CMD && pos->str[0] == '.')
+		mode = FILE;
 	if (!(compl = find_compl_word(pos)))
 		return ;
 	compl_lst = g_func_tab[mode](compl, shell, &len);

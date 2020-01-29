@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 13:40:41 by alagroy-          #+#    #+#             */
-/*   Updated: 2020/01/07 16:08:29 by alagroy-         ###   ########.fr       */
+/*   Updated: 2020/01/23 14:05:34 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,6 @@ int			ae_process(t_token *token)
 		ft_strdel(&token->content);
 		ft_strdel(&str);
 		ft_lstdel(&token_list, del_ae_token);
-		token->content = ft_strnew(0);
 		return (0);
 	}
 	result = eval_ae(token_list);

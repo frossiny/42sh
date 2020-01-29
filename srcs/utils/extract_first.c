@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tok_replace.c                                      :+:      :+:    :+:   */
+/*   extract_first.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/29 17:30:43 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/28 12:00:58 by alagroy-         ###   ########.fr       */
+/*   Created: 2020/01/26 15:50:03 by lubenard          #+#    #+#             */
+/*   Updated: 2020/01/26 15:50:33 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "lexer.h"
+#include "shell.h"
 
-void	tok_replace(t_token *token, char *str)
+char	*extract_first(char *command, char stop)
 {
-	ft_strdel(&token->content);
-	if (!str)
-		str = ft_strdup("");
-	token->content = str;
-	token->len = ft_strlen(str);
+	int		i;
+
+	i = 0;
+	while (command[i] != stop && command[i])
+		++i;
+	return (ft_strsub(command, 0, i));
 }
