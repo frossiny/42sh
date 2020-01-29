@@ -6,11 +6,11 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/09 15:29:04 by vsaltel           #+#    #+#              #
-#    Updated: 2020/01/28 14:50:00 by frossiny         ###   ########.fr        #
+#    Updated: 2020/01/29 13:01:44 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC		=	gcc -g3 -fsanitize=address
+CC		=	gcc -g3 #-fsanitize=address
 CFLAGS	+=	-Wall -Wextra #-Werror
 
 ifdef DEBUG
