@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 15:41:43 by lubenard          #+#    #+#             */
-/*   Updated: 2020/01/29 16:54:12 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/29 17:07:30 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ void	prompt_expansions(void)
 	else
 	{
 		ft_strdel(&g_shell.ps1);
-		g_shell.ps1 = ft_strdup("\e[1;31m$> \e[0m");
+		g_shell.ps1 = \
+			ft_strdup(g_return ? "\e[1;31m$> \e[0m" : "\e[1;32m$> \e[0m");
 	}
 }
