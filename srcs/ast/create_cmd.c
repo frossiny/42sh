@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 13:23:37 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/27 17:44:58 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/29 17:22:43 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,12 +92,29 @@ static t_token	*get_exe_token(t_token *exe)
 static void		check_fg(t_token **exe)
 {
 	t_token		*new;
+	t_token		*curr;
+	t_token		*tmp;
 
 	if (!exe || !*exe || (*exe)->content[0] != '%')
 		return ;
 	if (!(new = tok_new(TOKEN_NAME, "fg")))
 		return ;
 	new->next = *exe;
+	curr = g_shell.lexer.tokens;
+	tmp = NULL;
+	while (curr)
+	{
+		if (curr == *exe)
+		{
+			if (tmp)
+				tmp->next = new;
+			else
+				g_shell.lexer.tokens = new;
+			break ;
+		}
+		tmp = curr;
+		curr = curr->next;
+	}
 	*exe = new;
 }
 
