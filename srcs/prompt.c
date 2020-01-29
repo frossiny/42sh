@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/01 14:41:10 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/28 10:43:29 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/27 18:52:15 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,41 @@ void	prompt(void)
 	if (!isatty(0))
 		return ;
 	if (g_ignore_signals == 0)
-		ft_printf("\033[1;%dm$> \033[0m", g_return ? 31 : 32);
+	{
+		prompt_expansions();
+		ft_putstr(g_shell.ps1);
+	}
 	else if (g_ignore_signals == 1)
 		ft_printf("> ");
+}
+
+int		count_len_prompt(char *ps1)
+{
+	int		len;
+	int		i;
+
+	len = 0;
+	i = 0;
+	while (ps1[i])
+	{
+		if (ps1[i] == 27 && !ft_strnncmp(ps1, "[3", i + 1, i + 2)
+		&& ps1[i + 4] == 'm')
+			i += 5;
+		else if (ps1[i] == 27 && !ft_strnncmp(ps1, "[0m", i + 1, i + 2))
+			i += 4;
+		else
+		{
+			len++;
+			i++;
+		}
+	}
+	return (len);
 }
 
 int		prompt_len(void)
 {
 	if (g_ignore_signals == 0)
-		return (ft_strlen("$> "));
+		return (count_len_prompt(g_shell.ps1));
 	else if (g_ignore_signals == 1)
 		return (ft_strlen("> "));
 	return (0);

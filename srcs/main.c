@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 11:43:47 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/23 17:41:29 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/01/28 19:38:15 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,12 @@ static int	shell_config(char *envp[])
 	g_shell.vars = var_init(envp);
 	g_shell.alias = NULL;
 	g_shell.current_cmd = NULL;
-	g_shell.history = get_history();
+	g_shell.history.lst = NULL;
+	g_shell.history.size = 0;
+	g_shell.history.index = 1;
+	g_shell.history.histsize = 500;
+	if (var_get(g_shell.vars, "HOME"))
+		get_history();
 	g_pos.v_str = NULL;
 	g_shell.lexer.tokens = NULL;
 	g_shell.lexer.state = ST_GENERAL;
