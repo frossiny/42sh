@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 17:24:02 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/28 19:53:09 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/29 11:36:36 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,5 +129,8 @@ void				exec_option_prompt(char **expanded_prompt,
 										char *to_add, int *i);
 void				handle_options_num_prompt(char **expanded_prompt,
 												int num, int *i);
+int					color_utils(char **expanded_prompt, char *to_add,
+												int *i, int size);
+int					color_prompt(char **expanded_prompt, char *prompt, int *i);
 
 #endif
