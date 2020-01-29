@@ -1,0 +1,5 @@
+expected_to match_regex `pwd` 3 times
+expected_to match_regex `pwd ; echo \$` once
+expected_to match_regex "yes" once
+expected_to match_regex "no" once
+expected_to match_regex "Done!" once

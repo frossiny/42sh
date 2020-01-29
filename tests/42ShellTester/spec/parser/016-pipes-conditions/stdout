@@ -1,0 +1,3 @@
+expected_to match_regex `pwd` 4 times
+expected_to match_regex `pwd ; echo \$` once
+expected_to match_regex `pwd ; echo \$\$` once

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 14:30:04 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/23 15:58:54 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/28 19:51:38 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,7 @@ void				env_invalid_arg(int *argc, char ***argv);
 int					is_directory_err(char *name, int verbose);
 
 void				u_free_shell(int kill_jobs);
+
+char				*extract_first(char *command, char stop);
 
 #endif
