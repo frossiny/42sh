@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 17:47:28 by vsaltel           #+#    #+#             */
-/*   Updated: 2020/01/29 10:49:57 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/29 12:00:57 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,11 @@ void			get_history(void)
 		|| !(path = ft_strpathfile(getenv("HOME"), ".42sh_history")))
 		return ;
 	if (access(path, F_OK) || access(path, R_OK))
+	{
 		free(path);
-	if ((fd = open(path, O_RDONLY)))
+		return ;
+	}
+	if ((fd = open(path, O_RDONLY)) != -1)
 	{
 		read_history(fd, &g_shell.history);
 		close(fd);
