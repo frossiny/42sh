@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 15:41:43 by lubenard          #+#    #+#             */
-/*   Updated: 2020/01/29 11:35:11 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/29 18:00:13 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,23 +27,23 @@ void	exec_option_prompt(char **expanded_prompt, char *to_add, int *i)
 
 int		color_prompt(char **expanded_prompt, char *prompt, int *i)
 {
-	if (!ft_strnncmp(prompt, "{red}", *i, *i + 3))
+	if (!ft_strnncmp(prompt, "{red}", *i, *i + 4))
 		return (color_utils(expanded_prompt, RED, i, 3));
-	if (!ft_strnncmp(prompt, "{white}", *i, *i + 5))
+	if (!ft_strnncmp(prompt, "{white}", *i, *i + 6))
 		return (color_utils(expanded_prompt, WHITE, i, 5));
-	if (!ft_strnncmp(prompt, "{cyan}", *i, *i + 4))
+	if (!ft_strnncmp(prompt, "{cyan}", *i, *i + 5))
 		return (color_utils(expanded_prompt, CYAN, i, 4));
-	if (!ft_strnncmp(prompt, "{blue}", *i, *i + 4))
+	if (!ft_strnncmp(prompt, "{blue}", *i, *i + 5))
 		return (color_utils(expanded_prompt, BLUE, i, 4));
-	if (!ft_strnncmp(prompt, "{black}", *i, *i + 5))
+	if (!ft_strnncmp(prompt, "{black}", *i, *i + 6))
 		return (color_utils(expanded_prompt, BLACK, i, 5));
-	if (!ft_strnncmp(prompt, "{green}", *i, *i + 5))
+	if (!ft_strnncmp(prompt, "{green}", *i, *i + 6))
 		return (color_utils(expanded_prompt, GREEN, i, 5));
-	if (!ft_strnncmp(prompt, "{brown}", *i, *i + 5))
+	if (!ft_strnncmp(prompt, "{brown}", *i, *i + 6))
 		return (color_utils(expanded_prompt, BROWN, i, 5));
-	if (!ft_strnncmp(prompt, "{purple}", *i, *i + 6))
+	if (!ft_strnncmp(prompt, "{purple}", *i, *i + 7))
 		return (color_utils(expanded_prompt, PURPLE, i, 6));
-	if (!ft_strnncmp(prompt, "{lgray}", *i, *i + 5))
+	if (!ft_strnncmp(prompt, "{lgray}", *i, *i + 6))
 		return (color_utils(expanded_prompt, LGRAY, i, 5));
 	return (0);
 }
@@ -98,5 +98,9 @@ void	prompt_expansions(void)
 	if (ps1)
 		handle_options_prompt(ps1->value);
 	else
-		g_shell.ps1 = "\033[1;31m$> \033[0m";
+	{
+		ft_strdel(&g_shell.ps1);
+		g_shell.ps1 = \
+			ft_strdup(g_return ? "\e[1;31m$> \e[0m" : "\e[1;32m$> \e[0m");
+	}
 }

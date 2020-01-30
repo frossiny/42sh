@@ -1,1 +1,1 @@
-expected_to match_regex "42sh: fg: .*: no such job" 5 times
+expected_to match_regex "42sh: fg: .*: no such job" 7 times
