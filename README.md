@@ -152,6 +152,6 @@ If a non-numeric value is specified as argument, return code will be set to 255 
 
 **References:**
 
-Norme POSIX: https://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html
+POSIX Norm: https://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html
 
-Manuel bash: https://www.gnu.org/software/bash/manual/bash.html
+Bash Manual: https://www.gnu.org/software/bash/manual/bash.html
