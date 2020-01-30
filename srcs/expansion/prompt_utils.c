@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/26 16:36:31 by lubenard          #+#    #+#             */
-/*   Updated: 2020/01/29 11:35:14 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/30 17:26:53 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,9 @@ void	add_other_char_prompt(char **expanded_prompt, char *prompt, int *i)
 {
 	char	*copy;
 
-	if (color_prompt(expanded_prompt, prompt, i) == 0)
+	if (prompt[*i] == '\n')
+		(*i)++;
+	else if (color_prompt(expanded_prompt, prompt, i) == 0)
 	{
 		copy = ft_stradd(*expanded_prompt, prompt[(*i)++]);
 		if (ft_strcmp(*expanded_prompt, ""))
