@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/09 15:29:04 by vsaltel           #+#    #+#              #
-#    Updated: 2020/01/29 15:21:42 by frossiny         ###   ########.fr        #
+#    Updated: 2020/01/30 16:49:04 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,7 +53,7 @@ FILES	=	shell.c											\
 			alias/alias_utils.c								\
 			ast/ast_build.c									\
 			ast/create_node.c								\
-			ast/ast_create_node.c								\
+			ast/ast_create_node.c							\
 			ast/ast_build_args.c							\
 			ast/redirections.c								\
 			ast/ast_destroy.c								\
