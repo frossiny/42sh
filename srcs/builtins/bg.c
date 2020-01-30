@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 13:32:46 by lubenard          #+#    #+#             */
-/*   Updated: 2020/01/27 12:32:54 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/30 18:43:19 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int		b_bg(t_cmd *cmd, t_shell *shell)
 	ret_code = 0;
 	opts = opt_parse(cmd, "", "bg");
 	if (opts->ret != 0)
-		(opts->ret == -1 ? ft_putendl_fd("bg: usage: bg [job_spec]",
+		(opts->ret == -1 ? ft_putendl_fd("bg: usage: bg [job_id]",
 		2) : 0);
 	else
 	{
