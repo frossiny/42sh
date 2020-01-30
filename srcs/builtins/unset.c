@@ -6,12 +6,13 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/27 15:29:33 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/17 15:20:32 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/30 17:22:26 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
+#include "hashtable.h"
 
 int			b_unset(t_cmd *cmd, t_shell *shell)
 {
@@ -27,6 +28,8 @@ int			b_unset(t_cmd *cmd, t_shell *shell)
 	{
 		if (!cmd->args[i])
 			break ;
+		if (ft_strequ(cmd->args[i], "PATH"))
+			ht_delete();
 		var_delete(&(shell->vars), cmd->args[i++]);
 	}
 	return (0);

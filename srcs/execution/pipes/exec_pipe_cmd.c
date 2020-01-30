@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:49:21 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/23 15:50:41 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/30 17:37:48 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "ast.h"
 #include "builtins.h"
 
-static void	init_fd(t_pipel *pline, int op[], int np[])
+static int	init_fd(t_pipel *pline, int op[], int np[])
 {
 	if (pline->previous)
 	{
@@ -30,7 +30,7 @@ static void	init_fd(t_pipel *pline, int op[], int np[])
 		dup2(np[1], 1);
 		close(np[1]);
 	}
-	handle_redirections(pline->cmd->redir, 0);
+	return (handle_redirections(pline->cmd->redir, 0));
 }
 
 static int	fork_builtin(t_pipel *pline, t_cmd *cmd)
@@ -58,7 +58,11 @@ static void	fork_child(t_pipel *pline, t_cmd *cmd, t_fd *fd)
 	bg = exec_is_pipe_bg(pline);
 	unregister_signals();
 	!bg && g_shell.able_termcaps ? restore_shell(g_shell.prev_term) : 0;
-	init_fd(pline, fd->op, fd->np);
+	if (!(init_fd(pline, fd->op, fd->np)))
+	{
+		u_free_shell(0);
+		exit(EXIT_FAILURE);
+	}
 	if (is_builtin(cmd->exe->content))
 		exit(fork_builtin(pline, cmd));
 	if (!(file = exec_get_file(cmd, &error, 1)))
