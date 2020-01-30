@@ -6,7 +6,7 @@
 /*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 15:31:28 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/11/29 15:32:01 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/01/30 16:14:00 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,11 @@ void			tok_to_input(char **dest, t_token *token)
 	char	*tmp;
 
 	if (!token)
+	{
+		free(*dest);
+		*dest = ft_strdup("");
 		return ;
+	}
 	str = NULL;
 	while (token)
 	{

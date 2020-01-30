@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 15:55:33 by vsaltel           #+#    #+#             */
-/*   Updated: 2020/01/15 14:29:14 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/01/30 16:39:22 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int				alias_exec(t_shell *shell, char **input)
 
 	ret = 0;
 	alias_hist = NULL;
-	alias_ret = alias_resolve(shell->lexer.tokens, shell->alias, &alias_hist);
+	alias_ret = alias_resolve(shell, shell->lexer.tokens, shell->alias,
+															&alias_hist);
 	while (alias_ret > 0)
 	{
 		tok_to_input(input, shell->lexer.tokens);
@@ -33,7 +34,7 @@ int				alias_exec(t_shell *shell, char **input)
 			free_alias_history(&alias_hist);
 			return (ret);
 		}
-		alias_ret = alias_resolve(shell->lexer.tokens, shell->alias,
+		alias_ret = alias_resolve(shell, shell->lexer.tokens, shell->alias,
 															&alias_hist);
 	}
 	free_alias_history(&alias_hist);
