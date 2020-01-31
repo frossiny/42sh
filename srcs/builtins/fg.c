@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 16:51:40 by lubenard          #+#    #+#             */
-/*   Updated: 2020/01/30 18:43:18 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/31 17:26:50 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int		wait_for_job(int pid)
 
 int		put_foreground(t_jobs_lst *searched, int cont)
 {
-	if (tcsetpgrp(g_shell.pgrp, searched->pid) < 0)
+	if (!searched || tcsetpgrp(g_shell.pgrp, searched->pid) < 0)
 		return (EXIT_FAILURE);
 	ft_printf("%s\n", searched->command);
 	if (cont)

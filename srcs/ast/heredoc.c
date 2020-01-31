@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 17:33:11 by alagroy-          #+#    #+#             */
-/*   Updated: 2020/01/28 12:50:25 by alagroy-         ###   ########.fr       */
+/*   Updated: 2020/01/31 17:19:16 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ static int		build_heredoc_rec(t_anode *node)
 			return (0);
 	if (node->cmd && node->cmd->redir)
 	{
+		ft_printf("Heredoc: %s\n", node->cmd->exe->content);
 		tmp = node->cmd->redir;
 		while (tmp)
 		{
