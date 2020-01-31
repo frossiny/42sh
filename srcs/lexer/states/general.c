@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 14:17:47 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/04 14:23:01 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/31 14:39:28 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,12 @@ static void	lex_state_redirection(t_lexer *lex)
 		tok_create(lex, lex->in + i, cur.len, cur.type);
 		lex->in += i + cur.len;
 		lex->pin = lex->in;
+		if (lex->in[0] == '-')
+		{
+			tok_create(lex, lex->in, 1, TOKEN_NAME);
+			lex->in++;
+			lex->pin = lex->in;
+		}
 	}
 	else
 		lex->in += i;
