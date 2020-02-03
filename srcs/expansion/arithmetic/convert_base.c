@@ -6,7 +6,7 @@
 /*   By: alagroy- <alagroy-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 18:45:05 by alagroy-          #+#    #+#             */
-/*   Updated: 2020/01/07 15:59:38 by alagroy-         ###   ########.fr       */
+/*   Updated: 2020/02/03 18:14:11 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,23 +23,23 @@ static char	*replace_ae_var(char *str)
 
 	i = -1;
 	while (str[++i])
-	{
-		j = 0;
-		while (str[i + ++j - 1])
+		if (ft_isalpha(str[i]))
 		{
+			j = i;
+			while (str[j] && ft_isalnum(str[j]))
+				j++;
 			sub = ft_strsub(str, i, j);
 			if (sub && g_shell.vars && var_get(g_shell.vars, sub))
 			{
 				str = ft_strdelpart(str, (i > 0 && str[i - 1] == '$')
-						? i - 1 : i, j);
+															? --i : i, j);
 				str = ft_insert_str(str, var_get_value(g_shell.vars, sub), i);
-				ft_strdel(&sub);
-				i = -1;
-				break ;
+				i--;
 			}
+			else
+				i = str[j] ? j : j - 1;
 			ft_strdel(&sub);
 		}
-	}
 	return (str);
 }
 
