@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 15:42:26 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/23 14:15:17 by alagroy-         ###   ########.fr       */
+/*   Updated: 2020/02/03 19:27:30 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,10 @@ static int	exp_var_loop(t_expansion *exp)
 				if (!exp_parameter(exp))
 					return (0);
 			}
-			else if (!ft_strnequ(exp->str + exp->i, "$((", 3))
-				exp_simple_var(exp);
-			else
+			else if (ft_strnequ(exp->str + exp->i, "$((", 3))
 				exp->i += exp_get_ae_end(exp->str + exp->i);
+			else
+				exp_simple_var(exp);
 			if (exp->i >= ft_strlen(exp->str))
 				break ;
 		}
