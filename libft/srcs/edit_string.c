@@ -6,7 +6,7 @@
 /*   By: alagroy- <alagroy-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/12 20:22:32 by alagroy-          #+#    #+#             */
-/*   Updated: 2020/02/03 18:05:52 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/02/03 20:33:25 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*ft_strdelpart(char *s, int index, int nb_char)
 	char	*sub2;
 
 	sub = ft_strsub(s, 0, index);
-	sub2 = ft_strdup(s + index + nb_char);
+	sub2 = ft_strsub(s, index + nb_char, ft_strlen(s) - index - nb_char);
 	if (!(rtrn = ft_strjoin(sub, sub2)))
 		return (NULL);
 	free(s);
