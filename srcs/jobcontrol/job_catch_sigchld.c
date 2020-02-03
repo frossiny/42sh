@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 14:36:45 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/31 18:05:03 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/02/03 19:09:56 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,38 @@
 #include "execution.h"
 #include "ast.h"
 
-static void	catch_gchild(void)
+static t_jobs_lst	*get_job(int status)
 {
 	t_jobs_lst	*job;
-	int			pid;
+	
+	if (WIFEXITED(status) || WIFSTOPPED(status))
+		return (NULL);
+	if (g_shell.current_cmd)
+	{
+		job = job_new(g_shell.current_cmd, g_child);
+		job->state = JOB_SUSPENDED;
+	}
+	else
+	{
+		if (!(job = job_search_pid(&g_shell, g_child)))
+			return (NULL);
+		job->state = JOB_SUSPENDED;
+		ft_printf("\n[%d]%c  %s                 %s\n", job->job_number,
+			job->current, g_jobs_status[job->state], job->command);
+	}
+	return (job);
+}
+
+static void			catch_gchild(void)
+{
+	pid_t		pid;
 
 	pid = waitpid(g_child, &g_lstatus, WNOHANG | WUNTRACED);
-	if (g_shell.current_cmd->exe_found && WIFSTOPPED(g_lstatus))
+	if (g_shell.current_cmd->exe_found && !WIFEXITED(g_lstatus) && WIFSTOPPED(g_lstatus))
 	{
+		if (!get_job(g_lstatus))
+			return ;
 		kill(-g_child, SIGTSTP);
-		if (g_shell.current_cmd)
-			job = job_new(g_shell.current_cmd, g_child);
-		else
-		{
-			if (!(job = job_search_pid(&g_shell, g_child)))
-				return ;
-			job->state = JOB_SUSPENDED;
-			ft_printf("\n[%d]%c  %s                 %s\n", job->job_number,
-				job->current, g_jobs_status[job->state], job->command);
-		}
-		job->state = JOB_SUSPENDED;
 		ast_free_cmd(g_shell.current_cmd);
 		g_child = 0;
 		g_lstatus = 0;
@@ -44,7 +56,7 @@ static void	catch_gchild(void)
 		g_child = 0;
 }
 
-void		job_catch_sigchld(int signal)
+void				job_catch_sigchld(int signal)
 {
 	int			pid;
 	int			status;
