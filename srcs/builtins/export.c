@@ -6,26 +6,13 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 13:28:29 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/08 16:50:19 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/02/03 18:59:31 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "variables.h"
 #include "opt.h"
-
-static int	is_key_valid(char *str, size_t len)
-{
-	if (len == 0)
-		len = ft_strlen(str);
-	while (*str && len--)
-	{
-		if (!ft_isalnum(*str) && *str != '_')
-			return (0);
-		str++;
-	}
-	return (1);
-}
 
 static void	split_add_var(char *var, t_var **vars)
 {
@@ -48,7 +35,7 @@ static int	parse_vars(t_cmd *cmd, t_options *opts, t_shell *shell)
 	{
 		if ((chr = ft_strchr(cmd->args[i], '=')))
 		{
-			if (is_key_valid(cmd->args[i], chr - cmd->args[i]))
+			if (var_is_key_valid(cmd->args[i], chr - cmd->args[i]))
 				split_add_var(cmd->args[i], &(shell->vars));
 			else
 				ft_printf("export: '%s': not a valid identifier\n", \
@@ -56,7 +43,7 @@ static int	parse_vars(t_cmd *cmd, t_options *opts, t_shell *shell)
 		}
 		else
 		{
-			if (is_key_valid(cmd->args[i], 0))
+			if (var_is_key_valid(cmd->args[i], 0))
 				var_export(shell->vars, cmd->args[i]);
 			else
 				ft_printf("export: '%s': not a valid identifier\n", \
