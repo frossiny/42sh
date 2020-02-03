@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 10:48:51 by lubenard          #+#    #+#             */
-/*   Updated: 2020/01/14 17:42:47 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/31 18:47:34 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	update_current_job(t_shell *shell)
 		shell->jobs.last_job->prev->current = '-';
 		shell->jobs.minus = shell->jobs.last_job->prev;
 	}
-	if (shell->jobs.len > 1)
+	if (shell->jobs.len >= 1)
 		shell->jobs.last_job->current = '+';
 	shell->jobs.plus = shell->jobs.last_job;
 }

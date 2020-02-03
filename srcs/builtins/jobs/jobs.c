@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:05:36 by lubenard          #+#    #+#             */
-/*   Updated: 2020/01/23 14:06:47 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/31 16:09:28 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ int		print_jobs(t_shell *shell, t_cmd *cmd, t_options *opts, int opti)
 	{
 		while (cmd->args[job_num])
 		{
+			if (cmd->args[job_num][0] == '-')
+				job_num++;
 			if (cmd->args[job_num][0] == '%')
 				print_job(shell, opti, job_percent(cmd->args[job_num], "jobs"));
 			else if (job_check_valid_number(shell, cmd, job_num))
@@ -92,15 +94,15 @@ int		b_jobs(t_cmd *cmd, t_shell *shell)
 {
 	t_options	*opts;
 
+	opts = opt_parse(cmd, "lp", "jobs");
+	if (opts->ret != 0)
+		(opts->ret == -1 ? ft_putendl_fd("Usage: jobs [-l|-p] [job_id...]"
+		, 2) : 0);
 	if (shell->jobs.lst)
 	{
-		opts = opt_parse(cmd, "lp", "jobs");
-		if (opts->ret != 0)
-			(opts->ret == -1 ? ft_putendl_fd("Usage: jobs [-l|-p] [job_id...]"
-			, 2) : 0);
-		else
+		if (!opts->ret)
 			print_jobs(shell, cmd, opts, handle_options(opts));
-		opt_free(opts);
 	}
+	opt_free(opts);
 	return (0);
 }

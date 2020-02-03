@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 16:51:40 by lubenard          #+#    #+#             */
-/*   Updated: 2020/01/27 13:02:28 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/31 17:26:50 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int		wait_for_job(int pid)
 
 int		put_foreground(t_jobs_lst *searched, int cont)
 {
-	if (tcsetpgrp(g_shell.pgrp, searched->pid) < 0)
+	if (!searched || tcsetpgrp(g_shell.pgrp, searched->pid) < 0)
 		return (EXIT_FAILURE);
 	ft_printf("%s\n", searched->command);
 	if (cont)
@@ -125,7 +125,7 @@ int		b_fg(t_cmd *cmd, t_shell *shell)
 	ret_code = 0;
 	opts = opt_parse(cmd, "", "fg");
 	if (opts->ret != 0)
-		(opts->ret == -1 ? ft_putendl_fd("fg: usage: fg [job_spec]", 2) : 0);
+		(opts->ret == -1 ? ft_putendl_fd("fg: usage: fg [job_id]", 2) : 0);
 	else
 	{
 		if (!shell->jobs.lst && !(cmd->argc - opts->last))
