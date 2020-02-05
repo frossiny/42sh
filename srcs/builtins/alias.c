@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 14:16:26 by vsaltel           #+#    #+#             */
-/*   Updated: 2020/01/17 16:59:38 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/02/05 14:20:31 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ int				check_key_chain(char *key)
 		if (key[i] == '`' || key[i] == '/' || key[i] == '\\'
 			|| key[i] == '&' || key[i] == '$' || key[i] == ' '
 			|| key[i] == '(' || key[i] == ')' || key[i] == ';'
-			|| key[i] == ';' || key[i] == '<' || key[i] == '>'
-			|| key[i] == '|')
+			|| key[i] == '<' || key[i] == '>' || key[i] == '|'
+			|| key[i] == 10)
 			return (0);
 		i++;
 	}
