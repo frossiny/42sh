@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 14:36:45 by frossiny          #+#    #+#             */
-/*   Updated: 2020/02/03 19:09:56 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/02/11 14:02:29 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,12 @@
 static t_jobs_lst	*get_job(int status)
 {
 	t_jobs_lst	*job;
-	
-	if (WIFEXITED(status) || WIFSTOPPED(status))
+
+	/*if (WIFEXITED(status) || WIFSTOPPED(status))
+	{
+		ft_printf("My processus has exited\n");
 		return (NULL);
+	}*/
 	if (g_shell.current_cmd)
 	{
 		job = job_new(g_shell.current_cmd, g_child);
