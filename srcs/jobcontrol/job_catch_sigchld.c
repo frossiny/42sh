@@ -19,11 +19,7 @@ static t_jobs_lst	*get_job(int status)
 {
 	t_jobs_lst	*job;
 
-	/*if (WIFEXITED(status) || WIFSTOPPED(status))
-	{
-		ft_printf("My processus has exited\n");
-		return (NULL);
-	}*/
+	(void)status;
 	if (g_shell.current_cmd)
 	{
 		job = job_new(g_shell.current_cmd, g_child);
@@ -45,7 +41,8 @@ static void			catch_gchild(void)
 	pid_t		pid;
 
 	pid = waitpid(g_child, &g_lstatus, WNOHANG | WUNTRACED);
-	if (g_shell.current_cmd->exe_found && !WIFEXITED(g_lstatus) && WIFSTOPPED(g_lstatus))
+	if (g_shell.current_cmd->exe_found
+						&& !WIFEXITED(g_lstatus) && WIFSTOPPED(g_lstatus))
 	{
 		if (!get_job(g_lstatus))
 			return ;

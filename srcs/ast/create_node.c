@@ -48,11 +48,6 @@ t_anode			*create_cond_node(t_token **tokens)
 
 	node = ast_create_node(NULL, create_cmd(*tokens));
 	tok = get_cmd_end(*tokens);
-	if (!tok || tok->type != TOKEN_PIPE)
-	{
-		*tokens = tok;
-		return (node);
-	}
 	while (tok && tok->type == TOKEN_PIPE)
 	{
 		new = ast_create_node(tok, NULL);
