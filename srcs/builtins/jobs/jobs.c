@@ -67,7 +67,6 @@ int		print_jobs(t_shell *shell, t_cmd *cmd, t_options *opts, int opti)
 	job_num = 1;
 	display = shell->jobs.lst;
 	if (cmd->argc - opts->last)
-	{
 		while (cmd->args[job_num])
 		{
 			if (cmd->args[job_num][0] == '-')
@@ -78,7 +77,6 @@ int		print_jobs(t_shell *shell, t_cmd *cmd, t_options *opts, int opti)
 				print_job(shell, opti, ft_atoi(cmd->args[job_num]));
 			job_num++;
 		}
-	}
 	else
 	{
 		while (display)

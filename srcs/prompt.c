@@ -43,7 +43,7 @@ int		count_len_prompt(char *ps1)
 			i += 4;
 		else if (ps1[i] == 27 && !ft_strnncmp(ps1, "[1;3", i + 1, i + 4)
 		&& ps1[i + 6] == 'm')
-			i+= 7;
+			i += 7;
 		else
 		{
 			len++;

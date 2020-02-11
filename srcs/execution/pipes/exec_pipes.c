@@ -16,15 +16,6 @@
 #include "jobcontrol.h"
 #include "builtins.h"
 
-void	test(t_pipel *pipe)
-{
-	while (pipe)
-	{
-		ft_printf("TT: %s\n", pipe->cmd->exe->content);
-		pipe = pipe->next;
-	}
-}
-
 static t_pipel	*read_pipeline(t_pipel *pipeline, t_fd *fd)
 {
 	t_pipel		*pipe_start;
