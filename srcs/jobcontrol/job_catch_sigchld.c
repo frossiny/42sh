@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 14:36:45 by frossiny          #+#    #+#             */
-/*   Updated: 2020/02/11 14:02:29 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/02/12 13:50:20 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,14 @@ static t_jobs_lst	*get_job(int status)
 	(void)status;
 	if (g_shell.current_cmd)
 	{
+		if ((job = job_search_pid(&g_shell, g_child)))
+			return (NULL);
 		job = job_new(g_shell.current_cmd, g_child);
 		job->state = JOB_SUSPENDED;
 	}
 	else
 	{
-		if (!(job = job_search_pid(&g_shell, g_child)))
+		if ((job = job_search_pid(&g_shell, g_child)))
 			return (NULL);
 		job->state = JOB_SUSPENDED;
 		ft_printf("\n[%d]%c  %s                 %s\n", job->job_number,
