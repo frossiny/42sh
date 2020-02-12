@@ -29,7 +29,8 @@ static char	*replace_ae_var(char *str)
 			while (str[j] && ft_isalnum(str[j]))
 				j++;
 			sub = ft_strsub(str, i, j);
-			if (sub && g_shell.vars && var_get(g_shell.vars, sub))
+			if (sub && g_shell.vars && var_get(g_shell.vars, sub) && (i == 0
+				|| !ft_isalnum(str[i - 1])))
 			{
 				str = ft_strdelpart(str, (i > 0 && str[i - 1] == '$')
 															? --i : i, j - i);
