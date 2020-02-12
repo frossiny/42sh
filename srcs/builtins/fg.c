@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 16:51:40 by lubenard          #+#    #+#             */
-/*   Updated: 2020/02/03 19:09:17 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/02/12 14:02:17 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int		wait_for_job(int pid)
 
 int		put_foreground(t_jobs_lst *searched, int cont)
 {
-	if (!searched || tcsetpgrp(g_shell.pgrp, searched->pid) < 0)
+	if (!searched->pipeline && tcsetpgrp(g_shell.pgrp, searched->pid) < 0)
 		return (EXIT_FAILURE);
 	ft_printf("%s\n", searched->command);
 	if (cont)
@@ -120,6 +120,8 @@ int		handle_options_fg(t_cmd *cmd)
 		ft_dprintf(2, "42sh: fg: %%%d: no such job\n", converted);
 		return (1);
 	}
+	if (!searched)
+		return (EXIT_FAILURE);
 	return (put_foreground(searched, 1));
 }
 
