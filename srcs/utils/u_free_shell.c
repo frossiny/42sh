@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 10:55:38 by frossiny          #+#    #+#             */
-/*   Updated: 2020/02/13 14:37:36 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/02/13 15:12:55 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,6 @@ void	u_free_shell(int kill_jobs)
 		free_history(&(g_shell.history));
 	}
 	ft_strdel(&g_shell.ps1);
+	restore_shell(g_shell.prev_term);
 	g_pwd ? free(g_pwd) : 0;
 }
