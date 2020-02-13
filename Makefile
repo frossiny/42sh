@@ -6,12 +6,12 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/09 15:29:04 by vsaltel           #+#    #+#              #
-#    Updated: 2020/01/31 17:48:09 by frossiny         ###   ########.fr        #
+#    Updated: 2020/02/13 13:46:47 by frossiny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC		=	gcc -g3 #-fsanitize=address
-CFLAGS	+=	-Wall -Wextra #-Werror
+CFLAGS	+=	-Wall -Wextra -Werror
 
 ifdef DEBUG
 	CFLAGS += -fsanitize=address
@@ -27,7 +27,7 @@ endif
 ifdef SHOW
 	TARGS += --show-success
 endif
-VALGRIND_ARGS = --leak-check=full --show-leak-kinds=all --suppressions="${PWD}/valgrind.supp"
+VALGRIND_ARGS = --leak-check=full --show-leak-kinds=all --suppressions="valgrind.supp"
 ifdef CHILDREN
 	VALGRIND_ARGS += --trace-children=yes
 endif
@@ -337,7 +337,7 @@ check_error:
 	@grep -rn "stdio.h" srcs
 
 valgrind: all
-	\valgrind $(VALGRIND_ARGS) "${PWD}/${NAME}"
+	\valgrind $(VALGRIND_ARGS) "./${NAME}"
 
 tests: all
 	./tests/42ShellTester/42ShellTester.sh "$(PWD)/$(NAME)" ${TARGS}

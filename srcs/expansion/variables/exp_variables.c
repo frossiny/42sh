@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 15:42:26 by frossiny          #+#    #+#             */
-/*   Updated: 2020/02/03 19:27:30 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/02/05 14:23:07 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,10 @@ int			exp_variables(t_token *token)
 	exp_set_struct(&exp, token->content);
 	exp.i = 0;
 	if (!exp_var_loop(&exp))
+	{
+		ft_strdel(&(exp.new));
 		return (0);
+	}
 	tok_replace(token, exp.new ? exp.new : ft_strdup(""));
 	return (1);
 }

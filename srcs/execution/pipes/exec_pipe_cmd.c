@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:49:21 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/30 17:37:48 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/02/13 14:39:21 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	init_fd(t_pipel *pline, int op[], int np[])
 	return (handle_redirections(pline->cmd->redir, 0));
 }
 
-static int	fork_builtin(t_pipel *pline, t_cmd *cmd)
+static int	fork_builtin(t_cmd *cmd)
 {
 	t_builtin	builtin;
 	int			ret;
@@ -44,7 +44,6 @@ static int	fork_builtin(t_pipel *pline, t_cmd *cmd)
 		return (-1);
 	}
 	ret = builtin.func(cmd, &g_shell);
-	exec_del_pipeline(pline);
 	u_free_shell(0);
 	return (ret);
 }
@@ -64,7 +63,7 @@ static void	fork_child(t_pipel *pline, t_cmd *cmd, t_fd *fd)
 		exit(EXIT_FAILURE);
 	}
 	if (is_builtin(cmd->exe->content))
-		exit(fork_builtin(pline, cmd));
+		exit(fork_builtin(cmd));
 	if (!(file = exec_get_file(cmd, &error, 1)))
 	{
 		u_free_shell(0);
