@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 13:45:44 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/08 12:51:23 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/02/13 14:26:39 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,14 @@
 #  define OPEN_MAX 256
 # endif
 
-int	get_next_line(const int fd, char **line);
+typedef struct	s_gnl
+{
+	char	b[OPEN_MAX][BUFF_SIZE];
+	int		i[OPEN_MAX];
+	int		c[OPEN_MAX];
+	int		j;
+}				t_gnl;
+
+int				get_next_line(const int fd, char **line);
 
 #endif

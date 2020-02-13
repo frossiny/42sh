@@ -3,83 +3,69 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/12 13:44:42 by frossiny          #+#    #+#             */
-/*   Updated: 2019/05/01 15:10:37 by frossiny         ###   ########.fr       */
+/*   Created: 2018/11/13 18:01:23 by pcharrie          #+#    #+#             */
+/*   Updated: 2020/02/13 14:25:57 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
+#include <stdlib.h>
+#include <limits.h>
 #include "get_next_line.h"
 
-char			*ft_line(char *s, char c)
+static int	write_line(char **line, char b[], int i, int j)
 {
-	int			i;
-	char		*new;
+	char	*tmp;
+	int		k;
+	int		l;
 
-	i = 0;
-	while (s[i] != c)
-		i++;
-	if (!(new = (char *)malloc(sizeof(char) * i + 1)))
-		return (NULL);
-	i = 0;
-	while (s[i] != c)
-	{
-		new[i] = s[i];
-		i++;
-	}
-	new[i] = '\0';
-	return (new);
-}
-
-int				ft_ret(char **line, char **tmp, int new)
-{
-	char		*old;
-
-	if (new == 0 && ft_strlen(*tmp) == 0)
-	{
-		*line = NULL;
+	l = 0;
+	while (*line && (*line)[l])
+		l++;
+	if (!(tmp = malloc(sizeof(char) * (l + j - i + 1))))
 		return (0);
-	}
-	if (ft_strchr(*tmp, '\n') != NULL)
+	k = 0;
+	while (*line && (*line)[k])
 	{
-		old = *tmp;
-		*line = ft_line(*tmp, '\n');
-		*tmp = ft_strdup(ft_strchr(*tmp, '\n') + 1);
-		if (ft_strlen(*tmp) == 0)
-			ft_strdel(tmp);
-		free(old);
+		tmp[k] = (*line)[k];
+		k++;
 	}
-	else
-	{
-		*line = ft_strdup(*tmp);
-		ft_strclr(*tmp);
-	}
+	while (i < j)
+		tmp[k++] = b[i++];
+	tmp[k] = '\0';
+	if (*line)
+		free(*line);
+	*line = tmp;
 	return (1);
 }
 
-int				get_next_line(const int fd, char **line)
+int			get_next_line(int fd, char **line)
 {
-	static char	*tmp[OPEN_MAX + 1];
-	char		*old;
-	char		buff[BUFF_SIZE + 1];
-	int			new;
+	static t_gnl g;
 
-	while ((new = read(fd, buff, BUFF_SIZE)))
+	(line ? *line = NULL : 0);
+	while (line)
 	{
-		if (new == -1)
-			return (-1);
-		buff[new] = '\0';
-		if (tmp[fd] == NULL)
-			tmp[fd] = ft_strdup(buff);
-		else
+		if ((g.c[fd] < 1 || g.i[fd] == BUFF_SIZE)
+			|| (g.c[fd] < BUFF_SIZE && g.i[fd] == g.c[fd]))
 		{
-			old = tmp[fd];
-			tmp[fd] = ft_strjoin(tmp[fd], buff);
-			free(old);
+			if ((g.c[fd] = read(fd, g.b[fd], BUFF_SIZE)) < 1)
+				return (*line == NULL ? g.c[fd] : 1);
+			g.i[fd] = 0;
 		}
-		if (ft_strchr(buff, '\n') != NULL)
-			break ;
+		g.j = g.i[fd];
+		while (g.b[fd][g.j] != '\n' && g.j < g.c[fd])
+			g.j++;
+		if (!write_line(line, g.b[fd], g.i[fd], g.j))
+			return (-1);
+		g.i[fd] = g.j;
+		if (g.b[fd][g.j] == '\n' || (g.c[fd] < BUFF_SIZE && g.j == g.c[fd]))
+		{
+			(g.b[fd][g.j] == '\n' ? g.i[fd]++ : 0);
+			return (1);
+		}
 	}
-	return (ft_ret(line, &tmp[fd], new));
+	return (-1);
 }
