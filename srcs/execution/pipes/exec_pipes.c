@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 20:32:11 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/29 15:19:45 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/02/13 16:34:00 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "jobcontrol.h"
 #include "builtins.h"
 
-void	test(t_pipel *pipe)
+void			test(t_pipel *pipe)
 {
 	while (pipe)
 	{

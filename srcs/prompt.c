@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/01 14:41:10 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/29 17:00:51 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/02/13 16:35:19 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int		count_len_prompt(char *ps1)
 			i += 4;
 		else if (ps1[i] == 27 && !ft_strnncmp(ps1, "[1;3", i + 1, i + 4)
 		&& ps1[i + 6] == 'm')
-			i+= 7;
+			i += 7;
 		else
 		{
 			len++;
