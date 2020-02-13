@@ -6,12 +6,12 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/09 15:29:04 by vsaltel           #+#    #+#              #
-#    Updated: 2020/01/29 15:21:42 by frossiny         ###   ########.fr        #
+#    Updated: 2020/02/13 16:38:46 by alagroy-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC		=	gcc -g3 #-fsanitize=address
-CFLAGS	+=	-Wall -Wextra #-Werror
+CFLAGS	+=	-Wall -Wextra -Werror
 
 ifdef DEBUG
 	CFLAGS += -fsanitize=address
