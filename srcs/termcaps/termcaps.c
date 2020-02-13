@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 11:02:25 by vsaltel           #+#    #+#             */
-/*   Updated: 2020/01/16 14:29:23 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/02/13 17:06:42 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ static t_ex_caps	search_caps(const char *s)
 			return (g_caps_list[i]);
 		i++;
 	}
-	tputs(tgetstr("bl", NULL), 1, ft_putchar);
-	tputs(tgetstr("vb", NULL), 1, ft_putchar);
+	mytputs(tgetstr("bl", NULL));
+	mytputs(tgetstr("vb", NULL));
 	return (empty);
 }
 

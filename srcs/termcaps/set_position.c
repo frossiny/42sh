@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 14:59:44 by vsaltel           #+#    #+#             */
-/*   Updated: 2020/01/16 15:52:05 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/02/13 17:05:06 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,13 @@ static void		last_line(char *str, t_cursor_pos *pos)
 		move_cursor(pos->x, pos->y);
 		i = -1;
 		while (++i < len)
-			tputs(tgetstr("sf", NULL), 1, ft_putchar);
+			mytputs(tgetstr("sf", NULL));
 		pos->y_min -= len;
 		move_cursor(0, pos->y_min < 0 ? 0 : pos->y_min);
 	}
 }
 
-void			term_print(char *str)
+void			term_print(int fd, char *str)
 {
 	char	*tmp;
 	int		i;
@@ -78,7 +78,7 @@ void			term_print(char *str)
 		if (tmp[i] == '\n')
 			tmp[i] = ' ';
 	}
-	write(1, tmp, ft_strlen(tmp));
+	write(fd, tmp, ft_strlen(tmp));
 	free(tmp);
 }
 
@@ -96,15 +96,15 @@ void			reprint(char *str, t_cursor_pos *pos, int cursor_pos,
 	}
 	move_cursor(0, (pos->y_min >= 0 ? pos->y_min : 0));
 	if (pos->y_min > 0)
-		tputs(tgetstr("cd", NULL), 1, ft_putchar);
+		mytputs(tgetstr("cd", NULL));
 	else
-		tputs(tgetstr("ce", NULL), 1, ft_putchar);
+		mytputs(tgetstr("ce", NULL));
 	last_line(str, pos);
 	prompt();
 	if (pos->visual_mode)
 		visual_print(str, pos);
 	else
-		term_print(str);
+		term_print(g_fd, str);
 	if (pos->search_mode)
 		ft_printf("\nhistory_search: %s_", pos->s_str);
 	move_pos(str, pos, cursor_pos);
@@ -120,10 +120,10 @@ void			final_position(t_cursor_pos *pos)
 	if (len + pos->y_min >= pos->y_max - 1)
 	{
 		move_cursor(0, pos->y_max - 1);
-		tputs(tgetstr("do", NULL), 1, ft_putchar);
+		mytputs(tgetstr("do", NULL));
 		move_cursor(0, pos->y_max - 1);
 	}
 	else
 		move_cursor(0, len + pos->y_min + 1);
-	tputs(tgetstr("cd", NULL), 1, ft_putchar);
+	mytputs(tgetstr("cd", NULL));
 }

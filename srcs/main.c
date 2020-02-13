@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 11:43:47 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/28 19:38:15 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/02/13 16:41:04 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int				g_ignore_signals;
 int				g_return;
 int				g_lpid;
 int				g_clear_buffer;
+int				g_fd;
 char			*g_pwd;
 
 static void	init_default_vars(char *tmp)
@@ -117,6 +118,7 @@ int			main(int argc, char *argv[], char *envp[])
 	(void)argc;
 	(void)argv;
 	register_signals();
+	g_fd = isatty(STDOUT_FILENO) ? 1 : 2;
 	if (!shell_config(envp) || !shell_init())
 		return (0);
 	init_default_vars(NULL);
