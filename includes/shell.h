@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 11:59:10 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/28 19:52:35 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/02/13 16:37:55 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ extern int			g_clear_buffer;
 extern int			g_ignore_signals;
 extern int			g_return;
 extern int			g_lpid;
+extern int			g_fd;
 extern char			*g_pwd;
 
 int					handle_input(t_shell *shell, char **input, int history);
