@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 15:42:26 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/23 14:15:17 by alagroy-         ###   ########.fr       */
+/*   Updated: 2020/02/05 14:23:07 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,10 @@ static int	exp_var_loop(t_expansion *exp)
 				if (!exp_parameter(exp))
 					return (0);
 			}
-			else if (!ft_strnequ(exp->str + exp->i, "$((", 3))
-				exp_simple_var(exp);
-			else
+			else if (ft_strnequ(exp->str + exp->i, "$((", 3))
 				exp->i += exp_get_ae_end(exp->str + exp->i);
+			else
+				exp_simple_var(exp);
 			if (exp->i >= ft_strlen(exp->str))
 				break ;
 		}
@@ -82,7 +82,10 @@ int			exp_variables(t_token *token)
 	exp_set_struct(&exp, token->content);
 	exp.i = 0;
 	if (!exp_var_loop(&exp))
+	{
+		ft_strdel(&(exp.new));
 		return (0);
+	}
 	tok_replace(token, exp.new ? exp.new : ft_strdup(""));
 	return (1);
 }

@@ -26,7 +26,7 @@ static char	*find_compl_word(t_cursor_pos *pos)
 	int		beg;
 
 	beg = 0;
-	i = pos->x_rel == pos->len_str ? pos->x_rel - 1 : pos->x_rel;
+	i = pos->x_rel - 1;
 	while (--i >= 0)
 		if (ft_strchr(" |&<>'\"", pos->str[i]))
 		{

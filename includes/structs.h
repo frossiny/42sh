@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 14:23:53 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/29 10:51:24 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/31 17:23:57 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,7 +268,6 @@ typedef struct		s_jobs_lst
 	int					pid;
 	char				current;
 	int					state;
-	char				*status;
 	char				*command;
 	int					foreground;
 	t_pipel				*pipeline;

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 11:22:59 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/20 12:38:10 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/02/05 14:21:34 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int	parameter_parse(t_expansion *exp)
 	if (!exp || !ft_strnequ(exp->str + exp->i, "${", 2))
 		return (0);
 	i = exp->i + 2;
-	if (exp->str[i] == '}')
+	if (exp->str[i] == '}' || ft_isdigit(exp->str[i]))
 		return (0);
 	while (exp->str[i] && (ft_isalnum(exp->str[i]) || exp->str[i] == '_'))
 		i++;

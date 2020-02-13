@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 14:31:38 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/16 17:51:21 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/01/31 15:49:22 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static int			parse_mul(t_options *opts, char *opt, char *optstr, \
 			write(2, bname, ft_strlen(bname));
 			write(2, ": illegal option -- ", 20);
 			write(2, opt + i, 1);
+			write(2, "\n", 1);
 			opts->ret = -1;
 			return (0);
 		}

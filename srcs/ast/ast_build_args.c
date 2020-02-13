@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/04 16:14:27 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/17 16:51:49 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/02/13 14:39:19 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,10 @@ static int	build_args_arr(char ***args, t_token *tokens)
 
 	argc = count_args(tokens);
 	if (!((*args) = (char **)malloc(sizeof(char *) * (argc + 1))))
-		exit(-1);
+	{
+		*args = NULL;
+		return (-1);
+	}
 	prev = NULL;
 	i = 0;
 	while (is_arg(tokens) && i < argc)

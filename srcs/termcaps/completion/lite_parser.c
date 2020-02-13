@@ -25,7 +25,7 @@ static int	check_index(char *str, int i)
 
 int			lite_parser(t_cursor_pos *pos, int i)
 {
-	i = pos->x_rel == pos->len_str ? pos->x_rel - 1 : pos->x_rel;
+	i = pos->x_rel - 1;
 	if (check_index(pos->str, i) != 4)
 		return (check_index(pos->str, i));
 	while (--i >= 0)

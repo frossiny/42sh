@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 17:03:49 by vsaltel           #+#    #+#             */
-/*   Updated: 2020/01/17 16:59:12 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/30 15:07:31 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ int					alias_new(t_alias **alias, char *key, char *value);
 t_alias				*alias_get(t_alias *alias, char *key);
 void				alias_free_all(t_alias **list);
 void				alias_free_one(t_alias *alias);
-int					alias_resolve(t_token *token, t_alias *alias,
-													t_string **hist);
+int					alias_resolve(t_shell *shell, t_token *token,
+						t_alias *alias, t_string **hist);
 int					alias_exec(t_shell *shell, char **input);
 
 void				free_alias_history(t_string **list);

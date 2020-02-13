@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:26:37 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/29 14:18:46 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/31 18:03:33 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,8 @@ static int	start_process(t_cmd *cmd, char **env)
 	else
 		g_lpid = g_child;
 	g_lstatus = 0;
-	if (WIFSIGNALED(status))
-		return (display_signal(status));
-	return (WEXITSTATUS(status));
+	return (WIFSIGNALED(status) ?
+						display_signal(status) : WEXITSTATUS(status));
 }
 
 static int	start(t_cmd *cmd, char **env)

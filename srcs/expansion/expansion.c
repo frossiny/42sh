@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 15:32:30 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/10 15:43:21 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/01/30 16:47:05 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ int				expand(t_token *tokens, int do_globbing, t_cmd *cmd)
 	int			t;
 
 	i = 0;
-	while (tok_is_cmd_comp(tokens))
+	while (tokens && tok_is_cmd_comp(tokens))
 	{
 		next = tokens->next;
 		if (!(exp_variables(tokens)))
 			return (0);
 		if (cmd && ft_strequ("", tokens->content) \
-				&& !(tokens = exp_del_empty_tokens(tokens, cmd)))
-			break ;
+				&& ((tokens = exp_del_empty_tokens(tokens, cmd)) || 1))
+			continue ;
 		if (tokens->content[0] == '~' && !(handle_home(tokens, g_shell.vars)))
 			return (0);
 		if (!(replace_ae_token(tokens)))

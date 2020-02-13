@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 16:51:40 by lubenard          #+#    #+#             */
-/*   Updated: 2020/01/27 13:02:28 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/02/12 14:02:17 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int		wait_for_job(int pid)
 
 int		put_foreground(t_jobs_lst *searched, int cont)
 {
-	if (tcsetpgrp(g_shell.pgrp, searched->pid) < 0)
+	if (!searched->pipeline && tcsetpgrp(g_shell.pgrp, searched->pid) < 0)
 		return (EXIT_FAILURE);
 	ft_printf("%s\n", searched->command);
 	if (cont)
@@ -105,6 +105,7 @@ int		put_foreground(t_jobs_lst *searched, int cont)
 int		handle_options_fg(t_cmd *cmd)
 {
 	int			converted;
+	t_jobs_lst	*searched;
 
 	if (cmd->args[1] && cmd->args[1][0] == '%')
 		converted = job_percent(cmd->args[1], "fg");
@@ -114,7 +115,14 @@ int		handle_options_fg(t_cmd *cmd)
 		converted = g_shell.jobs.plus->job_number;
 	if (!converted)
 		return (1);
-	return (put_foreground(job_search(&g_shell, converted), 1));
+	if (!(searched = job_search(&g_shell, converted)))
+	{
+		ft_dprintf(2, "42sh: fg: %%%d: no such job\n", converted);
+		return (1);
+	}
+	if (!searched)
+		return (EXIT_FAILURE);
+	return (put_foreground(searched, 1));
 }
 
 int		b_fg(t_cmd *cmd, t_shell *shell)
@@ -125,17 +133,12 @@ int		b_fg(t_cmd *cmd, t_shell *shell)
 	ret_code = 0;
 	opts = opt_parse(cmd, "", "fg");
 	if (opts->ret != 0)
-		(opts->ret == -1 ? ft_putendl_fd("fg: usage: fg [job_spec]", 2) : 0);
+		(opts->ret == -1 ? ft_putendl_fd("fg: usage: fg [job_id]", 2) : 0);
 	else
 	{
 		if (!shell->jobs.lst && !(cmd->argc - opts->last))
 		{
 			ft_putendl_fd("42sh: fg: current: no such job", 2);
-			ret_code = 1;
-		}
-		else if (!shell->jobs.lst && (cmd->argc - opts->last))
-		{
-			ft_dprintf(2, "42sh: fg: %s: no such job\n", cmd->args[1]);
 			ret_code = 1;
 		}
 		else

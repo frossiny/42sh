@@ -6,13 +6,14 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 12:10:28 by lubenard          #+#    #+#             */
-/*   Updated: 2020/01/16 18:03:42 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/02/03 19:19:20 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "structs.h"
 #include "shell.h"
+#include "jobcontrol.h"
 
 int		job_check_valid_number(t_shell *shell, t_cmd *cmd, int j)
 {
@@ -66,28 +67,27 @@ int		handle_job_percent_alpha(char *args, char *builtin)
 int		job_percent(char *args, char *builtin)
 {
 	char	*extracted_number;
-	int		converted_number;
+	int		job_number;
 
 	if (!args[1] || args[1] == '+' || args[1] == '%')
-		converted_number = g_shell.jobs.plus->job_number;
+		job_number = g_shell.jobs.plus ? g_shell.jobs.plus->job_number : -1;
 	else if (args[1] == '-')
-		converted_number = g_shell.jobs.minus->job_number;
+		job_number = g_shell.jobs.minus ? g_shell.jobs.minus->job_number : -1;
 	else if (ft_isalpha(args[1]) || args[1] == '?')
-		converted_number = handle_job_percent_alpha(args, builtin);
+		job_number = handle_job_percent_alpha(args, builtin);
 	else
 	{
 		extracted_number = ft_strsub(args, 1, ft_strlen(args));
-		converted_number = ft_atoi(extracted_number);
+		job_number = ft_atoi(extracted_number);
 		ft_strdel(&extracted_number);
 	}
-	if (converted_number == -1)
-		return (0);
-	if (converted_number > (int)g_shell.jobs.len || !converted_number)
+	if (job_number == -1 || !job_search(&g_shell, job_number) \
+		|| !job_number)
 	{
 		ft_dprintf(2, "42sh: %s: %s: no such job\n", builtin, args);
 		return (0);
 	}
-	return (converted_number);
+	return (job_number);
 }
 
 int		*init_array(t_cmd *cmd, int *i, int *k, int *j)

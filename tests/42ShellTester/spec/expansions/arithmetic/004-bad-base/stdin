@@ -1,0 +1,7 @@
+a=2
+echo $((5a))
+echo $((08))
+echo $((0a))
+echo $((01a))
+echo $((0x1g))
+echo $((0x1a))

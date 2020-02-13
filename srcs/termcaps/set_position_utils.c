@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 12:24:22 by vsaltel           #+#    #+#             */
-/*   Updated: 2020/01/16 14:59:39 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/02/13 15:21:33 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int				get_pos(t_cursor_pos *pos)
 	int		i;
 	char	buf[17];
 
+	pos->x = 0;
+	pos->y = 0;
 	write(1, "\033[6n", 4);
 	if ((i = read(0, buf, 16)) <= 0)
 		return (0);

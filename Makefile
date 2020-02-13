@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/09 15:29:04 by vsaltel           #+#    #+#              #
-#    Updated: 2020/02/13 16:38:46 by alagroy-         ###   ########.fr        #
+#    Updated: 2020/02/13 17:29:19 by lubenard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ endif
 ifdef SHOW
 	TARGS += --show-success
 endif
-VALGRIND_ARGS = --leak-check=full --show-leak-kinds=all --suppressions="${PWD}/valgrind.supp"
+VALGRIND_ARGS = --leak-check=full --show-leak-kinds=all --suppressions="valgrind.supp"
 ifdef CHILDREN
 	VALGRIND_ARGS += --trace-children=yes
 endif
@@ -53,7 +53,7 @@ FILES	=	shell.c											\
 			alias/alias_utils.c								\
 			ast/ast_build.c									\
 			ast/create_node.c								\
-			ast/ast_create_node.c								\
+			ast/ast_create_node.c							\
 			ast/ast_build_args.c							\
 			ast/redirections.c								\
 			ast/ast_destroy.c								\
@@ -337,7 +337,7 @@ check_error:
 	@grep -rn "stdio.h" srcs
 
 valgrind: all
-	\valgrind $(VALGRIND_ARGS) "${PWD}/${NAME}"
+	\valgrind $(VALGRIND_ARGS) "./${NAME}"
 
 tests: all
 	./tests/42ShellTester/42ShellTester.sh "$(PWD)/$(NAME)" ${TARGS}

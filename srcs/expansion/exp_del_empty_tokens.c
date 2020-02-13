@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 10:27:05 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/08 11:11:58 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/01/30 16:46:01 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,5 @@ t_token			*exp_del_empty_tokens(t_token *token, t_cmd *cmd)
 	cmd->exe = get_exe_token(cmd->tokens);
 	next = token->next;
 	tok_free(token);
-	if (!next)
-		return (next);
-	return (next->next);
+	return (next);
 }
