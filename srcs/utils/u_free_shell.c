@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 10:55:38 by frossiny          #+#    #+#             */
-/*   Updated: 2020/02/13 15:12:55 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/02/13 15:26:46 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@
 void	u_free_shell(int kill_jobs)
 {
 	jobs_destroy_all(&g_shell, kill_jobs);
-	ast_destroy(&g_shell);
 	ast_free_cmd(g_shell.current_cmd);
 	exec_del_pipeline(g_shell.current_pipel);
+	ast_destroy(&g_shell);
 	var_destroy(&(g_shell.vars));
 	alias_free_all(&(g_shell.alias));
 	ht_delete(g_shell);

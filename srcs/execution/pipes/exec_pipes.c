@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 20:32:11 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/29 15:19:45 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/02/13 15:08:57 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,9 @@
 #include "jobcontrol.h"
 #include "builtins.h"
 
-static t_pipel	*read_pipeline(t_pipel *pipeline, t_fd *fd)
+static void	read_pipeline(t_pipel *pipeline, t_fd *fd)
 {
-	t_pipel		*pipe_start;
-
-	pipe_start = pipeline;
+	g_shell.current_pipel = pipeline;
 	while (pipeline && pipeline->cmd)
 	{
 		pipeline->next ? pipe(fd->np) : 0;
@@ -32,10 +30,9 @@ static t_pipel	*read_pipeline(t_pipel *pipeline, t_fd *fd)
 		pipeline = pipeline->next;
 	}
 	g_lpid = g_pipe_pid;
-	return (pipe_start);
 }
 
-int				exec_pipes(t_anode *node, t_shell *shell, t_anode **cn)
+int			exec_pipes(t_anode *node, t_shell *shell, t_anode **cn)
 {
 	t_fd		fd;
 	t_pipel		*pipeline;
@@ -43,7 +40,7 @@ int				exec_pipes(t_anode *node, t_shell *shell, t_anode **cn)
 	if (!(pipeline = exec_build_pipeline(node, shell, cn)))
 		return (1);
 	fd.sfd = dup(1);
-	g_shell.current_pipel = read_pipeline(pipeline, &fd);
+	read_pipeline(pipeline, &fd);
 	exec_is_pipe_bg(pipeline) ? job_new_pipe(pipeline) : 0;
 	dup2(fd.sfd, 1);
 	close(fd.sfd);
