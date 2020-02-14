@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 10:40:59 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/20 08:57:49 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/02/14 14:26:38 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void		catch_sigquit(int signal)
 
 void		catch_sigint(int signal)
 {
-	(void)signal;
 	g_clear_buffer = 1;
 	if (g_ignore_signals)
 	{
@@ -34,10 +33,15 @@ void		catch_sigint(int signal)
 	}
 	else if (g_shell.current_pipel)
 		exec_signal_pipe(g_shell.current_pipel, SIGINT);
-	else if (!g_child)
+	else if (!g_child && isatty(0))
 	{
 		g_return = 130;
 		ioctl(0, TIOCSTI, "\n");
+	}
+	else
+	{
+		u_free_shell(1);
+		exit(128 + signal);
 	}
 }
 

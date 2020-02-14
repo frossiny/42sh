@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 20:32:11 by frossiny          #+#    #+#             */
-/*   Updated: 2020/02/13 17:28:44 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/02/14 16:58:42 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,18 @@
 #include "jobcontrol.h"
 #include "builtins.h"
 
+static void	init_fd(t_fd *fd)
+{
+	fd->np[0] = -1;
+	fd->np[1] = -1;
+	fd->op[0] = -1;
+	fd->op[1] = -1;
+}
+
 static void	read_pipeline(t_pipel *pipeline, t_fd *fd)
 {
 	g_shell.current_pipel = pipeline;
-	while (pipeline && pipeline->cmd)
+	while (pipeline)
 	{
 		pipeline->next ? pipe(fd->np) : 0;
 		g_return = exec_pipe_cmd(pipeline, fd);
@@ -39,11 +47,9 @@ int			exec_pipes(t_anode *node, t_shell *shell, t_anode **cn)
 
 	if (!(pipeline = exec_build_pipeline(node, shell, cn)))
 		return (1);
-	fd.sfd = dup(1);
+	init_fd(&fd);
 	read_pipeline(pipeline, &fd);
 	exec_is_pipe_bg(pipeline) ? job_new_pipe(pipeline) : 0;
-	dup2(fd.sfd, 1);
-	close(fd.sfd);
 	exec_signal_pipe(pipeline, SIGCONT);
 	g_return = exec_end_pipes(pipeline, &fd);
 	g_shell.current_pipel = NULL;

@@ -1,0 +1,2 @@
+chmod 666 testf
+rm -rf testf

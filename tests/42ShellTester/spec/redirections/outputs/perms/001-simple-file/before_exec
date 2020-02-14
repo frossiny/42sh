@@ -1,0 +1,2 @@
+touch test
+chmod 000 test

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 14:23:53 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/31 17:23:57 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/02/14 16:49:04 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,7 +231,6 @@ typedef struct		s_fd
 {
 	int				op[2];
 	int				np[2];
-	int				sfd;
 }					t_fd;
 
 /*
