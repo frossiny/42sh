@@ -6,12 +6,25 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 10:27:05 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/30 16:46:01 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/02/14 14:40:11 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "expansion.h"
+
+static void		check_redir(t_token *tok, t_cmd *cmd)
+{
+	t_redirect	*curr;
+
+	curr = cmd->redir;
+	while (curr)
+	{
+		if (curr->value == tok)
+			curr->value = NULL;
+		curr = curr->next;
+	}
+}
 
 static t_token	*get_exe_token(t_token *exe)
 {
@@ -56,6 +69,7 @@ t_token			*exp_del_empty_tokens(t_token *token, t_cmd *cmd)
 		}
 	}
 	cmd->exe = get_exe_token(cmd->tokens);
+	check_redir(token, cmd);
 	next = token->next;
 	tok_free(token);
 	return (next);
