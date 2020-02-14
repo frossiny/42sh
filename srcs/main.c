@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 11:43:47 by frossiny          #+#    #+#             */
-/*   Updated: 2020/02/13 16:41:04 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/02/14 17:14:55 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,12 +113,27 @@ static int	shell_init(void)
 	return (1);
 }
 
+static int	check_output(void)
+{
+	if (isatty(STDOUT_FILENO))
+		g_fd = 1;
+	else if (isatty(STDERR_FILENO))
+		g_fd = 2;
+	else
+	{
+		ft_printf("STDOUT and STDERR has been modified\n");
+		return (0);
+	}
+	return (1);
+}
+
 int			main(int argc, char *argv[], char *envp[])
 {
 	(void)argc;
 	(void)argv;
 	register_signals();
-	g_fd = isatty(STDOUT_FILENO) ? 1 : 2;
+	if (!check_output())
+		return (0);
 	if (!shell_config(envp) || !shell_init())
 		return (0);
 	init_default_vars(NULL);

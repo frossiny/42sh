@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 19:12:36 by vsaltel           #+#    #+#             */
-/*   Updated: 2020/02/13 16:39:42 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/02/14 16:05:11 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static int	termcaps_gnl(int fd, char **dest, t_shell *shell)
 		if (ret == -1
 			|| (ret = check_input(buf, &(g_pos.str), &g_pos, shell)) <= 1)
 			return (ret);
-		if (buf[0] == '\n')
+		if (buf[0] == '\n' || buf[0] == 13)
 			break ;
 		if (is_special(buf))
 			execute_termcaps(buf, &(g_pos.str), &g_pos, shell);
