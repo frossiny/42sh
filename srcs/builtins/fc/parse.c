@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 01:34:27 by pcharrie          #+#    #+#             */
-/*   Updated: 2020/01/17 18:07:37 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/02/14 11:33:03 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,26 +76,30 @@ int			fc_parse_options(t_cmd *cmd, t_fc_vars *fc)
 static void	fc_fix_range(t_fc_vars *fc)
 {
 	int hist_size;
+	int tmp;
 
 	hist_size = g_shell.history.size - 1;
-	if (fc->exec)
+	if (fc->from < 1)
+		fc->from = hist_size + fc->from;
+	if (fc->from < 0)
+		fc->from = 0;
+	if (fc->to < 1)
+		fc->to = hist_size + fc->to;
+	if (fc->to < 0)
+		fc->to = 0;
+	if (fc->to < fc->from && !fc->exec)
 	{
-		if (fc->from == -1)
-			fc->from = hist_size;
-		fc->to = fc->from;
-	}
-	else
-	{
-		if (fc->from < 0)
-		{
-			fc->to = hist_size;
-			fc->from = fc->to + fc->from;
-		}
+		tmp = fc->from;
+		fc->from = fc->to;
+		fc->to = tmp;
+		fc->rv = 1;
 	}
 }
 
 int			fc_parse_range(t_cmd *cmd, t_fc_vars *fc)
 {
+	if (fc->exec)
+		fc->from = g_shell.history.size - 1;
 	if (cmd->args[fc->i])
 	{
 		if (!ft_isnumeric(cmd->args[fc->i]))
@@ -103,7 +107,7 @@ int			fc_parse_range(t_cmd *cmd, t_fc_vars *fc)
 			ft_putendl_fd("42sh: fc: history specification out of range", 2);
 			return (0);
 		}
-		fc->from_a = ft_atoi(cmd->args[fc->i++]);
+		fc->from = ft_atoi(cmd->args[fc->i++]);
 	}
 	if (cmd->args[fc->i])
 	{
@@ -112,8 +116,10 @@ int			fc_parse_range(t_cmd *cmd, t_fc_vars *fc)
 			ft_putendl_fd("42sh: fc: history specification out of range", 2);
 			return (0);
 		}
-		fc->to_a = ft_atoi(cmd->args[fc->i++]);
+		fc->to = ft_atoi(cmd->args[fc->i++]);
 	}
 	fc_fix_range(fc);
+	if (fc->exec)
+		fc->to = fc->from;
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 17:13:15 by pcharrie          #+#    #+#             */
-/*   Updated: 2020/01/13 17:05:40 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/02/14 10:57:31 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ void	fc_vars_init(t_fc_vars *fc)
 {
 	fc->from = g_shell.history.size - 1 - 15;
 	fc->to = g_shell.history.size - 1;
-	fc->from_a = 0;
-	fc->to_a = 0;
 	fc->list = 0;
 	fc->exec = 0;
 	fc->rm = 0;
