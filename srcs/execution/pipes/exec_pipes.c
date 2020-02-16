@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 20:32:11 by frossiny          #+#    #+#             */
-/*   Updated: 2020/02/14 16:58:42 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/02/16 14:51:12 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,11 @@ static void	read_pipeline(t_pipel *pipeline, t_fd *fd)
 	while (pipeline)
 	{
 		pipeline->next ? pipe(fd->np) : 0;
-		g_return = exec_pipe_cmd(pipeline, fd);
+		if ((g_return = exec_pipe_cmd(pipeline, fd)) == -1)
+		{
+			ft_printf("Error: fork failed\n");
+			break ;
+		}
 		pipeline->pid = g_pipe_pid;
 		pipeline->next ? copy_tab(fd->op, fd->np) : 0;
 		if (!pipeline->next)
