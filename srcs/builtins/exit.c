@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 11:53:12 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/28 19:48:33 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/02/17 12:26:39 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@
 
 static int	check_arg(t_cmd *cmd)
 {
-	if (!ft_strisdigit(cmd->args[1]))
+	if (!ft_strisdigit(cmd->args[1])
+	|| ft_strlen(cmd->args[1]) > 19)
 	{
 		write(2, "exit: Numeric argument required\n", 32);
 		return (0);
@@ -33,6 +34,7 @@ int			b_exit(t_cmd *cmd, t_shell *shell)
 {
 	int		ret;
 
+	write(1, "exit\n", 5);
 	if (cmd->argc > 2)
 	{
 		write(2, "exit: Too many arguments\n", 25);
@@ -40,7 +42,7 @@ int			b_exit(t_cmd *cmd, t_shell *shell)
 	}
 	ret = g_return;
 	if (cmd->argc == 2 && !check_arg(cmd))
-		ret = 1;
+		ret = 2;
 	else if (cmd->argc == 2)
 		ret = ft_atoi(cmd->args[1]);
 	(void)shell;

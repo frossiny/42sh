@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 11:43:47 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/28 19:38:15 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/02/17 13:15:14 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,35 @@ int				g_lpid;
 int				g_clear_buffer;
 char			*g_pwd;
 
+static void	check_shlvl(char *tmp)
+{
+	t_var	*shlvl;
+	int		int_shlvl;
+
+	int_shlvl = 1;
+	shlvl = var_get(g_shell.vars, "SHLVL");
+	if (shlvl && (int_shlvl = ft_atoi(shlvl->value) + 1) && int_shlvl >= 1002)
+	{
+		ft_dprintf(2,
+		"42sh: warning: shell level (%d) too high, resetting to 1\n",
+		int_shlvl);
+		int_shlvl = 1;
+	}
+	if (int_shlvl < 0)
+		int_shlvl = 0;
+	if ((tmp = ft_itoa(int_shlvl)))
+	{
+		var_set(&g_shell.vars, "SHLVL", tmp, 1);
+		ft_strdel(&tmp);
+	}
+	else
+		var_set(&g_shell.vars, "SHLVL", "1", 1);
+}
+
 static void	init_default_vars(char *tmp)
 {
 	char	buff[MAX_PWD_LEN];
 	t_var	*pwd;
-	t_var	*shlvl;
 	DIR		*dir;
 
 	if ((pwd = var_get(g_shell.vars, "PWD"))
@@ -46,14 +70,7 @@ static void	init_default_vars(char *tmp)
 		g_pwd = ft_strdup(buff);
 	}
 	var_set(&g_shell.vars, "PWD", g_pwd, 1);
-	if ((shlvl = var_get(g_shell.vars, "SHLVL"))
-		&& (tmp = ft_itoa(ft_atoi(shlvl->value) + 1)))
-	{
-		var_set(&g_shell.vars, "SHLVL", tmp, 1);
-		ft_strdel(&tmp);
-	}
-	else
-		var_set(&g_shell.vars, "SHLVL", "1", 1);
+	check_shlvl(tmp);
 }
 
 static int	shell_config(char *envp[])
