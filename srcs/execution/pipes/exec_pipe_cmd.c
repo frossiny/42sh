@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:49:21 by frossiny          #+#    #+#             */
-/*   Updated: 2020/02/14 17:02:02 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/02/17 15:58:49 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,8 @@ static void	fork_child(t_pipel *pline, t_cmd *cmd, t_fd *fd)
 int			exec_pipe_cmd(t_pipel *pline, t_fd *fd)
 {
 	t_cmd	*cmd;
-	int		ret;
 
 	cmd = pline->cmd;
-	if (!(ret = validate_redirection(cmd->redir)))
-		return (!ret);
 	g_pipe_pid = fork();
 	if (g_pipe_pid == 0)
 		fork_child(pline, cmd, fd);
@@ -93,5 +90,5 @@ int			exec_pipe_cmd(t_pipel *pline, t_fd *fd)
 	if (!pline->previous && !exec_is_pipe_bg(pline))
 		tcsetpgrp(g_shell.pgrp, g_pipe_pid);
 	kill(-g_pipe_pid, SIGSTOP);
-	return (ret);
+	return (1);
 }

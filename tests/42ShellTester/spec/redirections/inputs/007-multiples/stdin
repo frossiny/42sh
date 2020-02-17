@@ -1,0 +1,1 @@
+cat 8<${GLOBAL_TOKEN}_file <&8

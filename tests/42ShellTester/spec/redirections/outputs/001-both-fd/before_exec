@@ -1,0 +1,2 @@
+touch ${GLOBAL_TOKEN}_FILE
+rm -rf no_such_file

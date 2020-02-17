@@ -1,0 +1,1 @@
+ls ${GLOBAL_TOKEN}_FILE no_such_file >& ${GLOBAL_TOKEN}_LS_RESULT
