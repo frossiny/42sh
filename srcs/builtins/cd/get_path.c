@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 02:12:48 by pcharrie          #+#    #+#             */
-/*   Updated: 2020/01/07 17:47:41 by pcharrie         ###   ########.fr       */
+/*   Updated: 2020/02/17 14:13:43 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ static char	*cd_get_var(char *key)
 		ft_dprintf(2, "42sh: cd: %s not set\n", key);
 		return (NULL);
 	}
-	ft_putendl(path);
+	if (ft_strcmp(key, "HOME"))
+		ft_putendl(path);
 	return (ft_strdup(path));
 }
 
