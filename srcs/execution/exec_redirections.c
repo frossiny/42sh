@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 15:27:23 by frossiny          #+#    #+#             */
-/*   Updated: 2020/02/14 15:21:47 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/02/17 14:52:09 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int		redirect_output(t_redirect *redir, int c_only)
 	otype |= (redir->append) ? O_APPEND : O_TRUNC;
 	if ((fd = open(redir->value->content, otype, 420)) == -1)
 		return (0);
-	if (!c_only)
+	if (!c_only && fd != redir->filedes)
 	{
 		dup2(fd, redir->filedes);
 		close(fd);
