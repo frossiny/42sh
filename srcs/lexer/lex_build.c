@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 15:28:04 by vsaltel           #+#    #+#             */
-/*   Updated: 2020/01/20 15:17:58 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/02/17 16:49:11 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void		init_bslash_error(char **input, char **ninput)
 	*ninput = NULL;
 }
 
-static int		bslash_error(t_shell *shell, char **input, int ret)
+int				bslash_error(char **input, int ret)
 {
 	char	*ninput;
 	char	*tmp;
@@ -39,7 +39,7 @@ static int		bslash_error(t_shell *shell, char **input, int ret)
 	while (!ninput || ft_strequ(ninput, "\\"))
 	{
 		free(ninput);
-		if (!(ret = get_input(0, &ninput, shell)))
+		if (!(ret = get_input(0, &ninput, &g_shell)))
 		{
 			if (g_ignore_signals)
 			{
@@ -58,13 +58,13 @@ static int		bslash_error(t_shell *shell, char **input, int ret)
 	return (0);
 }
 
-static int		not_closed_error(t_shell *shell, char **input, int ret)
+int				not_closed_error(char **input, int ret)
 {
 	char	*ninput;
 	char	*tmp;
 
 	g_ignore_signals = 1;
-	if (!(ret = get_input(0, &ninput, shell)))
+	if (!(ret = get_input(0, &ninput, &g_shell)))
 	{
 		if (g_ignore_signals)
 		{
@@ -93,9 +93,9 @@ int				lex_build(t_shell *shell, char **input)
 		lexer_free(&(shell->lexer));
 		if (ret > -2)
 			return (ret);
-		else if (ret == -2 && (ret = not_closed_error(shell, input, ret)))
+		else if (ret == -2 && (ret = not_closed_error(input, ret)))
 			return (ret);
-		else if (ret == -3 && (ret = bslash_error(shell, input, ret)))
+		else if (ret == -3 && (ret = bslash_error(input, ret)))
 			return (ret);
 	}
 	return (ret);
@@ -112,7 +112,7 @@ int				lex_loop(t_shell *shell, char **input, int history)
 		return (ret);
 	if (isatty(0))
 		history ? add_to_history(*input, &(shell->history)) : 0;
-	if ((ret = alias_exec(shell, input)))
+	if ((ret = alias_exec(shell)))
 		return (ret);
 	return (1);
 }
