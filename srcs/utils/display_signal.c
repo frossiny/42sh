@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/15 14:13:07 by vsaltel           #+#    #+#             */
-/*   Updated: 2019/05/15 15:22:57 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/02/14 13:36:13 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ const static char	*g_signals_desc[] =
 
 int					display_signal(int sigid)
 {
-	if (sigid > 0 && sigid <= 31)
+	if (sigid > 0 && sigid <= 31 && sigid != SIGPIPE && sigid != SIGINT)
 		ft_printf("\n\033[1;31m[SIGNAL]\033[0m %d %s",
 			sigid, g_signals_desc[sigid]);
 	return (128 + sigid);

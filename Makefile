@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/09 15:29:04 by vsaltel           #+#    #+#              #
-#    Updated: 2020/02/18 14:49:00 by vsaltel          ###   ########.fr        #
+#    Updated: 2020/02/18 14:55:58 by vsaltel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -244,6 +244,9 @@ FILES	=	shell.c											\
 			utils/copy_tab.c								\
 			utils/u_free_shell.c							\
 			utils/extract_first.c							\
+			utils/u_file_exists.c							\
+			utils/u_file_can_read.c							\
+			utils/u_file_can_write.c						\
 			variables/var_build_env.c						\
 			variables/var_delete.c							\
 			variables/var_destroy.c							\

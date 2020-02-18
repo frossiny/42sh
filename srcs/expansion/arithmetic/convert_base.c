@@ -6,7 +6,7 @@
 /*   By: alagroy- <alagroy-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 18:45:05 by alagroy-          #+#    #+#             */
-/*   Updated: 2020/02/03 20:33:30 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/02/13 18:07:54 by alagroy-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,13 @@ static int	parse_base(char *str)
 	int		len;
 	int		hex;
 
-	i = 1;
 	hex = 0;
 	if (str[1] == 'x')
 		hex = 1;
 	else if (!ft_isdigit(str[1]))
 		return (0);
-	len = 2;
+	i = hex;
+	len = hex + 1;
 	while (ft_isdigit(str[++i]) || ft_isalpha(str[i]))
 	{
 		if ((hex && ft_isalpha(str[i]) && !((str[i] <= 'F' && str[i] >= 'A')
@@ -78,7 +78,10 @@ static int	convert_base_str(char **str, int i)
 	if (!ft_isdigit((*str)[i + 1]) && !ft_isalpha((*str)[i + 1]))
 		return (i);
 	if (!(len = parse_base(*str + i)))
-		return (i);
+	{
+		ft_dprintf(2, "42sh: value too great for base\n");
+		return (-1);
+	}
 	if ((*str)[i + 1] == 'x')
 		new_num = ft_ltoa(ft_atol_base(*str + i + 2, 16));
 	else
@@ -98,7 +101,8 @@ char		*ae_base10(char *str)
 	while (str[++i])
 	{
 		if (str[i] == '0' && (i == 0 || !ft_isdigit(str[i - 1])))
-			i = convert_base_str(&str, i);
+			if ((i = convert_base_str(&str, i)) == -1)
+				return (NULL);
 	}
 	return (str);
 }

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 16:54:50 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/23 15:59:10 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/02/14 15:02:33 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,10 @@
 
 void	inexistant(char *name)
 {
-	ft_dprintf(2, "42sh: %s: no such file or directory\n", name);
+	if (!name)
+		ft_dprintf(2, "42sh: ambiguous redirect\n");
+	else
+		ft_dprintf(2, "42sh: %s: no such file or directory\n", name);
 }
 
 void	not_found(char *name)
@@ -25,7 +28,10 @@ void	not_found(char *name)
 
 int		permission_denied(char *name)
 {
-	ft_dprintf(2, "42sh: %s: permission denied\n", name);
+	if (!name)
+		ft_dprintf(2, "42sh: ambiguous redirect\n");
+	else
+		ft_dprintf(2, "42sh: %s: permission denied\n", name);
 	return (126);
 }
 

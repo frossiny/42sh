@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 11:43:47 by frossiny          #+#    #+#             */
-/*   Updated: 2020/02/14 17:14:55 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/02/14 17:40:47 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ static int	check_output(void)
 		g_fd = 1;
 	else if (isatty(STDERR_FILENO))
 		g_fd = 2;
-	else
+	else if (isatty(STDIN_FILENO))
 	{
 		ft_printf("STDOUT and STDERR has been modified\n");
 		return (0);

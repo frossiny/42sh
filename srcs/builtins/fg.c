@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 16:51:40 by lubenard          #+#    #+#             */
-/*   Updated: 2020/02/12 14:02:17 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/02/14 14:08:26 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,49 +23,35 @@
 ** Set new status to processes when waiting for them
 */
 
-int		mark_process_status(pid_t pid, int status)
+int		mark_process_status(t_jobs_lst *job, int status)
 {
-	t_jobs_lst	*plist;
 	int			signo;
 
-	if ((plist = job_search(&g_shell, pid)))
+	if (!job)
+		return (WEXITSTATUS(status));
+	if (WIFSTOPPED(status))
+		job->state = JOB_SUSPENDED;
+	else
 	{
-		if (WIFSTOPPED(status))
-			plist->state = JOB_SUSPENDED;
-		else
-		{
-			plist->state = JOB_COMPLETED;
-			if (WIFSIGNALED(status) && (signo = WTERMSIG(status)))
-			{
-				if (signo != SIGPIPE && signo != SIGINT)
-					ft_dprintf(2, "%d\n", signo);
-			}
-		}
-		return (0);
+		job->state = JOB_COMPLETED;
+		if (WIFSIGNALED(status) && (signo = WTERMSIG(status)))
+			display_signal(signo);
 	}
-	return (1);
+	return (WEXITSTATUS(status));
 }
 
 /*
 ** Wait for job to complete
 */
 
-int		wait_for_job(int pid)
+int		wait_for_job(t_jobs_lst *job)
 {
-	pid_t	wait;
 	int		status;
 
-	g_child = pid;
-	while (1)
-	{
-		if ((wait = waitpid(-pid, &status, WUNTRACED)) == -1)
-			return (1);
-		if (pid <= 1 || mark_process_status(wait, status)
-			|| job_is_stopped(g_shell.jobs.lst)
-			|| job_is_completed(g_shell.jobs.lst))
-			break ;
-	}
-	return (0);
+	g_child = job->pid;
+	if (waitpid(-job->pid, &status, WUNTRACED) == -1)
+		return (-1);
+	return (mark_process_status(job, status));
 }
 
 /*
@@ -87,9 +73,8 @@ int		put_foreground(t_jobs_lst *searched, int cont)
 	}
 	searched->state = JOB_RUNNING;
 	searched->foreground = 1;
-	wait_for_job(searched->pid);
-	if (tcsetpgrp(g_shell.pgrp, g_shell.pid) < 0)
-		return (EXIT_FAILURE);
+	g_return = wait_for_job(searched);
+	tcsetpgrp(g_shell.pgrp, g_shell.pid);
 	termcaps_init(NULL);
 	if (job_is_completed(searched))
 		job_delete(&g_shell, searched->pid);
@@ -99,7 +84,7 @@ int		put_foreground(t_jobs_lst *searched, int cont)
 		ft_printf("[%d]%c %s %s\n", searched->job_number, searched->current,
 					g_jobs_status[searched->state], searched->command);
 	}
-	return (EXIT_SUCCESS);
+	return (g_return);
 }
 
 int		handle_options_fg(t_cmd *cmd)

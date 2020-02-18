@@ -6,42 +6,70 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 15:27:23 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/30 17:28:40 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/02/17 15:56:44 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include "libft.h"
 #include "execution.h"
+#include "utils.h"
 
-static void		redirect_output(t_redirect *redir, int c_only)
+static int		redirect_output(t_redirect *redir, int c_only)
 {
 	int		fd;
 	int		otype;
 
+	if (!u_file_can_write(redir->value ? redir->value->content : NULL))
+		return (0);
 	otype = O_WRONLY | O_CREAT;
 	otype |= (redir->append) ? O_APPEND : O_TRUNC;
 	if ((fd = open(redir->value->content, otype, 420)) == -1)
-		return ;
-	if (!c_only)
+		return (0);
+	if (!c_only && fd != redir->filedes)
 	{
 		dup2(fd, redir->filedes);
 		close(fd);
 	}
+	return (1);
 }
 
-static void		redirect_input(t_redirect *redir)
+static int		redirect_input(t_redirect *redir)
 {
 	int		fd;
 
+	if (!u_file_exists(redir->value ? redir->value->content : NULL, 1))
+		return (0);
+	if (!u_file_can_read(redir->value ? redir->value->content : NULL))
+		return (0);
 	if ((fd = open(redir->value->content, O_RDONLY)) == -1)
-		return ;
+		return (0);
 	dup2(fd, redir->filedes);
 	close(fd);
+	return (1);
+}
+
+/*
+** 1537 = O_WRONLY | O_CREAT | O_TRUNC
+*/
+
+static int		aggr_output(t_redirect *redir)
+{
+	int		fd;
+
+	if (!u_file_can_write(redir->value ? redir->value->content : NULL))
+		return (0);
+	if ((fd = open(redir->value->content, 1537, 420)) == -1)
+		return (0);
+	dup2(fd, 1);
+	dup2(fd, 2);
+	return (1);
 }
 
 static int		handle_aggregate(t_redirect *redir)
 {
+	if (!redir->value)
+		return (0);
 	if (redir->type == TOKEN_AGGR)
 	{
 		if (ft_strequ(redir->value->content, "-"))
@@ -55,25 +83,30 @@ static int		handle_aggregate(t_redirect *redir)
 				return (0);
 			}
 		}
+		else if (redir->filedes == 1)
+			aggr_output(redir);
 	}
 	return (1);
 }
 
 int				handle_redirections(t_redirect *redir, int c_only)
 {
-	t_redirect	*save;
-
-	save = redir;
-	while (redir && redir->value)
+	while (redir)
 	{
 		if (redir->type == TOKEN_REDIRO)
-			redirect_output(redir, c_only);
+		{
+			if (!redirect_output(redir, c_only))
+				return (0);
+		}
 		else if (!c_only && redir->type == TOKEN_REDIRI)
 		{
 			if (redir->append)
 				apply_here_doc(redir);
 			else
-				redirect_input(redir);
+			{
+				if (!redirect_input(redir))
+					return (0);
+			}
 		}
 		else if (redir->type == TOKEN_AGGR)
 			if (!(handle_aggregate(redir)))

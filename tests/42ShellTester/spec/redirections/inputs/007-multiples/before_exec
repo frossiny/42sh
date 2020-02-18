@@ -1,0 +1,2 @@
+rm -rf ${GLOBAL_TOKEN}_file
+echo "OuiCestBon" > ${GLOBAL_TOKEN}_file
