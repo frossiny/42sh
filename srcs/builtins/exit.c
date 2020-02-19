@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/26 11:53:12 by frossiny          #+#    #+#             */
-/*   Updated: 2020/02/17 12:26:39 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/02/19 17:52:47 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ int			b_exit(t_cmd *cmd, t_shell *shell)
 {
 	int		ret;
 
-	write(1, "exit\n", 5);
+	if (isatty(0))
+		write(1, "exit\n", 5);
 	if (cmd->argc > 2)
 	{
 		write(2, "exit: Too many arguments\n", 25);
