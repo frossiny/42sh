@@ -6,7 +6,7 @@
 /*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 14:00:31 by vsaltel           #+#    #+#             */
-/*   Updated: 2020/02/18 14:44:48 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/02/19 14:35:16 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,10 @@ int				alias_recursive(t_alias *alias, t_token *token,
 	t_string	*new_hist;
 	t_token		*tmp;
 	t_token		*deb;
+	int			ret;
 
 	new_hist = t_stringdup(hist);
-	if (old_word)
-		new_hist = add_alias_history(new_hist, old_word);
+	new_hist = old_word ? add_alias_history(new_hist, old_word) : new_hist;
 	deb = token;
 	while (token)
 	{
@@ -88,10 +88,10 @@ int				alias_recursive(t_alias *alias, t_token *token,
 		if (tok_is_word(token) && !is_already_solve(new_hist, token->content))
 		{
 			tmp = token->next;
-			if (alias_resolve(alias, token, new_hist))
+			if ((ret = alias_resolve(alias, token, new_hist)))
 			{
 				free_alias_history(&new_hist);
-				return (1);
+				return (ret);
 			}
 			token = tmp;
 		}
