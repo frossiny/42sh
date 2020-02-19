@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 12:18:13 by vsaltel           #+#    #+#             */
-/*   Updated: 2020/01/27 14:54:22 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/02/19 16:52:13 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,8 @@ int				histo_expansion(t_shell *shell, char **input)
 		if (e.str[e.i] == '\'' && !is_escaped(e.str, e.i, 0))
 			e.isquote = (e.isquote ? 0 : 1);
 		if (e.str[e.i] == '!' && !is_escaped(e.str, e.i, 0)
-			&& e.str[e.i + 1] && e.str[e.i + 1] != ' ' && !e.isquote)
+			&& e.str[e.i + 1] && e.str[e.i + 1] != ' '
+			&& !is_in_bracket(e.str, e.i) && !e.isquote)
 			if (histo_complete(&e, shell->history, &find))
 			{
 				free(e.new);

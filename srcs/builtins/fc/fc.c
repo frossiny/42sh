@@ -6,24 +6,18 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 17:13:15 by pcharrie          #+#    #+#             */
-/*   Updated: 2020/02/19 14:48:32 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/02/19 17:33:47 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <fcntl.h>
-#include "utils.h"
-#include "shell.h"
 #include "libft.h"
 #include "variables.h"
 #include "builtins.h"
-#include "opt.h"
 
-void	fc_vars_init(t_fc_vars *fc)
+static void	fc_vars_init(t_shell *shell, t_fc_vars *fc)
 {
-	fc->from = g_shell.history.size - 1 - 15;
-	fc->to = g_shell.history.size - 1;
+	fc->from = shell->history.size - 1 - 15;
+	fc->to = shell->history.size - 1;
 	fc->list = 0;
 	fc->exec = 0;
 	fc->rm = 0;
@@ -36,7 +30,7 @@ void	fc_vars_init(t_fc_vars *fc)
 	fc->tab = NULL;
 }
 
-void	fc_proceed(t_shell *shell, t_fc_vars *fc)
+static void	fc_proceed(t_shell *shell, t_fc_vars *fc)
 {
 	if (fc->exec)
 	{
@@ -56,7 +50,7 @@ void	fc_proceed(t_shell *shell, t_fc_vars *fc)
 	}
 }
 
-void	fc_vars_del(t_fc_vars *fc)
+static void	fc_vars_del(t_fc_vars *fc)
 {
 	ft_2dstrdel(&fc->tab);
 	ft_2dstrdel(&fc->ed_args);
@@ -64,13 +58,12 @@ void	fc_vars_del(t_fc_vars *fc)
 	ft_strdel(&fc->s_cmd);
 }
 
-int		b_fc(t_cmd *cmd, t_shell *shell)
+int			b_fc(t_cmd *cmd, t_shell *shell)
 {
 	t_fc_vars	fc;
 	int			ret;
 
-	(void)shell;
-	fc_vars_init(&fc);
+	fc_vars_init(shell, &fc);
 	if ((ret = fc_parse_options(cmd, &fc)) < 1 || !fc_parse_range(cmd, &fc)
 		|| !fc_build_tab(&fc))
 	{

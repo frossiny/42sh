@@ -6,19 +6,12 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 01:29:44 by pcharrie          #+#    #+#             */
-/*   Updated: 2019/11/13 12:52:50 by pcharrie         ###   ########.fr       */
+/*   Updated: 2020/02/19 15:39:03 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <fcntl.h>
-#include "utils.h"
-#include "shell.h"
 #include "libft.h"
-#include "variables.h"
 #include "builtins.h"
-#include "opt.h"
 
 static void	fc_list_print_str(char *str, int n, int rm)
 {

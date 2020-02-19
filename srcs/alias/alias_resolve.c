@@ -6,7 +6,7 @@
 /*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 14:00:31 by vsaltel           #+#    #+#             */
-/*   Updated: 2020/02/19 14:35:16 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/02/19 15:36:56 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int				alias_resolve(t_alias *alias, t_token *token, t_string *hist)
 	return (0);
 }
 
-void			move_token_index(t_token **tok)
+static void		move_token_index(t_token **tok)
 {
 	t_token		*token;
 

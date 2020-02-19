@@ -6,17 +6,12 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 01:34:27 by pcharrie          #+#    #+#             */
-/*   Updated: 2020/02/14 11:33:03 by pcharrie         ###   ########.fr       */
+/*   Updated: 2020/02/19 15:43:16 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <fcntl.h>
-#include "utils.h"
-#include "shell.h"
 #include "libft.h"
-#include "variables.h"
+#include "shell.h"
 #include "builtins.h"
 #include "opt.h"
 
