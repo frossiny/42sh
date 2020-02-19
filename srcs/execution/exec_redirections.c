@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 15:27:23 by frossiny          #+#    #+#             */
-/*   Updated: 2020/02/17 15:56:44 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/02/17 16:08:57 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,11 @@ static int		aggr_output(t_redirect *redir)
 {
 	int		fd;
 
+	if (redir->filedes != 1)
+	{
+		ft_dprintf(2, "42sh: %s: ambiguous redirect\n", redir->value->content);
+		return (0);
+	}
 	if (!u_file_can_write(redir->value ? redir->value->content : NULL))
 		return (0);
 	if ((fd = open(redir->value->content, 1537, 420)) == -1)
