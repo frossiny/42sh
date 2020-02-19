@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/25 13:26:37 by frossiny          #+#    #+#             */
-/*   Updated: 2020/02/17 15:51:34 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/02/19 15:59:52 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	start_process(t_cmd *cmd, char **env)
 		return (g_child = 0);
 	if (!cmd->is_bg)
 	{
-		pause();
+		sigsuspend(NULL);
 		status = g_lstatus;
 		tcsetpgrp(g_shell.pgrp, g_shell.pid);
 		g_shell.able_termcaps ? termcaps_init(NULL) : 0;
