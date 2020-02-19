@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/09 15:29:04 by vsaltel           #+#    #+#              #
-#    Updated: 2020/02/14 15:29:57 by frossiny         ###   ########.fr        #
+#    Updated: 2020/02/18 14:55:58 by vsaltel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,7 @@ FILES	=	shell.c											\
 			alias/alias_display.c							\
 			alias/alias_free.c								\
 			alias/alias_resolve.c							\
+			alias/alias_lex.c								\
 			alias/alias_exec.c								\
 			alias/alias_utils.c								\
 			ast/ast_build.c									\

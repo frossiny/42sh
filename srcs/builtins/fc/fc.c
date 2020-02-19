@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 17:13:15 by pcharrie          #+#    #+#             */
-/*   Updated: 2020/02/14 10:57:31 by pcharrie         ###   ########.fr       */
+/*   Updated: 2020/02/19 14:48:32 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	fc_vars_init(t_fc_vars *fc)
 	fc->tab = NULL;
 }
 
-void	fc_proceed(t_fc_vars *fc)
+void	fc_proceed(t_shell *shell, t_fc_vars *fc)
 {
 	if (fc->exec)
 	{
@@ -48,8 +48,10 @@ void	fc_proceed(t_fc_vars *fc)
 		fc_list(fc);
 	else
 	{
-		if (!fc->editor && !(fc->editor = ft_strdup("/bin/ed")))
-			return ;
+		if (!fc->editor)
+			if (!(fc->editor = var_get_value(shell->vars, "FCEDIT")))
+				if (!(fc->editor = ft_strdup("/bin/ed")))
+					return ;
 		fc_edit(fc);
 	}
 }
@@ -80,7 +82,7 @@ int		b_fc(t_cmd *cmd, t_shell *shell)
 		fc_vars_del(&fc);
 		return (1);
 	}
-	fc_proceed(&fc);
+	fc_proceed(shell, &fc);
 	fc_vars_del(&fc);
 	return (0);
 }
