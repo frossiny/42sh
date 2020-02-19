@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 18:49:29 by vsaltel           #+#    #+#             */
-/*   Updated: 2020/01/16 14:28:28 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/02/13 17:03:38 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct		s_ex_caps
 	void				(*func)();
 }					t_ex_caps;
 
+void				mytputs(char *caps);
 int					termcaps_init(struct termios *prev_term);
 void				restore_shell(struct termios prev_term);
 void				free_termcaps(t_shell *shell);
@@ -75,7 +76,7 @@ void				resize(int sig);
 void				memset_pos(t_cursor_pos *pos);
 void				move_cursor(int x, int y);
 void				final_position(t_cursor_pos *pos);
-void				term_print(char *str);
+void				term_print(int fd, char *str);
 void				reprint(char *str, t_cursor_pos *pos, int cursor_pos,
 															int is_resize);
 void				visual_delete(char **str, t_cursor_pos *pos);

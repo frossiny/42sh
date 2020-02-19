@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 15:28:37 by vsaltel           #+#    #+#             */
-/*   Updated: 2020/01/28 19:55:06 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/02/14 10:57:27 by pcharrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,8 +115,6 @@ typedef struct			s_fc_vars
 {
 	int					from;
 	int					to;
-	int					from_a;
-	int					to_a;
 	int					list;
 	int					exec;
 	int					rm;

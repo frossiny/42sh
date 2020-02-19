@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/01 14:41:10 by frossiny          #+#    #+#             */
-/*   Updated: 2020/02/13 16:35:19 by alagroy-         ###   ########.fr       */
+/*   Updated: 2020/02/14 17:27:46 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ void	prompt(void)
 	if (g_ignore_signals == 0)
 	{
 		prompt_expansions();
-		ft_putstr(g_shell.ps1);
+		ft_putstr_fd(g_shell.ps1, g_fd);
 	}
 	else if (g_ignore_signals == 1)
-		ft_printf("> ");
+		ft_dprintf(g_fd, "> ");
 }
 
 int		count_len_prompt(char *ps1)

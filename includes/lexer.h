@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 11:23:56 by frossiny          #+#    #+#             */
-/*   Updated: 2019/11/29 15:35:35 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/02/17 15:35:56 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,6 @@ int			lex_state_operator(t_lexer *lexer);
 int			lex_state_semic(t_lexer *lexer);
 int			lex_state_expansions(t_lexer *lexer);
 
+int			not_closed_error(char **input, int ret);
+int			bslash_error(char **input, int ret);
 #endif

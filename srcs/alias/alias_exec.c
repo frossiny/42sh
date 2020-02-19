@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 15:55:33 by vsaltel           #+#    #+#             */
-/*   Updated: 2020/01/30 16:39:22 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/02/18 14:43:41 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,38 @@
 #include "structs.h"
 #include "lexer.h"
 
-int				alias_exec(t_shell *shell, char **input)
+static void		free_empty_tok(t_token **tok)
 {
-	int			ret;
-	int			alias_ret;
-	t_string	*alias_hist;
+	t_token		*token;
+	t_token		*prev;
+	t_token		*tmp;
 
-	ret = 0;
-	alias_hist = NULL;
-	alias_ret = alias_resolve(shell, shell->lexer.tokens, shell->alias,
-															&alias_hist);
-	while (alias_ret > 0)
+	token = *tok;
+	prev = NULL;
+	while (token)
 	{
-		tok_to_input(input, shell->lexer.tokens);
-		lexer_free(&(shell->lexer));
-		if ((ret = lex_build(shell, input)) != 1)
+		tmp = token->next;
+		if (token->content && !token->content[0])
 		{
-			free_alias_history(&alias_hist);
-			return (ret);
+			if (token == *tok)
+				*tok = tmp;
+			else if (prev)
+				prev->next = token->next;
+			tok_free(token);
+			token = NULL;
 		}
-		alias_ret = alias_resolve(shell, shell->lexer.tokens, shell->alias,
-															&alias_hist);
+		prev = token;
+		token = tmp;
 	}
-	free_alias_history(&alias_hist);
-	return (0);
+}
+
+int				alias_exec(t_shell *shell)
+{
+	int		ret;
+
+	if (!shell->alias)
+		return (1);
+	ret = alias_recursive(shell->alias, shell->lexer.tokens, NULL, NULL);
+	free_empty_tok(&shell->lexer.tokens);
+	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 12:24:22 by vsaltel           #+#    #+#             */
-/*   Updated: 2020/02/13 15:21:33 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/02/13 18:21:15 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,14 @@
 #include "libft.h"
 #include "shell.h"
 
+void			mytputs(char *caps)
+{
+	if (g_fd == 2)
+		tputs(caps, 1, ft_putchar_err);
+	else
+		tputs(caps, 1, ft_putchar);
+}
+
 void			move_cursor(int x, int y)
 {
 	char	*tmp;
@@ -22,7 +30,7 @@ void			move_cursor(int x, int y)
 
 	tmp = tgetstr("cm", NULL);
 	tmp2 = tgoto(tmp, x, y);
-	tputs(tmp2, 1, ft_putchar);
+	mytputs(tmp2);
 }
 
 int				get_pos(t_cursor_pos *pos)
@@ -32,7 +40,7 @@ int				get_pos(t_cursor_pos *pos)
 
 	pos->x = 0;
 	pos->y = 0;
-	write(1, "\033[6n", 4);
+	write(g_fd, "\033[6n", 4);
 	if ((i = read(0, buf, 16)) <= 0)
 		return (0);
 	buf[i] = 0;
@@ -57,7 +65,7 @@ static void		memset_cursor(t_cursor_pos *pos)
 	{
 		move_cursor(0, 0);
 		prompt();
-		tputs(tgetstr("cd", NULL), 1, ft_putchar);
+		mytputs(tgetstr("cd", NULL));
 		pos->y = 0;
 		pos->x = prompt_len();
 		move_cursor(pos->x, pos->y);

@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 11:43:47 by frossiny          #+#    #+#             */
-/*   Updated: 2020/02/17 13:15:14 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/02/19 17:49:13 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int				g_ignore_signals;
 int				g_return;
 int				g_lpid;
 int				g_clear_buffer;
+int				g_fd;
 char			*g_pwd;
 
 static void	check_shlvl(char *tmp)
@@ -129,11 +130,27 @@ static int	shell_init(void)
 	return (1);
 }
 
+static int	check_output(void)
+{
+	if (isatty(STDOUT_FILENO))
+		g_fd = 1;
+	else if (isatty(STDERR_FILENO))
+		g_fd = 2;
+	else if (isatty(STDIN_FILENO))
+	{
+		ft_printf("STDOUT and STDERR has been modified\n");
+		return (0);
+	}
+	return (1);
+}
+
 int			main(int argc, char *argv[], char *envp[])
 {
 	(void)argc;
 	(void)argv;
 	register_signals();
+	if (!check_output())
+		return (0);
 	if (!shell_config(envp) || !shell_init())
 		return (0);
 	init_default_vars(NULL);

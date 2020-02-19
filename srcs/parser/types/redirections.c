@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 16:08:55 by frossiny          #+#    #+#             */
-/*   Updated: 2019/10/24 12:58:29 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/02/17 15:37:57 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@ static int	is_aggr_valid(t_parser *par)
 		return (1);
 	if (!par->tokens->next)
 		return (0);
+	if (ft_strequ(par->tokens->content, ">&") \
+			&& !ft_strisdigit(par->tokens->next->content) \
+			&& !ft_strequ(par->tokens->next->content, "-"))
+		return (1);
 	if (!ft_strisdigit(par->tokens->next->content) \
 			&& !ft_strequ(par->tokens->next->content, "-"))
 	{

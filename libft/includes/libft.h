@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 18:24:16 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/27 19:03:35 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/02/13 18:21:40 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ int					ft_toupper(int c);
 int					ft_isnumeric(char *str);
 
 int					ft_putchar(int c);
+int					ft_putchar_err(int c);
 void				ft_putstr(char const *s);
 void				ft_putnstr(char const *s, size_t n);
 void				ft_putendl(char const *s);

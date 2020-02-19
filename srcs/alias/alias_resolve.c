@@ -6,7 +6,7 @@
 /*   By: vsaltel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 14:00:31 by vsaltel           #+#    #+#             */
-/*   Updated: 2020/01/30 17:14:03 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/02/19 15:36:56 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,84 +14,89 @@
 #include "alias.h"
 #include "lexer.h"
 
-static int	alias_init(t_token *token, t_alias *alias, int *res, t_string **lst)
+void			alias_patch_token_list(t_token *dest, t_token *new)
 {
-	if (!alias || !token)
-		return (0);
-	*res = 0;
-	*lst = NULL;
-	return (1);
+	t_token *tmp;
+
+	if (!new)
+		return ;
+	dest->content = ft_strfdup(new->content, dest->content);
+	tmp = new;
+	new = new->next;
+	tok_free(tmp);
+	if (new)
+	{
+		tmp = dest->next;
+		dest->next = new;
+		while (new && new->next)
+			new = new->next;
+		new->next = tmp;
+	}
 }
 
-static void	alias_empty_tok(t_shell *shell, t_token **token)
+int				alias_resolve(t_alias *alias, t_token *token, t_string *hist)
 {
-	t_token		*tok_lst;
+	t_alias		*res;
+	t_lexer		lexer;
+	char		*tmp;
+	int			ret;
 
-	if (shell->lexer.tokens == *token)
+	ret = 1;
+	if ((res = alias_get(alias, token->content)))
 	{
-		shell->lexer.tokens = shell->lexer.tokens->next;
-		tok_free(*token);
-		*token = shell->lexer.tokens;
-	}
-	else
-	{
-		tok_lst = shell->lexer.tokens;
-		while (tok_lst->next && tok_lst->next != *token)
-			tok_lst = tok_lst->next;
-		if (tok_lst)
+		if (res && res->value[0])
 		{
-			tok_lst->next = (*token)->next;
-			tok_free(*token);
-			*token = tok_lst->next;
+			tmp = ft_strdup(res->value);
+			if ((ret = alias_lex(&lexer, &tmp)) != 1)
+				return (ret);
+			if (alias_recursive(alias, lexer.tokens, hist, token->content))
+				return (1);
+			alias_patch_token_list(token, lexer.tokens);
 		}
-		else
-			*token = (*token)->next;
+		else if (res && !res->value[0])
+			token->content = ft_strfdup("", token->content);
 	}
+	return (0);
 }
 
-char		*alias_solver(t_alias *alias, t_alias *curr, t_string **list,
-																t_string *hist)
+static void		move_token_index(t_token **tok)
 {
-	t_alias		*tmp;
+	t_token		*token;
 
-	if (!alias || !curr)
-		return (NULL);
-	if (curr->loop > 0)
-		return (curr->key);
-	curr->loop++;
-	add_alias_history(list, curr->key);
-	if (!is_already_solve(hist, curr->value)
-			&& (tmp = alias_get(alias, curr->value)))
-		return (alias_solver(alias, tmp, list, hist));
-	return (curr->value);
+	token = *tok;
+	while (token && (tok_is_word(token) || tok_is_redirection(token)))
+		token = token->next;
+	if (token)
+		token = token->next;
+	*tok = token;
 }
 
-int			alias_resolve(t_shell *shell, t_token *token, t_alias *alias
-															, t_string **hist)
+int				alias_recursive(t_alias *alias, t_token *token,
+											t_string *hist, char *old_word)
 {
-	int			res;
-	char		*str;
-	t_string	*list;
+	t_string	*new_hist;
+	t_token		*tmp;
+	t_token		*deb;
+	int			ret;
 
-	if (!alias_init(token, alias, &res, &list))
-		return (0);
+	new_hist = t_stringdup(hist);
+	new_hist = old_word ? add_alias_history(new_hist, old_word) : new_hist;
+	deb = token;
 	while (token)
-		if (tok_is_word(token))
+	{
+		tmp = NULL;
+		if (tok_is_word(token) && !is_already_solve(new_hist, token->content))
 		{
-			set_loop(alias);
-			if (!is_already_solve(*hist, token->content)
-				&& ((str = alias_solver(alias, alias_get(alias, token->content),
-													&list, *hist))) && (++res))
-				token->content = ft_strfdup(str, token->content);
-			if (ft_strcmp(token->content, ""))
-				while (token && (tok_is_word(token)
-								|| tok_is_redirection(token)))
-					token = token->next;
-			else
-				alias_empty_tok(shell, &token);
+			tmp = token->next;
+			if ((ret = alias_resolve(alias, token, new_hist)))
+			{
+				free_alias_history(&new_hist);
+				return (ret);
+			}
+			token = tmp;
 		}
-		else
-			token = token->next;
-	maj_alias_history(list, hist);
-	return (res);
+		move_token_index(&token);
+	}
+	free_alias_history(&new_hist);
+	return (0);
 }

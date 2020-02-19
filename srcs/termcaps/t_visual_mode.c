@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 17:30:28 by vsaltel           #+#    #+#             */
-/*   Updated: 2020/01/21 15:07:00 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/02/13 16:31:08 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ void		visual_print(char *str, t_cursor_pos *pos)
 		r = str[pos->v_beg] ? ft_strdup(str + pos->v_beg + 1) : NULL;
 	}
 	if (l)
-		term_print(l);
+		term_print(g_fd, l);
 	write(1, "\e[7m", 4);
 	if (m)
-		term_print(m);
+		term_print(g_fd, m);
 	write(1, "\e[0m", 4);
 	if (r)
-		term_print(r);
+		term_print(g_fd, r);
 	ft_multifree(&l, &m, &r);
 }
 

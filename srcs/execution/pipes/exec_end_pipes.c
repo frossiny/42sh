@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:42:11 by frossiny          #+#    #+#             */
-/*   Updated: 2020/02/14 16:51:33 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/02/19 15:59:55 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int			exec_end_pipes(t_pipel *pline, t_fd *fd)
 	while (pline && g_shell.current_pipel)
 	{
 		if (pline->pid)
-			!bg ? pause() : 0;
+			!bg ? sigsuspend(NULL) : 0;
 		if (is_pipe_ended(start))
 			break ;
 		pline = pline->next;
