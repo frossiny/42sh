@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 17:39:34 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/17 13:26:45 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/02/19 18:21:40 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "structs.h"
 
+void	var_set_init(void);
 t_var	*var_init(char *envp[]);
 t_var	*var_new(char *key, char *value, int export);
 int		var_set(t_var **vars, char *key, char *value, int export);

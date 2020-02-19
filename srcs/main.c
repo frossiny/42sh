@@ -6,13 +6,11 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 11:43:47 by frossiny          #+#    #+#             */
-/*   Updated: 2020/02/19 17:49:13 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/02/19 18:27:05 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <dirent.h>
 #include "shell.h"
-#include "libft.h"
 #include "history.h"
 #include "ft_printf.h"
 
@@ -27,52 +25,6 @@ int				g_lpid;
 int				g_clear_buffer;
 int				g_fd;
 char			*g_pwd;
-
-static void	check_shlvl(char *tmp)
-{
-	t_var	*shlvl;
-	int		int_shlvl;
-
-	int_shlvl = 1;
-	shlvl = var_get(g_shell.vars, "SHLVL");
-	if (shlvl && (int_shlvl = ft_atoi(shlvl->value) + 1) && int_shlvl >= 1002)
-	{
-		ft_dprintf(2,
-		"42sh: warning: shell level (%d) too high, resetting to 1\n",
-		int_shlvl);
-		int_shlvl = 1;
-	}
-	if (int_shlvl < 0)
-		int_shlvl = 0;
-	if ((tmp = ft_itoa(int_shlvl)))
-	{
-		var_set(&g_shell.vars, "SHLVL", tmp, 1);
-		ft_strdel(&tmp);
-	}
-	else
-		var_set(&g_shell.vars, "SHLVL", "1", 1);
-}
-
-static void	init_default_vars(char *tmp)
-{
-	char	buff[MAX_PWD_LEN];
-	t_var	*pwd;
-	DIR		*dir;
-
-	if ((pwd = var_get(g_shell.vars, "PWD"))
-		&& (dir = opendir(pwd->value)))
-	{
-		closedir(dir);
-		g_pwd = ft_strdup(pwd->value);
-	}
-	else
-	{
-		getcwd(buff, MAX_PWD_LEN);
-		g_pwd = ft_strdup(buff);
-	}
-	var_set(&g_shell.vars, "PWD", g_pwd, 1);
-	check_shlvl(tmp);
-}
 
 static int	shell_config(char *envp[])
 {
@@ -149,10 +101,8 @@ int			main(int argc, char *argv[], char *envp[])
 	(void)argc;
 	(void)argv;
 	register_signals();
-	if (!check_output())
+	if (!check_output() || !shell_config(envp) || !shell_init())
 		return (0);
-	if (!shell_config(envp) || !shell_init())
-		return (0);
-	init_default_vars(NULL);
+	var_set_init();
 	return (shell());
 }

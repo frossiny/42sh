@@ -6,7 +6,7 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/09 15:29:04 by vsaltel           #+#    #+#              #
-#    Updated: 2020/02/18 14:55:58 by vsaltel          ###   ########.fr        #
+#    Updated: 2020/02/19 18:51:51 by vsaltel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,10 +40,6 @@ OBJDIR	=	objs
 
 FILES	=	shell.c											\
 			main.c											\
-			prompt.c										\
-			signals.c										\
-			errors.c										\
-			utils.c											\
 			alias/alias_new.c								\
 			alias/alias_get.c								\
 			alias/alias_display.c							\
@@ -204,38 +200,42 @@ FILES	=	shell.c											\
 			parser/types/jobs.c								\
 			parser/types/semic.c							\
 			parser/types/conditions.c						\
-			termcaps/read_input.c							\
-			termcaps/read_utils.c							\
-			termcaps/termcaps.c								\
-			termcaps/initialization.c						\
-			termcaps/set_position.c							\
-			termcaps/set_position_utils.c					\
-			termcaps/t_up.c									\
-			termcaps/t_down.c								\
-			termcaps/t_history_next.c						\
-			termcaps/t_history_prev.c						\
-			termcaps/t_history_search.c						\
-			termcaps/t_left_word.c							\
-			termcaps/t_right_word.c							\
-			termcaps/t_left.c								\
-			termcaps/t_right.c								\
-			termcaps/t_delete.c								\
-			termcaps/t_delete_right.c						\
-			termcaps/t_home.c								\
-			termcaps/t_end.c								\
-			termcaps/t_escape.c								\
-			termcaps/t_visual_mode.c						\
-			termcaps/t_visual_cut.c							\
-			termcaps/t_visual_paste.c						\
-			termcaps/t_visual_copy.c						\
-			termcaps/t_clear.c								\
-			termcaps/signal.c								\
-			termcaps/completion/t_completion.c				\
-			termcaps/completion/lite_parser.c				\
-			termcaps/completion/files.c						\
-			termcaps/completion/cmd.c						\
-			termcaps/completion/var.c						\
-			termcaps/completion/disp_compl.c				\
+			command_line/read_input.c						\
+			command_line/read_utils.c						\
+			command_line/termcaps.c							\
+			command_line/initialization.c					\
+			command_line/set_position.c						\
+			command_line/signal.c							\
+			command_line/set_position_utils.c				\
+			command_line/prompt.c							\
+			command_line/termcaps/t_up.c					\
+			command_line/termcaps/t_down.c					\
+			command_line/termcaps/t_history_next.c			\
+			command_line/termcaps/t_history_prev.c			\
+			command_line/termcaps/t_history_search.c		\
+			command_line/termcaps/t_left_word.c				\
+			command_line/termcaps/t_right_word.c			\
+			command_line/termcaps/t_left.c					\
+			command_line/termcaps/t_right.c					\
+			command_line/termcaps/t_delete.c				\
+			command_line/termcaps/t_delete_right.c			\
+			command_line/termcaps/t_home.c					\
+			command_line/termcaps/t_end.c					\
+			command_line/termcaps/t_escape.c				\
+			command_line/termcaps/t_visual_mode.c			\
+			command_line/termcaps/t_visual_cut.c			\
+			command_line/termcaps/t_visual_paste.c			\
+			command_line/termcaps/t_visual_copy.c			\
+			command_line/termcaps/t_clear.c					\
+			command_line/termcaps/completion/t_completion.c	\
+			command_line/termcaps/completion/lite_parser.c	\
+			command_line/termcaps/completion/files.c		\
+			command_line/termcaps/completion/cmd.c			\
+			command_line/termcaps/completion/var.c			\
+			command_line/termcaps/completion/disp_compl.c	\
+			utils/utils.c									\
+			utils/signals.c									\
+			utils/errors.c									\
 			utils/is_escaped.c								\
 			utils/dup_argv.c								\
 			utils/display_signal.c							\
@@ -252,6 +252,7 @@ FILES	=	shell.c											\
 			variables/var_destroy.c							\
 			variables/var_get.c								\
 			variables/var_value.c							\
+			variables/var_set_init.c						\
 			variables/var_init.c							\
 			variables/var_new.c								\
 			variables/var_replace.c							\
@@ -333,7 +334,7 @@ re: fclean
 	@$(MAKE)
 
 norm:
-	@norminette $(INCDIR) $(SRCDIR) | grep "Warning\|Error" || true
+	@norminette $(INCDIR) $(SRCDIR) $(LIBFT)/$(INCDIR) $(LIBFT)/$(SRCDIR) | grep "Warning\|Error" || true
 	@echo "Norm done!"
 
 check_error:
