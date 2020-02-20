@@ -6,28 +6,30 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/26 16:36:31 by lubenard          #+#    #+#             */
-/*   Updated: 2020/01/30 17:26:53 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/02/20 15:03:42 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 #include "expansion.h"
 
-void	handle_options_h_prompt(char **expanded_prompt, int *i, int mode)
-{
-	char	*first_point;
-	char	hostname[4096];
-
-	gethostname(hostname, 4096);
-	if (mode == 1)
-		exec_option_prompt(expanded_prompt, hostname, i);
-	else
-	{
-		first_point = extract_first(hostname, '.');
-		exec_option_prompt(expanded_prompt, first_point, i);
-		ft_strdel(&first_point);
-	}
-}
+/*
+**void	handle_options_h_prompt(char **expanded_prompt, int *i, int mode)
+**{
+**	char	*first_point;
+**	char	hostname[4096];
+**
+**	gethostname(hostname, 4096);
+**	if (mode == 1)
+**		exec_option_prompt(expanded_prompt, hostname, i);
+**	else
+**	{
+**		first_point = extract_first(hostname, '.');
+**		exec_option_prompt(expanded_prompt, first_point, i);
+**		ft_strdel(&first_point);
+**	}
+**}
+*/
 
 void	reduce_pwd_size(char **expanded_prompt, char *pwd, int *i)
 {
@@ -35,9 +37,8 @@ void	reduce_pwd_size(char **expanded_prompt, char *pwd, int *i)
 	char	*extracted;
 	char	*copy;
 
-	if (!(home = var_get(g_shell.vars, "HOME")))
-		exec_option_prompt(expanded_prompt, pwd, i);
-	if (ft_strstr(pwd, home->value))
+	home = var_get(g_shell.vars, "HOME");
+	if (home && ft_strstr(pwd, home->value))
 	{
 		extracted = ft_strsub(pwd, ft_strlen(home->value), ft_strlen(pwd) -
 		ft_strlen(home->value));
@@ -46,6 +47,8 @@ void	reduce_pwd_size(char **expanded_prompt, char *pwd, int *i)
 		exec_option_prompt(expanded_prompt, copy, i);
 		ft_strdel(&copy);
 	}
+	else
+		exec_option_prompt(expanded_prompt, pwd, i);
 }
 
 void	handle_options_num_prompt(char **expanded_prompt, int num, int *i)

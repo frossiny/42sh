@@ -6,7 +6,7 @@
 /*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 02:12:48 by pcharrie          #+#    #+#             */
-/*   Updated: 2020/02/17 14:13:43 by pcharrie         ###   ########.fr       */
+/*   Updated: 2020/02/20 16:11:56 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ static int	ft_strredupconst(char **s1, char *s2)
 	return (1);
 }
 
-static char	*cd_get_var(char *key)
+static char	*cd_get_var(t_var *vars, char *key)
 {
 	t_var	*var;
 	char	*path;
 
-	if (!(var = var_get(g_shell.vars, key))
+	if (!(var = var_get(vars, key))
 		|| !(path = var->value))
 	{
 		ft_dprintf(2, "42sh: cd: %s not set\n", key);
@@ -99,13 +99,13 @@ int			cd_getpath(t_cmd *cmd, t_options *opts)
 	t_var	*cdp;
 
 	if (!cmd->args[opts->last] || !ft_strcmp(cmd->args[opts->last], "--"))
-		path = cd_get_var("HOME");
+		path = cd_get_var(cmd->tenv, "HOME");
 	else if (!ft_strcmp(cmd->args[opts->last], "-"))
-		path = cd_get_var("OLDPWD");
+		path = cd_get_var(cmd->tenv, "OLDPWD");
 	else if (cmd->args[opts->last][0] != '/'
 		&& !ft_strequ(cmd->args[opts->last], ".")
 		&& !ft_strequ(cmd->args[opts->last], "..")
-		&& (cdp = var_get(g_shell.vars, "CDPATH")) && ft_strlen(cdp->value))
+		&& (cdp = var_get(cmd->tenv, "CDPATH")) && ft_strlen(cdp->value))
 		path = cd_cdpath(cdp, cmd->args[opts->last]);
 	else
 		path = (cmd->args[opts->last][0] == '/'
