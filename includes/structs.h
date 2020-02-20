@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 14:23:53 by frossiny          #+#    #+#             */
-/*   Updated: 2020/02/14 16:49:04 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/02/20 14:23:48 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ typedef struct		s_alias
 {
 	char			*key;
 	char			*value;
-	int				loop;
 	struct s_alias	*next;
 }					t_alias;
 
