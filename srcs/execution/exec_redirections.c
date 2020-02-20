@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 15:27:23 by frossiny          #+#    #+#             */
-/*   Updated: 2020/02/17 16:08:57 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/02/20 14:16:39 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,8 @@ static int		handle_aggregate(t_redirect *redir)
 			}
 		}
 		else if (redir->filedes == 1)
-			aggr_output(redir);
+			if (!(aggr_output(redir)))
+				return (0);
 	}
 	return (1);
 }
