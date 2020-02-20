@@ -6,28 +6,30 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/26 16:36:31 by lubenard          #+#    #+#             */
-/*   Updated: 2020/02/20 14:50:46 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/02/20 15:03:42 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 #include "expansion.h"
 
-void	handle_options_h_prompt(char **expanded_prompt, int *i, int mode)
-{
-	char	*first_point;
-	char	hostname[4096];
-
-	gethostname(hostname, 4096);
-	if (mode == 1)
-		exec_option_prompt(expanded_prompt, hostname, i);
-	else
-	{
-		first_point = extract_first(hostname, '.');
-		exec_option_prompt(expanded_prompt, first_point, i);
-		ft_strdel(&first_point);
-	}
-}
+/*
+**void	handle_options_h_prompt(char **expanded_prompt, int *i, int mode)
+**{
+**	char	*first_point;
+**	char	hostname[4096];
+**
+**	gethostname(hostname, 4096);
+**	if (mode == 1)
+**		exec_option_prompt(expanded_prompt, hostname, i);
+**	else
+**	{
+**		first_point = extract_first(hostname, '.');
+**		exec_option_prompt(expanded_prompt, first_point, i);
+**		ft_strdel(&first_point);
+**	}
+**}
+*/
 
 void	reduce_pwd_size(char **expanded_prompt, char *pwd, int *i)
 {
