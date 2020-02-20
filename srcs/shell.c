@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 12:05:59 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/28 19:37:33 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/02/20 12:33:32 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ int		shell(void)
 	prompt_expansions();
 	while ((get_input(0, &input, &g_shell)) > 0)
 	{
+		job_check_status();
 		if (!input && g_return != 130)
 			g_return = 1;
 		else
