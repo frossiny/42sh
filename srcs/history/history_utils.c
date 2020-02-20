@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 12:19:22 by vsaltel           #+#    #+#             */
-/*   Updated: 2020/02/19 16:52:53 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/02/20 21:02:49 by vsaltel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int					is_in_bracket(char *str, int i)
 	tmp = i;
 	while (i-- > -1)
 	{
-		if (str[i] == '[' && !is_escaped(str, i, 0))
+		if ((str[i] == '[' || str[i] == '(') && !is_escaped(str, i, 0))
 			break ;
 	}
 	if (i == -1)
@@ -28,7 +28,7 @@ int					is_in_bracket(char *str, int i)
 	i = tmp;
 	while (str[i])
 	{
-		if (str[i] == ']' && !is_escaped(str, i, 0))
+		if ((str[i] == ']' || str[i] == ')') && !is_escaped(str, i, 0))
 			break ;
 		i++;
 	}
