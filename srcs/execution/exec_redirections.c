@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 15:27:23 by frossiny          #+#    #+#             */
-/*   Updated: 2020/02/20 14:16:39 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/02/20 16:28:14 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int		redirect_output(t_redirect *redir, int c_only)
 	return (1);
 }
 
-static int		redirect_input(t_redirect *redir)
+static int		redirect_input(t_redirect *redir, int c_only)
 {
 	int		fd;
 
@@ -42,6 +42,8 @@ static int		redirect_input(t_redirect *redir)
 		return (0);
 	if (!u_file_can_read(redir->value ? redir->value->content : NULL))
 		return (0);
+	if (c_only)
+		return (1);
 	if ((fd = open(redir->value->content, O_RDONLY)) == -1)
 		return (0);
 	dup2(fd, redir->filedes);
@@ -104,13 +106,13 @@ int				handle_redirections(t_redirect *redir, int c_only)
 			if (!redirect_output(redir, c_only))
 				return (0);
 		}
-		else if (!c_only && redir->type == TOKEN_REDIRI)
+		else if (redir->type == TOKEN_REDIRI)
 		{
 			if (redir->append)
 				apply_here_doc(redir);
 			else
 			{
-				if (!redirect_input(redir))
+				if (!redirect_input(redir, c_only))
 					return (0);
 			}
 		}
