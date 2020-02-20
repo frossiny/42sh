@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 15:41:43 by lubenard          #+#    #+#             */
-/*   Updated: 2020/01/29 18:00:13 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/02/20 15:02:29 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,14 @@ int		color_prompt(char **expanded_prompt, char *prompt, int *i)
 	return (0);
 }
 
+/*
+** Add to prompt_main_loop to enable hostname expansions
+**		else if (prompt[*i] == '\\' && prompt[*i + 1] == 'H')
+**			handle_options_h_prompt(expanded_prompt, i, 1);
+**		else if (prompt[*i] == '\\' && prompt[*i + 1] == 'h')
+**			handle_options_h_prompt(expanded_prompt, i, 0);
+*/
+
 void	prompt_main_loop(char *prompt, int *i, char **expanded_prompt)
 {
 	while (prompt[*i])
@@ -64,10 +72,6 @@ void	prompt_main_loop(char *prompt, int *i, char **expanded_prompt)
 			exec_option_prompt(expanded_prompt, "1.0", i);
 		else if (prompt[*i] == '\\' && prompt[*i + 1] == 's')
 			exec_option_prompt(expanded_prompt, "42sh", i);
-		else if (prompt[*i] == '\\' && prompt[*i + 1] == 'H')
-			handle_options_h_prompt(expanded_prompt, i, 1);
-		else if (prompt[*i] == '\\' && prompt[*i + 1] == 'h')
-			handle_options_h_prompt(expanded_prompt, i, 0);
 		else if (prompt[*i] == '\\' && prompt[*i + 1] == 'w')
 			reduce_pwd_size(expanded_prompt,
 			var_get(g_shell.vars, "PWD")->value, i);
