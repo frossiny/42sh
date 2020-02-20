@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pcharrie <pcharrie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 15:28:37 by vsaltel           #+#    #+#             */
-/*   Updated: 2020/02/14 10:57:27 by pcharrie         ###   ########.fr       */
+/*   Updated: 2020/02/20 18:46:53 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int						b_jobs(t_cmd *cmd, t_shell *shell);
 int						b_fg(t_cmd *cmd, t_shell *shell);
 int						b_fc(t_cmd *cmd, t_shell *shell);
 int						b_bg(t_cmd *cmd, t_shell *shell);
+int						b_test(t_cmd *cmd, t_shell *shell);
 
 /*
 ** Cd internal functions
@@ -92,6 +93,7 @@ static const t_builtin	g_builtins[] =
 	{ "fg", &b_fg},
 	{ "bg", &b_bg},
 	{ "fc", &b_fc },
+	{ "test", &b_test },
 	{ NULL, NULL }
 };
 
