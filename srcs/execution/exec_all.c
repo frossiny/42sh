@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 15:17:59 by frossiny          #+#    #+#             */
-/*   Updated: 2020/02/20 21:36:19 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/02/21 14:26:10 by frossiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,6 @@ int			exec_all(t_shell *shell, t_anode *ast)
 			g_return = exec_pipes(ast, shell, &ast);
 		ast ? ast = ast->parent : 0;
 	}
+	g_child = 0;
 	return (g_return);
 }
