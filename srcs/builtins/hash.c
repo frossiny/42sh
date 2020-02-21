@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 13:08:41 by lubenard          #+#    #+#             */
-/*   Updated: 2020/01/16 16:55:23 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/02/21 20:34:48 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,11 @@ char	*find_path_jobs(t_shell *shell, char *first_command)
 
 	path = var_get(shell->vars, "PATH");
 	i = -1;
+	if (!path)
+	{
+		ft_putendl("hash: hash table empty");
+		return (NULL);
+	}
 	dirs = ft_strsplit(path->value, ':');
 	while (dirs && dirs[++i])
 	{

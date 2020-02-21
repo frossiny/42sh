@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 16:51:40 by lubenard          #+#    #+#             */
-/*   Updated: 2020/02/14 14:08:26 by frossiny         ###   ########.fr       */
+/*   Updated: 2020/02/21 20:29:16 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,21 @@ int		handle_options_fg(t_cmd *cmd)
 	return (put_foreground(searched, 1));
 }
 
+int		handle_error_fg(t_shell *shell, t_cmd *cmd, t_options *opts)
+{
+	if (!isatty(0) || !isatty(1))
+	{
+		ft_putendl_fd("42sh: fg: no job control", 2);
+		return (1);
+	}
+	if (!shell->jobs.lst && !(cmd->argc - opts->last))
+	{
+		ft_putendl_fd("42sh: fg: current: no such job", 2);
+		return (1);
+	}
+	return (0);
+}
+
 int		b_fg(t_cmd *cmd, t_shell *shell)
 {
 	t_options	*opts;
@@ -121,11 +136,8 @@ int		b_fg(t_cmd *cmd, t_shell *shell)
 		(opts->ret == -1 ? ft_putendl_fd("fg: usage: fg [job_id]", 2) : 0);
 	else
 	{
-		if (!shell->jobs.lst && !(cmd->argc - opts->last))
-		{
-			ft_putendl_fd("42sh: fg: current: no such job", 2);
+		if (handle_error_fg(shell, cmd, opts) == 1)
 			ret_code = 1;
-		}
 		else
 			ret_code = handle_options_fg(cmd);
 	}

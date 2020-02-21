@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 13:32:46 by lubenard          #+#    #+#             */
-/*   Updated: 2020/01/31 15:51:36 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/02/21 20:28:14 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,26 @@ int		handle_options_bg(t_shell *shell, t_cmd *cmd)
 	return (set_bg(shell, converted, 1));
 }
 
+int		handle_error_bg(t_shell *shell, t_cmd *cmd, t_options *opts)
+{
+	if (!isatty(0) || !isatty(1))
+	{
+		ft_putendl_fd("42sh: bg: no job control", 2);
+		return (1);
+	}
+	if (!shell->jobs.lst && !(cmd->argc - opts->last))
+	{
+		ft_putendl_fd("42sh: bg: current: no such job", 2);
+		return (1);
+	}
+	else if (!shell->jobs.lst && (cmd->argc - opts->last))
+	{
+		ft_dprintf(2, "42sh: bg: %s: no such job\n", cmd->args[1]);
+		return (1);
+	}
+	return (0);
+}
+
 /*
 ** builtin bg, handle options
 */
@@ -81,16 +101,8 @@ int		b_bg(t_cmd *cmd, t_shell *shell)
 		2) : 0);
 	else
 	{
-		if (!shell->jobs.lst && !(cmd->argc - opts->last))
-		{
-			ft_putendl_fd("42sh: bg: current: no such job", 2);
-			return (1);
-		}
-		else if (!shell->jobs.lst && (cmd->argc - opts->last))
-		{
-			ft_dprintf(2, "42sh: bg: %s: no such job\n", cmd->args[1]);
-			return (1);
-		}
+		if (handle_error_bg(shell, cmd, opts) == 1)
+			ret_code = 1;
 		else
 			ret_code = handle_options_bg(shell, cmd);
 	}

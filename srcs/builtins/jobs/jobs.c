@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:05:36 by lubenard          #+#    #+#             */
-/*   Updated: 2020/01/31 16:09:28 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/02/21 20:15:28 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ int		handle_options(t_options *opts)
 	tmp_opts = opts->opts;
 	while (tmp_opts)
 	{
-		if (!ft_strcmp(tmp_opts->opt, "l"))
+		if (!ft_strcmp(tmp_opts->opt, "p"))
 			option = 1;
-		else if (!ft_strcmp(tmp_opts->opt, "p"))
+		else if (!ft_strcmp(tmp_opts->opt, "l"))
 			option = 2;
 		tmp_opts = tmp_opts->next;
 	}
