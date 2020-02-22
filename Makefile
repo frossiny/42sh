@@ -6,28 +6,34 @@
 #    By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/09 15:29:04 by vsaltel           #+#    #+#              #
-#    Updated: 2020/02/19 18:51:51 by vsaltel          ###   ########.fr        #
+#    Updated: 2020/02/22 15:40:47 by lubenard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC		=	gcc -g3 #-fsanitize=address
-CFLAGS	+=	-Wall -Wextra -Werror
+CC		=	clang
+CFLAGS	+=	-Wall -Wextra #-Werror
 
 ifdef DEBUG
-	CFLAGS += -fsanitize=address
+	CFLAGS += -g3 -fsanitize=address
 endif
 
 SHELL	=	bash
 
+MAKEFLAGS += --silent
+
 #Tests and debug related variables
 TARGS	=
+
 ifdef FILTER
 	TARGS += --filter ${FILTER}
 endif
+
 ifdef SHOW
 	TARGS += --show-success
 endif
+
 VALGRIND_ARGS = --leak-check=full --show-leak-kinds=all --suppressions="valgrind.supp"
+
 ifdef CHILDREN
 	VALGRIND_ARGS += --trace-children=yes
 endif
@@ -295,6 +301,7 @@ _CYAN=\x1b[36m
 _WHITE=\x1b[37m
 
 .PHONY: all clean fclean re norm tests $(LIBFT)
+
 
 .SILENT:
 

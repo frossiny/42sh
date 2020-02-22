@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/28 10:50:50 by frossiny          #+#    #+#             */
-/*   Updated: 2020/01/27 14:45:36 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/02/22 15:50:05 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,11 @@ int				b_echo(t_cmd *cmd, t_shell *shell)
 	(void)shell;
 	opt = 0;
 	y = 0;
+	if (!isatty(1))
+	{
+		write(2, "42sh: echo : bad file descriptor\n", 34);
+		return (1);
+	}
 	while (cmd->args[++y] && cmd->args[y][0] == '-' && cmd->args[y][1]
 										&& is_alphastr(cmd->args[y] + 1))
 		if (ft_strchr(cmd->args[y], 'n'))
