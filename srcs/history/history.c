@@ -6,7 +6,7 @@
 /*   By: frossiny <frossiny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 17:47:28 by vsaltel           #+#    #+#             */
-/*   Updated: 2020/01/29 15:34:49 by vsaltel          ###   ########.fr       */
+/*   Updated: 2020/02/24 12:40:05 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void			delete_entry_hist(t_history *history)
 		history->first_element->next = NULL;
 		ft_strdel(&to_delete->str);
 		free(to_delete);
+		history->size--;
 	}
 }
 

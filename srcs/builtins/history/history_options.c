@@ -6,7 +6,7 @@
 /*   By: lubenard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 13:54:13 by lubenard          #+#    #+#             */
-/*   Updated: 2020/01/09 19:10:41 by lubenard         ###   ########.fr       */
+/*   Updated: 2020/02/24 12:40:40 by lubenard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,7 @@ int			empty_hist(t_shell *shell)
 
 	if (!shell->history.lst)
 		return (0);
-	if (shell->history.first_element->index - 1 <= 0)
-		shell->history.index = 1;
-	else
-		shell->history.index = shell->history.first_element->index - 1;
+	shell->history.index = 1;
 	history = shell->history.lst;
 	while (history)
 	{
